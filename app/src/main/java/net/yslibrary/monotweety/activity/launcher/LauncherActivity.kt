@@ -8,6 +8,8 @@ import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.app.RemoteInput
 import android.support.v4.app.TaskStackBuilder
 import android.widget.Button
+import com.bluelinelabs.conductor.ChangeHandlerFrameLayout
+import com.bluelinelabs.conductor.Controller
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.BaseActivity
 import org.jetbrains.anko.find
@@ -16,6 +18,13 @@ import org.jetbrains.anko.find
  * Created by yshrsmz on 2016/09/24.
  */
 class LauncherActivity : BaseActivity() {
+
+  override val container: ChangeHandlerFrameLayout
+    get() = throw UnsupportedOperationException()
+  override val layoutResId: Int
+    get() = throw UnsupportedOperationException()
+  override val rootController: Controller
+    get() = throw UnsupportedOperationException()
 
   val KEY_TEXT = "key_text"
 

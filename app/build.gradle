@@ -19,6 +19,16 @@ def TWITTER_API_SECRET = "\"${getSecretProperty('twitter.api.secret')}\""
 android {
   compileSdkVersion 24
   buildToolsVersion "24.0.2"
+
+  signingConfigs {
+    release {
+      storeFile file("../yslibrary.jks")
+      keyAlias "yslibrary"
+      storePassword getSecretProperty("keystorePassword")
+      keyPassword getSecretProperty("keystoreKeyPassword")
+    }
+  }
+
   defaultConfig {
     applicationId "net.yslibrary.monotweety"
     minSdkVersion 21
@@ -33,18 +43,21 @@ android {
 
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
+
   buildTypes {
     release {
       debuggable false
       minifyEnabled false
       zipAlignEnabled true
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      signingConfig signingConfigs.release
     }
     debug {
       debuggable true
       applicationIdSuffix '.debug'
     }
   }
+
   sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
   }

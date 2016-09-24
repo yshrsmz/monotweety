@@ -20,9 +20,11 @@ import org.jetbrains.anko.find
 class LauncherActivity : BaseActivity() {
 
   override val container: ChangeHandlerFrameLayout
-    get() = throw UnsupportedOperationException()
+    get() = findViewById(R.id.controller_container) as ChangeHandlerFrameLayout
+
   override val layoutResId: Int
-    get() = throw UnsupportedOperationException()
+    get() = R.layout.activity_launcher
+
   override val rootController: Controller
     get() = throw UnsupportedOperationException()
 

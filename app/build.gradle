@@ -66,6 +66,8 @@ dependencies {
   compile 'com.jakewharton.timber:timber:4.3.1'
   compile 'com.jakewharton.threetenabp:threetenabp:1.0.4'
 
+  compile 'net.yslibrary.rxeventbus:rxeventbus:1.0.1'
+
   compile 'org.jetbrains.anko:anko-common:0.9'
 
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {

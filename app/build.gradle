@@ -1,5 +1,15 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'com.github.ben-manes.versions'
+apply plugin: 'com.getkeepsafe.dexcount'
+
+def getSecretProperty(name) {
+  Properties properties = new Properties()
+  properties.load(project.rootProject.file('secret.properties').newDataInputStream())
+
+  return properties.getProperty(name.toString())
+}
 
 android {
   compileSdkVersion 24
@@ -23,15 +33,48 @@ android {
   }
 }
 
+ext.support_lib_version = '24.2.1'
+ext.rxbinding_version = '0.4.0'
+ext.conductor_version = '2.0.2-SNAPSHOT'
 dependencies {
-  compile fileTree(dir: 'libs', include: ['*.jar'])
+  compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+  compile "com.android.support:appcompat-v7:$support_lib_version"
+  compile "com.android.support:recyclerview-v7:$support_lib_version"
+
+  compile 'com.google.dagger:dagger:2.7'
+  kapt 'com.google.dagger:dagger-compiler:2.7'
+  provided 'org.glassfish:javax.annotation:10.0-b28'
+
+  compile 'io.reactivex:rxjava:1.2.0'
+  testCompile 'io.reactivex:rxjava:1.2.0'
+  compile 'io.reactivex:rxandroid:1.2.1'
+  testCompile 'io.reactivex:rxandroid:1.2.1'
+  compile 'io.reactivex:rxkotlin:0.60.0'
+
+  compile "com.jakewharton.rxbinding:rxbinding-kotlin:$rxbinding_version"
+  compile "com.jakewharton.rxbinding:rxbinding-support-v4-kotlin:$rxbinding_version"
+  compile "com.jakewharton.rxbinding:rxbinding-appcompat-v7-kotlin:$rxbinding_version"
+  compile "com.jakewharton.rxbinding:rxbinding-recyclerview-v7-kotlin:$rxbinding_version"
+
+  compile 'com.f2prateek.rx.preferences:rx-preferences:1.0.2'
+
+  compile "com.bluelinelabs:conductor:${conductor_version}"
+  compile "com.bluelinelabs:conductor-support:${conductor_version}"
+  compile "com.bluelinelabs:conductor-rxlifecycle:${conductor_version}"
+
+  compile 'com.jakewharton.timber:timber:4.3.1'
+  compile 'com.jakewharton.threetenabp:threetenabp:1.0.4'
+
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
-  compile 'com.android.support:appcompat-v7:24.2.1'
+
+
   testCompile 'junit:junit:4.12'
-  compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 repositories {
   mavenCentral()
+  maven { url 'http://dl.bintray.com/kotlin/kotlin-eap' }
+  maven { url 'http://oss.sonatype.org/content/repositories/snapshots' }
 }

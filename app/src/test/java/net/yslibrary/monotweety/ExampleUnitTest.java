@@ -1,4 +1,4 @@
-package net.yslibrary.monologue;
+package net.yslibrary.monotweety;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package net.yslibrary.monologue.activity.launcher
+package net.yslibrary.monotweety.activity.launcher
 
 import android.app.PendingIntent
 import android.content.Intent
@@ -8,8 +8,8 @@ import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.app.RemoteInput
 import android.support.v4.app.TaskStackBuilder
 import android.widget.Button
-import net.yslibrary.monologue.R
-import net.yslibrary.monologue.base.BaseActivity
+import net.yslibrary.monotweety.R
+import net.yslibrary.monotweety.base.BaseActivity
 import org.jetbrains.anko.find
 
 /**

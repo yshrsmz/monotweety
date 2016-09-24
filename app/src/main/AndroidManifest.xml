@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="net.yslibrary.monologue">
+          package="net.yslibrary.monotweety">
 
   <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -11,7 +11,7 @@
       android:theme="@style/AppTheme">
 
     <activity
-        android:name=".activity.launcher.LauncherActivity"
+        android:name="net.yslibrary.monotweety.activity.launcher.LauncherActivity"
         android:launchMode="singleTask">
 
       <intent-filter>
@@ -29,7 +29,7 @@
         <data
             android:host="yslibrary.net"
             android:path="/launcher/auth"
-            android:scheme="monologue"
+            android:scheme="monotweety"
             />
       </intent-filter>
     </activity>

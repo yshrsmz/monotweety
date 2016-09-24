@@ -1,4 +1,4 @@
-package net.yslibrary.monologue.base
+package net.yslibrary.monotweety.base
 
 import android.support.v7.app.AppCompatActivity
 

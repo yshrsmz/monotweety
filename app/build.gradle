@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.github.ben-manes.versions'
 apply plugin: 'com.getkeepsafe.dexcount'
+apply plugin: 'io.fabric'
 
 def getSecretProperty(name) {
   Properties properties = new Properties()
@@ -10,6 +11,10 @@ def getSecretProperty(name) {
 
   return properties.getProperty(name.toString())
 }
+
+def FABRIC_API_KEY = getSecretProperty('fabric.api.key')
+def TWITTER_API_KEY = "\"${getSecretProperty('twitter.api.key')}\""
+def TWITTER_API_SECRET = "\"${getSecretProperty('twitter.api.secret')}\""
 
 android {
   compileSdkVersion 24
@@ -20,6 +25,12 @@ android {
     targetSdkVersion 24
     versionCode 1
     versionName "1.0"
+
+    buildConfigField 'String', 'TWITTER_API_KEY', TWITTER_API_KEY
+    buildConfigField 'String', 'TWITTER_API_SECRET', TWITTER_API_SECRET
+
+    manifestPlaceholders = [fabricApiKey: FABRIC_API_KEY]
+
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
   buildTypes {
@@ -41,6 +52,10 @@ dependencies {
 
   compile "com.android.support:appcompat-v7:$support_lib_version"
   compile "com.android.support:recyclerview-v7:$support_lib_version"
+
+  compile('com.twitter.sdk.android:twitter:2.0.1@aar') {
+    transitive = true;
+  }
 
   compile 'com.google.dagger:dagger:2.7'
   kapt 'com.google.dagger:dagger-compiler:2.7'

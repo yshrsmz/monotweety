@@ -1,0 +1,17 @@
+.gradle
+/local.properties
+/.idea/*
+.DS_Store
+/build
+
+*.iml
+crashlytics.properties
+com_crashlytics_export_strings.xml
+crashlytics-build.properties
+
+fabric.properties
+secret.properties
+
+yslibrary.jks
+
+!.idea/codeStyleSettings.xml

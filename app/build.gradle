@@ -16,7 +16,7 @@ android {
   buildToolsVersion "24.0.2"
   defaultConfig {
     applicationId "net.yslibrary.monologue"
-    minSdkVersion 19
+    minSdkVersion 21
     targetSdkVersion 24
     versionCode 1
     versionName "1.0"

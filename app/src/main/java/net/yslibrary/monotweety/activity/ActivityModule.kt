@@ -3,7 +3,7 @@ package net.yslibrary.monotweety.activity
 import android.support.v7.app.AppCompatActivity
 import dagger.Module
 import dagger.Provides
-import net.yslibrary.monotweety.ActivityScope
+import net.yslibrary.monotweety.base.di.ActivityScope
 import net.yslibrary.monotweety.base.di.Names
 import net.yslibrary.rxeventbus.EventBus
 import javax.inject.Named

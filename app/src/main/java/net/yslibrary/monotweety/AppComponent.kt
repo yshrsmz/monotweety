@@ -1,6 +1,7 @@
 package net.yslibrary.monotweety
 
 import dagger.Component
+import net.yslibrary.monotweety.base.di.AppScope
 
 /**
  * Created by yshrsmz on 2016/09/24.

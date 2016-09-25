@@ -3,6 +3,7 @@ package net.yslibrary.monotweety
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import net.yslibrary.monotweety.base.di.AppScope
 import net.yslibrary.monotweety.base.di.Names
 import javax.inject.Named
 

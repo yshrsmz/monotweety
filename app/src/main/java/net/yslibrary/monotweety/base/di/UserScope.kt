@@ -1,4 +1,4 @@
-package net.yslibrary.monotweety
+package net.yslibrary.monotweety.base.di
 
 import javax.inject.Scope
 

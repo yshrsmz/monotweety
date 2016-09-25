@@ -3,15 +3,17 @@ package net.yslibrary.monotweety.base
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.bluelinelabs.conductor.*
+import net.yslibrary.monotweety.base.di.Names
 import net.yslibrary.rxeventbus.EventBus
 import javax.inject.Inject
+import javax.inject.Named
 
 /**
  * Created by yshrsmz on 2016/09/24.
  */
 abstract class BaseActivity : AppCompatActivity() {
 
-  @field:[Inject]
+  @field:[Inject Named(Names.FOR_ACTIVITY)]
   lateinit var activityBus: EventBus
 
   protected abstract val layoutResId: Int

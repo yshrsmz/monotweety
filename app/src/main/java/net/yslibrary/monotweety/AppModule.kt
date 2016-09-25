@@ -3,6 +3,8 @@ package net.yslibrary.monotweety
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import net.yslibrary.monotweety.base.di.Names
+import javax.inject.Named
 
 /**
  * Created by yshrsmz on 2016/09/24.
@@ -10,14 +12,14 @@ import dagger.Provides
 @Module
 class AppModule(private val context: Context) {
 
-  @ForApp
+  @Named(Names.FOR_APP)
   @AppScope
   @Provides
   fun provideAppContext(): Context = context
 
   @AppScope
   @Provides
-  open fun provideAppLifecycleCallbacks(@ForApp context: Context): App.LifecycleCallbacks {
+  open fun provideAppLifecycleCallbacks(@Named(Names.FOR_APP) context: Context): App.LifecycleCallbacks {
     return AppLifecycleCallbacks(context)
   }
 }

@@ -68,7 +68,7 @@ class NotificationService : Service(), HasComponent<NotificationServiceComponent
     super.onCreate()
     Timber.d("onCreate")
 
-    // check login status first
+    // TODO: check login status first
 
     injectDependencies()
     setEvents()
@@ -228,6 +228,8 @@ class NotificationService : Service(), HasComponent<NotificationServiceComponent
       val command = intent?.getStringExtra(KEY_COMMAND)
 
       Timber.d("onReceive - command: $command")
+
+      // TODO: check login status first
 
       command?.let {
         when (it) {

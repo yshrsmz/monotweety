@@ -7,6 +7,6 @@ import android.content.Context
  */
 class Modules {
   companion object {
-    fun appModule(context: Context) = AppModule(context)
+    fun appModule(context: Context) = DebugAppModule(context)
   }
 }

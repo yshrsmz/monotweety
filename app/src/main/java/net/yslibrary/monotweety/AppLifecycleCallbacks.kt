@@ -11,10 +11,15 @@ import io.fabric.sdk.android.Fabric
  */
 open class AppLifecycleCallbacks(val context: Context) : App.LifecycleCallbacks {
   override fun onCreate() {
+    initTimber()
     initFabric()
   }
 
   override fun onTerminate() {
+
+  }
+
+  open fun initTimber() {
 
   }
 

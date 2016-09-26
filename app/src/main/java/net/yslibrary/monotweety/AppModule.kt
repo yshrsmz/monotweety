@@ -11,7 +11,7 @@ import javax.inject.Named
  * Created by yshrsmz on 2016/09/24.
  */
 @Module
-class AppModule(private val context: Context) {
+open class AppModule(private val context: Context) {
 
   @Named(Names.FOR_APP)
   @AppScope

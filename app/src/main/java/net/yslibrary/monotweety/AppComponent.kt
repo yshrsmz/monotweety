@@ -10,6 +10,6 @@ import net.yslibrary.monotweety.base.di.AppScope
 @Component(
     modules = arrayOf(AppModule::class)
 )
-interface AppComponent {
+interface AppComponent : UserComponent.ComponentProvider {
   fun inject(app: App)
 }

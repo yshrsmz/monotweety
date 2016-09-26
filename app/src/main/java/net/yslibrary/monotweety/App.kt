@@ -10,8 +10,17 @@ import javax.inject.Inject
 open class App : Application() {
 
   companion object {
-    fun appComponent(context: Context): AppComponent = get(context).appComponent
     fun get(context: Context): App = context.applicationContext as App
+    fun appComponent(context: Context): AppComponent = get(context).appComponent
+    fun userComponent(context: Context): UserComponent {
+      val app = get(context)
+
+      if (app.userComponent == null) {
+        app.userComponent = app.appComponent.userComponent()
+      }
+
+      return app.userComponent!!
+    }
   }
 
   val appComponent: AppComponent by lazy {
@@ -19,6 +28,8 @@ open class App : Application() {
         .appModule(Modules.appModule(this))
         .build()
   }
+
+  var userComponent: UserComponent? = null
 
   @field:[Inject]
   lateinit var lifecycleCallbacks: App.LifecycleCallbacks

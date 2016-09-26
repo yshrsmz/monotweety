@@ -8,7 +8,7 @@ import net.yslibrary.monotweety.base.di.UserScope
  */
 @UserScope
 @Subcomponent
-interface UserComponent {
+interface UserComponent : AppModule.Provider {
 
   interface ComponentProvider {
     fun userComponent(): UserComponent

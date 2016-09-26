@@ -1,3 +1,7 @@
 <resources>
   <string name="app_name">Monotweety</string>
+
+  <string name="message_tweet_succeeded">Status successfully updated!</string>
+  <string name="error_tweet_failed">Tweet failed.</string>
+  <string name="error_tweet_failed_because_of_length">Content too long.</string>
 </resources>

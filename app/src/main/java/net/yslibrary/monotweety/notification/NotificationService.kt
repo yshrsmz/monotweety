@@ -8,9 +8,13 @@ import android.content.IntentFilter
 import android.os.Binder
 import android.os.IBinder
 import android.support.annotation.StringDef
+import android.widget.Toast
+import net.yslibrary.monotweety.App
+import net.yslibrary.monotweety.R
+import net.yslibrary.monotweety.base.HasComponent
 import timber.log.Timber
 
-class NotificationService : Service() {
+class NotificationService : Service(), NotificationServiceContract.View, HasComponent<NotificationServiceComponent> {
 
   companion object {
     const val ACTION = "net.yslibrary.monotweety.notification.NotificationService.Action"
@@ -34,9 +38,19 @@ class NotificationService : Service() {
   val binder: IBinder by lazy { ServiceBinder() }
   val commandReceiver: NotificationCommandReceiver by lazy { NotificationCommandReceiver() }
 
+  override val component: NotificationServiceComponent by lazy {
+    DaggerNotificationServiceComponent.builder()
+        .userComponent(App.userComponent(this))
+        .build()
+  }
+
   override fun onCreate() {
     super.onCreate()
     Timber.d("onCreate")
+
+    // check login status first
+
+    injectDependencies()
 
     registerCommandReceiver()
   }
@@ -64,18 +78,41 @@ class NotificationService : Service() {
     super.onRebind(intent)
   }
 
+  private fun injectDependencies() {
+    component.inject(this)
+  }
+
   private fun registerCommandReceiver() {
     val intentFilter = IntentFilter()
     intentFilter.addAction(ACTION)
     registerReceiver(commandReceiver, intentFilter)
   }
 
-  fun showNotification() {
+  override fun showNotification() {
     Timber.d("show notification")
   }
 
-  fun hideNotification() {
+  override fun hideNotification() {
     Timber.d("hide notification")
+  }
+
+  override fun showTweetDialog(text: String) {
+
+  }
+
+  override fun showTweetSucceeded() {
+    Toast.makeText(applicationContext, getString(R.string.message_tweet_succeeded), Toast.LENGTH_SHORT)
+        .show()
+  }
+
+  override fun showTweetFailed() {
+    Toast.makeText(applicationContext, getString(R.string.error_tweet_failed), Toast.LENGTH_SHORT)
+        .show()
+  }
+
+  override fun showTweetFailedBecauseOfLength() {
+    Toast.makeText(applicationContext, getString(R.string.error_tweet_failed_because_of_length), Toast.LENGTH_SHORT)
+        .show()
   }
 
   inner class ServiceBinder : Binder() {

@@ -12,13 +12,7 @@ class NotificationServiceModule(private val service: NotificationService) {
 
   @ServiceScope
   @Provides
-  fun provideNotificationServicePresenter(): NotificationServiceContract.Presenter {
-    return NotificationServicePresenter()
-  }
-
-  @ServiceScope
-  @Provides
-  fun provideNotificationServiceView(): NotificationServiceContract.View {
-    return service
+  fun provideNotificationServiceViewModel(): NotificationServiceViewModel {
+    return NotificationServiceViewModel()
   }
 }

@@ -1,5 +1,6 @@
 package net.yslibrary.monotweety.login
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,9 @@ import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.BaseController
 import net.yslibrary.monotweety.base.HasComponent
 import net.yslibrary.monotweety.base.findById
+import net.yslibrary.monotweety.event.ActivityResult
+import rx.android.schedulers.AndroidSchedulers
+import timber.log.Timber
 
 /**
  * Created by yshrsmz on 2016/09/27.
@@ -41,15 +45,25 @@ class LoginController : BaseController(), HasComponent<LoginComponent> {
   }
 
   fun setEvents() {
-    bindings.loginButton.callback = object : Callback<TwitterSession>() {
-      override fun success(result: Result<TwitterSession>?) {
+    activityBus.on(ActivityResult::class.java)
+        .observeOn(AndroidSchedulers.mainThread())
+        .bindToLifecycle()
+        .subscribe { bindings.loginButton.onActivityResult(it.requestCode, it.resultCode, it.data) }
 
+    bindings.loginButton.callback = object : Callback<TwitterSession>() {
+      override fun success(result: Result<TwitterSession>) {
+        Timber.d("login success")
       }
 
-      override fun failure(exception: TwitterException?) {
-
+      override fun failure(exception: TwitterException) {
+        Timber.e(exception, exception.message)
       }
     }
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    bindings.loginButton.onActivityResult(requestCode, resultCode, data)
   }
 
   inner class Bindings(view: View) {

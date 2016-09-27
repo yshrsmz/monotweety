@@ -1,5 +1,6 @@
 package net.yslibrary.monotweety.base
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.bluelinelabs.conductor.*
@@ -37,5 +38,10 @@ abstract class BaseActivity : AppCompatActivity() {
     if (!router.handleBack()) {
       super.onBackPressed()
     }
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    router.onActivityResult(requestCode, resultCode, data)
   }
 }

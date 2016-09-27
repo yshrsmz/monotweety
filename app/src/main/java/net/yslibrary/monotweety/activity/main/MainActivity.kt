@@ -1,5 +1,7 @@
 package net.yslibrary.monotweety.activity.main
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import com.bluelinelabs.conductor.ChangeHandlerFrameLayout
 import com.bluelinelabs.conductor.Controller
@@ -13,6 +15,13 @@ import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.setting.SettingController
 
 class MainActivity : BaseActivity(), ActionBarProvider, HasComponent<MainActivityComponent> {
+
+  companion object {
+    fun callingIntent(context: Context): Intent {
+      return Intent(context, MainActivity::class.java)
+    }
+  }
+
   override val container: ChangeHandlerFrameLayout
     get() = findById(R.id.controller_container)
 

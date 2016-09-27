@@ -3,6 +3,7 @@ package net.yslibrary.monotweety.activity.main
 import android.os.Bundle
 import com.bluelinelabs.conductor.ChangeHandlerFrameLayout
 import com.bluelinelabs.conductor.Controller
+import net.yslibrary.monotweety.App
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.activity.ActionBarProvider
 import net.yslibrary.monotweety.activity.ActivityModule
@@ -23,6 +24,7 @@ class MainActivity : BaseActivity(), ActionBarProvider, HasComponent<MainActivit
 
   override val component: MainActivityComponent by lazy {
     DaggerMainActivityComponent.builder()
+        .appComponent(App.appComponent(this))
         .activityModule(ActivityModule(this))
         .build()
   }

@@ -3,6 +3,7 @@ package net.yslibrary.monotweety.activity.launcher
 import android.os.Bundle
 import com.bluelinelabs.conductor.ChangeHandlerFrameLayout
 import com.bluelinelabs.conductor.Controller
+import net.yslibrary.monotweety.App
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.activity.ActivityModule
 import net.yslibrary.monotweety.base.BaseActivity
@@ -25,6 +26,7 @@ class LauncherActivity : BaseActivity(), HasComponent<LauncherActivityComponent>
 
   override val component: LauncherActivityComponent by lazy {
     DaggerLauncherActivityComponent.builder()
+        .appComponent(App.appComponent(this))
         .activityModule(ActivityModule(this))
         .build()
   }

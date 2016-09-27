@@ -84,8 +84,8 @@ dependencies {
   kapt 'com.google.dagger:dagger-compiler:2.7'
   provided 'org.glassfish:javax.annotation:10.0-b28'
 
-  compile 'io.reactivex:rxjava:1.2.0'
-  testCompile 'io.reactivex:rxjava:1.2.0'
+  compile 'io.reactivex:rxjava:1.1.10'
+  testCompile 'io.reactivex:rxjava:1.1.10'
   compile 'io.reactivex:rxandroid:1.2.1'
   testCompile 'io.reactivex:rxandroid:1.2.1'
   compile 'io.reactivex:rxkotlin:0.60.0'

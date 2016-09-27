@@ -9,7 +9,7 @@ import rx.subjects.BehaviorSubject
  */
 class SplashViewModel(private val isLoggedIn: IsLoggedIn) {
 
-  val loggedInSubject = BehaviorSubject.create<Boolean>()
+  private val loggedInSubject = BehaviorSubject.create<Boolean>()
 
   val loggedIn: Observable<Boolean>
     get() = loggedInSubject.asObservable()

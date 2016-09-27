@@ -18,6 +18,7 @@ import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.HasComponent
 import rx.Completable
 import rx.android.schedulers.AndroidSchedulers
+import rx.lang.kotlin.addTo
 import rx.subscriptions.CompositeSubscription
 import timber.log.Timber
 import javax.inject.Inject
@@ -68,11 +69,18 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
     super.onCreate()
     Timber.d("onCreate")
 
-    // TODO: check login status first
-
-    injectDependencies()
-    setEvents()
-    registerCommandReceiver()
+    // check login status before inject dependencies & initialize
+    App.appComponent(this).isLoggedIn()
+        .execute()
+        .subscribe { loggedIn ->
+          if (loggedIn) {
+            injectDependencies()
+            setEvents()
+            registerCommandReceiver()
+          } else {
+            stopSelf()
+          }
+        }.addTo(subscriptions)
   }
 
   override fun onBind(intent: Intent): IBinder? {
@@ -88,6 +96,7 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
   override fun onDestroy() {
     super.onDestroy()
     Timber.d("onDestroy")
+    subscriptions.unsubscribe()
   }
 
   override fun onUnbind(intent: Intent?): Boolean {
@@ -114,7 +123,7 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
           updateNotification()
           closeNotificationDrawer()
           showTweetSucceeded()
-        }
+        }.addTo(subscriptions)
   }
 
   fun showNotification() {

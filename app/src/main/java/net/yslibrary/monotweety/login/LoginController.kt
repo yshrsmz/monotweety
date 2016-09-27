@@ -25,11 +25,15 @@ class LoginController : BaseController(), HasComponent<LoginComponent> {
         .loginComponent(LoginViewModule())
   }
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-    val view = inflater.inflate(R.layout.controller_login, container, false)
-    bindings = Bindings(view)
-
+  override fun onCreate() {
+    super.onCreate()
     component.inject(this)
+  }
+
+  override fun inflateView(inflater: LayoutInflater, container: ViewGroup): View {
+    val view = inflater.inflate(R.layout.controller_login, container, false)
+
+    bindings = Bindings(view)
 
     setEvents()
 

@@ -17,10 +17,13 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
         .settingComponent(SettingViewModule())
   }
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-    val view = inflater.inflate(R.layout.controller_setting, container, false)
-
+  override fun onCreate() {
+    super.onCreate()
     component.inject(this)
+  }
+
+  override fun inflateView(inflater: LayoutInflater, container: ViewGroup): View {
+    val view = inflater.inflate(R.layout.controller_setting, container, false)
 
     return view
   }

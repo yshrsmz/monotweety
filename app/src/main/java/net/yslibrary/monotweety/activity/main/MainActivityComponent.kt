@@ -4,6 +4,7 @@ import dagger.Component
 import net.yslibrary.monotweety.AppComponent
 import net.yslibrary.monotweety.activity.ActivityModule
 import net.yslibrary.monotweety.base.di.ActivityScope
+import net.yslibrary.monotweety.setting.SettingComponent
 
 /**
  * Created by yshrsmz on 2016/09/25.
@@ -13,6 +14,7 @@ import net.yslibrary.monotweety.base.di.ActivityScope
     dependencies = arrayOf(AppComponent::class),
     modules = arrayOf(ActivityModule::class)
 )
-interface MainActivityComponent : ActivityModule.Provider {
+interface MainActivityComponent : ActivityModule.Provider,
+                                  SettingComponent.ComponentProvider {
   fun inject(activity: MainActivity)
 }

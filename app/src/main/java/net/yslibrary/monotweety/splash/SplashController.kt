@@ -14,6 +14,7 @@ import com.jakewharton.rxbinding.view.clicks
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.activity.launcher.LauncherActivity
 import net.yslibrary.monotweety.base.BaseController
+import net.yslibrary.monotweety.base.HasComponent
 import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.notification.NotificationService
 import net.yslibrary.monotweety.notification.ServiceConnection
@@ -23,7 +24,7 @@ import kotlin.properties.Delegates
 /**
  * Created by yshrsmz on 2016/09/25.
  */
-class SplashController : BaseController() {
+class SplashController : BaseController(), HasComponent<SplashComponent> {
 
   val KEY_TEXT = "key_text"
 
@@ -34,6 +35,11 @@ class SplashController : BaseController() {
 
   val notificationManager: NotificationManagerCompat
       by lazy { NotificationManagerCompat.from(applicationContext) }
+
+  override val component: SplashComponent by lazy {
+    getComponentProvider<SplashComponent.ComponentProvider>(activity)
+        .splashComponent(SplashViewModule())
+  }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
     val view = inflater.inflate(R.layout.controller_splash, container, false)

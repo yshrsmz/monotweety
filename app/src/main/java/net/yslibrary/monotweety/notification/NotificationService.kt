@@ -22,7 +22,7 @@ import rx.subscriptions.CompositeSubscription
 import timber.log.Timber
 import javax.inject.Inject
 
-class NotificationService : Service(), HasComponent<NotificationServiceComponent> {
+class NotificationService : Service(), HasComponent<NotificationComponent> {
 
   companion object {
     const val KEY_NOTIFICATION_TWEET_TEXT = "notification_tweet_text"
@@ -57,8 +57,8 @@ class NotificationService : Service(), HasComponent<NotificationServiceComponent
   private val subscriptions = CompositeSubscription()
 
 
-  override val component: NotificationServiceComponent by lazy {
-    DaggerNotificationServiceComponent.builder()
+  override val component: NotificationComponent by lazy {
+    DaggerNotificationComponent.builder()
         .userComponent(App.userComponent(this))
         .notificationServiceModule(NotificationServiceModule(this))
         .build()

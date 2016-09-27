@@ -3,6 +3,7 @@ package net.yslibrary.monotweety
 import dagger.Component
 import net.yslibrary.monotweety.base.di.AppScope
 import net.yslibrary.monotweety.data.DataModule
+import net.yslibrary.monotweety.login.domain.IsLoggedIn
 
 /**
  * Created by yshrsmz on 2016/09/24.
@@ -13,4 +14,6 @@ import net.yslibrary.monotweety.data.DataModule
 )
 interface AppComponent : UserComponent.ComponentProvider {
   fun inject(app: App)
+
+  fun isLoggedIn(): IsLoggedIn
 }

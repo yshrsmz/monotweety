@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
 import net.yslibrary.monotweety.R
+import net.yslibrary.monotweety.activity.main.MainActivity
 import net.yslibrary.monotweety.base.BaseController
 import net.yslibrary.monotweety.base.HasComponent
 import net.yslibrary.monotweety.login.LoginController
@@ -49,9 +50,14 @@ class SplashController : BaseController(), HasComponent<SplashComponent> {
         .zipWith(Observable.interval(2, TimeUnit.SECONDS).first()) { t1, t2 -> t1 }
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe {
-          router.setRoot(RouterTransaction.with(LoginController())
-              .popChangeHandler(FadeChangeHandler())
-              .pushChangeHandler(FadeChangeHandler()))
+          if (it) {
+            startActivity(MainActivity.callingIntent(applicationContext))
+            activity.finish()
+          } else {
+            router.setRoot(RouterTransaction.with(LoginController())
+                .popChangeHandler(FadeChangeHandler())
+                .pushChangeHandler(FadeChangeHandler()))
+          }
         }
   }
 }

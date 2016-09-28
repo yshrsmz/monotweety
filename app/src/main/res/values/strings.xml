@@ -1,6 +1,8 @@
 <resources>
-  <string name="app_name">Monotweety</string>
+  <string name="app_name" translatable="false">Monotweety</string>
   <string name="setting_title">Settings</string>
+
+  <string name="setting_enable_notification" translatable="false">ON</string>
 
   <string name="message_tweet_succeeded">Status successfully updated!</string>
   <string name="message_login_succeeded">Successfully logged in as \@%s</string>

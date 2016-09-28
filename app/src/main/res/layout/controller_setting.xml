@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+  <android.support.v7.widget.SwitchCompat
+      android:id="@+id/notification_switch"
+      android:layout_width="match_parent"
+      android:layout_height="?actionBarSize"
+      android:background="@color/colorPrimary"
+      android:paddingLeft="16dp"
+      android:paddingRight="16dp"
+      android:text="@string/setting_enable_notification"
+      android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+      android:textColor="@android:color/white"
+      android:textStyle="bold"
+      />
 
 </LinearLayout>

@@ -49,5 +49,5 @@ abstract class BaseController : RxController() {
 
   fun getString(@StringRes id: Int): String = applicationContext.getString(id)
 
-  fun getString(@StringRes id: Int, vararg formatArgs: Any): String = applicationContext.getString(id, formatArgs)
+  fun getString(@StringRes id: Int, vararg formatArgs: Any): String = applicationContext.getString(id, *formatArgs)
 }

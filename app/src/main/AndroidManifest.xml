@@ -13,7 +13,8 @@
       android:theme="@style/AppTheme">
     <activity
         android:name=".activity.launcher.LauncherActivity"
-        android:launchMode="singleTask">
+        android:launchMode="singleTask"
+        android:theme="@style/AppTheme.FullScreen">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 

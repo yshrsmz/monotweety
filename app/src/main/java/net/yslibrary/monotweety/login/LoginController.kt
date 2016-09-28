@@ -10,12 +10,14 @@ import com.twitter.sdk.android.core.TwitterException
 import com.twitter.sdk.android.core.TwitterSession
 import com.twitter.sdk.android.core.identity.TwitterLoginButton
 import net.yslibrary.monotweety.R
+import net.yslibrary.monotweety.activity.main.MainActivity
 import net.yslibrary.monotweety.base.BaseController
 import net.yslibrary.monotweety.base.HasComponent
 import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.event.ActivityResult
 import rx.android.schedulers.AndroidSchedulers
 import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * Created by yshrsmz on 2016/09/27.
@@ -23,6 +25,9 @@ import timber.log.Timber
 class LoginController : BaseController(), HasComponent<LoginComponent> {
 
   lateinit var bindings: Bindings
+
+  @field:[Inject]
+  lateinit var viewModel: LoginViewModel
 
   override val component: LoginComponent by lazy {
     getComponentProvider<LoginComponent.ComponentProvider>(activity)
@@ -50,13 +55,29 @@ class LoginController : BaseController(), HasComponent<LoginComponent> {
         .bindToLifecycle()
         .subscribe { bindings.loginButton.onActivityResult(it.requestCode, it.resultCode, it.data) }
 
+    viewModel.loginCompleted
+        .observeOn(AndroidSchedulers.mainThread())
+        .bindToLifecycle()
+        .doOnNext { toast(getString(R.string.message_login_succeeded, it.userName)).show() }
+        .subscribe {
+          startActivity(MainActivity.callingIntent(applicationContext))
+          activity.finish()
+        }
+
+    viewModel.loginFailed
+        .observeOn(AndroidSchedulers.mainThread())
+        .bindToLifecycle()
+        .subscribe { showSnackBar(getString(R.string.error_login_failed)) }
+
     bindings.loginButton.callback = object : Callback<TwitterSession>() {
       override fun success(result: Result<TwitterSession>) {
-        Timber.d("login success")
+        Timber.d("login success: $result")
+        viewModel.onLoginCompleted(result.data)
       }
 
       override fun failure(exception: TwitterException) {
         Timber.e(exception, exception.message)
+        viewModel.onLoginFailed(exception)
       }
     }
   }

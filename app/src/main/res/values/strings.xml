@@ -2,6 +2,9 @@
   <string name="app_name">Monotweety</string>
 
   <string name="message_tweet_succeeded">Status successfully updated!</string>
+  <string name="message_login_succeeded">Successfully logged in as \@%s</string>
+
+  <string name="error_login_failed">Failed to login. Please try again later.</string>
   <string name="error_tweet_failed">Tweet failed.</string>
   <string name="error_tweet_failed_because_of_length">Content too long.</string>
 </resources>

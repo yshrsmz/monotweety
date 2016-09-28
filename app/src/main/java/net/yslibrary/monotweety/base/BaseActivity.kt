@@ -2,7 +2,9 @@ package net.yslibrary.monotweety.base
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.view.ViewGroup
 import com.bluelinelabs.conductor.*
 import net.yslibrary.monotweety.base.di.Names
 import net.yslibrary.rxeventbus.EventBus
@@ -44,4 +46,6 @@ abstract class BaseActivity : AppCompatActivity() {
     super.onActivityResult(requestCode, resultCode, data)
     router.onActivityResult(requestCode, resultCode, data)
   }
+
+  fun showSnackBar(message: String) = Snackbar.make(container.parent as ViewGroup, message, Snackbar.LENGTH_SHORT).show()
 }

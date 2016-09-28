@@ -1,6 +1,5 @@
 package net.yslibrary.monotweety.login
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -80,11 +79,6 @@ class LoginController : BaseController(), HasComponent<LoginComponent> {
         viewModel.onLoginFailed(exception)
       }
     }
-  }
-
-  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    super.onActivityResult(requestCode, resultCode, data)
-    bindings.loginButton.onActivityResult(requestCode, resultCode, data)
   }
 
   inner class Bindings(view: View) {

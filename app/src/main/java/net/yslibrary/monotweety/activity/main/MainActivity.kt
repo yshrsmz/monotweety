@@ -3,6 +3,7 @@ package net.yslibrary.monotweety.activity.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.widget.Toolbar
 import com.bluelinelabs.conductor.ChangeHandlerFrameLayout
 import com.bluelinelabs.conductor.Controller
 import net.yslibrary.monotweety.App
@@ -40,6 +41,9 @@ class MainActivity : BaseActivity(), ActionBarProvider, HasComponent<MainActivit
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+
+    val toolbar = findById<Toolbar>(R.id.toolbar)
+    setSupportActionBar(toolbar)
 
     component.inject(this)
   }

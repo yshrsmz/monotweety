@@ -12,6 +12,9 @@ import net.yslibrary.monotweety.base.HasComponent
  */
 class SettingController : ActionBarController(), HasComponent<SettingComponent> {
 
+  override val title: String?
+    get() = getString(R.string.setting_title)
+
   override val component: SettingComponent by lazy {
     getComponentProvider<SettingComponent.ComponentProvider>(activity)
         .settingComponent(SettingViewModule())

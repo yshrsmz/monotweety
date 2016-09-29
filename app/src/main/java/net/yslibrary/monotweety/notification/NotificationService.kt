@@ -8,14 +8,17 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Binder
+import android.os.Build
 import android.os.IBinder
 import android.support.annotation.StringDef
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.app.RemoteInput
+import android.support.v4.app.TaskStackBuilder
 import android.widget.Toast
 import net.yslibrary.monotweety.App
 import net.yslibrary.monotweety.R
+import net.yslibrary.monotweety.activity.launcher.LauncherActivity
 import net.yslibrary.monotweety.base.HasComponent
 import rx.Completable
 import rx.android.schedulers.AndroidSchedulers
@@ -34,7 +37,7 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
     const val KEY_COMMAND = "notification_command"
 
     const val COMMAND_SHOW_NOTIFICATION = "net.yslibrary.monotweety.notification.NotificationService.ShowNotification"
-    const val COMMAND_HIDE_NOTIFICATION = "net.yslibrary.monotweety.notification.NotificationService.HideNotification"
+    const val COMMAND_CLOSE_NOTIFICATION = "net.yslibrary.monotweety.notification.NotificationService.CloseNotification"
     const val COMMAND_DIRECT_TWEET = "net.yslibrary.monotweety.notification.NotificationService.DirectTweet"
     const val COMMAND_SHOW_TWEET_DIALOG = "net.yslibrary.monotweety.notification.NotificationService.ShowTweetDialog"
 
@@ -135,67 +138,84 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
           closeNotificationDrawer()
           showTweetSucceeded()
         }.addTo(subscriptions)
+
+    viewModel.closeNotification
+        .subscribe { stopSelf() }
+        .addTo(subscriptions)
+  }
+
+  fun buildNotification(): Notification {
+    val directTweetIntent = PendingIntent
+        .getBroadcast(applicationContext, 0, commandIntent(COMMAND_DIRECT_TWEET), PendingIntent.FLAG_UPDATE_CURRENT)
+    val openDialogIntent = PendingIntent
+        .getBroadcast(applicationContext, 1, commandIntent(COMMAND_SHOW_TWEET_DIALOG), PendingIntent.FLAG_UPDATE_CURRENT)
+    val closeIntent = PendingIntent
+        .getBroadcast(applicationContext, 2, commandIntent(COMMAND_CLOSE_NOTIFICATION), PendingIntent.FLAG_CANCEL_CURRENT)
+    val openSettingIntent = TaskStackBuilder.create(applicationContext)
+        .addParentStack(LauncherActivity::class.java)
+        .addNextIntent(LauncherActivity.callingIntent(applicationContext))
+        .getPendingIntent(3, PendingIntent.FLAG_UPDATE_CURRENT)
+
+    val remoteInput = RemoteInput.Builder(KEY_NOTIFICATION_TWEET_TEXT)
+        .setLabel(getString(R.string.label_whats_happening))
+        .build()
+
+    val directTweetAction = NotificationCompat.Action.Builder(
+        R.drawable.ic_send_black_24dp,
+        getString(R.string.label_tweet_now),
+        directTweetIntent)
+        .addRemoteInput(remoteInput)
+        .build()
+
+    val openDialogAction = NotificationCompat.Action.Builder(
+        R.drawable.ic_open_in_new_black_24dp,
+        getString(R.string.label_open_dialog),
+        openDialogIntent).build()
+
+    val closeAction = NotificationCompat.Action.Builder(
+        R.drawable.ic_close_black_24dp,
+        getString(R.string.label_close_notification),
+        closeIntent).build()
+
+    val settingAction = NotificationCompat.Action.Builder(
+        R.drawable.ic_settings_black_24dp,
+        getString(R.string.label_open_settings),
+        openSettingIntent).build()
+
+    val builder = NotificationCompat.Builder(applicationContext)
+        .setSmallIcon(R.drawable.ic_chat_bubble_outline_black_24dp)
+        .setContentTitle(getString(R.string.app_name))
+        .setContentText(getString(R.string.label_notification_content))
+        .setContentIntent(openDialogIntent)
+
+
+    // add remote input if and only if device sdk version is greater than Nougat
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+      builder.addAction(directTweetAction)
+    }
+
+    builder.addAction(settingAction)
+        .addAction(closeAction)
+
+    return builder.build()
   }
 
   fun showNotification(): Notification {
     Timber.d("show notification")
-    val label = "tweet"
-    val intent = commandIntent(COMMAND_DIRECT_TWEET)
-    val pendingIntent = PendingIntent
-        .getBroadcast(applicationContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-
-    val remoteInput = RemoteInput.Builder(KEY_NOTIFICATION_TWEET_TEXT)
-        .setLabel(label).build()
-
-    val notificationAction = NotificationCompat.Action.Builder(
-        R.drawable.ic_send_black_24dp,
-        "tweet_label",
-        pendingIntent)
-        .addRemoteInput(remoteInput)
-        .build()
-
-    val builder = NotificationCompat.Builder(applicationContext)
-        .setSmallIcon(R.drawable.ic_chat_bubble_outline_black_24dp)
-        .setContentTitle("Notification Title")
-        .setContentText("Notification Text")
-        .addAction(notificationAction)
-
-    val noti = builder.build()
+    val noti = buildNotification()
 
     noti.flags = NotificationCompat.FLAG_NO_CLEAR
 
     notificationManager.notify(R.id.tweet_notification, noti)
 
     return noti
-
   }
 
   fun updateNotification() {
     Timber.d("update notification")
-    val label = "tweet"
-    val intent = commandIntent(COMMAND_DIRECT_TWEET)
-    val pendingIntent = PendingIntent
-        .getBroadcast(applicationContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-
-    val remoteInput = RemoteInput.Builder(KEY_NOTIFICATION_TWEET_TEXT)
-        .setLabel(label).build()
-
-    val notificationAction = NotificationCompat.Action.Builder(
-        R.drawable.ic_send_black_24dp,
-        "tweet_label",
-        pendingIntent)
-        .addRemoteInput(remoteInput)
-        .build()
-
-    val builder = NotificationCompat.Builder(applicationContext)
-        .setSmallIcon(R.drawable.ic_chat_bubble_outline_black_24dp)
-        .setContentTitle("Notification Title")
-        .setContentText("Notification Text")
-        .addAction(notificationAction)
-
-    val noti = builder.build()
+    val noti = buildNotification()
 
     noti.flags = NotificationCompat.FLAG_NO_CLEAR
 
@@ -248,7 +268,7 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
   @Retention(AnnotationRetention.SOURCE)
   @StringDef(
       COMMAND_SHOW_NOTIFICATION,
-      COMMAND_HIDE_NOTIFICATION,
+      COMMAND_CLOSE_NOTIFICATION,
       COMMAND_DIRECT_TWEET,
       COMMAND_SHOW_TWEET_DIALOG)
   annotation class CommandType
@@ -265,7 +285,7 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
       command?.let {
         when (it) {
           COMMAND_SHOW_NOTIFICATION -> viewModel.onShowNotificationCommand()
-          COMMAND_HIDE_NOTIFICATION -> viewModel.onHideNotificationCommand()
+          COMMAND_CLOSE_NOTIFICATION -> viewModel.onCloseNotificationCommand()
           COMMAND_DIRECT_TWEET -> {
             val bundle = RemoteInput.getResultsFromIntent(intent)
             bundle?.getString(KEY_NOTIFICATION_TWEET_TEXT)?.let { text ->

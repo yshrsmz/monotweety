@@ -4,6 +4,14 @@
 
   <string name="setting_enable_notification" translatable="false">ON</string>
 
+  <string name="label_tweet_now">tweet</string>
+  <string name="label_open_dialog">open dialog</string>
+  <string name="label_open_settings">settings</string>
+  <string name="label_close_notification">close</string>
+  <string name="label_notification_content">Tap to open tweet dialog:)</string>
+
+  <string name="label_whats_happening">What\'s happening?</string>
+
   <string name="message_tweet_succeeded">Status successfully updated!</string>
   <string name="message_login_succeeded">Successfully logged in as \@%s</string>
 

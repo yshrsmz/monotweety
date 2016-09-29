@@ -9,6 +9,9 @@ import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.HasComponent
 import net.yslibrary.monotweety.base.findById
+import net.yslibrary.monotweety.notification.NotificationService
+import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * Created by yshrsmz on 2016/09/24.
@@ -24,6 +27,9 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
     getComponentProvider<SettingComponent.ComponentProvider>(activity)
         .settingComponent(SettingViewModule())
   }
+
+  @field:[Inject]
+  lateinit var viewModel: SettingViewModel
 
   override fun onCreate() {
     super.onCreate()
@@ -59,9 +65,27 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
   }
 
   fun setEvents() {
+    // make sure to get saved status before subscribes to view events
+    viewModel.notificationEnabledChanged
+        .bindToLifecycle()
+        .doOnNext { bindings.notificationSwitch.isChecked = it }
+        .subscribe {
+          Timber.d("notification enabled: $it")
+          if (it) startNotificationService() else stopNotificationService()
+        }
+
     bindings.notificationSwitch
         .checkedChanges()
         .bindToLifecycle()
+        .subscribe { viewModel.onNotificationEnabledChanged(it) }
+  }
+
+  fun startNotificationService() {
+    applicationContext.startService(NotificationService.callingIntent(activity))
+  }
+
+  fun stopNotificationService() {
+    applicationContext.stopService(NotificationService.callingIntent(activity))
   }
 
   inner class Bindings(view: View) {

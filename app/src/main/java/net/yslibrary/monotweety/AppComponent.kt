@@ -4,6 +4,7 @@ import dagger.Component
 import net.yslibrary.monotweety.base.di.AppScope
 import net.yslibrary.monotweety.data.DataModule
 import net.yslibrary.monotweety.login.domain.IsLoggedIn
+import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
 
 /**
  * Created by yshrsmz on 2016/09/24.
@@ -16,4 +17,6 @@ interface AppComponent : UserComponent.ComponentProvider {
   fun inject(app: App)
 
   fun isLoggedIn(): IsLoggedIn
+
+  fun notificationEnabledManager(): NotificationEnabledManager
 }

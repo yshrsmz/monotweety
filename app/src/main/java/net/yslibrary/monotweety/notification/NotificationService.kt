@@ -1,5 +1,6 @@
 package net.yslibrary.monotweety.notification
 
+import android.app.Notification
 import android.app.PendingIntent
 import android.app.Service
 import android.content.BroadcastReceiver
@@ -41,6 +42,12 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
       val intent = Intent()
       intent.action = ACTION
       intent.putExtra(KEY_COMMAND, command)
+
+      return intent
+    }
+
+    fun callingIntent(context: Context): Intent {
+      val intent = Intent(context, NotificationService::class.java)
 
       return intent
     }
@@ -90,12 +97,16 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
     Timber.d("onStartCommand: ${intent?.toString()}")
 
+    val notification = showNotification()
+    startForeground(R.id.tweet_notification, notification)
+
     return START_STICKY
   }
 
   override fun onDestroy() {
     super.onDestroy()
     Timber.d("onDestroy")
+    unregisterReceiver(commandReceiver)
     subscriptions.unsubscribe()
   }
 
@@ -126,7 +137,7 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
         }.addTo(subscriptions)
   }
 
-  fun showNotification() {
+  fun showNotification(): Notification {
     Timber.d("show notification")
     val label = "tweet"
     val intent = commandIntent(COMMAND_DIRECT_TWEET)
@@ -150,7 +161,14 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
         .setContentText("Notification Text")
         .addAction(notificationAction)
 
-    notificationManager.notify(R.id.tweet_notification, builder.build())
+    val noti = builder.build()
+
+    noti.flags = NotificationCompat.FLAG_NO_CLEAR
+
+    notificationManager.notify(R.id.tweet_notification, noti)
+
+    return noti
+
   }
 
   fun updateNotification() {
@@ -177,7 +195,11 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
         .setContentText("Notification Text")
         .addAction(notificationAction)
 
-    notificationManager.notify(R.id.tweet_notification, builder.build())
+    val noti = builder.build()
+
+    noti.flags = NotificationCompat.FLAG_NO_CLEAR
+
+    notificationManager.notify(R.id.tweet_notification, noti)
   }
 
   fun closeNotificationDrawer() {

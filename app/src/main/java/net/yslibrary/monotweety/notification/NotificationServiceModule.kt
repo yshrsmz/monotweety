@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import net.yslibrary.monotweety.base.di.ServiceScope
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
+import net.yslibrary.monotweety.status.domain.UpdateStatus
 
 /**
  * Created by yshrsmz on 2016/09/26.
@@ -13,7 +14,8 @@ class NotificationServiceModule(private val service: NotificationService) {
 
   @ServiceScope
   @Provides
-  fun provideNotificationServiceViewModel(notificationEnabledManager: NotificationEnabledManager): NotificationServiceViewModel {
-    return NotificationServiceViewModel(notificationEnabledManager)
+  fun provideNotificationServiceViewModel(notificationEnabledManager: NotificationEnabledManager,
+                                          updateStatus: UpdateStatus): NotificationServiceViewModel {
+    return NotificationServiceViewModel(notificationEnabledManager, updateStatus)
   }
 }

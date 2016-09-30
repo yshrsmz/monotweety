@@ -3,6 +3,7 @@ package net.yslibrary.monotweety.data
 import com.twitter.sdk.android.core.SessionManager
 import com.twitter.sdk.android.core.TwitterCore
 import com.twitter.sdk.android.core.TwitterSession
+import com.twitter.sdk.android.core.services.StatusesService
 import dagger.Module
 import dagger.Provides
 import net.yslibrary.monotweety.data.session.SessionModule

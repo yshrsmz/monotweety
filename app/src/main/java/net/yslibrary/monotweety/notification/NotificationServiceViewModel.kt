@@ -1,16 +1,17 @@
 package net.yslibrary.monotweety.notification
 
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
+import net.yslibrary.monotweety.status.domain.UpdateStatus
 import rx.Observable
 import rx.lang.kotlin.PublishSubject
 import timber.log.Timber
-import java.util.concurrent.TimeUnit
 
 
 /**
  * Created by yshrsmz on 2016/09/26.
  */
-class NotificationServiceViewModel(private val notificationEnabledManager: NotificationEnabledManager) {
+class NotificationServiceViewModel(private val notificationEnabledManager: NotificationEnabledManager,
+                                   private val updateStatus: UpdateStatus) {
 
   private val tweetableTextSubject = PublishSubject<String?>()
 
@@ -44,12 +45,13 @@ class NotificationServiceViewModel(private val notificationEnabledManager: Notif
 
   fun onDirectTweetCommand(text: String) {
     Timber.d("onDirectTweetCommand: $text")
-    Observable.interval(3, TimeUnit.SECONDS)
-        .first()
-        .subscribe {
+    updateStatus.execute(text)
+        .subscribe({
           Timber.d("tweet completed")
           updateCompletedSubject.onNext(Unit)
-        }
+        }, { throwable ->
+          Timber.e(throwable, throwable.message)
+        })
   }
 
   fun onShowTweetDialogCommand() {

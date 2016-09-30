@@ -167,11 +167,6 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
         .addRemoteInput(remoteInput)
         .build()
 
-    val openDialogAction = NotificationCompat.Action.Builder(
-        R.drawable.ic_open_in_new_black_24dp,
-        getString(R.string.label_open_dialog),
-        openDialogIntent).build()
-
     val closeAction = NotificationCompat.Action.Builder(
         R.drawable.ic_close_black_24dp,
         getString(R.string.label_close_notification),
@@ -212,7 +207,7 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
     return noti
   }
 
-  fun updateNotification() {
+  fun updateNotification(): Notification {
     Timber.d("update notification")
 
     val noti = buildNotification()
@@ -220,6 +215,8 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
     noti.flags = NotificationCompat.FLAG_NO_CLEAR
 
     notificationManager.notify(R.id.tweet_notification, noti)
+
+    return noti
   }
 
   fun closeNotificationDrawer() {

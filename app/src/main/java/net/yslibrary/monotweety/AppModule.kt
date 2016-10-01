@@ -4,6 +4,8 @@ import android.content.Context
 import android.support.v4.app.NotificationManagerCompat
 import dagger.Module
 import dagger.Provides
+import net.yslibrary.monotweety.base.Clock
+import net.yslibrary.monotweety.base.ClockImpl
 import net.yslibrary.monotweety.base.di.AppScope
 import net.yslibrary.monotweety.base.di.Names
 import javax.inject.Named
@@ -31,7 +33,14 @@ open class AppModule(private val context: Context) {
     return NotificationManagerCompat.from(context)
   }
 
+  @AppScope
+  @Provides
+  fun provideClock(): Clock {
+    return ClockImpl()
+  }
+
   interface Provider {
     fun notificationManager(): NotificationManagerCompat
+    fun clock(): Clock
   }
 }

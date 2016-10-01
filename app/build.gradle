@@ -73,6 +73,7 @@ dependencies {
   compile "com.android.support:recyclerview-v7:$support_lib_version"
   compile "com.android.support:design:$support_lib_version"
 
+  compile 'com.twitter:twitter-text:1.13.0'
   compile('com.twitter.sdk.android:twitter:2.0.1@aar') {
     transitive = true;
   }

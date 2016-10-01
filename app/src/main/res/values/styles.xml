@@ -17,4 +17,9 @@
     <item name="android:windowContentOverlay">@null</item>
   </style>
 
+  <style name="AppTheme.Dialog" parent="AppTheme">
+    <item name="android:windowIsTranslucent">true</item>
+    <item name="android:windowBackground">@color/transparentGray</item>
+  </style>
+
 </resources>

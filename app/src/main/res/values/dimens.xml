@@ -2,4 +2,9 @@
   <!-- Default screen margins, per the Android Design guidelines. -->
   <dimen name="activity_horizontal_margin">16dp</dimen>
   <dimen name="activity_vertical_margin">16dp</dimen>
+
+  <dimen name="match_parent">-2px</dimen>
+  <dimen name="wrap_content">-3px</dimen>
+
+  <dimen name="compose_dialog_width">@dimen/match_parent</dimen>
 </resources>

@@ -1,5 +1,6 @@
 package net.yslibrary.monotweety.notification
 
+import com.twitter.sdk.android.core.TwitterApiException
 import net.yslibrary.monotweety.data.status.OverlongStatusException
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
 import net.yslibrary.monotweety.status.domain.CheckStatusLength
@@ -17,25 +18,25 @@ class NotificationServiceViewModel(private val notificationEnabledManager: Notif
                                    private val checkStatusLength: CheckStatusLength,
                                    private val updateStatus: UpdateStatus) {
 
-  private val tweetableTextSubject = PublishSubject<String?>()
-
-  private val overlongTextSubject = PublishSubject<OverlongStatus>()
+  private val overlongStatusSubject = PublishSubject<OverlongStatus>()
 
   private val updateCompletedSubject = PublishSubject<Unit>()
 
   private val closeNotificationSubject = PublishSubject<Unit>()
 
-  val tweetableText: Observable<String?>
-    get() = tweetableTextSubject.asObservable()
+  private val errorSubject = PublishSubject<String>()
 
-  val overlongText: Observable<OverlongStatus>
-    get() = overlongTextSubject.asObservable()
+  val overlongStatus: Observable<OverlongStatus>
+    get() = overlongStatusSubject.asObservable()
 
   val updateCompleted: Observable<Unit>
     get() = updateCompletedSubject.asObservable()
 
   val closeNotification: Observable<Unit>
     get() = closeNotificationSubject.asObservable()
+
+  val error: Observable<String>
+    get() = errorSubject.asObservable()
 
   fun onShowNotificationCommand() {
     Timber.d("onShowNotificationCommand")
@@ -62,8 +63,16 @@ class NotificationServiceViewModel(private val notificationEnabledManager: Notif
           Timber.d("tweet succeeded!")
           updateCompletedSubject.onNext(Unit)
         }, {
-          if (it is OverlongStatusException) {
-            overlongTextSubject.onNext(OverlongStatus(it.status, it.length))
+          when (it) {
+            is OverlongStatusException -> {
+              overlongStatusSubject.onNext(OverlongStatus(it.status, it.length))
+            }
+            is TwitterApiException -> {
+              errorSubject.onNext(it.errorMessage)
+            }
+            else -> {
+              errorSubject.onNext(it.message)
+            }
           }
         })
   }

@@ -18,6 +18,7 @@ import android.support.v4.app.TaskStackBuilder
 import android.widget.Toast
 import net.yslibrary.monotweety.App
 import net.yslibrary.monotweety.R
+import net.yslibrary.monotweety.activity.compose.ComposeActivity
 import net.yslibrary.monotweety.activity.launcher.LauncherActivity
 import net.yslibrary.monotweety.base.HasComponent
 import rx.Completable
@@ -140,6 +141,19 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
   }
 
   fun setEvents() {
+    viewModel.error
+        .subscribe { showError(it) }
+        .addTo(subscriptions)
+
+    viewModel.overlongStatus
+        .subscribe {
+          closeNotificationDrawer()
+          showTweetFailedBecauseOfLength()
+          updateNotification()
+          showTweetDialog(it.status)
+        }
+        .addTo(subscriptions)
+
     viewModel.updateCompleted
         .subscribe {
           updateNotification()
@@ -155,10 +169,13 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
   fun buildNotification(): Notification {
     val directTweetIntent = PendingIntent
         .getBroadcast(applicationContext, 0, commandIntent(COMMAND_DIRECT_TWEET), PendingIntent.FLAG_UPDATE_CURRENT)
-    val openDialogIntent = PendingIntent
-        .getBroadcast(applicationContext, 1, commandIntent(COMMAND_SHOW_TWEET_DIALOG), PendingIntent.FLAG_UPDATE_CURRENT)
+    val openDialogIntent = TaskStackBuilder.create(applicationContext)
+        .addParentStack(ComposeActivity::class.java)
+        .addNextIntent(ComposeActivity.callingIntent(applicationContext))
+        .getPendingIntent(2, PendingIntent.FLAG_UPDATE_CURRENT)
     val closeIntent = PendingIntent
         .getBroadcast(applicationContext, 2, commandIntent(COMMAND_CLOSE_NOTIFICATION), PendingIntent.FLAG_CANCEL_CURRENT)
+
     val openSettingIntent = TaskStackBuilder.create(applicationContext)
         .addParentStack(LauncherActivity::class.java)
         .addNextIntent(LauncherActivity.callingIntent(applicationContext))
@@ -236,8 +253,8 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
     Timber.d("hide notification")
   }
 
-  fun showTweetDialog(text: String) {
-
+  fun showTweetDialog(status: String) {
+    startActivity(ComposeActivity.callingIntent(applicationContext, status))
   }
 
   fun showTweetSucceeded() {
@@ -254,13 +271,19 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
           .show()
     }.subscribeOn(AndroidSchedulers.mainThread())
         .subscribe()
-
   }
 
   fun showTweetFailedBecauseOfLength() {
     Completable.fromAction {
       Toast.makeText(applicationContext, getString(R.string.error_tweet_failed_because_of_length), Toast.LENGTH_SHORT)
           .show()
+    }.subscribeOn(AndroidSchedulers.mainThread())
+        .subscribe()
+  }
+
+  fun showError(message: String) {
+    Completable.fromAction {
+      Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
     }.subscribeOn(AndroidSchedulers.mainThread())
         .subscribe()
   }

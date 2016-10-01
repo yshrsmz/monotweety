@@ -14,6 +14,7 @@ import javax.inject.Named
 @Module
 class SettingModule {
 
+  @Named(Names.FOR_SETTING)
   @AppScope
   @Provides
   fun provideSettingPreferences(@Named(Names.FOR_APP) context: Context): RxSharedPreferences {
@@ -23,7 +24,7 @@ class SettingModule {
 
   @AppScope
   @Provides
-  fun provideSettingDataManager(prefs: RxSharedPreferences): SettingDataManager {
+  fun provideSettingDataManager(@Named(Names.FOR_SETTING) prefs: RxSharedPreferences): SettingDataManager {
     return SettingDataManagerImpl(prefs)
   }
 

@@ -4,6 +4,7 @@ import dagger.Subcomponent
 import net.yslibrary.monotweety.base.di.UserScope
 import net.yslibrary.monotweety.data.UserDataModule
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
+import net.yslibrary.monotweety.status.domain.CheckStatusLength
 import net.yslibrary.monotweety.status.domain.UpdateStatus
 
 /**
@@ -16,6 +17,8 @@ import net.yslibrary.monotweety.status.domain.UpdateStatus
 interface UserComponent : AppModule.Provider {
 
   fun notificationEnabledManager(): NotificationEnabledManager
+
+  fun checkStatusLength(): CheckStatusLength
 
   fun updateStatus(): UpdateStatus
 

@@ -2,6 +2,8 @@ package net.yslibrary.monotweety.activity.compose
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
+import android.support.v7.widget.Toolbar
 import com.bluelinelabs.conductor.ChangeHandlerFrameLayout
 import com.bluelinelabs.conductor.Controller
 import net.yslibrary.monotweety.R
@@ -38,4 +40,10 @@ class ComposeActivity : BaseActivity(), ActionBarProvider {
   override val rootController: Controller
     get() = ComposeStatusController(intent.getStringExtra(KEY_STATUS))
 
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+
+    val toolbar = findById<Toolbar>(R.id.toolbar)
+    setSupportActionBar(toolbar)
+  }
 }

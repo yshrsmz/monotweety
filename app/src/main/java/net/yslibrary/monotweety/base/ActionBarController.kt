@@ -13,25 +13,25 @@ abstract class ActionBarController : BaseController() {
 
   open val shouldShowActionBar: Boolean = true
 
-  fun getActionBar(): ActionBar? {
-    val actionBarProvider = activity as ActionBarProvider?
-    return actionBarProvider?.let { actionBarProvider.getSupportActionBar() }
-  }
+  val actionBar: ActionBar?
+    get() {
+      val actionBarProvider = activity as ActionBarProvider?
+      return actionBarProvider?.let { actionBarProvider.getSupportActionBar() }
+    }
 
   override fun onAttach(view: View) {
     if (shouldShowActionBar) {
-      getActionBar()?.show()
+      actionBar?.show()
     } else {
-      getActionBar()?.hide()
+      actionBar?.hide()
     }
     setTitle()
     super.onAttach(view)
   }
 
   fun setTitle() {
-    val actionBar = getActionBar()
-    if (actionBar != null && title != null) {
-      actionBar.title = title
+    if (title != null) {
+      actionBar?.title = title
     }
   }
 }

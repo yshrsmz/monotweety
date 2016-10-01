@@ -109,7 +109,15 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
   override fun onDestroy() {
     super.onDestroy()
     Timber.d("onDestroy")
-    unregisterReceiver(commandReceiver)
+
+    try {
+      unregisterReceiver(commandReceiver)
+    } catch (e: Exception) {
+      // suppress exception
+      // http://stackoverflow.com/questions/12421449/android-broadcastreceiver-unregisterreceiver-issue-not-registered#answer-31276205
+      // https://github.com/yshrsmz/omnitweety-android/issues/22
+    }
+
     subscriptions.unsubscribe()
   }
 

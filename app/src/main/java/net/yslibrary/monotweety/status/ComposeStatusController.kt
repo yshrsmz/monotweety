@@ -9,7 +9,6 @@ import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.HasComponent
 import net.yslibrary.monotweety.base.findById
-import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.lang.kotlin.PublishSubject
 import timber.log.Timber
@@ -27,7 +26,7 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
 
   override val component: ComposeStatusComponent by lazy {
     getComponentProvider<ComposeStatusComponent.ComponentProvider>(activity)
-        .composeStatusComponent(ComposeStatusViewModule())
+        .composeStatusComponent(ComposeStatusViewModule(status))
   }
 
   lateinit var bindings: Bindings
@@ -59,10 +58,20 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
   }
 
   fun setEvents() {
-    val textChanges = bindings.statusInput.textChanges()
+    // fill initial status string
+    viewModel.status
+        .first()
+        .filter { it.isNotBlank() }
         .bindToLifecycle()
-        .map { it.toString() }
-        .doOnNext { viewModel.onStatusUpdated(it) }
+        .subscribe {
+          bindings.statusInput.setText(it, TextView.BufferType.EDITABLE)
+        }
+
+    // reset EditText
+    viewModel.statusUpdated
+        .bindToLifecycle()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe { bindings.statusInput.setText("", TextView.BufferType.EDITABLE) }
 
     viewModel.isSendableStatus
         .bindToLifecycle()
@@ -74,12 +83,13 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe { updateStatusCounter(it.valid, it.length, it.maxLength) }
 
-    Observable.combineLatest(
-        textChanges,
-        sendButtonClicks,
-        { status, aUnit -> status })
+    sendButtonClicks.bindToLifecycle()
+        .subscribe { viewModel.onSendStatus() }
+
+    bindings.statusInput.textChanges()
         .bindToLifecycle()
-        .subscribe { viewModel.onSendStatus(it) }
+        .map { it.toString() }
+        .subscribe { viewModel.onStatusUpdated(it) }
   }
 
   fun initToolbar() {

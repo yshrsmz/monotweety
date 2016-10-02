@@ -5,7 +5,7 @@
 
   <item
       android:id="@+id/action_send_tweet"
-      android:icon="@drawable/ic_send_white_24dp"
+      android:icon="@drawable/ic_send_white"
       android:title="@string/action_send_tweet"
       app:showAsAction="always"
       />

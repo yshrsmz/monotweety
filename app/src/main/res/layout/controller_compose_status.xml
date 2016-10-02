@@ -2,6 +2,7 @@
 
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="16dp">
@@ -16,11 +17,22 @@
         android:layout_height="wrap_content">
 
       <android.support.design.widget.TextInputEditText
-          android:id="@+id/status_text"
+          android:id="@+id/status_input"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:hint="@string/label_whats_happening"/>
     </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:id="@+id/status_counter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|end"
+        android:maxLines="1"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        tools:text="0/140"/>
 
   </LinearLayout>
 </ScrollView>

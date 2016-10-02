@@ -6,16 +6,19 @@ import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import com.bluelinelabs.conductor.ChangeHandlerFrameLayout
 import com.bluelinelabs.conductor.Controller
+import net.yslibrary.monotweety.App
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.activity.ActionBarProvider
+import net.yslibrary.monotweety.activity.ActivityModule
 import net.yslibrary.monotweety.base.BaseActivity
+import net.yslibrary.monotweety.base.HasComponent
 import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.status.ComposeStatusController
 
 /**
  * Created by yshrsmz on 2016/10/01.
  */
-class ComposeActivity : BaseActivity(), ActionBarProvider {
+class ComposeActivity : BaseActivity(), ActionBarProvider, HasComponent<ComposeActivityComponent> {
 
   companion object {
     const val KEY_STATUS = "key_status"
@@ -40,10 +43,19 @@ class ComposeActivity : BaseActivity(), ActionBarProvider {
   override val rootController: Controller
     get() = ComposeStatusController(intent.getStringExtra(KEY_STATUS))
 
+  override val component: ComposeActivityComponent by lazy {
+    DaggerComposeActivityComponent.builder()
+        .activityModule(ActivityModule(this))
+        .userComponent(App.userComponent(this))
+        .build()
+  }
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
     val toolbar = findById<Toolbar>(R.id.toolbar)
     setSupportActionBar(toolbar)
+
+    component.inject(this)
   }
 }

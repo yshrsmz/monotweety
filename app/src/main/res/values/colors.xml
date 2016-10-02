@@ -4,6 +4,13 @@
   <color name="colorPrimaryDark">#303F9F</color>
   <color name="colorAccent">#FF4081</color>
 
+  <color name="colorTextIcon">#212121</color>
+  <color name="colorTextPrimary">#212121</color>
+  <color name="colorTextSecondary">#727272</color>
+  <color name="colorDivider">#b6b6b6</color>
+
 
   <color name="transparentGray">#1e000000</color>
+
+  <color name="red">#f44336</color>
 </resources>

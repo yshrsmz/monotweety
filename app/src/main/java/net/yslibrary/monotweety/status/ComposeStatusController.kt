@@ -2,8 +2,10 @@ package net.yslibrary.monotweety.status
 
 import android.support.design.widget.TextInputEditText
 import android.support.v4.content.ContextCompat
+import android.support.v7.widget.SwitchCompat
 import android.view.*
 import android.widget.TextView
+import com.jakewharton.rxbinding.widget.checkedChanges
 import com.jakewharton.rxbinding.widget.textChanges
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.ActionBarController
@@ -90,6 +92,14 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
         .bindToLifecycle()
         .map { it.toString() }
         .subscribe { viewModel.onStatusUpdated(it) }
+
+    bindings.keepDialogSwitch.checkedChanges()
+        .bindToLifecycle()
+        .subscribe { viewModel.onKeepDialogChanged(it) }
+
+    bindings.enableThreadSwitch.checkedChanges()
+        .bindToLifecycle()
+        .subscribe { viewModel.onEnableThreadChanged(it) }
   }
 
   fun initToolbar() {
@@ -116,7 +126,7 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
 
     viewModel.isSendableStatus
         .first()
-        .observeOn(AndroidSchedulers.mainThread())
+        .toBlocking()
         .subscribe { menu.findItem(R.id.action_send_tweet)?.isEnabled = it }
   }
 
@@ -144,5 +154,7 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
   inner class Bindings(view: View) {
     val statusInput = view.findById<TextInputEditText>(R.id.status_input)
     val statusCounter = view.findById<TextView>(R.id.status_counter)
+    val keepDialogSwitch = view.findById<SwitchCompat>(R.id.keep_dialog)
+    val enableThreadSwitch = view.findById<SwitchCompat>(R.id.enable_thread)
   }
 }

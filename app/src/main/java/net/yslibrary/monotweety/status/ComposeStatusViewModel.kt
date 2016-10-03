@@ -68,6 +68,14 @@ class ComposeStatusViewModel(status: String,
         .subscribe()
   }
 
+  fun onKeepDialogChanged(keep: Boolean) {
+
+  }
+
+  fun onEnableThreadChanged(enable: Boolean) {
+
+  }
+
   fun onUpdateSendButton() {
 
   }

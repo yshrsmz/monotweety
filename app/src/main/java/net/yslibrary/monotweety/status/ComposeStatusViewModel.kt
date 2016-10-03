@@ -1,5 +1,6 @@
 package net.yslibrary.monotweety.status
 
+import net.yslibrary.monotweety.setting.domain.AlwaysKeepDialogOpenedManager
 import net.yslibrary.monotweety.status.domain.CheckStatusLength
 import net.yslibrary.monotweety.status.domain.GetPreviousStatus
 import net.yslibrary.monotweety.status.domain.UpdateStatus
@@ -15,7 +16,8 @@ import timber.log.Timber
 class ComposeStatusViewModel(status: String,
                              private val checkStatusLength: CheckStatusLength,
                              private val updateStatus: UpdateStatus,
-                             private val getPreviousStatus: GetPreviousStatus) {
+                             private val getPreviousStatus: GetPreviousStatus,
+                             private val alwaysKeepDialogOpenedManager: AlwaysKeepDialogOpenedManager) {
 
   private val isSendableStatusSubject = BehaviorSubject<Boolean>(false)
 
@@ -24,6 +26,10 @@ class ComposeStatusViewModel(status: String,
   private val statusSubject = BehaviorSubject<String>(status)
 
   private val statusUpdatedSubject = PublishSubject<Unit>()
+
+  private val keepDialogOpenedSubject = BehaviorSubject<Boolean>()
+
+  private val tweetAsThreadSubject = BehaviorSubject<Boolean>(false)
 
   val isSendableStatus: Observable<Boolean>
     get() = isSendableStatusSubject.asObservable()
@@ -37,9 +43,18 @@ class ComposeStatusViewModel(status: String,
   val statusUpdated: Observable<Unit>
     get() = statusUpdatedSubject.asObservable()
 
+  val keepDialogOpened: Observable<Boolean>
+    get() = keepDialogOpenedSubject.asObservable()
+
+  val tweetAsThread: Observable<Boolean>
+    get() = tweetAsThreadSubject.asObservable()
+
   init {
     getPreviousStatus.execute()
         .subscribe { Timber.d("previous status: ${it?.id}") }
+
+    alwaysKeepDialogOpenedManager.get().first()
+        .subscribe { keepDialogOpenedSubject.onNext(it) }
   }
 
   fun onStatusUpdated(status: String) {
@@ -68,7 +83,7 @@ class ComposeStatusViewModel(status: String,
         .subscribe()
   }
 
-  fun onKeepDialogChanged(keep: Boolean) {
+  fun onKeepDialogOpenedChanged(keep: Boolean) {
 
   }
 

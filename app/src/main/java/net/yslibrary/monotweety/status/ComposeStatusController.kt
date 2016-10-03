@@ -69,6 +69,11 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
           bindings.statusInput.setText(it, TextView.BufferType.EDITABLE)
         }
 
+    // load initial state
+    viewModel.keepDialogOpened.first()
+        .bindToLifecycle()
+        .subscribe { bindings.keepDialogOpenedSwitch.isChecked = it }
+
     // reset EditText
     viewModel.statusUpdated
         .bindToLifecycle()
@@ -93,9 +98,9 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
         .map { it.toString() }
         .subscribe { viewModel.onStatusUpdated(it) }
 
-    bindings.keepDialogSwitch.checkedChanges()
+    bindings.keepDialogOpenedSwitch.checkedChanges()
         .bindToLifecycle()
-        .subscribe { viewModel.onKeepDialogChanged(it) }
+        .subscribe { viewModel.onKeepDialogOpenedChanged(it) }
 
     bindings.enableThreadSwitch.checkedChanges()
         .bindToLifecycle()
@@ -154,7 +159,7 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
   inner class Bindings(view: View) {
     val statusInput = view.findById<TextInputEditText>(R.id.status_input)
     val statusCounter = view.findById<TextView>(R.id.status_counter)
-    val keepDialogSwitch = view.findById<SwitchCompat>(R.id.keep_dialog)
+    val keepDialogOpenedSwitch = view.findById<SwitchCompat>(R.id.keep_dialog)
     val enableThreadSwitch = view.findById<SwitchCompat>(R.id.enable_thread)
   }
 }

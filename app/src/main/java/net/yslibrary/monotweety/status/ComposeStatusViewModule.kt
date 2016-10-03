@@ -3,6 +3,7 @@ package net.yslibrary.monotweety.status
 import dagger.Module
 import dagger.Provides
 import net.yslibrary.monotweety.base.di.ControllerScope
+import net.yslibrary.monotweety.setting.domain.AlwaysKeepDialogOpenedManager
 import net.yslibrary.monotweety.status.domain.CheckStatusLength
 import net.yslibrary.monotweety.status.domain.GetPreviousStatus
 import net.yslibrary.monotweety.status.domain.UpdateStatus
@@ -17,11 +18,13 @@ class ComposeStatusViewModule(private val status: String?) {
   @Provides
   fun provideComposeStatusViewModel(checkStatusLength: CheckStatusLength,
                                     updateStatus: UpdateStatus,
-                                    getPreviousStatus: GetPreviousStatus): ComposeStatusViewModel {
+                                    getPreviousStatus: GetPreviousStatus,
+                                    alwaysKeepDialogOpenedManager: AlwaysKeepDialogOpenedManager): ComposeStatusViewModel {
     val _status: String = if (status.isNullOrBlank()) "" else status!!
     return ComposeStatusViewModel(_status,
         checkStatusLength,
         updateStatus,
-        getPreviousStatus)
+        getPreviousStatus,
+        alwaysKeepDialogOpenedManager)
   }
 }

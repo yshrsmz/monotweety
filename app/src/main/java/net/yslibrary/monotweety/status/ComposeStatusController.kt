@@ -70,9 +70,13 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
         }
 
     // load initial state
-    viewModel.keepDialogOpened.first()
+    viewModel.keepDialogOpened
         .bindToLifecycle()
-        .subscribe { bindings.keepDialogOpenedSwitch.isChecked = it }
+        .subscribe {
+          if (bindings.keepDialogOpenedSwitch.isChecked != it) {
+            bindings.keepDialogOpenedSwitch.isChecked = it
+          }
+        }
 
     // reset EditText
     viewModel.statusUpdated

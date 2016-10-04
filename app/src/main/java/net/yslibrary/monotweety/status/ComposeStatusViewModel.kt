@@ -1,5 +1,6 @@
 package net.yslibrary.monotweety.status
 
+import com.twitter.sdk.android.core.models.Tweet
 import net.yslibrary.monotweety.setting.domain.AlwaysKeepDialogOpenedManager
 import net.yslibrary.monotweety.status.domain.CheckStatusLength
 import net.yslibrary.monotweety.status.domain.GetPreviousStatus
@@ -51,7 +52,9 @@ class ComposeStatusViewModel(status: String,
 
   init {
     getPreviousStatus.execute()
-        .subscribe { Timber.d("previous status: ${it?.id}") }
+        .subscribe {
+          Timber.d("previous status: ${it?.id}")
+        }
 
     alwaysKeepDialogOpenedManager.get().first()
         .subscribe { keepDialogOpenedSubject.onNext(it) }
@@ -70,12 +73,14 @@ class ComposeStatusViewModel(status: String,
   fun onSendStatus() {
     Observable.combineLatest(
         isSendableStatus.filter { it },
+        tweetAsThread,
+        getPreviousStatus.execute().first(),
         status,
-        { sendable, status -> status }).first().toSingle()
-        .flatMapCompletable { status ->
-          getPreviousStatus.execute().first().toSingle()
-              .flatMapCompletable { updateStatus.execute(status, it?.id) }
-        }
+        { sendable, asThread, previousTweet, status ->
+          Pair<Tweet?, String>(if (asThread) previousTweet else null, status)
+        })
+        .first().toSingle()
+        .flatMapCompletable { updateStatus.execute(it.second, it.first?.id) }
         .doOnCompleted {
           Timber.d("status updated - complete")
           statusUpdatedSubject.onNext(Unit)
@@ -84,11 +89,14 @@ class ComposeStatusViewModel(status: String,
   }
 
   fun onKeepDialogOpenedChanged(keep: Boolean) {
-
+    keepDialogOpenedSubject.onNext(keep)
   }
 
   fun onEnableThreadChanged(enable: Boolean) {
-
+    tweetAsThreadSubject.onNext(enable)
+    if (enable) {
+      keepDialogOpenedSubject.onNext(true)
+    }
   }
 
   fun onUpdateSendButton() {

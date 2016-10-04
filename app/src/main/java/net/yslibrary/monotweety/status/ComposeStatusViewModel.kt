@@ -32,6 +32,8 @@ class ComposeStatusViewModel(status: String,
 
   private val tweetAsThreadSubject = BehaviorSubject<Boolean>(false)
 
+  private val progressEventsSubject = PublishSubject<ProgressEvent>()
+
   val isSendableStatus: Observable<Boolean>
     get() = isSendableStatusSubject.asObservable()
 
@@ -49,6 +51,9 @@ class ComposeStatusViewModel(status: String,
 
   val tweetAsThread: Observable<Boolean>
     get() = tweetAsThreadSubject.asObservable()
+
+  val progressEvents: Observable<ProgressEvent>
+    get() = progressEventsSubject.asObservable()
 
   init {
     getPreviousStatus.execute()
@@ -80,11 +85,13 @@ class ComposeStatusViewModel(status: String,
           Pair<Tweet?, String>(if (asThread) previousTweet else null, status)
         })
         .first().toSingle()
+        .doOnSuccess { progressEventsSubject.onNext(ProgressEvent.IN_PROGRESS) }
         .flatMapCompletable { updateStatus.execute(it.second, it.first?.id) }
         .doOnCompleted {
           Timber.d("status updated - complete")
           statusUpdatedSubject.onNext(Unit)
         }
+        .doOnTerminate { progressEventsSubject.onNext(ProgressEvent.FINISHED) }
         .subscribe()
   }
 
@@ -108,4 +115,9 @@ class ComposeStatusViewModel(status: String,
   }
 
   data class StatusLength(val valid: Boolean, val length: Int, val maxLength: Int = 140)
+
+  enum class ProgressEvent {
+    IN_PROGRESS,
+    FINISHED
+  }
 }

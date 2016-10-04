@@ -11,6 +11,7 @@
 
 
   <color name="transparentGray">#1e000000</color>
+  <color name="overlayGray">#88000000</color>
 
   <color name="red">#f44336</color>
 </resources>

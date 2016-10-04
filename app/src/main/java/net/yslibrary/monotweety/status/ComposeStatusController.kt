@@ -4,12 +4,16 @@ import android.support.design.widget.TextInputEditText
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.SwitchCompat
 import android.view.*
+import android.widget.FrameLayout
 import android.widget.TextView
+import com.bluelinelabs.conductor.RouterTransaction
+import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
 import com.jakewharton.rxbinding.widget.checkedChanges
 import com.jakewharton.rxbinding.widget.textChanges
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.HasComponent
+import net.yslibrary.monotweety.base.ProgressController
 import net.yslibrary.monotweety.base.findById
 import rx.android.schedulers.AndroidSchedulers
 import rx.lang.kotlin.PublishSubject
@@ -94,6 +98,25 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe { updateStatusCounter(it.valid, it.length, it.maxLength) }
 
+    viewModel.progressEvents
+        .bindToLifecycle()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe {
+          when (it) {
+            ComposeStatusViewModel.ProgressEvent.IN_PROGRESS -> {
+              getChildRouter(bindings.overlayRoot, null)
+                  .setPopsLastView(true)
+                  .setRoot(RouterTransaction.with(ProgressController())
+                      .popChangeHandler(FadeChangeHandler())
+                      .pushChangeHandler(FadeChangeHandler()))
+            }
+            ComposeStatusViewModel.ProgressEvent.FINISHED -> {
+              getChildRouter(bindings.overlayRoot, null)
+                  .popCurrentController()
+            }
+          }
+        }
+
     sendButtonClicks.bindToLifecycle()
         .subscribe { viewModel.onSendStatus() }
 
@@ -165,5 +188,6 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
     val statusCounter = view.findById<TextView>(R.id.status_counter)
     val keepDialogOpenedSwitch = view.findById<SwitchCompat>(R.id.keep_dialog)
     val enableThreadSwitch = view.findById<SwitchCompat>(R.id.enable_thread)
+    val overlayRoot = view.findById<FrameLayout>(R.id.overlay_root)
   }
 }

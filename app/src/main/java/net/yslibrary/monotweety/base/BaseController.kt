@@ -47,6 +47,8 @@ abstract class BaseController : RxController() {
 
   fun toast(message: String): Toast = Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT)
 
+  fun toastLong(message: String): Toast = Toast.makeText(applicationContext, message, Toast.LENGTH_LONG)
+
   fun getString(@StringRes id: Int): String = applicationContext.getString(id)
 
   fun getString(@StringRes id: Int, vararg formatArgs: Any): String = applicationContext.getString(id, *formatArgs)

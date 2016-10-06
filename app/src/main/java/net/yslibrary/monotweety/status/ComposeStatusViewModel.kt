@@ -37,6 +37,8 @@ class ComposeStatusViewModel(status: String,
 
   private val messagesSubject = PublishSubject<String>()
 
+  private val allowCloseViewSubject = BehaviorSubject<Boolean>(false)
+
   val isSendableStatus: Observable<Boolean>
     get() = isSendableStatusSubject.asObservable()
 
@@ -61,12 +63,16 @@ class ComposeStatusViewModel(status: String,
   val messages: Observable<String>
     get() = messagesSubject.asObservable()
 
+  val allowCloseView: Observable<Boolean>
+    get() = allowCloseViewSubject.asObservable()
+
   val canClose: Boolean
     get() {
       val isSending = progressEventsSubject.value == ProgressEvent.IN_PROGRESS
       val hasContent = statusLengthSubject.value.length > 0
+      val allowCloseView = allowCloseViewSubject.value
 
-      return !isSending && !hasContent
+      return !isSending && (!hasContent || allowCloseView)
     }
 
   init {
@@ -127,8 +133,8 @@ class ComposeStatusViewModel(status: String,
     }
   }
 
-  fun onUpdateSendButton() {
-
+  fun onConfirmCloseView(allowCloseView: Boolean) {
+    allowCloseViewSubject.onNext(allowCloseView)
   }
 
   data class StatusLength(val valid: Boolean, val length: Int, val maxLength: Int = 140)

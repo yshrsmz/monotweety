@@ -2,6 +2,7 @@ package net.yslibrary.monotweety.status
 
 import android.support.design.widget.TextInputEditText
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.SwitchCompat
 import android.view.*
 import android.widget.FrameLayout
@@ -74,7 +75,6 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
           bindings.statusInput.setText(it, TextView.BufferType.EDITABLE)
         }
 
-    // load initial state
     viewModel.keepDialogOpened
         .bindToLifecycle()
         .subscribe {
@@ -88,6 +88,12 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
         .bindToLifecycle()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe { bindings.statusInput.setText("", TextView.BufferType.EDITABLE) }
+
+    viewModel.statusUpdated
+        .switchMap { viewModel.keepDialogOpened.first() }
+        .filter { !it }
+        .bindToLifecycle()
+        .subscribe { activity?.finish() }
 
     viewModel.isSendableStatus
         .bindToLifecycle()
@@ -187,7 +193,29 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
       return super.handleBack()
     }
 
+    showConfirmCloseDialog()
+
     return true
+  }
+
+  fun showConfirmCloseDialog() {
+
+    AlertDialog.Builder(activity)
+        .setTitle(R.string.title_cancel_confirm)
+        .setMessage(R.string.label_cancel_confirm)
+        .setCancelable(true)
+        .setNegativeButton(
+            R.string.label_no,
+            { dialog, which ->
+              viewModel.onConfirmCloseView(allowCloseView = false)
+              dialog.dismiss()
+            })
+        .setPositiveButton(
+            R.string.label_quit,
+            { dialog, which ->
+              viewModel.onConfirmCloseView(allowCloseView = true)
+              activity.onBackPressed()
+            }).show()
   }
 
   fun showLoadingState() {

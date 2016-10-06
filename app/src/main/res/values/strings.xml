@@ -14,6 +14,11 @@
   <string name="label_keep_dialog">Keep dialog opened</string>
   <string name="label_enable_thread">Tweet as a thread</string>
 
+  <string name="title_cancel_confirm">Confirm</string>
+  <string name="label_cancel_confirm">Quit without tweeting?</string>
+  <string name="label_quit">Quit</string>
+  <string name="label_no">No</string>
+
   <string name="action_send_tweet">tweet</string>
 
   <string name="message_tweet_succeeded">Status successfully updated!</string>

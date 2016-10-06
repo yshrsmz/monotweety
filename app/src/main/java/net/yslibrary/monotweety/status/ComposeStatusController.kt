@@ -89,9 +89,7 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe { bindings.statusInput.setText("", TextView.BufferType.EDITABLE) }
 
-    viewModel.statusUpdated
-        .switchMap { viewModel.keepDialogOpened.first() }
-        .filter { !it }
+    viewModel.closeViewRequests
         .bindToLifecycle()
         .subscribe { activity?.finish() }
 

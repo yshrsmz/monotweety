@@ -66,6 +66,14 @@ class ComposeStatusViewModel(status: String,
   val allowCloseView: Observable<Boolean>
     get() = allowCloseViewSubject.asObservable()
 
+  val closeViewRequests: Observable<Unit>
+    get() {
+      return statusUpdatedSubject
+          .switchMap { keepDialogOpenedSubject.first() }
+          .filter { !it }
+          .map { Unit }
+    }
+
   val canClose: Boolean
     get() {
       val isSending = progressEventsSubject.value == ProgressEvent.IN_PROGRESS

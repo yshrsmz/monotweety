@@ -1,5 +1,6 @@
 package net.yslibrary.monotweety.status
 
+import com.twitter.sdk.android.core.TwitterApiException
 import com.twitter.sdk.android.core.models.Tweet
 import net.yslibrary.monotweety.setting.domain.AlwaysKeepDialogOpenedManager
 import net.yslibrary.monotweety.status.domain.CheckStatusLength
@@ -32,7 +33,9 @@ class ComposeStatusViewModel(status: String,
 
   private val tweetAsThreadSubject = BehaviorSubject<Boolean>(false)
 
-  private val progressEventsSubject = PublishSubject<ProgressEvent>()
+  private val progressEventsSubject = BehaviorSubject<ProgressEvent>(ProgressEvent.FINISHED)
+
+  private val messagesSubject = PublishSubject<String>()
 
   val isSendableStatus: Observable<Boolean>
     get() = isSendableStatusSubject.asObservable()
@@ -54,6 +57,17 @@ class ComposeStatusViewModel(status: String,
 
   val progressEvents: Observable<ProgressEvent>
     get() = progressEventsSubject.asObservable()
+
+  val messages: Observable<String>
+    get() = messagesSubject.asObservable()
+
+  val canClose: Boolean
+    get() {
+      val isSending = progressEventsSubject.value == ProgressEvent.IN_PROGRESS
+      val hasContent = statusLengthSubject.value.length > 0
+
+      return !isSending && !hasContent
+    }
 
   init {
     getPreviousStatus.execute()
@@ -92,7 +106,14 @@ class ComposeStatusViewModel(status: String,
           statusUpdatedSubject.onNext(Unit)
         }
         .doOnTerminate { progressEventsSubject.onNext(ProgressEvent.FINISHED) }
-        .subscribe()
+        .subscribe({}, { t ->
+          Timber.e(t, t.message)
+          if (t is TwitterApiException && t.errorMessage != null) {
+            messagesSubject.onNext(t.errorMessage)
+          } else {
+            messagesSubject.onNext("Something wrong happened")
+          }
+        })
   }
 
   fun onKeepDialogOpenedChanged(keep: Boolean) {
@@ -107,10 +128,6 @@ class ComposeStatusViewModel(status: String,
   }
 
   fun onUpdateSendButton() {
-
-  }
-
-  fun onBackPressed() {
 
   }
 

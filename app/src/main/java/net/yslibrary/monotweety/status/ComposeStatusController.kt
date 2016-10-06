@@ -15,6 +15,7 @@ import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.HasComponent
 import net.yslibrary.monotweety.base.ProgressController
 import net.yslibrary.monotweety.base.findById
+import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.lang.kotlin.PublishSubject
 import timber.log.Timber
@@ -99,23 +100,20 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
         .subscribe { updateStatusCounter(it.valid, it.length, it.maxLength) }
 
     viewModel.progressEvents
+        .skip(1)
         .bindToLifecycle()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe {
           when (it) {
-            ComposeStatusViewModel.ProgressEvent.IN_PROGRESS -> {
-              getChildRouter(bindings.overlayRoot, null)
-                  .setPopsLastView(true)
-                  .setRoot(RouterTransaction.with(ProgressController())
-                      .popChangeHandler(FadeChangeHandler())
-                      .pushChangeHandler(FadeChangeHandler()))
-            }
-            ComposeStatusViewModel.ProgressEvent.FINISHED -> {
-              getChildRouter(bindings.overlayRoot, null)
-                  .popCurrentController()
-            }
+            ComposeStatusViewModel.ProgressEvent.IN_PROGRESS -> showLoadingState()
+            ComposeStatusViewModel.ProgressEvent.FINISHED -> hideLoadingState()
           }
         }
+
+    viewModel.messages
+        .bindToLifecycle()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe { toastLong(it).show() }
 
     sendButtonClicks.bindToLifecycle()
         .subscribe { viewModel.onSendStatus() }
@@ -156,10 +154,15 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
   override fun onPrepareOptionsMenu(menu: Menu) {
     super.onPrepareOptionsMenu(menu)
 
-    viewModel.isSendableStatus
+    Observable.zip(
+        viewModel.isSendableStatus,
+        viewModel.progressEvents,
+        { sendable, progress -> Pair(sendable, progress) })
         .first()
         .toBlocking()
-        .subscribe { menu.findItem(R.id.action_send_tweet)?.isEnabled = it }
+        .subscribe {
+          menu.findItem(R.id.action_send_tweet)?.isEnabled = it.first && it.second == ComposeStatusViewModel.ProgressEvent.FINISHED
+        }
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -180,7 +183,30 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
 
   override fun handleBack(): Boolean {
     Timber.d("handleBack")
-    return super.handleBack()
+    if (viewModel.canClose) {
+      return super.handleBack()
+    }
+
+    return true
+  }
+
+  fun showLoadingState() {
+    activity.invalidateOptionsMenu()
+    getChildRouter(bindings.overlayRoot, null)
+        .setPopsLastView(true)
+        .setRoot(RouterTransaction.with(ProgressController())
+            .popChangeHandler(FadeChangeHandler())
+            .pushChangeHandler(FadeChangeHandler()))
+  }
+
+  fun hideLoadingState() {
+    val childRouter = getChildRouter(bindings.overlayRoot, null)
+    if (childRouter.backstackSize == 0) {
+      return
+    }
+
+    activity.invalidateOptionsMenu()
+    childRouter.popCurrentController()
   }
 
   inner class Bindings(view: View) {

@@ -102,6 +102,8 @@ dependencies {
   compile "com.bluelinelabs:conductor-support:${conductor_version}"
   compile "com.bluelinelabs:conductor-rxlifecycle:${conductor_version}"
 
+  compile 'com.hannesdorfmann:adapterdelegates2:2.0.2-SNAPSHOT'
+
   compile 'com.jakewharton.timber:timber:4.3.1'
   compile 'com.jakewharton.threetenabp:threetenabp:1.0.4'
 

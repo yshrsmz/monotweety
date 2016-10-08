@@ -5,14 +5,17 @@ import com.twitter.sdk.android.core.Result
 import com.twitter.sdk.android.core.TwitterException
 import com.twitter.sdk.android.core.models.Tweet
 import com.twitter.sdk.android.core.services.StatusesService
+import net.yslibrary.monotweety.base.di.UserScope
 import rx.AsyncEmitter
 import rx.Observable
 import rx.Single
+import javax.inject.Inject
 
 /**
  * Created by yshrsmz on 2016/09/30.
  */
-class StatusRemoteRepositoryImpl(private val statusesService: StatusesService) : StatusRemoteRepository {
+@UserScope
+class StatusRemoteRepositoryImpl @Inject constructor(private val statusesService: StatusesService) : StatusRemoteRepository {
 
   override fun update(status: String, inReplyToStatusId: Long?): Single<Tweet> {
     return Observable.fromEmitter<Tweet>({ emitter ->

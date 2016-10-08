@@ -8,6 +8,7 @@ import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
 import net.yslibrary.monotweety.status.domain.CheckStatusLength
 import net.yslibrary.monotweety.status.domain.GetPreviousStatus
 import net.yslibrary.monotweety.status.domain.UpdateStatus
+import net.yslibrary.monotweety.user.domain.GetUser
 
 /**
  * Created by yshrsmz on 2016/09/24.
@@ -27,6 +28,8 @@ interface UserComponent : AppModule.Provider {
   fun updateStatus(): UpdateStatus
 
   fun getPreviousStatus(): GetPreviousStatus
+
+  fun getUser(): GetUser
 
   interface ComponentProvider {
     fun userComponent(): UserComponent

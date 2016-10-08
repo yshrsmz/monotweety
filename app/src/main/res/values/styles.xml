@@ -29,4 +29,51 @@
     <item name="android:statusBarColor">@android:color/transparent</item>
   </style>
 
+  <style name="AppTheme.Setting"/>
+
+  <style name="AppTheme.Setting.ListItem" parent="AppTheme">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:minHeight">@dimen/tile_height_1line</item>
+    <item name="android:paddingLeft">@dimen/tile_horizontal_padding</item>
+    <item name="android:paddingTop">@dimen/tile_vertical_padding</item>
+    <item name="android:paddingRight">@dimen/tile_horizontal_padding</item>
+    <item name="android:paddingBottom">@dimen/tile_vertical_padding</item>
+    <item name="android:background">?attr/selectableItemBackground</item>
+  </style>
+
+  <style name="AppTheme.Setting.ListItem2" parent="AppTheme.Setting.ListItem">
+    <item name="android:minHeight">@dimen/tile_height_2line</item>
+  </style>
+
+  <style name="AppTheme.Setting.OneLineTitle" parent="AppTheme">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:maxLines">1</item>
+    <item name="android:layout_gravity">center_vertical</item>
+    <item name="android:textAppearance">@style/TextAppearance.AppCompat.Subhead</item>
+  </style>
+
+  <style name="AppTheme.Setting.TwoLineTitle" parent="AppTheme">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:maxLines">1</item>
+    <item name="android:textAppearance">@style/TextAppearance.AppCompat.Subhead</item>
+  </style>
+
+  <style name="AppTheme.Setting.TwoLineSubTitle" parent="AppTheme">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:maxLines">1</item>
+    <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
+  </style>
+
+  <style name="AppTheme.Setting.SubHeaderItem" parent="AppTheme.Setting.ListItem">
+    <item name="android:background">@null</item>
+  </style>
+
+  <style name="AppTheme.Setting.SubHeaderTitle" parent="AppTheme.Setting.OneLineTitle">
+    <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body2</item>
+  </style>
+
 </resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             style="@style/AppTheme.Setting.SubHeaderItem">
+
+  <TextView
+      android:id="@+id/title"
+      style="@style/AppTheme.Setting.SubHeaderTitle"
+      tools:text="SubHeader"/>
+
+</FrameLayout>

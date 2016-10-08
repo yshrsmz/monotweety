@@ -1,5 +1,7 @@
 package net.yslibrary.monotweety.setting
 
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SwitchCompat
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +12,8 @@ import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.HasComponent
 import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.notification.NotificationService
+import net.yslibrary.monotweety.setting.adapter.SettingAdapter
+import net.yslibrary.monotweety.setting.adapter.SubHeaderDividerDecoration
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -19,6 +23,38 @@ import javax.inject.Inject
 class SettingController : ActionBarController(), HasComponent<SettingComponent> {
 
   lateinit var bindings: Bindings
+
+  val adapter by lazy { SettingAdapter(applicationContext.resources, adapterListener) }
+
+  val adapterListener = object : SettingAdapter.Listener {
+    override fun onAppVersionClick() {
+
+    }
+
+    override fun onDeveloperClick() {
+
+    }
+
+    override fun onGooglePlayClick() {
+
+    }
+
+    override fun onHowtoClick() {
+
+    }
+
+    override fun onLicenseClick() {
+
+    }
+
+    override fun onLogoutClick() {
+
+    }
+
+    override fun onOpenProfileClick() {
+
+    }
+  }
 
   override val title: String?
     get() = getString(R.string.setting_title)
@@ -41,9 +77,11 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
 
     bindings = Bindings(view)
 
-    setEvents()
+    bindings.list.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+    bindings.list.addItemDecoration(SubHeaderDividerDecoration(applicationContext))
+    bindings.list.adapter = adapter
 
-    // enable notification
+    setEvents()
 
     // twitter profile
 
@@ -90,5 +128,6 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
 
   inner class Bindings(view: View) {
     val notificationSwitch = view.findById<SwitchCompat>(R.id.notification_switch)
+    val list = view.findById<RecyclerView>(R.id.list)
   }
 }

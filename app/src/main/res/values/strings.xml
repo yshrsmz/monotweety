@@ -14,6 +14,17 @@
   <string name="label_keep_dialog">Keep dialog opened</string>
   <string name="label_enable_thread">Tweet as a thread</string>
 
+  <string name="label_account">Account</string>
+  <string name="label_others">Others</string>
+  <string name="label_license">Open Source License</string>
+  <string name="label_app_version">App Version: %1$s(%2$d)</string>
+  <string name="sub_label_app_version">View changelog</string>
+  <string name="label_howto">How to</string>
+  <string name="label_developer">Developer</string>
+  <string name="sub_label_developer" translatable="false">\@yslibnet (yslibrary.net)</string>
+  <string name="label_changelog">Change Log</string>
+  <string name="label_googleplay">Rate in Google Play Store</string>
+
   <string name="title_cancel_confirm">Confirm</string>
   <string name="label_cancel_confirm">Quit without tweeting?</string>
   <string name="label_quit">Quit</string>

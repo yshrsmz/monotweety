@@ -34,7 +34,7 @@ class MainActivity : BaseActivity(), ActionBarProvider, HasComponent<MainActivit
 
   override val component: MainActivityComponent by lazy {
     DaggerMainActivityComponent.builder()
-        .appComponent(App.appComponent(this))
+        .userComponent(App.userComponent(this))
         .activityModule(ActivityModule(this))
         .build()
   }

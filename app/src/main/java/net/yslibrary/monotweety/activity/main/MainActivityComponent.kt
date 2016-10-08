@@ -1,7 +1,7 @@
 package net.yslibrary.monotweety.activity.main
 
 import dagger.Component
-import net.yslibrary.monotweety.AppComponent
+import net.yslibrary.monotweety.UserComponent
 import net.yslibrary.monotweety.activity.ActivityModule
 import net.yslibrary.monotweety.base.di.ActivityScope
 import net.yslibrary.monotweety.setting.SettingComponent
@@ -11,7 +11,7 @@ import net.yslibrary.monotweety.setting.SettingComponent
  */
 @ActivityScope
 @Component(
-    dependencies = arrayOf(AppComponent::class),
+    dependencies = arrayOf(UserComponent::class),
     modules = arrayOf(ActivityModule::class)
 )
 interface MainActivityComponent : ActivityModule.Provider,

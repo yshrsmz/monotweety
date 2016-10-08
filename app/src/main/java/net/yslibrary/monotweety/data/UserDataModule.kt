@@ -5,6 +5,7 @@ import com.twitter.Validator
 import com.twitter.sdk.android.core.SessionManager
 import com.twitter.sdk.android.core.TwitterCore
 import com.twitter.sdk.android.core.TwitterSession
+import com.twitter.sdk.android.core.services.AccountService
 import com.twitter.sdk.android.core.services.ConfigurationService
 import com.twitter.sdk.android.core.services.StatusesService
 import dagger.Module
@@ -12,12 +13,16 @@ import dagger.Provides
 import net.yslibrary.monotweety.base.di.UserScope
 import net.yslibrary.monotweety.data.config.ConfigModule
 import net.yslibrary.monotweety.data.status.StatusModule
+import net.yslibrary.monotweety.data.user.UserModule
 
 /**
  * Created by yshrsmz on 2016/09/27.
  */
 @Module(
-    includes = arrayOf(StatusModule::class, ConfigModule::class)
+    includes = arrayOf(
+        StatusModule::class,
+        ConfigModule::class,
+        UserModule::class)
 )
 class UserDataModule {
 
@@ -29,6 +34,11 @@ class UserDataModule {
   @Provides
   fun provideTwitterConfigurationService(sessionManager: SessionManager<TwitterSession>): ConfigurationService {
     return TwitterCore.getInstance().getApiClient(sessionManager.activeSession).configurationService
+  }
+
+  @Provides
+  fun provideTwitterAccountService(sessionManager: SessionManager<TwitterSession>): AccountService {
+    return TwitterCore.getInstance().getApiClient(sessionManager.activeSession).accountService
   }
 
   @UserScope

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import com.hannesdorfmann.adapterdelegates2.AdapterDelegate
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.findById
-import net.yslibrary.monotweety.setting.adapter.SettingAdapter
 
 /**
  * Created by yshrsmz on 2016/10/07.
@@ -16,11 +15,11 @@ import net.yslibrary.monotweety.setting.adapter.SettingAdapter
 class SwitchAdapterDelegate(private val listener: Listener) : AdapterDelegate<List<SettingAdapter.Item>> {
 
   override fun isForViewType(items: List<SettingAdapter.Item>, position: Int): Boolean {
-    return items[position] is SwitchItem
+    return items[position] is Item
   }
 
   override fun onBindViewHolder(items: List<SettingAdapter.Item>, position: Int, holder: RecyclerView.ViewHolder, payloads: MutableList<Any?>?) {
-    val item = items[position] as SwitchItem
+    val item = items[position] as Item
     if (holder is SwitchViewHolder) {
       holder.switchButton.text = item.title
       holder.switchButton.isChecked = item.checked
@@ -34,10 +33,10 @@ class SwitchAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
     return SwitchViewHolder.create(parent)
   }
 
-  data class SwitchItem(val title: String,
-                        val checked: Boolean,
-                        val enabled: Boolean,
-                        override val type: SettingAdapter.ViewType) : SettingAdapter.Item
+  data class Item(val title: String,
+                  val checked: Boolean,
+                  val enabled: Boolean,
+                  override val type: SettingAdapter.ViewType) : SettingAdapter.Item
 
   class SwitchViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -52,6 +51,6 @@ class SwitchAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
   }
 
   interface Listener {
-    fun onClick(item: SwitchItem, checked: Boolean)
+    fun onClick(item: Item, checked: Boolean)
   }
 }

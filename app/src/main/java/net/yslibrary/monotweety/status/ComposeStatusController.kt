@@ -75,11 +75,11 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
           bindings.statusInput.setText(it, TextView.BufferType.EDITABLE)
         }
 
-    viewModel.keepDialogOpened
+    viewModel.keepDialogOpen
         .bindToLifecycle()
         .subscribe {
-          if (bindings.keepDialogOpenedSwitch.isChecked != it) {
-            bindings.keepDialogOpenedSwitch.isChecked = it
+          if (bindings.keepDialogOpenSwitch.isChecked != it) {
+            bindings.keepDialogOpenSwitch.isChecked = it
           }
         }
 
@@ -127,9 +127,9 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
         .map { it.toString() }
         .subscribe { viewModel.onStatusUpdated(it) }
 
-    bindings.keepDialogOpenedSwitch.checkedChanges()
+    bindings.keepDialogOpenSwitch.checkedChanges()
         .bindToLifecycle()
-        .subscribe { viewModel.onKeepDialogOpenedChanged(it) }
+        .subscribe { viewModel.onKeepDialogOpenChanged(it) }
 
     bindings.enableThreadSwitch.checkedChanges()
         .bindToLifecycle()
@@ -238,7 +238,7 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
   inner class Bindings(view: View) {
     val statusInput = view.findById<TextInputEditText>(R.id.status_input)
     val statusCounter = view.findById<TextView>(R.id.status_counter)
-    val keepDialogOpenedSwitch = view.findById<SwitchCompat>(R.id.keep_dialog)
+    val keepDialogOpenSwitch = view.findById<SwitchCompat>(R.id.keep_dialog)
     val enableThreadSwitch = view.findById<SwitchCompat>(R.id.enable_thread)
     val overlayRoot = view.findById<FrameLayout>(R.id.overlay_root)
   }

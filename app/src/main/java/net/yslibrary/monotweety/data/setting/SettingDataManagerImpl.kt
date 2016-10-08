@@ -12,7 +12,7 @@ class SettingDataManagerImpl(private val prefs: RxSharedPreferences) : SettingDa
 
   private val startOnRebootEnabled = prefs.getBoolean(START_ON_REBOOT_ENABLED, false)
 
-  private val alwaysKeepDialogOpened = prefs.getBoolean(ALWAYS_KEEP_DIALOG_OPENED, false)
+  private val keepDialogOpened = prefs.getBoolean(KEEP_DIALOG_OPEN, false)
 
   override fun notificationEnabled(): Observable<Boolean> {
     return notificationEnabled.asObservable()
@@ -30,17 +30,17 @@ class SettingDataManagerImpl(private val prefs: RxSharedPreferences) : SettingDa
     startOnRebootEnabled.set(enabled)
   }
 
-  override fun alwaysKeepDialogOpened(): Observable<Boolean> {
-    return alwaysKeepDialogOpened.asObservable()
+  override fun keepDialogOpened(): Observable<Boolean> {
+    return keepDialogOpened.asObservable()
   }
 
-  override fun alwaysKeepDialogOpened(enabled: Boolean) {
-    alwaysKeepDialogOpened.set(enabled)
+  override fun keepDialogOpened(enabled: Boolean) {
+    keepDialogOpened.set(enabled)
   }
 
   companion object {
     const val NOTIFICATION_ENABLED = "notification_enabled"
     const val START_ON_REBOOT_ENABLED = "start_on_reboot_enabled"
-    const val ALWAYS_KEEP_DIALOG_OPENED = "always_keep_dialog_opened"
+    const val KEEP_DIALOG_OPEN = "keep_dialog_open"
   }
 }

@@ -18,8 +18,13 @@ class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter
     delegatesManager.addDelegate(ProfileAdapterDelegate())
 
     delegatesManager.addDelegate(SwitchAdapterDelegate(object : SwitchAdapterDelegate.Listener {
-      override fun onClick(item: SwitchAdapterDelegate.SwitchItem, checked: Boolean) {
-
+      override fun onClick(item: SwitchAdapterDelegate.Item, checked: Boolean) {
+        when (item.type) {
+          ViewType.KEEP_DIALOG_OPEN -> listener.onKeepDialogOpenClick(checked)
+          else -> {
+            // no-op
+          }
+        }
       }
     }))
 
@@ -51,6 +56,8 @@ class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter
     items = mutableListOf(
         SubHeaderAdapterDelegate.Item(res.getString(R.string.label_account), ViewType.SUBHEADER_ACCOUNT),
         ProfileAdapterDelegate.Item.empty(),
+        SubHeaderAdapterDelegate.Item(res.getString(R.string.label_setting), ViewType.SUBHEADER_SETTING),
+        SwitchAdapterDelegate.Item(res.getString(R.string.label_keep_dialog), false, false, ViewType.KEEP_DIALOG_OPEN),
         SubHeaderAdapterDelegate.Item(res.getString(R.string.label_others), ViewType.SUBHEADER_OTHERS),
         OneLineTextAdapterDelegate.Item(res.getString(R.string.label_howto), true, ViewType.HOWTO),
         TwoLineTextAdapterDelegate.Item(res.getString(R.string.label_app_version, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE),
@@ -65,6 +72,15 @@ class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter
   fun updateProfile(user: User) {
     (items as MutableList).set(ViewType.PROFILE.ordinal, ProfileAdapterDelegate.Item.from(user))
     notifyItemChanged(ViewType.PROFILE.ordinal)
+  }
+
+  fun updateKeepDialogOpen(enabled: Boolean) {
+    val item = items[ViewType.KEEP_DIALOG_OPEN.ordinal] as SwitchAdapterDelegate.Item
+    if (item.checked == enabled && item.enabled) {
+      return
+    }
+    (items as MutableList).set(ViewType.KEEP_DIALOG_OPEN.ordinal, item.copy(checked = enabled, enabled = true))
+    notifyItemChanged(ViewType.KEEP_DIALOG_OPEN.ordinal)
   }
 
   enum class ViewType {
@@ -87,6 +103,7 @@ class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter
   interface Listener {
     fun onOpenProfileClick()
     fun onLogoutClick()
+    fun onKeepDialogOpenClick(enabled: Boolean)
     fun onHowtoClick()
     fun onAppVersionClick()
     fun onLicenseClick()

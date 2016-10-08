@@ -1,6 +1,7 @@
 package net.yslibrary.monotweety.setting
 
 import net.yslibrary.monotweety.data.user.User
+import net.yslibrary.monotweety.setting.domain.KeepDialogOpenedManager
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
 import net.yslibrary.monotweety.user.domain.GetUser
 import rx.Observable
@@ -13,12 +14,16 @@ import timber.log.Timber
  */
 
 class SettingViewModel(private val notificationEnabledManager: NotificationEnabledManager,
-                       private val getUser: GetUser) {
+                       private val getUser: GetUser,
+                       private val keepDialogOpenedManager: KeepDialogOpenedManager) {
 
   private val userSubject = BehaviorSubject<User?>(null)
 
   val notificationEnabledChanged: Observable<Boolean>
     get() = notificationEnabledManager.get()
+
+  val keepDialogOpen: Observable<Boolean>
+    get() = keepDialogOpenedManager.get()
 
   val user: Observable<User?>
     get() = userSubject.asObservable()
@@ -31,5 +36,9 @@ class SettingViewModel(private val notificationEnabledManager: NotificationEnabl
 
   fun onNotificationEnabledChanged(enabled: Boolean) {
     notificationEnabledManager.set(enabled)
+  }
+
+  fun onKeepDialogOpenChanged(enabled: Boolean) {
+    keepDialogOpenedManager.set(enabled)
   }
 }

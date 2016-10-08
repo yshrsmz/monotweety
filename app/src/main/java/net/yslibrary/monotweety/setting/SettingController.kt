@@ -48,6 +48,10 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
 
     }
 
+    override fun onKeepDialogOpenClick(enabled: Boolean) {
+      viewModel.onKeepDialogOpenChanged(enabled)
+    }
+
     override fun onLogoutClick() {
 
     }
@@ -112,6 +116,12 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
           Timber.d("notification enabled: $it")
           if (it) startNotificationService() else stopNotificationService()
         }
+
+    viewModel.keepDialogOpen
+        .first()
+        .bindToLifecycle()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe { adapter.updateKeepDialogOpen(it) }
 
     viewModel.user
         .bindToLifecycle()

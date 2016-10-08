@@ -3,6 +3,7 @@ package net.yslibrary.monotweety.setting
 import dagger.Module
 import dagger.Provides
 import net.yslibrary.monotweety.base.di.ControllerScope
+import net.yslibrary.monotweety.setting.domain.KeepDialogOpenedManager
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
 import net.yslibrary.monotweety.user.domain.GetUser
 
@@ -15,7 +16,8 @@ class SettingViewModule() {
   @ControllerScope
   @Provides
   fun provideSettingViewModel(notificationEnabledManager: NotificationEnabledManager,
-                              getUser: GetUser): SettingViewModel {
-    return SettingViewModel(notificationEnabledManager, getUser)
+                              getUser: GetUser,
+                              keepDialogOpenedManager: KeepDialogOpenedManager): SettingViewModel {
+    return SettingViewModel(notificationEnabledManager, getUser, keepDialogOpenedManager)
   }
 }

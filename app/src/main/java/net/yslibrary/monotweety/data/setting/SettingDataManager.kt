@@ -12,6 +12,6 @@ interface SettingDataManager {
   fun startOnRebootEnabled(): Observable<Boolean>
   fun startOnRebootEnabled(enabled: Boolean)
 
-  fun alwaysKeepDialogOpened(): Observable<Boolean>
-  fun alwaysKeepDialogOpened(enabled: Boolean)
+  fun keepDialogOpened(): Observable<Boolean>
+  fun keepDialogOpened(enabled: Boolean)
 }

@@ -11,12 +11,13 @@
   <string name="label_close_notification">close</string>
   <string name="label_notification_content">Tap to open tweet dialog:)</string>
   <string name="label_whats_happening">What\'s happening?</string>
-  <string name="label_keep_dialog">Keep dialog opened</string>
+  <string name="label_keep_dialog">Keep dialog open</string>
   <string name="label_enable_thread">Tweet as a thread</string>
 
   <string name="label_account">Account</string>
   <string name="label_open_profile">Open Profile</string>
   <string name="label_logout">Logout</string>
+  <string name="label_setting">Setting</string>
   <string name="label_others">Others</string>
   <string name="label_license">Open Source License</string>
   <string name="label_app_version">App Version: %1$s(%2$d)</string>

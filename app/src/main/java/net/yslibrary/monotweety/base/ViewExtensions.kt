@@ -4,7 +4,9 @@ import android.app.Activity
 import android.support.annotation.IdRes
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import com.bluelinelabs.conductor.Controller
+import com.bumptech.glide.Glide
 
 
 /**
@@ -21,3 +23,9 @@ fun <T> Activity.findById(@IdRes id: Int): T = findViewById(id) as T
 
 @Suppress("UNCHECKED_CAST")
 fun <T> Controller.findById(@IdRes id: Int): T = view.findViewById(id) as T
+
+fun ImageView.load(url: String) {
+  Glide.with(this.context)
+      .load(url)
+      .into(this)
+}

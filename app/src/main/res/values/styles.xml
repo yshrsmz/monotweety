@@ -76,4 +76,34 @@
     <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body2</item>
   </style>
 
+
+  <style name="AppTheme.RaisedButton">
+    <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Colored</item>
+  </style>
+
+  <style name="AppTheme.RaisedButton.Primary" parent="AppTheme.RaisedButton">
+    <item name="colorAccent">@color/colorPrimary</item>
+  </style>
+
+  <style name="AppTheme.RaisedButton.Secondary" parent="AppTheme.RaisedButton">
+
+  </style>
+
+  <style name="AppTheme.RaisedButton.White" parent="AppTheme.RaisedButton">
+    <item name="colorAccent">@color/white</item>
+    <item name="android:textColor">@color/colorAccent</item>
+  </style>
+
+  <style name="AppTheme.FlatButton">
+    <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless.Colored</item>
+    <!--<item name="colorControlHighlight">@color/highlight_light</item>-->
+  </style>
+
+  <style name="AppTheme.FlatButton.Primary">
+    <item name="colorAccent">@color/colorPrimary</item>
+  </style>
+
+  <style name="AppTheme.FlatButton.Accent">
+
+  </style>
 </resources>

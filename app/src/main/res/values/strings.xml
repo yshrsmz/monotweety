@@ -15,6 +15,8 @@
   <string name="label_enable_thread">Tweet as a thread</string>
 
   <string name="label_account">Account</string>
+  <string name="label_open_profile">Open Profile</string>
+  <string name="label_logout">Logout</string>
   <string name="label_others">Others</string>
   <string name="label_license">Open Source License</string>
   <string name="label_app_version">App Version: %1$s(%2$d)</string>
@@ -38,4 +40,7 @@
   <string name="error_login_failed">Failed to login. Please try again later.</string>
   <string name="error_tweet_failed">Tweet failed.</string>
   <string name="error_tweet_failed_because_of_length">Content is too long. \nPlease edit on the following dialog</string>
+
+  <string name="label_loading" translatable="false">Loading…</string>
+  <string name="label_loading_placeholder" translatable="false">-</string>
 </resources>

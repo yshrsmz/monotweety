@@ -13,6 +13,8 @@
   <dimen name="tile_horizontal_padding">16dp</dimen>
   <dimen name="tile_padding_bottom_single">20dp</dimen>
 
+  <dimen name="thumb_size">40dp</dimen>
+
   <dimen name="list_vertical_padding">8dp</dimen>
 
   <dimen name="compose_dialog_width">@dimen/match_parent</dimen>

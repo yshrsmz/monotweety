@@ -14,6 +14,7 @@ import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.notification.NotificationService
 import net.yslibrary.monotweety.setting.adapter.SettingAdapter
 import net.yslibrary.monotweety.setting.adapter.SubHeaderDividerDecoration
+import rx.android.schedulers.AndroidSchedulers
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -110,6 +111,14 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
         .subscribe {
           Timber.d("notification enabled: $it")
           if (it) startNotificationService() else stopNotificationService()
+        }
+
+    viewModel.user
+        .bindToLifecycle()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe {
+          Timber.d("user: $it")
+          it?.let { adapter.updateProfile(it) }
         }
 
     bindings.notificationSwitch

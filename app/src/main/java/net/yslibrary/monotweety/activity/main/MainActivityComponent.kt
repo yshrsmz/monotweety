@@ -1,4 +1,4 @@
-package net.yslibrary.monotweety.activity.launcher
+package net.yslibrary.monotweety.activity.main
 
 import dagger.Component
 import net.yslibrary.monotweety.AppComponent
@@ -16,9 +16,9 @@ import net.yslibrary.monotweety.splash.SplashComponent
     dependencies = arrayOf(AppComponent::class),
     modules = arrayOf(ActivityModule::class)
 )
-interface LauncherActivityComponent : ActivityModule.Provider,
-                                      SplashComponent.ComponentProvider,
-                                      LoginComponent.ComponentProvider,
-                                      SettingViewModule.DependencyProvider {
-  fun inject(activity: LauncherActivity)
+interface MainActivityComponent : ActivityModule.Provider,
+                                  SplashComponent.ComponentProvider,
+                                  LoginComponent.ComponentProvider,
+                                  SettingViewModule.DependencyProvider {
+  fun inject(activity: MainActivity)
 }

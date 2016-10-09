@@ -1,4 +1,4 @@
-package net.yslibrary.monotweety.activity.launcher
+package net.yslibrary.monotweety.activity.main
 
 import android.content.Context
 import android.content.Intent
@@ -20,11 +20,11 @@ import net.yslibrary.monotweety.splash.SplashController
 /**
  * Created by yshrsmz on 2016/09/24.
  */
-class LauncherActivity : BaseActivity(), ActionBarProvider, HasComponent<LauncherActivityComponent> {
+class MainActivity : BaseActivity(), ActionBarProvider, HasComponent<MainActivityComponent> {
 
   companion object {
     fun callingIntent(context: Context): Intent {
-      val intent = Intent(context, LauncherActivity::class.java)
+      val intent = Intent(context, MainActivity::class.java)
       return intent
     }
   }
@@ -38,8 +38,8 @@ class LauncherActivity : BaseActivity(), ActionBarProvider, HasComponent<Launche
   override val rootController: Controller
     get() = SplashController()
 
-  override val component: LauncherActivityComponent by lazy {
-    DaggerLauncherActivityComponent.builder()
+  override val component: MainActivityComponent by lazy {
+    DaggerMainActivityComponent.builder()
         .appComponent(App.appComponent(this))
         .activityModule(ActivityModule(this, router))
         .build()

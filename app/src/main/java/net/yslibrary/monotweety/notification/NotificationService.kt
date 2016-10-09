@@ -19,7 +19,7 @@ import android.widget.Toast
 import net.yslibrary.monotweety.App
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.activity.compose.ComposeActivity
-import net.yslibrary.monotweety.activity.launcher.LauncherActivity
+import net.yslibrary.monotweety.activity.main.MainActivity
 import net.yslibrary.monotweety.base.HasComponent
 import rx.Completable
 import rx.android.schedulers.AndroidSchedulers
@@ -177,8 +177,8 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
         .getBroadcast(applicationContext, 2, commandIntent(COMMAND_CLOSE_NOTIFICATION), PendingIntent.FLAG_CANCEL_CURRENT)
 
     val openSettingIntent = TaskStackBuilder.create(applicationContext)
-        .addParentStack(LauncherActivity::class.java)
-        .addNextIntent(LauncherActivity.callingIntent(applicationContext))
+        .addParentStack(MainActivity::class.java)
+        .addNextIntent(MainActivity.callingIntent(applicationContext))
         .getPendingIntent(3, PendingIntent.FLAG_UPDATE_CURRENT)
 
     val remoteInput = RemoteInput.Builder(KEY_NOTIFICATION_TWEET_TEXT)

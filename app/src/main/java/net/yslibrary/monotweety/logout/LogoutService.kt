@@ -4,7 +4,7 @@ import android.app.IntentService
 import android.content.Context
 import android.content.Intent
 import net.yslibrary.monotweety.App
-import net.yslibrary.monotweety.activity.launcher.LauncherActivity
+import net.yslibrary.monotweety.activity.main.MainActivity
 import net.yslibrary.monotweety.login.domain.DoLogout
 import javax.inject.Inject
 
@@ -32,7 +32,7 @@ class LogoutService : IntentService(NAME) {
     doLogout.execute().await()
     App.clearUserComponent(this)
 
-    val activityIntent = LauncherActivity.callingIntent(this)
+    val activityIntent = MainActivity.callingIntent(this)
     activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
 
     startActivity(activityIntent)

@@ -13,7 +13,7 @@
       android:theme="@style/AppTheme">
 
     <activity
-        android:name=".activity.launcher.LauncherActivity"
+        android:name=".activity.main.MainActivity"
         android:label="@string/app_name">
 
       <intent-filter>
@@ -29,7 +29,7 @@
 
         <data
             android:host="yslibrary.net"
-            android:path="/launcher/auth"
+            android:path="/main/*"
             android:scheme="monotweety"/>
       </intent-filter>
     </activity>

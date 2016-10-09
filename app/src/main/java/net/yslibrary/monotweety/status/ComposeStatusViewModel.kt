@@ -2,7 +2,7 @@ package net.yslibrary.monotweety.status
 
 import com.twitter.sdk.android.core.TwitterApiException
 import com.twitter.sdk.android.core.models.Tweet
-import net.yslibrary.monotweety.setting.domain.KeepDialogOpenedManager
+import net.yslibrary.monotweety.setting.domain.KeepDialogOpenManager
 import net.yslibrary.monotweety.status.domain.CheckStatusLength
 import net.yslibrary.monotweety.status.domain.GetPreviousStatus
 import net.yslibrary.monotweety.status.domain.UpdateStatus
@@ -19,7 +19,7 @@ class ComposeStatusViewModel(status: String,
                              private val checkStatusLength: CheckStatusLength,
                              private val updateStatus: UpdateStatus,
                              private val getPreviousStatus: GetPreviousStatus,
-                             private val keepDialogOpenedManager: KeepDialogOpenedManager) {
+                             private val keepDialogOpenManager: KeepDialogOpenManager) {
 
   private val isSendableStatusSubject = BehaviorSubject<Boolean>(false)
 
@@ -89,7 +89,7 @@ class ComposeStatusViewModel(status: String,
           Timber.d("previous status: ${it?.id}")
         }
 
-    keepDialogOpenedManager.get().first()
+    keepDialogOpenManager.get().first()
         .subscribe { keepDialogOpenSubject.onNext(it) }
   }
 

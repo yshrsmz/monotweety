@@ -3,7 +3,7 @@ package net.yslibrary.monotweety
 import dagger.Subcomponent
 import net.yslibrary.monotweety.base.di.UserScope
 import net.yslibrary.monotweety.data.UserDataModule
-import net.yslibrary.monotweety.setting.domain.KeepDialogOpenedManager
+import net.yslibrary.monotweety.setting.domain.KeepDialogOpenManager
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
 import net.yslibrary.monotweety.status.domain.CheckStatusLength
 import net.yslibrary.monotweety.status.domain.GetPreviousStatus
@@ -21,7 +21,7 @@ interface UserComponent : AppModule.Provider {
 
   fun notificationEnabledManager(): NotificationEnabledManager
 
-  fun alwaysKeepDialogOpenedManager(): KeepDialogOpenedManager
+  fun alwaysKeepDialogOpenedManager(): KeepDialogOpenManager
 
   fun checkStatusLength(): CheckStatusLength
 

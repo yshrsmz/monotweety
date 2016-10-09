@@ -1,6 +1,7 @@
 package net.yslibrary.monotweety.data.setting
 
 import com.f2prateek.rx.preferences.RxSharedPreferences
+import rx.Completable
 import rx.Observable
 
 /**
@@ -12,7 +13,7 @@ class SettingDataManagerImpl(private val prefs: RxSharedPreferences) : SettingDa
 
   private val startOnRebootEnabled = prefs.getBoolean(START_ON_REBOOT_ENABLED, false)
 
-  private val keepDialogOpened = prefs.getBoolean(KEEP_DIALOG_OPEN, false)
+  private val keepDialogOpen = prefs.getBoolean(KEEP_DIALOG_OPEN, false)
 
   override fun notificationEnabled(): Observable<Boolean> {
     return notificationEnabled.asObservable()
@@ -30,12 +31,20 @@ class SettingDataManagerImpl(private val prefs: RxSharedPreferences) : SettingDa
     startOnRebootEnabled.set(enabled)
   }
 
-  override fun keepDialogOpened(): Observable<Boolean> {
-    return keepDialogOpened.asObservable()
+  override fun keepDialogOpen(): Observable<Boolean> {
+    return keepDialogOpen.asObservable()
   }
 
-  override fun keepDialogOpened(enabled: Boolean) {
-    keepDialogOpened.set(enabled)
+  override fun keepDialogOpen(enabled: Boolean) {
+    keepDialogOpen.set(enabled)
+  }
+
+  override fun clear(): Completable {
+    return Completable.fromAction {
+      notificationEnabled.delete()
+      startOnRebootEnabled.delete()
+      keepDialogOpen.delete()
+    }
   }
 
   companion object {

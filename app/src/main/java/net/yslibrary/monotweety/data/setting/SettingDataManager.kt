@@ -1,5 +1,6 @@
 package net.yslibrary.monotweety.data.setting
 
+import rx.Completable
 import rx.Observable
 
 /**
@@ -12,6 +13,8 @@ interface SettingDataManager {
   fun startOnRebootEnabled(): Observable<Boolean>
   fun startOnRebootEnabled(enabled: Boolean)
 
-  fun keepDialogOpened(): Observable<Boolean>
-  fun keepDialogOpened(enabled: Boolean)
+  fun keepDialogOpen(): Observable<Boolean>
+  fun keepDialogOpen(enabled: Boolean)
+
+  fun clear(): Completable
 }

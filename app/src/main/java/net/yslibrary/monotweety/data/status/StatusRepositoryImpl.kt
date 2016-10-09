@@ -27,4 +27,8 @@ class StatusRepositoryImpl @Inject constructor(private val remoteRepository: Sta
   override fun previousStatus(): Observable<Tweet?> {
     return localRepository.getPrevious()
   }
+
+  override fun clear(): Completable {
+    return localRepository.clear()
+  }
 }

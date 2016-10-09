@@ -3,6 +3,7 @@ package net.yslibrary.monotweety
 import dagger.Subcomponent
 import net.yslibrary.monotweety.base.di.UserScope
 import net.yslibrary.monotweety.data.UserDataModule
+import net.yslibrary.monotweety.login.domain.DoLogout
 import net.yslibrary.monotweety.setting.domain.KeepDialogOpenManager
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
 import net.yslibrary.monotweety.status.domain.CheckStatusLength
@@ -30,6 +31,8 @@ interface UserComponent : AppModule.Provider {
   fun getPreviousStatus(): GetPreviousStatus
 
   fun getUser(): GetUser
+
+  fun doLogout(): DoLogout
 
   interface ComponentProvider {
     fun userComponent(): UserComponent

@@ -1,19 +1,17 @@
 package net.yslibrary.monotweety.setting
 
-import dagger.Subcomponent
+import dagger.Component
+import net.yslibrary.monotweety.UserComponent
 import net.yslibrary.monotweety.base.di.ControllerScope
 
 /**
  * Created by yshrsmz on 2016/09/25.
  */
 @ControllerScope
-@Subcomponent(
+@Component(
+    dependencies = arrayOf(UserComponent::class),
     modules = arrayOf(SettingViewModule::class)
 )
 interface SettingComponent {
   fun inject(controller: SettingController)
-
-  interface ComponentProvider {
-    fun settingComponent(module: SettingViewModule): SettingComponent
-  }
 }

@@ -3,17 +3,19 @@ package net.yslibrary.monotweety.login
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bluelinelabs.conductor.RouterTransaction
+import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
 import com.twitter.sdk.android.core.Callback
 import com.twitter.sdk.android.core.Result
 import com.twitter.sdk.android.core.TwitterException
 import com.twitter.sdk.android.core.TwitterSession
 import com.twitter.sdk.android.core.identity.TwitterLoginButton
 import net.yslibrary.monotweety.R
-import net.yslibrary.monotweety.activity.main.MainActivity
-import net.yslibrary.monotweety.base.BaseController
+import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.HasComponent
 import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.event.ActivityResult
+import net.yslibrary.monotweety.setting.SettingController
 import rx.android.schedulers.AndroidSchedulers
 import timber.log.Timber
 import javax.inject.Inject
@@ -21,7 +23,9 @@ import javax.inject.Inject
 /**
  * Created by yshrsmz on 2016/09/27.
  */
-class LoginController : BaseController(), HasComponent<LoginComponent> {
+class LoginController : ActionBarController(), HasComponent<LoginComponent> {
+
+  override val shouldShowActionBar: Boolean = false
 
   lateinit var bindings: Bindings
 
@@ -59,8 +63,9 @@ class LoginController : BaseController(), HasComponent<LoginComponent> {
         .bindToLifecycle()
         .doOnNext { toast(getString(R.string.message_login_succeeded, it.userName)).show() }
         .subscribe {
-          startActivity(MainActivity.callingIntent(applicationContext))
-          activity.finish()
+          router.setRoot(RouterTransaction.with(SettingController())
+              .popChangeHandler(FadeChangeHandler())
+              .pushChangeHandler(FadeChangeHandler()))
         }
 
     viewModel.loginFailed

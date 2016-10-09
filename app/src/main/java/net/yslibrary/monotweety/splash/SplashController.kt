@@ -3,13 +3,14 @@ package net.yslibrary.monotweety.splash
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
 import net.yslibrary.monotweety.R
-import net.yslibrary.monotweety.activity.main.MainActivity
-import net.yslibrary.monotweety.base.BaseController
+import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.HasComponent
 import net.yslibrary.monotweety.login.LoginController
+import net.yslibrary.monotweety.setting.SettingController
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import timber.log.Timber
@@ -20,10 +21,12 @@ import javax.inject.Inject
 /**
  * Created by yshrsmz on 2016/09/25.
  */
-class SplashController : BaseController(), HasComponent<SplashComponent> {
+class SplashController : ActionBarController(), HasComponent<SplashComponent> {
 
   @field:[Inject]
   lateinit var viewModel: SplashViewModel
+
+  override val shouldShowActionBar: Boolean = false
 
   override val component: SplashComponent by lazy {
     getComponentProvider<SplashComponent.ComponentProvider>(activity)
@@ -50,14 +53,11 @@ class SplashController : BaseController(), HasComponent<SplashComponent> {
         .zipWith(Observable.interval(2, TimeUnit.SECONDS).first()) { t1, t2 -> t1 }
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe {
-          if (it) {
-            startActivity(MainActivity.callingIntent(applicationContext))
-            activity.finish()
-          } else {
-            router.setRoot(RouterTransaction.with(LoginController())
-                .popChangeHandler(FadeChangeHandler())
-                .pushChangeHandler(FadeChangeHandler()))
-          }
+          val next: Controller = if (it) SettingController() else LoginController()
+
+          router.setRoot(RouterTransaction.with(next)
+              .popChangeHandler(FadeChangeHandler())
+              .pushChangeHandler(FadeChangeHandler()))
         }
   }
 }

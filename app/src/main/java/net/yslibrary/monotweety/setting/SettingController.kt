@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jakewharton.rxbinding.widget.checkedChanges
+import net.yslibrary.monotweety.App
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.HasComponent
@@ -66,8 +67,11 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
     get() = getString(R.string.setting_title)
 
   override val component: SettingComponent by lazy {
-    getComponentProvider<SettingComponent.ComponentProvider>(activity)
-        .settingComponent(SettingViewModule())
+    val activityBus = getComponentProvider<SettingViewModule.DependencyProvider>(activity).activityBus()
+    DaggerSettingComponent.builder()
+        .userComponent(App.userComponent(applicationContext))
+        .settingViewModule(SettingViewModule(activityBus))
+        .build()
   }
 
   @field:[Inject]

@@ -5,6 +5,7 @@ import net.yslibrary.monotweety.AppComponent
 import net.yslibrary.monotweety.activity.ActivityModule
 import net.yslibrary.monotweety.base.di.ActivityScope
 import net.yslibrary.monotweety.login.LoginComponent
+import net.yslibrary.monotweety.setting.SettingViewModule
 import net.yslibrary.monotweety.splash.SplashComponent
 
 /**
@@ -17,6 +18,7 @@ import net.yslibrary.monotweety.splash.SplashComponent
 )
 interface LauncherActivityComponent : ActivityModule.Provider,
                                       SplashComponent.ComponentProvider,
-                                      LoginComponent.ComponentProvider {
+                                      LoginComponent.ComponentProvider,
+                                      SettingViewModule.DependencyProvider {
   fun inject(activity: LauncherActivity)
 }

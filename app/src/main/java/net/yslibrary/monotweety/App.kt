@@ -21,6 +21,14 @@ open class App : Application() {
 
       return app.userComponent!!
     }
+
+    /**
+     * clear UserComponent
+     * this method should be called when user is logging out
+     */
+    fun clearUserComponent(context: Context) {
+      get(context).userComponent = null
+    }
   }
 
   val appComponent: AppComponent by lazy {

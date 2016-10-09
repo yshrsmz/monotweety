@@ -15,7 +15,15 @@ class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter
 
     delegatesManager.addDelegate(SubHeaderAdapterDelegate())
 
-    delegatesManager.addDelegate(ProfileAdapterDelegate())
+    delegatesManager.addDelegate(ProfileAdapterDelegate(object : ProfileAdapterDelegate.Listener {
+      override fun onLogoutClick() {
+        listener.onLogoutClick()
+      }
+
+      override fun onOpenProfileClick() {
+        listener.onOpenProfileClick()
+      }
+    }))
 
     delegatesManager.addDelegate(SwitchAdapterDelegate(object : SwitchAdapterDelegate.Listener {
       override fun onClick(item: SwitchAdapterDelegate.Item, checked: Boolean) {

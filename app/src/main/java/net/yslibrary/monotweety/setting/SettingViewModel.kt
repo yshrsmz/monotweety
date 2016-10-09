@@ -6,6 +6,7 @@ import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
 import net.yslibrary.monotweety.user.domain.GetUser
 import rx.Observable
 import rx.lang.kotlin.BehaviorSubject
+import rx.lang.kotlin.PublishSubject
 import timber.log.Timber
 
 
@@ -19,11 +20,16 @@ class SettingViewModel(private val notificationEnabledManager: NotificationEnabl
 
   private val userSubject = BehaviorSubject<User?>(null)
 
+  private val logoutRequestsSubject = PublishSubject<Unit>()
+
   val notificationEnabledChanged: Observable<Boolean>
     get() = notificationEnabledManager.get()
 
   val keepDialogOpen: Observable<Boolean>
-    get() = keepDialogOpenedManager.get()
+    get() = keepDialogOpenManager.get()
+
+  val logoutRequests: Observable<Unit>
+    get() = logoutRequestsSubject.asObservable()
 
   val user: Observable<User?>
     get() = userSubject.asObservable()
@@ -39,6 +45,10 @@ class SettingViewModel(private val notificationEnabledManager: NotificationEnabl
   }
 
   fun onKeepDialogOpenChanged(enabled: Boolean) {
-    keepDialogOpenedManager.set(enabled)
+    keepDialogOpenManager.set(enabled)
+  }
+
+  fun onLogoutRequested() {
+    logoutRequestsSubject.onNext(Unit)
   }
 }

@@ -11,6 +11,7 @@ import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.HasComponent
 import net.yslibrary.monotweety.base.findById
+import net.yslibrary.monotweety.logout.LogoutService
 import net.yslibrary.monotweety.notification.NotificationService
 import net.yslibrary.monotweety.setting.adapter.SettingAdapter
 import net.yslibrary.monotweety.setting.adapter.SubHeaderDividerDecoration
@@ -53,7 +54,7 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
     }
 
     override fun onLogoutClick() {
-
+      viewModel.onLogoutRequested()
     }
 
     override fun onOpenProfileClick() {
@@ -131,6 +132,11 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
           it?.let { adapter.updateProfile(it) }
         }
 
+    viewModel.logoutRequests
+        .bindToLifecycle()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe { logout() }
+
     bindings.notificationSwitch
         .checkedChanges()
         .bindToLifecycle()
@@ -143,6 +149,13 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
 
   fun stopNotificationService() {
     applicationContext.stopService(NotificationService.callingIntent(activity))
+  }
+
+  fun logout() {
+    val intent = LogoutService.callingIntent(applicationContext)
+    applicationContext.startService(intent)
+
+    activity.finish()
   }
 
   inner class Bindings(view: View) {

@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.hannesdorfmann.adapterdelegates2.AdapterDelegate
@@ -16,7 +17,7 @@ import net.yslibrary.monotweety.data.user.User
 /**
  * Created by yshrsmz on 2016/10/08.
  */
-class ProfileAdapterDelegate : AdapterDelegate<List<SettingAdapter.Item>> {
+class ProfileAdapterDelegate(private val listener: Listener) : AdapterDelegate<List<SettingAdapter.Item>> {
   override fun isForViewType(items: List<SettingAdapter.Item>, position: Int): Boolean {
     return items[position] is Item
   }
@@ -32,10 +33,14 @@ class ProfileAdapterDelegate : AdapterDelegate<List<SettingAdapter.Item>> {
         holder.name.text = context.getString(R.string.label_loading)
         holder.screenName.text = context.getString(R.string.label_loading)
         holder.thumb.setImageResource(android.R.color.transparent)
+        holder.logoutButton.setOnClickListener(null)
+        holder.openProfileButton.setOnClickListener(null)
       } else {
         holder.name.text = item.name
         holder.screenName.text = item.screenName
         holder.thumb.load(item.imageUrl)
+        holder.logoutButton.setOnClickListener { listener.onLogoutClick() }
+        holder.openProfileButton.setOnClickListener { listener.onOpenProfileClick() }
       }
     }
   }
@@ -49,6 +54,9 @@ class ProfileAdapterDelegate : AdapterDelegate<List<SettingAdapter.Item>> {
     val thumb = view.findById<ImageView>(R.id.thumb)
     val name = view.findById<TextView>(R.id.name)
     val screenName = view.findById<TextView>(R.id.screen_name)
+
+    val logoutButton = view.findById<Button>(R.id.logout)
+    val openProfileButton = view.findById<Button>(R.id.open_profile)
 
     companion object {
       fun create(parent: ViewGroup): ViewHolder {
@@ -79,5 +87,10 @@ class ProfileAdapterDelegate : AdapterDelegate<List<SettingAdapter.Item>> {
             type = SettingAdapter.ViewType.PROFILE)
       }
     }
+  }
+
+  interface Listener {
+    fun onOpenProfileClick()
+    fun onLogoutClick()
   }
 }

@@ -6,12 +6,15 @@ import android.support.v7.widget.SwitchCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bluelinelabs.conductor.RouterTransaction
+import com.bluelinelabs.conductor.changehandler.HorizontalChangeHandler
 import com.jakewharton.rxbinding.widget.checkedChanges
 import net.yslibrary.monotweety.App
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.HasComponent
 import net.yslibrary.monotweety.base.findById
+import net.yslibrary.monotweety.license.LicenseController
 import net.yslibrary.monotweety.logout.LogoutService
 import net.yslibrary.monotweety.notification.NotificationService
 import net.yslibrary.monotweety.setting.adapter.SettingAdapter
@@ -47,7 +50,7 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
     }
 
     override fun onLicenseClick() {
-
+      viewModel.onLicenseRequested()
     }
 
     override fun onKeepDialogOpenClick(enabled: Boolean) {
@@ -141,6 +144,11 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe { logout() }
 
+    viewModel.licenseRequests
+        .bindToLifecycle()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe { showLicense() }
+
     bindings.notificationSwitch
         .checkedChanges()
         .bindToLifecycle()
@@ -160,6 +168,12 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
     applicationContext.startService(intent)
 
     activity.finish()
+  }
+
+  fun showLicense() {
+    router.pushController(RouterTransaction.with(LicenseController())
+        .pushChangeHandler(HorizontalChangeHandler())
+        .popChangeHandler(HorizontalChangeHandler()))
   }
 
   inner class Bindings(view: View) {

@@ -2,6 +2,7 @@
   <string name="app_name" translatable="false">Monotweety</string>
   <string name="setting_title">Settings</string>
   <string name="compose_title">Compose Tweet</string>
+  <string name="license_title">Open Source License</string>
 
   <string name="setting_enable_notification" translatable="false">ON</string>
 

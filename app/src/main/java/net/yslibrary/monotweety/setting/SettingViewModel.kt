@@ -22,6 +22,8 @@ class SettingViewModel(private val notificationEnabledManager: NotificationEnabl
 
   private val logoutRequestsSubject = PublishSubject<Unit>()
 
+  private val licenseRequestsSubject = PublishSubject<Unit>()
+
   val notificationEnabledChanged: Observable<Boolean>
     get() = notificationEnabledManager.get()
 
@@ -30,6 +32,9 @@ class SettingViewModel(private val notificationEnabledManager: NotificationEnabl
 
   val logoutRequests: Observable<Unit>
     get() = logoutRequestsSubject.asObservable()
+
+  val licenseRequests: Observable<Unit>
+    get() = licenseRequestsSubject.asObservable()
 
   val user: Observable<User?>
     get() = userSubject.asObservable()
@@ -50,5 +55,9 @@ class SettingViewModel(private val notificationEnabledManager: NotificationEnabl
 
   fun onLogoutRequested() {
     logoutRequestsSubject.onNext(Unit)
+  }
+
+  fun onLicenseRequested() {
+    licenseRequestsSubject.onNext(Unit)
   }
 }

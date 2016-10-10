@@ -8,7 +8,9 @@ import android.widget.Toast
 import com.bluelinelabs.conductor.rxlifecycle.RxController
 import net.yslibrary.monotweety.base.di.Names
 import net.yslibrary.rxeventbus.EventBus
+import rx.Completable
 import rx.Observable
+import rx.Single
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -42,6 +44,10 @@ abstract class BaseController : RxController() {
   abstract fun inflateView(inflater: LayoutInflater, container: ViewGroup): View
 
   fun <T> Observable<T>.bindToLifecycle(): Observable<T> = this.compose(this@BaseController.bindToLifecycle<T>())
+
+  fun <T> Single<T>.bindToLifecycle(): Single<T> = this.compose(this@BaseController.bindToLifecycle<T>().forSingle<T>())
+
+  fun <T> Completable.bindToLifecycle(): Completable = this.compose(this@BaseController.bindToLifecycle<T>().forCompletable())
 
   fun showSnackBar(message: String) = (activity as BaseActivity).showSnackBar(message)
 

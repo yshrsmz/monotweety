@@ -19,6 +19,8 @@ import javax.inject.Inject
  */
 class LicenseController : ActionBarController() {
 
+  override val hasBackButton: Boolean = true
+
   lateinit var bindings: Bindings
 
   @field:[Inject]

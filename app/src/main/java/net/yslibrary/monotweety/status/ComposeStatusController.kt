@@ -27,10 +27,8 @@ import javax.inject.Inject
  */
 class ComposeStatusController(private var status: String? = null) : ActionBarController(),
                                                                     HasComponent<ComposeStatusComponent> {
-
-  init {
-    setHasOptionsMenu(true)
-  }
+  override val hasBackButton: Boolean = true
+  override val hasOptionsMenu: Boolean = true
 
   override val component: ComposeStatusComponent by lazy {
     getComponentProvider<ComposeStatusComponent.ComponentProvider>(activity)
@@ -137,9 +135,8 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
   }
 
   fun initToolbar() {
-    actionBar?.let {
-      it.setDisplayHomeAsUpEnabled(true)
-      it.setHomeAsUpIndicator(R.drawable.ic_close_white_24dp)
+    actionBar?.apply {
+      setHomeAsUpIndicator(R.drawable.ic_close_white_24dp)
     }
   }
 
@@ -175,14 +172,12 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
       R.id.action_send_tweet -> {
         Timber.d("option - action_send_tweet")
         sendButtonClicks.onNext(Unit)
+        return true
       }
-      android.R.id.home -> {
-        Timber.d("option - home")
-        activity.onBackPressed()
+      else -> {
+        return super.onOptionsItemSelected(item)
       }
     }
-
-    return super.onOptionsItemSelected(item)
   }
 
   override fun handleBack(): Boolean {

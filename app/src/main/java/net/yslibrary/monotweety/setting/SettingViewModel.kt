@@ -30,6 +30,8 @@ class SettingViewModel(private val config: Config,
 
   private val googlePlayRequestsSubject = PublishSubject<String>()
 
+  private val openProfileRequestsSubject = PublishSubject<String>()
+
   val notificationEnabledChanged: Observable<Boolean>
     get() = notificationEnabledManager.get()
 
@@ -38,6 +40,9 @@ class SettingViewModel(private val config: Config,
 
   val user: Observable<User?>
     get() = userSubject.asObservable()
+
+  val openProfileRequests: Observable<String>
+    get() = openProfileRequestsSubject.asObservable()
 
   val logoutRequests: Observable<Unit>
     get() = logoutRequestsSubject.asObservable()
@@ -63,6 +68,12 @@ class SettingViewModel(private val config: Config,
 
   fun onKeepDialogOpenChanged(enabled: Boolean) {
     keepDialogOpenManager.set(enabled)
+  }
+
+  fun onOpenProfileRequested() {
+    userSubject.value?.let {
+      openProfileRequestsSubject.onNext(it.screenName)
+    }
   }
 
   fun onLogoutRequested() {

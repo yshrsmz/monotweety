@@ -16,8 +16,6 @@ import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.HasComponent
 import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.license.LicenseController
-import net.yslibrary.monotweety.logout.LogoutService
-import net.yslibrary.monotweety.notification.NotificationService
 import net.yslibrary.monotweety.setting.adapter.SettingAdapter
 import net.yslibrary.monotweety.setting.adapter.SubHeaderDividerDecoration
 import rx.android.schedulers.AndroidSchedulers
@@ -66,7 +64,7 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
     }
 
     override fun onOpenProfileClick() {
-
+      viewModel.onOpenProfileRequested()
     }
   }
 
@@ -102,19 +100,11 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
 
     setEvents()
 
-    // twitter profile
-
     // start on reboot
 
     // how to
 
     // version info
-
-    // license
-
-    // developer
-
-    // to google play
 
     // padding for ad?
 
@@ -145,6 +135,10 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
           it?.let { adapter.updateProfile(it) }
         }
 
+    viewModel.openProfileRequests
+        .bindToLifecycle()
+        .subscribe { navigator.openProfileWithTwitterApp(it) }
+
     viewModel.logoutRequests
         .bindToLifecycle()
         .observeOn(AndroidSchedulers.mainThread())
@@ -172,17 +166,15 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
   }
 
   fun startNotificationService() {
-    applicationContext.startService(NotificationService.callingIntent(activity))
+    navigator.startNotificationService()
   }
 
   fun stopNotificationService() {
-    applicationContext.stopService(NotificationService.callingIntent(activity))
+    navigator.stopNotificationService()
   }
 
   fun logout() {
-    val intent = LogoutService.callingIntent(applicationContext)
-    applicationContext.startService(intent)
-
+    navigator.startLogoutService()
     activity.finish()
   }
 

@@ -118,6 +118,8 @@ dependencies {
   compile 'net.yslibrary.rxeventbus:rxeventbus:1.0.1'
   compile 'net.yslibrary.licenseadapter:licenseadapter:1.2.4'
 
+  compile 'com.github.gabrielemariotti.changeloglib:changelog:2.1.0'
+
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
     exclude group: 'com.google.code.findbugs', module: 'jsr305'

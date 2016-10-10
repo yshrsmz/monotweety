@@ -39,8 +39,15 @@ open class AppModule(private val context: Context) {
     return ClockImpl()
   }
 
+  @AppScope
+  @Provides
+  fun provideConfig(): Config {
+    return Config.init()
+  }
+
   interface Provider {
     fun notificationManager(): NotificationManagerCompat
     fun clock(): Clock
+    fun config(): Config
   }
 }

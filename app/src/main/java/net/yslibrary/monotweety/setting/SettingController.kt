@@ -10,6 +10,7 @@ import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.HorizontalChangeHandler
 import com.jakewharton.rxbinding.widget.checkedChanges
 import net.yslibrary.monotweety.App
+import net.yslibrary.monotweety.Navigator
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.HasComponent
@@ -28,6 +29,9 @@ import javax.inject.Inject
  */
 class SettingController : ActionBarController(), HasComponent<SettingComponent> {
 
+  @field:[Inject]
+  lateinit var navigator: Navigator
+
   lateinit var bindings: Bindings
 
   val adapter by lazy { SettingAdapter(applicationContext.resources, adapterListener) }
@@ -38,11 +42,11 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
     }
 
     override fun onDeveloperClick() {
-
+      viewModel.onDeveloperRequested()
     }
 
     override fun onGooglePlayClick() {
-
+      viewModel.onGooglePlayRequested()
     }
 
     override fun onHowtoClick() {
@@ -70,10 +74,12 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
     get() = getString(R.string.setting_title)
 
   override val component: SettingComponent by lazy {
-    val activityBus = getComponentProvider<SettingViewModule.DependencyProvider>(activity).activityBus()
+    val provider = getComponentProvider<SettingViewModule.DependencyProvider>(activity)
+    val activityBus = provider.activityBus()
+    val navigator = provider.navigator()
     DaggerSettingComponent.builder()
         .userComponent(App.userComponent(applicationContext))
-        .settingViewModule(SettingViewModule(activityBus))
+        .settingViewModule(SettingViewModule(activityBus, navigator))
         .build()
   }
 
@@ -148,6 +154,16 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
         .bindToLifecycle()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe { showLicense() }
+
+    viewModel.developerRequests
+        .bindToLifecycle()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe { navigator.openExternalAppWithUrl(it) }
+
+    viewModel.googlePlayRequests
+        .bindToLifecycle()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe { navigator.openExternalAppWithUrl(it) }
 
     bindings.notificationSwitch
         .checkedChanges()

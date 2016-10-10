@@ -1,5 +1,7 @@
 package net.yslibrary.monotweety
 
+import android.content.Intent
+import android.net.Uri
 import com.bluelinelabs.conductor.Router
 import net.yslibrary.monotweety.base.BaseActivity
 
@@ -27,5 +29,10 @@ class Navigator(private val activity: BaseActivity,
 
   fun startNotificationService() {
 
+  }
+
+  fun openExternalAppWithUrl(url: String) {
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+    activity.startActivity(intent)
   }
 }

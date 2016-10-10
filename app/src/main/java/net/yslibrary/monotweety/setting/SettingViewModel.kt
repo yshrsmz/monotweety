@@ -1,5 +1,6 @@
 package net.yslibrary.monotweety.setting
 
+import net.yslibrary.monotweety.Config
 import net.yslibrary.monotweety.data.user.User
 import net.yslibrary.monotweety.setting.domain.KeepDialogOpenManager
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
@@ -14,7 +15,8 @@ import timber.log.Timber
  * Created by yshrsmz on 2016/09/29.
  */
 
-class SettingViewModel(private val notificationEnabledManager: NotificationEnabledManager,
+class SettingViewModel(private val config: Config,
+                       private val notificationEnabledManager: NotificationEnabledManager,
                        private val getUser: GetUser,
                        private val keepDialogOpenManager: KeepDialogOpenManager) {
 
@@ -24,11 +26,18 @@ class SettingViewModel(private val notificationEnabledManager: NotificationEnabl
 
   private val licenseRequestsSubject = PublishSubject<Unit>()
 
+  private val developerRequestsSubject = PublishSubject<String>()
+
+  private val googlePlayRequestsSubject = PublishSubject<String>()
+
   val notificationEnabledChanged: Observable<Boolean>
     get() = notificationEnabledManager.get()
 
   val keepDialogOpen: Observable<Boolean>
     get() = keepDialogOpenManager.get()
+
+  val user: Observable<User?>
+    get() = userSubject.asObservable()
 
   val logoutRequests: Observable<Unit>
     get() = logoutRequestsSubject.asObservable()
@@ -36,8 +45,11 @@ class SettingViewModel(private val notificationEnabledManager: NotificationEnabl
   val licenseRequests: Observable<Unit>
     get() = licenseRequestsSubject.asObservable()
 
-  val user: Observable<User?>
-    get() = userSubject.asObservable()
+  val developerRequests: Observable<String>
+    get() = developerRequestsSubject.asObservable()
+
+  val googlePlayRequests: Observable<String>
+    get() = googlePlayRequestsSubject.asObservable()
 
   init {
     getUser.execute()
@@ -59,5 +71,13 @@ class SettingViewModel(private val notificationEnabledManager: NotificationEnabl
 
   fun onLicenseRequested() {
     licenseRequestsSubject.onNext(Unit)
+  }
+
+  fun onDeveloperRequested() {
+    developerRequestsSubject.onNext(config.developerUrl)
+  }
+
+  fun onGooglePlayRequested() {
+    googlePlayRequestsSubject.onNext(config.googlePlayUrl)
   }
 }

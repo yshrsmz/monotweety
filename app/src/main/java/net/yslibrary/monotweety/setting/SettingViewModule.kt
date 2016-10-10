@@ -2,6 +2,8 @@ package net.yslibrary.monotweety.setting
 
 import dagger.Module
 import dagger.Provides
+import net.yslibrary.monotweety.Config
+import net.yslibrary.monotweety.Navigator
 import net.yslibrary.monotweety.base.di.ControllerScope
 import net.yslibrary.monotweety.base.di.Names
 import net.yslibrary.monotweety.setting.domain.KeepDialogOpenManager
@@ -14,7 +16,8 @@ import javax.inject.Named
  * Created by yshrsmz on 2016/09/25.
  */
 @Module
-class SettingViewModule(private val activityBus: EventBus) {
+class SettingViewModule(private val activityBus: EventBus,
+                        private val navigator: Navigator) {
 
   @ControllerScope
   @Provides
@@ -23,14 +26,21 @@ class SettingViewModule(private val activityBus: EventBus) {
 
   @ControllerScope
   @Provides
-  fun provideSettingViewModel(notificationEnabledManager: NotificationEnabledManager,
+  fun provideNavigator(): Navigator = navigator
+
+  @ControllerScope
+  @Provides
+  fun provideSettingViewModel(config: Config,
+                              notificationEnabledManager: NotificationEnabledManager,
                               getUser: GetUser,
                               keepDialogOpenManager: KeepDialogOpenManager): SettingViewModel {
-    return SettingViewModel(notificationEnabledManager, getUser, keepDialogOpenManager)
+    return SettingViewModel(config, notificationEnabledManager, getUser, keepDialogOpenManager)
   }
 
   interface DependencyProvider {
     @Named(Names.FOR_ACTIVITY)
     fun activityBus(): EventBus
+
+    fun navigator(): Navigator
   }
 }

@@ -43,7 +43,7 @@ class LicenseController : ActionBarController() {
   }
 
   override fun inflateView(inflater: LayoutInflater, container: ViewGroup): View {
-    val view = LayoutInflater.from(container.context).inflate(R.layout.controller_license, container, false)
+    val view = inflater.inflate(R.layout.controller_license, container, false)
 
     bindings = Bindings(view)
 

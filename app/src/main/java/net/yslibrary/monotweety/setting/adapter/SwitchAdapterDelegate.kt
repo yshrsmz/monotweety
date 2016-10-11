@@ -5,20 +5,20 @@ import android.support.v7.widget.SwitchCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.hannesdorfmann.adapterdelegates2.AdapterDelegate
+import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.findById
 
 /**
  * Created by yshrsmz on 2016/10/07.
  */
-class SwitchAdapterDelegate(private val listener: Listener) : AdapterDelegate<List<SettingAdapter.Item>> {
+class SwitchAdapterDelegate(private val listener: Listener) : AdapterDelegate<List<SettingAdapter.Item>>() {
 
   override fun isForViewType(items: List<SettingAdapter.Item>, position: Int): Boolean {
     return items[position] is Item
   }
 
-  override fun onBindViewHolder(items: List<SettingAdapter.Item>, position: Int, holder: RecyclerView.ViewHolder, payloads: MutableList<Any?>?) {
+  override fun onBindViewHolder(items: List<SettingAdapter.Item>, position: Int, holder: RecyclerView.ViewHolder, payloads: MutableList<Any?>) {
     val item = items[position] as Item
     if (holder is SwitchViewHolder) {
       holder.switchButton.text = item.title

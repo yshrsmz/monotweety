@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import com.hannesdorfmann.adapterdelegates2.AdapterDelegate
+import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.base.load
@@ -17,7 +17,7 @@ import net.yslibrary.monotweety.data.user.User
 /**
  * Created by yshrsmz on 2016/10/08.
  */
-class ProfileAdapterDelegate(private val listener: Listener) : AdapterDelegate<List<SettingAdapter.Item>> {
+class ProfileAdapterDelegate(private val listener: Listener) : AdapterDelegate<List<SettingAdapter.Item>>() {
   override fun isForViewType(items: List<SettingAdapter.Item>, position: Int): Boolean {
     return items[position] is Item
   }
@@ -25,7 +25,7 @@ class ProfileAdapterDelegate(private val listener: Listener) : AdapterDelegate<L
   override fun onBindViewHolder(items: List<SettingAdapter.Item>,
                                 position: Int,
                                 holder: RecyclerView.ViewHolder,
-                                payloads: MutableList<Any?>?) {
+                                payloads: MutableList<Any?>) {
     val item = items[position] as Item
     if (holder is ViewHolder) {
       val context = holder.itemView.context

@@ -5,14 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.hannesdorfmann.adapterdelegates2.AdapterDelegate
+import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.findById
 
 /**
  * Created by yshrsmz on 2016/10/08.
  */
-class SubHeaderAdapterDelegate : AdapterDelegate<List<SettingAdapter.Item>> {
+class SubHeaderAdapterDelegate : AdapterDelegate<List<SettingAdapter.Item>>() {
 
   override fun isForViewType(items: List<SettingAdapter.Item>, position: Int): Boolean {
     return items[position] is Item
@@ -21,7 +21,7 @@ class SubHeaderAdapterDelegate : AdapterDelegate<List<SettingAdapter.Item>> {
   override fun onBindViewHolder(items: List<SettingAdapter.Item>,
                                 position: Int,
                                 holder: RecyclerView.ViewHolder,
-                                payloads: MutableList<Any?>?) {
+                                payloads: MutableList<Any?>) {
     val item = items[position] as Item
     if (holder is ViewHolder) {
       holder.title.text = item.title

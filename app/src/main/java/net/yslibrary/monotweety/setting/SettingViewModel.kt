@@ -34,6 +34,8 @@ class SettingViewModel(private val config: Config,
 
   private val changelogRequestsSubject = PublishSubject<Unit>()
 
+  private val githubRequestsSubject = PublishSubject<String>()
+
   val notificationEnabledChanged: Observable<Boolean>
     get() = notificationEnabledManager.get()
 
@@ -60,6 +62,9 @@ class SettingViewModel(private val config: Config,
 
   val changelogRequests: Observable<Unit>
     get() = changelogRequestsSubject.asObservable()
+
+  val githubRequests: Observable<String>
+    get() = githubRequestsSubject.asObservable()
 
   init {
     getUser.execute()
@@ -99,5 +104,9 @@ class SettingViewModel(private val config: Config,
 
   fun onChangelogRequested() {
     changelogRequestsSubject.onNext(Unit)
+  }
+
+  fun onGithubRequested() {
+    githubRequestsSubject.onNext(config.githubUrl)
   }
 }

@@ -48,6 +48,10 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
       viewModel.onGooglePlayRequested()
     }
 
+    override fun onGithubClick() {
+      viewModel.onGithubRequested()
+    }
+
     override fun onHowtoClick() {
 
     }
@@ -105,8 +109,6 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
 
     // how to
 
-    // star on github
-
     // padding for ad?
 
     return view
@@ -156,6 +158,11 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
         .subscribe { navigator.openExternalAppWithUrl(it) }
 
     viewModel.googlePlayRequests
+        .bindToLifecycle()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe { navigator.openExternalAppWithUrl(it) }
+
+    viewModel.githubRequests
         .bindToLifecycle()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe { navigator.openExternalAppWithUrl(it) }

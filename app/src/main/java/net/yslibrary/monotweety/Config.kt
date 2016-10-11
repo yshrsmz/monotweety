@@ -4,12 +4,14 @@ package net.yslibrary.monotweety
  * Created by yshrsmz on 2016/10/10.
  */
 data class Config(val developerUrl: String,
-                  val googlePlayUrl: String) {
+                  val googlePlayUrl: String,
+                  val githubUrl: String) {
   companion object {
     fun init(): Config {
       return Config(
           developerUrl = "https://twitter.com/yslibnet",
-          googlePlayUrl = "https://play.google.com/store/apps/details?id=net.yslibrary.monotweety"
+          googlePlayUrl = "https://play.google.com/store/apps/details?id=net.yslibrary.monotweety",
+          githubUrl = "https://github.com/yshrsmz/monotweety"
       )
     }
   }

@@ -42,6 +42,7 @@ class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter
           ViewType.HOWTO -> listener.onHowtoClick()
           ViewType.LICENSE -> listener.onLicenseClick()
           ViewType.GOOGLE_PLAY -> listener.onGooglePlayClick()
+          ViewType.GITHUB -> listener.onGithubClick()
           else -> {
             // no-op
           }
@@ -71,9 +72,11 @@ class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter
         TwoLineTextAdapterDelegate.Item(res.getString(R.string.label_app_version, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE),
             res.getString(R.string.sub_label_app_version), true, ViewType.APP_VERSION),
         OneLineTextAdapterDelegate.Item(res.getString(R.string.label_license), true, ViewType.LICENSE),
+        SubHeaderAdapterDelegate.Item(res.getString(R.string.label_support_developer), ViewType.SUBHEADER_DEVELOPER),
         TwoLineTextAdapterDelegate.Item(res.getString(R.string.label_developer),
             res.getString(R.string.sub_label_developer), true, ViewType.DEVELOPER),
-        OneLineTextAdapterDelegate.Item(res.getString(R.string.label_googleplay), true, ViewType.GOOGLE_PLAY)
+        OneLineTextAdapterDelegate.Item(res.getString(R.string.label_googleplay), true, ViewType.GOOGLE_PLAY),
+        OneLineTextAdapterDelegate.Item(res.getString(R.string.label_github), true, ViewType.GITHUB)
     )
   }
 
@@ -100,8 +103,10 @@ class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter
     HOWTO,
     APP_VERSION,
     LICENSE,
+    SUBHEADER_DEVELOPER,
     DEVELOPER,
-    GOOGLE_PLAY;
+    GOOGLE_PLAY,
+    GITHUB;
   }
 
   interface Item {
@@ -117,5 +122,6 @@ class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter
     fun onLicenseClick()
     fun onDeveloperClick()
     fun onGooglePlayClick()
+    fun onGithubClick()
   }
 }

@@ -15,6 +15,7 @@ import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.HasComponent
 import net.yslibrary.monotweety.base.findById
+import net.yslibrary.monotweety.changelog.ChangelogController
 import net.yslibrary.monotweety.license.LicenseController
 import net.yslibrary.monotweety.setting.adapter.SettingAdapter
 import net.yslibrary.monotweety.setting.adapter.SubHeaderDividerDecoration
@@ -36,7 +37,7 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
 
   val adapterListener = object : SettingAdapter.Listener {
     override fun onAppVersionClick() {
-
+      viewModel.onChangelogRequested()
     }
 
     override fun onDeveloperClick() {
@@ -104,7 +105,7 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
 
     // how to
 
-    // version info
+    // star on github
 
     // padding for ad?
 
@@ -159,6 +160,11 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe { navigator.openExternalAppWithUrl(it) }
 
+    viewModel.changelogRequests
+        .bindToLifecycle()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe { showChangelog() }
+
     bindings.notificationSwitch
         .checkedChanges()
         .bindToLifecycle()
@@ -180,6 +186,12 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
 
   fun showLicense() {
     router.pushController(RouterTransaction.with(LicenseController())
+        .pushChangeHandler(HorizontalChangeHandler())
+        .popChangeHandler(HorizontalChangeHandler()))
+  }
+
+  fun showChangelog() {
+    router.pushController(RouterTransaction.with(ChangelogController())
         .pushChangeHandler(HorizontalChangeHandler())
         .popChangeHandler(HorizontalChangeHandler()))
   }

@@ -32,6 +32,8 @@ class SettingViewModel(private val config: Config,
 
   private val openProfileRequestsSubject = PublishSubject<String>()
 
+  private val changelogRequestsSubject = PublishSubject<Unit>()
+
   val notificationEnabledChanged: Observable<Boolean>
     get() = notificationEnabledManager.get()
 
@@ -55,6 +57,9 @@ class SettingViewModel(private val config: Config,
 
   val googlePlayRequests: Observable<String>
     get() = googlePlayRequestsSubject.asObservable()
+
+  val changelogRequests: Observable<Unit>
+    get() = changelogRequestsSubject.asObservable()
 
   init {
     getUser.execute()
@@ -90,5 +95,9 @@ class SettingViewModel(private val config: Config,
 
   fun onGooglePlayRequested() {
     googlePlayRequestsSubject.onNext(config.googlePlayUrl)
+  }
+
+  fun onChangelogRequested() {
+    changelogRequestsSubject.onNext(Unit)
   }
 }

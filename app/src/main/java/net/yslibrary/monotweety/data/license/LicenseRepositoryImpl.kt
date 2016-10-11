@@ -16,6 +16,7 @@ class LicenseRepositoryImpl @Inject constructor() : LicenseRepository {
       val list = listOf(
           Licenses.fromGitHub("bluelinelabs/conductor"),
           Licenses.fromGitHub("hdodenhof/CircleImageView"),
+          Licenses.fromGitHub("gabrielemariotti/changeloglib", Licenses.LICENSE_APACHE_V2),
           Licenses.fromGitHub("google/dagger"),
           Licenses.fromGitHub("bumptech/glide", Licenses.FILE_NO_EXTENSION),
           Licenses.fromGitHub("jakewharton/rxbinding"),

@@ -2,6 +2,7 @@ package net.yslibrary.monotweety
 
 import android.app.Application
 import android.content.Context
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -47,10 +48,13 @@ open class App : Application() {
 
     appComponent(this).inject(this)
     lifecycleCallbacks.onCreate()
+
+    Timber.d("App#onCreate")
   }
 
   override fun onTerminate() {
     super.onTerminate()
+    Timber.d("App#onTerminate")
     lifecycleCallbacks.onTerminate()
   }
 

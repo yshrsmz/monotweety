@@ -21,6 +21,11 @@ android {
   buildToolsVersion "24.0.2"
 
   signingConfigs {
+    debug {
+      storeFile file("../debug.keystore")
+      storePassword 'android'
+      keyPassword 'android'
+    }
     release {
       storeFile file("../yslibrary.jks")
       keyAlias "yslibrary"
@@ -55,6 +60,7 @@ android {
     debug {
       debuggable true
       applicationIdSuffix '.debug'
+      signingConfig signingConfigs.debug
     }
   }
 

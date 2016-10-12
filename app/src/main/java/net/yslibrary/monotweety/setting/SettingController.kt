@@ -105,8 +105,6 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
 
     setEvents()
 
-    // start on reboot
-
     // how to
 
     // padding for ad?

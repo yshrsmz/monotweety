@@ -2,6 +2,8 @@ package net.yslibrary.monotweety.base
 
 import android.app.Activity
 import android.support.annotation.IdRes
+import android.support.annotation.LayoutRes
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -28,4 +30,8 @@ fun ImageView.load(url: String) {
   Glide.with(this.context)
       .load(url)
       .into(this)
+}
+
+fun ViewGroup.inflate(@LayoutRes resource: Int, root: ViewGroup = this, attachToRoot: Boolean = false): View {
+  return LayoutInflater.from(this.context).inflate(resource, root, attachToRoot)
 }

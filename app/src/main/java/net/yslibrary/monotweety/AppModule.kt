@@ -1,7 +1,10 @@
 package net.yslibrary.monotweety
 
+import android.app.Application
 import android.content.Context
 import android.support.v4.app.NotificationManagerCompat
+import com.squareup.leakcanary.LeakCanary
+import com.squareup.leakcanary.RefWatcher
 import dagger.Module
 import dagger.Provides
 import net.yslibrary.monotweety.base.Clock
@@ -45,9 +48,16 @@ open class AppModule(private val context: Context) {
     return Config.init()
   }
 
+  @AppScope
+  @Provides
+  open fun provideRefWatcher(): RefWatcher {
+    return LeakCanary.install(context.applicationContext as Application)
+  }
+
   interface Provider {
     fun notificationManager(): NotificationManagerCompat
     fun clock(): Clock
     fun config(): Config
+    fun refWatcher(): RefWatcher
   }
 }

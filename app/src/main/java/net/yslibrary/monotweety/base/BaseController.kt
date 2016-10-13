@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.bluelinelabs.conductor.rxlifecycle.RxController
 import net.yslibrary.monotweety.base.di.Names
 import net.yslibrary.rxeventbus.EventBus
 import rx.Completable
@@ -17,7 +16,7 @@ import javax.inject.Named
 /**
  * Created by yshrsmz on 2016/09/24.
  */
-abstract class BaseController : RxController() {
+abstract class BaseController : RefWatchingController() {
   @field:[Inject Named(Names.FOR_ACTIVITY)]
   lateinit var activityBus: EventBus
 

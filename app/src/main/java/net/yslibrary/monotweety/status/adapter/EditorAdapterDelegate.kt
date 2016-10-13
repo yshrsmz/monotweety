@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
+import com.jakewharton.rxbinding.widget.afterTextChangeEvents
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.base.inflate
@@ -25,6 +26,29 @@ class EditorAdapterDelegate : AdapterDelegate<List<ComposeStatusAdapter.Item>>()
                                 holder: RecyclerView.ViewHolder,
                                 payloads: MutableList<Any>) {
 
+    if (holder is ViewHolder) {
+      val item = items[position] as Item
+
+      val shouldUpdateStatus = item.clear || item.initialValue
+
+      if (shouldUpdateStatus) {
+        holder.statusInput.setText(item.status, TextView.BufferType.EDITABLE)
+      }
+      holder.statusCounter.text = item.statusLength.toString()
+
+      // update only if value is updated at somewhere
+      if (item.keepDialogOpen != holder.keepDialogOpenSwitch.isChecked) {
+        holder.keepDialogOpenSwitch.isChecked = item.keepDialogOpen
+      }
+
+      if (item.enableThread != holder.enableThreadSwitch.isChecked) {
+        holder.enableThreadSwitch.isChecked = item.enableThread
+      }
+
+      holder.statusInput.afterTextChangeEvents()
+        .subscribe {  }
+
+    }
   }
 
   override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
@@ -32,6 +56,11 @@ class EditorAdapterDelegate : AdapterDelegate<List<ComposeStatusAdapter.Item>>()
   }
 
   data class Item(val status: String,
+                  val statusLength: Int,
+                  val keepDialogOpen: Boolean,
+                  val enableThread: Boolean,
+                  val initialValue: Boolean,
+                  val clear: Boolean,
                   override val viewType: ComposeStatusAdapter.ViewType = ComposeStatusAdapter.ViewType.EDITOR) : ComposeStatusAdapter.Item
 
   class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

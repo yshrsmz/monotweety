@@ -105,6 +105,8 @@ dependencies {
   compile "com.jakewharton.rxbinding:rxbinding-appcompat-v7-kotlin:$rxbinding_version"
   compile "com.jakewharton.rxbinding:rxbinding-recyclerview-v7-kotlin:$rxbinding_version"
 
+  compile 'com.jakewharton.rxrelay:rxrelay:1.2.0'
+
   compile 'com.f2prateek.rx.preferences:rx-preferences:1.0.2'
 
   compile "com.bluelinelabs:conductor:${conductor_version}"

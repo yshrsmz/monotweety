@@ -7,7 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
-import com.jakewharton.rxbinding.widget.afterTextChangeEvents
+import com.jakewharton.rxbinding.widget.checkedChanges
+import com.jakewharton.rxbinding.widget.textChanges
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.base.inflate
@@ -15,7 +16,7 @@ import net.yslibrary.monotweety.base.inflate
 /**
  * Created by yshrsmz on 2016/10/13.
  */
-class EditorAdapterDelegate : AdapterDelegate<List<ComposeStatusAdapter.Item>>() {
+class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<List<ComposeStatusAdapter.Item>>() {
 
   override fun isForViewType(items: List<ComposeStatusAdapter.Item>, position: Int): Boolean {
     return items[position].viewType == ComposeStatusAdapter.ViewType.EDITOR
@@ -45,9 +46,14 @@ class EditorAdapterDelegate : AdapterDelegate<List<ComposeStatusAdapter.Item>>()
         holder.enableThreadSwitch.isChecked = item.enableThread
       }
 
-      holder.statusInput.afterTextChangeEvents()
-        .subscribe {  }
+      holder.statusInput.textChanges()
+          .subscribe { listener.onStatusChanged(it.toString()) }
 
+      holder.enableThreadSwitch.checkedChanges()
+          .subscribe { listener.onEnableThreadChanged(it) }
+
+      holder.keepDialogOpenSwitch.checkedChanges()
+          .subscribe { listener.onKeepDialogOpenChanged(it) }
     }
   }
 
@@ -76,5 +82,11 @@ class EditorAdapterDelegate : AdapterDelegate<List<ComposeStatusAdapter.Item>>()
         return ViewHolder(view)
       }
     }
+  }
+
+  interface Listener {
+    fun onStatusChanged(status: String)
+    fun onEnableThreadChanged(enabled: Boolean)
+    fun onKeepDialogOpenChanged(enabled: Boolean)
   }
 }

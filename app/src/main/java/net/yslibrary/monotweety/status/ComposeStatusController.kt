@@ -122,8 +122,7 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
 
     bindings.statusInput.textChanges()
         .bindToLifecycle()
-        .map { it.toString() }
-        .subscribe { viewModel.onStatusUpdated(it) }
+        .subscribe { viewModel.onStatusUpdated(it.toString()) }
 
     bindings.keepDialogOpenSwitch.checkedChanges()
         .bindToLifecycle()

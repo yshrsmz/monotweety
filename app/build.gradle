@@ -91,7 +91,6 @@ dependencies {
   kapt 'com.google.dagger:dagger-compiler:2.7'
   provided 'org.glassfish:javax.annotation:10.0-b28'
 
-  // use origin when they supports RxJava 1.2.1 and up
   compile 'com.pushtorefresh.storio:sqlite:1.11.0'
 
   compile 'io.reactivex:rxjava:1.2.1'

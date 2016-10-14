@@ -1,6 +1,11 @@
 package net.yslibrary.monotweety.status.adapter
 
+import android.support.v7.util.DiffUtil
 import com.hannesdorfmann.adapterdelegates3.ListDelegationAdapter
+import com.twitter.sdk.android.core.models.Tweet
+import rx.Single
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
 
 /**
  * Created by yshrsmz on 2016/10/13.
@@ -23,6 +28,70 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
         listener.onKeepDialogOpenChanged(enabled)
       }
     }))
+  }
+
+  fun setPreviousStatus(tweets: List<Tweet>) {
+    val tweetItems = tweets.map {
+      PreviousStatusAdapterDelegate.Item(
+          id = it.id,
+          status = it.text,
+          createdAt = it.createdAt)
+    }
+
+    notifyChange(items, tweetItems + items.last())
+  }
+
+  fun updateEditor(item: EditorAdapterDelegate.Item) {
+    notifyChange(items, items.dropLast(1) + item)
+  }
+
+  fun notifyChange(oldList: List<Item>, newList: List<Item>) {
+    Single.fromCallable {
+      DiffUtil.calculateDiff(object : DiffUtil.Callback() {
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+          val oldItem = oldList[oldItemPosition]
+          val newItem = newList[newItemPosition]
+
+          if (oldItem.viewType == newItem.viewType) {
+            if (newItem.viewType == ComposeStatusAdapter.ViewType.EDITOR) {
+              return true
+            } else if (oldItem is PreviousStatusAdapterDelegate.Item && newItem is PreviousStatusAdapterDelegate.Item) {
+              return oldItem.id == newItem.id
+            }
+          }
+
+          return false
+        }
+
+        override fun getOldListSize(): Int {
+          return oldList.size
+        }
+
+        override fun getNewListSize(): Int {
+          return newList.size
+        }
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+          val oldItem = oldList[oldItemPosition]
+          val newItem = newList[newItemPosition]
+
+          if (oldItem.viewType == newItem.viewType) {
+            if (oldItem is EditorAdapterDelegate.Item && newItem is EditorAdapterDelegate.Item) {
+              return oldItem == newItem
+            } else if (oldItem is PreviousStatusAdapterDelegate.Item && newItem is PreviousStatusAdapterDelegate.Item) {
+              return oldItem.id == newItem.id
+            }
+          }
+          return false
+        }
+      })
+    }
+        .subscribeOn(Schedulers.computation())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe {
+          items = newList
+          it.dispatchUpdatesTo(this)
+        }
   }
 
   interface Item {

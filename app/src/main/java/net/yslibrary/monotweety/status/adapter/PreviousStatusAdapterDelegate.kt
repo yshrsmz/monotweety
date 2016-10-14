@@ -30,8 +30,9 @@ class PreviousStatusAdapterDelegate : AdapterDelegate<List<ComposeStatusAdapter.
     return items[position].viewType == ComposeStatusAdapter.ViewType.PREVIOUS_STATUS
   }
 
-  data class Item(val status: String,
-                  val timestamp: Long,
+  data class Item(val id: Long,
+                  val status: String,
+                  val createdAt: String,
                   override val viewType: ComposeStatusAdapter.ViewType = ComposeStatusAdapter.ViewType.PREVIOUS_STATUS) : ComposeStatusAdapter.Item
 
   class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

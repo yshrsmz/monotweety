@@ -12,6 +12,6 @@ crashlytics-build.properties
 fabric.properties
 secret.properties
 
-yslibrary.jks
+*.jks
 
 !.idea/codeStyleSettings.xml

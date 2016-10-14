@@ -27,8 +27,8 @@ android {
       keyPassword 'android'
     }
     release {
-      storeFile file("../yslibrary.jks")
-      keyAlias "yslibrary"
+      storeFile file("../${getSecretProperty("keystoreFile")}")
+      keyAlias getSecretProperty("keyAlias")
       storePassword getSecretProperty("keystorePassword")
       keyPassword getSecretProperty("keystoreKeyPassword")
     }

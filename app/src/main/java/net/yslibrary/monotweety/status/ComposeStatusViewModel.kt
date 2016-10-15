@@ -97,14 +97,16 @@ class ComposeStatusViewModel(status: String,
 
     keepDialogOpenManager.get().first()
         .subscribe { keepDialogOpenSubject.onNext(it) }
+
+    onStatusChanged(status)
   }
 
-  fun onStatusUpdated(status: String) {
+  fun onStatusChanged(status: String) {
     checkStatusLength.execute(status)
         .subscribeOn(Schedulers.io())
         .subscribe {
           statusSubject.onNext(status)
-          statusLengthSubject.onNext(StatusLength(it.valid, it.length))
+          statusLengthSubject.onNext(StatusLength(it.valid, it.length, config.statusMaxLength))
           isSendableStatusSubject.onNext(it.valid)
         }
   }

@@ -13,11 +13,17 @@ import com.jakewharton.rxbinding.widget.textChanges
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.base.inflate
+import net.yslibrary.monotweety.base.setTo
+import rx.subscriptions.SerialSubscription
 
 /**
  * Created by yshrsmz on 2016/10/13.
  */
 class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<List<ComposeStatusAdapter.Item>>() {
+
+  val statusInputSubscription = SerialSubscription()
+  val enableThreadSwitchSubscription = SerialSubscription()
+  val keepDialogOpenSubscription = SerialSubscription()
 
   override fun isForViewType(items: List<ComposeStatusAdapter.Item>, position: Int): Boolean {
     return items[position].viewType == ComposeStatusAdapter.ViewType.EDITOR
@@ -50,18 +56,26 @@ class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
       }
 
       holder.statusInput.textChanges()
+          .skip(1)
           .subscribe { listener.onStatusChanged(it.toString()) }
+          .setTo(statusInputSubscription)
 
       holder.enableThreadSwitch.checkedChanges()
+          .skip(1)
           .subscribe { listener.onEnableThreadChanged(it) }
+          .setTo(enableThreadSwitchSubscription)
 
       holder.keepDialogOpenSwitch.checkedChanges()
+          .skip(1)
           .subscribe { listener.onKeepDialogOpenChanged(it) }
+          .setTo(keepDialogOpenSubscription)
     }
   }
 
   override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
-    return ViewHolder.create(parent)
+    val holder = ViewHolder.create(parent)
+
+    return holder
   }
 
   data class Item(val status: String,
@@ -70,8 +84,8 @@ class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
                   val valid: Boolean,
                   val keepDialogOpen: Boolean,
                   val enableThread: Boolean,
-                  val initialValue: Boolean,
                   val clear: Boolean,
+                  val initialValue: Boolean = false,
                   override val viewType: ComposeStatusAdapter.ViewType = ComposeStatusAdapter.ViewType.EDITOR) : ComposeStatusAdapter.Item
 
   class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

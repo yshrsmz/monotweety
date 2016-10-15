@@ -6,7 +6,6 @@ import com.twitter.sdk.android.core.models.Tweet
 import rx.Single
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
-import timber.log.Timber
 
 /**
  * Created by yshrsmz on 2016/10/13.
@@ -32,7 +31,7 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
       }
     }))
 
-    items = emptyList()
+    items = mutableListOf()
   }
 
   private fun editorItem(): EditorAdapterDelegate.Item {
@@ -47,39 +46,31 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
           createdAt = it.createdAt)
     }
 
-    notifyChange(items, tweetItems + items.last())
+    calculateDiff(items, tweetItems + items.last())
+  }
+
+  fun updateEditorInternal(item: EditorAdapterDelegate.Item) {
+    val change: Single<Pair<DiffUtil.DiffResult, List<Item>>>
+    if (items.isEmpty() || items.last().viewType != ViewType.EDITOR) {
+      // list is empty or last item is not editor
+      change = calculateDiff(items, items + item)
+    } else {
+      // list item is not empty and last item is editor
+      change = calculateDiff(items, items.dropLast(1) + item)
+    }
+    change.subscribe {
+      items = it.second
+      it.first.dispatchUpdatesTo(this)
+      editorInitialized = true
+    }
   }
 
   fun updateEditor(item: EditorAdapterDelegate.Item) {
-    notifyChange(items, items.dropLast(1) + item)
-  }
-
-  fun initializeEditor(status: String, keepDialogOpen: Boolean) {
-    if (editorInitialized) {
-      Timber.w("Editor is already initialized")
-      return
-    }
-    editorInitialized = true
-
-    val item = EditorAdapterDelegate.Item(
-        status = status,
-        statusLength = 0,
-        maxLength = 0,
-        keepDialogOpen = keepDialogOpen,
-        enableThread = false,
-        valid = false,
-        initialValue = true,
-        clear = false)
-
-    if (items.isEmpty() || items.last().viewType != ViewType.EDITOR) {
-      notifyChange(items, items + item)
-    } else {
-      notifyChange(items, items.dropLast(1) + item)
-    }
+    updateEditorInternal(item.copy(initialValue = !editorInitialized))
   }
 
   fun clearEditor() {
-    updateEditor(editorItem()
+    updateEditorInternal(editorItem()
         .copy(status = "",
             statusLength = 0,
             valid = false,
@@ -88,14 +79,14 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
   }
 
   fun updateStatusCounter(valid: Boolean, length: Int, maxLength: Int) {
-    updateEditor(editorItem()
+    updateEditorInternal(editorItem()
         .copy(valid = valid,
             statusLength = length,
             maxLength = maxLength))
   }
 
-  fun notifyChange(oldList: List<Item>, newList: List<Item>) {
-    Single.fromCallable {
+  fun calculateDiff(oldList: List<Item>, newList: List<Item>): Single<Pair<DiffUtil.DiffResult, List<Item>>> {
+    return Single.fromCallable {
       DiffUtil.calculateDiff(object : DiffUtil.Callback() {
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
           val oldItem = oldList[oldItemPosition]
@@ -135,12 +126,9 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
         }
       })
     }
+        .map { Pair<DiffUtil.DiffResult, List<Item>>(it, newList) }
         .subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe {
-          items = newList
-          it.dispatchUpdatesTo(this)
-        }
   }
 
   interface Item {

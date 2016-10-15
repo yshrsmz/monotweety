@@ -1,6 +1,7 @@
 package net.yslibrary.monotweety.status.adapter
 
 import android.support.design.widget.TextInputEditText
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SwitchCompat
 import android.view.View
@@ -35,7 +36,9 @@ class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
       if (shouldUpdateStatus) {
         holder.statusInput.setText(item.status, TextView.BufferType.EDITABLE)
       }
-      holder.statusCounter.text = item.statusLength.toString()
+      val counterColor = if (item.valid) R.color.colorTextSecondary else R.color.red
+      holder.statusCounter.setTextColor(ContextCompat.getColor(holder.itemView.context, counterColor))
+      holder.statusCounter.text = "${item.statusLength}/${item.maxLength}"
 
       // update only if value is updated at somewhere
       if (item.keepDialogOpen != holder.keepDialogOpenSwitch.isChecked) {
@@ -63,6 +66,8 @@ class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
 
   data class Item(val status: String,
                   val statusLength: Int,
+                  val maxLength: Int,
+                  val valid: Boolean,
                   val keepDialogOpen: Boolean,
                   val enableThread: Boolean,
                   val initialValue: Boolean,

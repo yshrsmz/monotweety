@@ -6,11 +6,14 @@ import com.twitter.sdk.android.core.models.Tweet
 import rx.Single
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
+import timber.log.Timber
 
 /**
  * Created by yshrsmz on 2016/10/13.
  */
 class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapter<List<ComposeStatusAdapter.Item>>() {
+
+  var editorInitialized = false
 
   init {
     delegatesManager.addDelegate(PreviousStatusAdapterDelegate())
@@ -28,6 +31,12 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
         listener.onKeepDialogOpenChanged(enabled)
       }
     }))
+
+    items = emptyList()
+  }
+
+  private fun editorItem(): EditorAdapterDelegate.Item {
+    return items.last() as EditorAdapterDelegate.Item
   }
 
   fun setPreviousStatus(tweets: List<Tweet>) {
@@ -43,6 +52,46 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
 
   fun updateEditor(item: EditorAdapterDelegate.Item) {
     notifyChange(items, items.dropLast(1) + item)
+  }
+
+  fun initializeEditor(status: String, keepDialogOpen: Boolean) {
+    if (editorInitialized) {
+      Timber.w("Editor is already initialized")
+      return
+    }
+    editorInitialized = true
+
+    val item = EditorAdapterDelegate.Item(
+        status = status,
+        statusLength = 0,
+        maxLength = 0,
+        keepDialogOpen = keepDialogOpen,
+        enableThread = false,
+        valid = false,
+        initialValue = true,
+        clear = false)
+
+    if (items.isEmpty() || items.last().viewType != ViewType.EDITOR) {
+      notifyChange(items, items + item)
+    } else {
+      notifyChange(items, items.dropLast(1) + item)
+    }
+  }
+
+  fun clearEditor() {
+    updateEditor(editorItem()
+        .copy(status = "",
+            statusLength = 0,
+            valid = false,
+            initialValue = false,
+            clear = true))
+  }
+
+  fun updateStatusCounter(valid: Boolean, length: Int, maxLength: Int) {
+    updateEditor(editorItem()
+        .copy(valid = valid,
+            statusLength = length,
+            maxLength = maxLength))
   }
 
   fun notifyChange(oldList: List<Item>, newList: List<Item>) {

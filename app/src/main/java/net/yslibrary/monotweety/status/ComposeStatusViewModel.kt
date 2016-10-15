@@ -2,11 +2,13 @@ package net.yslibrary.monotweety.status
 
 import com.twitter.sdk.android.core.TwitterApiException
 import com.twitter.sdk.android.core.models.Tweet
+import net.yslibrary.monotweety.Config
 import net.yslibrary.monotweety.setting.domain.KeepDialogOpenManager
 import net.yslibrary.monotweety.status.domain.CheckStatusLength
 import net.yslibrary.monotweety.status.domain.GetPreviousStatus
 import net.yslibrary.monotweety.status.domain.UpdateStatus
 import rx.Observable
+import rx.Single
 import rx.lang.kotlin.BehaviorSubject
 import rx.lang.kotlin.PublishSubject
 import rx.schedulers.Schedulers
@@ -16,6 +18,7 @@ import timber.log.Timber
  * Created by yshrsmz on 2016/10/02.
  */
 class ComposeStatusViewModel(status: String,
+                             private val config: Config,
                              private val checkStatusLength: CheckStatusLength,
                              private val updateStatus: UpdateStatus,
                              private val getPreviousStatus: GetPreviousStatus,
@@ -65,6 +68,9 @@ class ComposeStatusViewModel(status: String,
 
   val allowCloseView: Observable<Boolean>
     get() = allowCloseViewSubject.asObservable()
+
+  val statusMaxLength: Single<Int>
+    get() = Single.just(config.statusMaxLength)
 
   val closeViewRequests: Observable<Unit>
     get() {

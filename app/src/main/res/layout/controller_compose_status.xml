@@ -2,60 +2,64 @@
 
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-  <ScrollView
+  <!--<ScrollView-->
+  <!--android:layout_width="match_parent"-->
+  <!--android:layout_height="match_parent">-->
+
+  <!--<LinearLayout-->
+  <!--android:layout_width="match_parent"-->
+  <!--android:layout_height="wrap_content"-->
+  <!--android:orientation="vertical"-->
+  <!--android:padding="16dp">-->
+
+  <!--<android.support.design.widget.TextInputLayout-->
+  <!--android:layout_width="match_parent"-->
+  <!--android:layout_height="wrap_content">-->
+
+  <!--<android.support.design.widget.TextInputEditText-->
+  <!--android:id="@+id/status_input"-->
+  <!--android:layout_width="match_parent"-->
+  <!--android:layout_height="wrap_content"-->
+  <!--android:hint="@string/label_whats_happening"/>-->
+  <!--</android.support.design.widget.TextInputLayout>-->
+
+  <!--<TextView-->
+  <!--android:id="@+id/status_counter"-->
+  <!--android:layout_width="match_parent"-->
+  <!--android:layout_height="wrap_content"-->
+  <!--android:layout_marginBottom="16dp"-->
+  <!--android:gravity="center_vertical|end"-->
+  <!--android:maxLines="1"-->
+  <!--android:paddingLeft="4dp"-->
+  <!--android:paddingRight="4dp"-->
+  <!--android:textAppearance="@style/TextAppearance.AppCompat.Small"-->
+  <!--tools:text="0/140"/>-->
+
+  <!--<android.support.v7.widget.SwitchCompat-->
+  <!--android:id="@+id/keep_dialog"-->
+  <!--android:layout_width="match_parent"-->
+  <!--android:layout_height="wrap_content"-->
+  <!--android:layout_marginBottom="16dp"-->
+  <!--android:text="@string/label_keep_dialog"-->
+  <!--android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>-->
+
+  <!--<android.support.v7.widget.SwitchCompat-->
+  <!--android:id="@+id/enable_thread"-->
+  <!--android:layout_width="match_parent"-->
+  <!--android:layout_height="wrap_content"-->
+  <!--android:text="@string/label_enable_thread"-->
+  <!--android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>-->
+
+  <!--</LinearLayout>-->
+  <!--</ScrollView>-->
+
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/list"
       android:layout_width="match_parent"
-      android:layout_height="match_parent">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-      <android.support.design.widget.TextInputLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/status_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/label_whats_happening"/>
-      </android.support.design.widget.TextInputLayout>
-
-      <TextView
-          android:id="@+id/status_counter"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginBottom="16dp"
-          android:gravity="center_vertical|end"
-          android:maxLines="1"
-          android:paddingLeft="4dp"
-          android:paddingRight="4dp"
-          android:textAppearance="@style/TextAppearance.AppCompat.Small"
-          tools:text="0/140"/>
-
-      <android.support.v7.widget.SwitchCompat
-          android:id="@+id/keep_dialog"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginBottom="16dp"
-          android:text="@string/label_keep_dialog"
-          android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
-
-      <android.support.v7.widget.SwitchCompat
-          android:id="@+id/enable_thread"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="@string/label_enable_thread"
-          android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
-
-    </LinearLayout>
-  </ScrollView>
+      android:layout_height="match_parent"/>
 
   <FrameLayout
       android:id="@+id/overlay_root"

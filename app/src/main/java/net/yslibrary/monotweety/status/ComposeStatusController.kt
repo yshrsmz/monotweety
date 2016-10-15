@@ -1,26 +1,28 @@
 package net.yslibrary.monotweety.status
 
-import android.support.design.widget.TextInputEditText
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
-import android.support.v7.widget.SwitchCompat
+import android.support.v7.widget.RecyclerView
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.TextView
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
-import com.jakewharton.rxbinding.widget.checkedChanges
-import com.jakewharton.rxbinding.widget.textChanges
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.HasComponent
 import net.yslibrary.monotweety.base.ProgressController
 import net.yslibrary.monotweety.base.findById
+import net.yslibrary.monotweety.status.adapter.ComposeStatusAdapter
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.lang.kotlin.PublishSubject
 import timber.log.Timber
 import javax.inject.Inject
+
+
+
+
 
 /**
  * Created by yshrsmz on 2016/10/01.
@@ -35,7 +37,23 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
         .composeStatusComponent(ComposeStatusViewModule(status))
   }
 
+  val adapterListener = object : ComposeStatusAdapter.Listener {
+    override fun onEnableThreadChanged(enabled: Boolean) {
+      viewModel.onEnableThreadChanged(enabled)
+    }
+
+    override fun onKeepDialogOpenChanged(enabled: Boolean) {
+      viewModel.onKeepDialogOpenChanged(enabled)
+    }
+
+    override fun onStatusChanged(status: String) {
+      viewModel.onStatusUpdated(status)
+    }
+  }
+
   lateinit var bindings: Bindings
+
+  val adapter: ComposeStatusAdapter by lazy { ComposeStatusAdapter(adapterListener)  }
 
   @field:[Inject]
   lateinit var viewModel: ComposeStatusViewModel
@@ -112,8 +130,7 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
           }
         }
 
-    viewModel.messages
-        .bindToLifecycle()
+    viewModel.messages.bindToLifecycle()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe { toastLong(it).show() }
 
@@ -230,10 +247,11 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
   }
 
   inner class Bindings(view: View) {
-    val statusInput = view.findById<TextInputEditText>(R.id.status_input)
-    val statusCounter = view.findById<TextView>(R.id.status_counter)
-    val keepDialogOpenSwitch = view.findById<SwitchCompat>(R.id.keep_dialog)
-    val enableThreadSwitch = view.findById<SwitchCompat>(R.id.enable_thread)
+    //    val statusInput = view.findById<TextInputEditText>(R.id.status_input)
+//    val statusCounter = view.findById<TextView>(R.id.status_counter)
+//    val keepDialogOpenSwitch = view.findById<SwitchCompat>(R.id.keep_dialog)
+//    val enableThreadSwitch = view.findById<SwitchCompat>(R.id.enable_thread)
+    val list = view.findById<RecyclerView>(R.id.list)
     val overlayRoot = view.findById<FrameLayout>(R.id.overlay_root)
   }
 }

@@ -5,7 +5,7 @@ import com.twitter.sdk.android.core.Result
 import com.twitter.sdk.android.core.TwitterException
 import com.twitter.sdk.android.core.models.Configuration
 import com.twitter.sdk.android.core.services.ConfigurationService
-import rx.AsyncEmitter
+import rx.Emitter
 import rx.Observable
 import rx.Single
 
@@ -30,6 +30,6 @@ class ConfigRemoteDataManagerImpl(private val configurationService: Configuratio
         }
       })
       emitter.setCancellation { call.cancel() }
-    }, AsyncEmitter.BackpressureMode.BUFFER).toSingle()
+    }, Emitter.BackpressureMode.BUFFER).toSingle()
   }
 }

@@ -3,6 +3,7 @@ package net.yslibrary.monotweety.status
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.SimpleItemAnimator
 import android.view.*
 import android.widget.FrameLayout
 import com.bluelinelabs.conductor.RouterTransaction
@@ -80,6 +81,11 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
 
   fun setEvents() {
 
+    // https://code.google.com/p/android/issues/detail?id=161559
+    // disable animation to avoid duplicated viewholder
+    if (bindings.list.itemAnimator is SimpleItemAnimator) {
+      (bindings.list.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+    }
     bindings.list.adapter = adapter
     bindings.list.layoutManager = LinearLayoutManager(activity)
 

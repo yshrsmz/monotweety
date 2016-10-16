@@ -54,26 +54,24 @@ class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
       if (item.enableThread != holder.enableThreadSwitch.isChecked) {
         holder.enableThreadSwitch.isChecked = item.enableThread
       }
-
-      holder.statusInput.textChanges()
-          .skip(1)
-          .subscribe { listener.onStatusChanged(it.toString()) }
-          .setTo(statusInputSubscription)
-
-      holder.enableThreadSwitch.checkedChanges()
-          .skip(1)
-          .subscribe { listener.onEnableThreadChanged(it) }
-          .setTo(enableThreadSwitchSubscription)
-
-      holder.keepDialogOpenSwitch.checkedChanges()
-          .skip(1)
-          .subscribe { listener.onKeepDialogOpenChanged(it) }
-          .setTo(keepDialogOpenSubscription)
     }
   }
 
   override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
     val holder = ViewHolder.create(parent)
+
+    holder.statusInput.textChanges()
+        .skip(1)
+        .subscribe { listener.onStatusChanged(it.toString()) }
+        .setTo(statusInputSubscription)
+
+    holder.enableThreadSwitch.checkedChanges()
+        .subscribe { listener.onEnableThreadChanged(it) }
+        .setTo(enableThreadSwitchSubscription)
+
+    holder.keepDialogOpenSwitch.checkedChanges()
+        .subscribe { listener.onKeepDialogOpenChanged(it) }
+        .setTo(keepDialogOpenSubscription)
 
     return holder
   }

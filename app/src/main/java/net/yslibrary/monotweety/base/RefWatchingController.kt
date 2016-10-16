@@ -13,13 +13,13 @@ abstract class RefWatchingController : RxController() {
 
   private var hasExisted: Boolean = false
 
-  @field:[Inject]
-  lateinit var refWatcher: RefWatcher
+  @set:[Inject]
+  var refWatcher: RefWatcher? = null
 
   override fun onDestroy() {
     super.onDestroy()
     if (hasExisted) {
-      refWatcher.watch(this)
+      refWatcher?.watch(this)
     }
   }
 
@@ -28,7 +28,7 @@ abstract class RefWatchingController : RxController() {
 
     hasExisted = !changeType.isEnter
     if (isDestroyed) {
-      refWatcher.watch(this)
+      refWatcher?.watch(this)
     }
   }
 }

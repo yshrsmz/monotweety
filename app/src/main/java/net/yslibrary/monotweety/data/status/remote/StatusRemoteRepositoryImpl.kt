@@ -6,7 +6,7 @@ import com.twitter.sdk.android.core.TwitterException
 import com.twitter.sdk.android.core.models.Tweet
 import com.twitter.sdk.android.core.services.StatusesService
 import net.yslibrary.monotweety.base.di.UserScope
-import rx.AsyncEmitter
+import rx.Emitter
 import rx.Observable
 import rx.Single
 import javax.inject.Inject
@@ -31,6 +31,6 @@ class StatusRemoteRepositoryImpl @Inject constructor(private val statusesService
         }
       })
       emitter.setCancellation { call.cancel() }
-    }, AsyncEmitter.BackpressureMode.BUFFER).toSingle()
+    }, Emitter.BackpressureMode.BUFFER).toSingle()
   }
 }

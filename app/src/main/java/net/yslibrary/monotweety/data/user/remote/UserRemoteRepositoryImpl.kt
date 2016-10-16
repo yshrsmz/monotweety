@@ -6,7 +6,7 @@ import com.twitter.sdk.android.core.TwitterException
 import com.twitter.sdk.android.core.models.User
 import com.twitter.sdk.android.core.services.AccountService
 import net.yslibrary.monotweety.base.di.UserScope
-import rx.AsyncEmitter
+import rx.Emitter
 import rx.Observable
 import rx.Single
 import javax.inject.Inject
@@ -30,6 +30,6 @@ class UserRemoteRepositoryImpl @Inject constructor(private val accountService: A
         }
       })
       emitter.setCancellation { call.cancel() }
-    }, AsyncEmitter.BackpressureMode.BUFFER).toSingle()
+    }, Emitter.BackpressureMode.BUFFER).toSingle()
   }
 }

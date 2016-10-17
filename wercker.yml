@@ -1,0 +1,14 @@
+box: yshrsmz/android
+
+build:
+  steps:
+    - script:
+        name: obtain secrets
+        code: echo $SECRETS | base64 -d > ./secret.properties
+    - script:
+        name: obtain release jks
+        code: echo $RELEASE_JKS | base64 -d > monotweety.jks
+    - script:
+        name: run gradle assembleDebug
+        code: |
+          ./gradlew --project-cache-dir=$WERCKER_CACHE_DIR assembleDebug -PdisablePreDex

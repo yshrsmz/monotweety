@@ -90,19 +90,16 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
     bindings.list.layoutManager = LinearLayoutManager(activity)
 
     Observable.combineLatest(
-        Observable.zip(
-            viewModel.status,
-            viewModel.statusLength,
-            { status, statusLength -> Pair(status, statusLength) }).distinctUntilChanged(),
+        viewModel.statusInfo.distinctUntilChanged(),
         viewModel.keepDialogOpen,
         viewModel.tweetAsThread,
-        { statusAndLength, keepDialogOpen, tweetAsThread ->
-          EditorAdapterDelegate.Item(status = statusAndLength.first,
+        { statusInfo, keepDialogOpen, tweetAsThread ->
+          EditorAdapterDelegate.Item(status = statusInfo.status,
               keepDialogOpen = keepDialogOpen,
               enableThread = tweetAsThread,
-              statusLength = statusAndLength.second.length,
-              maxLength = statusAndLength.second.maxLength,
-              valid = statusAndLength.second.valid,
+              statusLength = statusInfo.length,
+              maxLength = statusInfo.maxLength,
+              valid = statusInfo.valid,
               clear = false)
         })
         .distinctUntilChanged()

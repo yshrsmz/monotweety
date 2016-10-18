@@ -65,12 +65,12 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
 
   fun setEvents() {
     // fill initial status string
-    viewModel.status
+    viewModel.statusInfo
         .first()
-        .filter { it.isNotBlank() }
+        .filter { it.status.isNotBlank() }
         .bindToLifecycle()
         .subscribe {
-          bindings.statusInput.setText(it, TextView.BufferType.EDITABLE)
+          bindings.statusInput.setText(it.status, TextView.BufferType.EDITABLE)
         }
 
     viewModel.keepDialogOpen
@@ -96,7 +96,7 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe { activity?.invalidateOptionsMenu() }
 
-    viewModel.statusLength
+    viewModel.statusInfo
         .bindToLifecycle()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe { updateStatusCounter(it.valid, it.length, it.maxLength) }

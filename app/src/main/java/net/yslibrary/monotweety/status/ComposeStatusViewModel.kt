@@ -23,9 +23,7 @@ class ComposeStatusViewModel(status: String,
 
   private val isSendableStatusSubject = BehaviorSubject<Boolean>(false)
 
-  private val statusLengthSubject = BehaviorSubject<StatusLength>()
-
-  private val statusSubject = BehaviorSubject<String>(status)
+  private val statusLengthSubject = BehaviorSubject<StatusInfo>()
 
   private val statusUpdatedSubject = PublishSubject<Unit>()
 
@@ -42,11 +40,8 @@ class ComposeStatusViewModel(status: String,
   val isSendableStatus: Observable<Boolean>
     get() = isSendableStatusSubject.asObservable()
 
-  val statusLength: Observable<StatusLength>
+  val statusInfo: Observable<StatusInfo>
     get() = statusLengthSubject.asObservable()
-
-  val status: Observable<String>
-    get() = statusSubject.asObservable()
 
   val statusUpdated: Observable<Unit>
     get() = statusUpdatedSubject.asObservable()
@@ -91,14 +86,15 @@ class ComposeStatusViewModel(status: String,
 
     keepDialogOpenManager.get().first()
         .subscribe { keepDialogOpenSubject.onNext(it) }
+
+    onStatusUpdated(status)
   }
 
   fun onStatusUpdated(status: String) {
     checkStatusLength.execute(status)
         .subscribeOn(Schedulers.io())
         .subscribe {
-          statusSubject.onNext(status)
-          statusLengthSubject.onNext(StatusLength(it.valid, it.length))
+          statusLengthSubject.onNext(StatusInfo(status, it.valid, it.length))
           isSendableStatusSubject.onNext(it.valid)
         }
   }
@@ -108,9 +104,9 @@ class ComposeStatusViewModel(status: String,
         isSendableStatus.filter { it },
         tweetAsThread,
         getPreviousStatus.execute().first(),
-        status,
-        { sendable, asThread, previousTweet, status ->
-          Pair<Tweet?, String>(if (asThread) previousTweet else null, status)
+        statusInfo,
+        { sendable, asThread, previousTweet, info ->
+          Pair<Tweet?, String>(if (asThread) previousTweet else null, info.status)
         })
         .first().toSingle()
         .doOnSuccess { progressEventsSubject.onNext(ProgressEvent.IN_PROGRESS) }
@@ -145,7 +141,7 @@ class ComposeStatusViewModel(status: String,
     allowCloseViewSubject.onNext(allowCloseView)
   }
 
-  data class StatusLength(val valid: Boolean, val length: Int, val maxLength: Int = 140)
+  data class StatusInfo(val status: String, val valid: Boolean, val length: Int, val maxLength: Int = 140)
 
   enum class ProgressEvent {
     IN_PROGRESS,

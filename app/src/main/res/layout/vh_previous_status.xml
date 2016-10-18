@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:paddingBottom="@dimen/tile_vertical_padding"
+              android:paddingLeft="@dimen/tile_horizontal_padding"
+              android:paddingRight="@dimen/tile_horizontal_padding"
+              android:paddingTop="@dimen/tile_vertical_padding">
+
+  <TextView
+      android:id="@+id/status"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"/>
+
+  <TextView
+      android:id="@+id/timestamp"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="right"
+      android:maxLines="1"
+      tools:text="timestamp"/>
 
 </LinearLayout>

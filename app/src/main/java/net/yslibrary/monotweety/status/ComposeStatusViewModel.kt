@@ -42,6 +42,8 @@ class ComposeStatusViewModel(status: String,
 
   private val allowCloseViewSubject = BehaviorSubject<Boolean>(false)
 
+  private val previousStatusSubject = BehaviorSubject<Tweet?>(null)
+
   val isSendableStatus: Observable<Boolean>
     get() = isSendableStatusSubject.asObservable()
 
@@ -72,6 +74,9 @@ class ComposeStatusViewModel(status: String,
   val statusMaxLength: Single<Int>
     get() = Single.just(config.statusMaxLength)
 
+  val previousStatus: Observable<Tweet?>
+    get() = previousStatusSubject.asObservable()
+
   val closeViewRequests: Observable<Unit>
     get() {
       return statusUpdatedSubject
@@ -93,6 +98,7 @@ class ComposeStatusViewModel(status: String,
     getPreviousStatus.execute()
         .subscribe {
           Timber.d("previous status: ${it?.id}")
+          previousStatusSubject.onNext(it)
         }
 
     keepDialogOpenManager.get().first()

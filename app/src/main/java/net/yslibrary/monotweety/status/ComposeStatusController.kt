@@ -112,12 +112,6 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
           adapter.updateEditor(it)
         }
 
-    // reset EditText
-    viewModel.statusUpdated
-        .bindToLifecycle()
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe { adapter.clearEditor() }
-
     viewModel.closeViewRequests
         .bindToLifecycle()
         .subscribe { activity?.finish() }
@@ -136,6 +130,14 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
             ComposeStatusViewModel.ProgressEvent.IN_PROGRESS -> showLoadingState()
             ComposeStatusViewModel.ProgressEvent.FINISHED -> hideLoadingState()
           }
+        }
+
+    viewModel.statusUpdated
+        .zipWith(viewModel.previousStatus, { unit, tweet -> tweet })
+        .bindToLifecycle()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe {
+          adapter.updatePreviousTweetAndClearEditor(if (it == null) emptyList() else listOf(it))
         }
 
     viewModel.messages.bindToLifecycle()

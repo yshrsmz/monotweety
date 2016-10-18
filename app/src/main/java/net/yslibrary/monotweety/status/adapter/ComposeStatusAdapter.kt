@@ -6,6 +6,7 @@ import com.twitter.sdk.android.core.models.Tweet
 import rx.Single
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
+import timber.log.Timber
 
 /**
  * Created by yshrsmz on 2016/10/13.
@@ -47,6 +48,13 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
     }
 
     calculateDiff(items, tweetItems + items.last())
+        .subscribe {
+          synchronized(ComposeStatusAdapter@this, {
+            Timber.d("update previous status")
+            items = it.second
+            it.first.dispatchUpdatesTo(this)
+          })
+        }
   }
 
   fun updateEditorInternal(item: EditorAdapterDelegate.Item) {
@@ -59,14 +67,37 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
       change = calculateDiff(items, items.dropLast(1) + item)
     }
     change.subscribe {
-      items = it.second
-      it.first.dispatchUpdatesTo(this)
-      editorInitialized = true
+      synchronized(ComposeStatusAdapter@this, {
+        Timber.d("update editor")
+        items = it.second
+        it.first.dispatchUpdatesTo(this)
+        editorInitialized = true
+      })
     }
   }
 
   fun updateEditor(item: EditorAdapterDelegate.Item) {
     updateEditorInternal(item.copy(initialValue = !editorInitialized))
+  }
+
+  fun updatePreviousTweetAndClearEditor(tweets: List<Tweet>) {
+    val tweetItems = tweets.map {
+      PreviousStatusAdapterDelegate.Item(
+          id = it.id,
+          status = it.text,
+          createdAt = it.createdAt)
+    }
+    calculateDiff(items, tweetItems + editorItem()
+        .copy(status = "",
+            statusLength = 0,
+            valid = false,
+            initialValue = false,
+            clear = true))
+        .subscribe {
+          Timber.d("update tweet & clear editor")
+          items = it.second
+          it.first.dispatchUpdatesTo(this)
+        }
   }
 
   fun clearEditor() {

@@ -67,6 +67,11 @@ android {
   sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
   }
+
+  lintOptions {
+    textReport true
+    textOutput 'stdout'
+  }
 }
 
 ext.support_lib_version = '24.2.1'

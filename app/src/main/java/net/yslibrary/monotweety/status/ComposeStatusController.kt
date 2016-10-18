@@ -4,6 +4,7 @@ import android.support.design.widget.TextInputEditText
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.SwitchCompat
+import android.util.Pair
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.TextView
@@ -109,6 +110,7 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
           when (it) {
             ComposeStatusViewModel.ProgressEvent.IN_PROGRESS -> showLoadingState()
             ComposeStatusViewModel.ProgressEvent.FINISHED -> hideLoadingState()
+            else -> hideLoadingState()
           }
         }
 

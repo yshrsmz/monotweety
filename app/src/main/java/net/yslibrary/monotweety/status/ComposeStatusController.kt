@@ -238,10 +238,6 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
   }
 
   inner class Bindings(view: View) {
-    //    val statusInput = view.findById<TextInputEditText>(R.id.status_input)
-//    val statusCounter = view.findById<TextView>(R.id.status_counter)
-//    val keepDialogOpenSwitch = view.findById<SwitchCompat>(R.id.keep_dialog)
-//    val enableThreadSwitch = view.findById<SwitchCompat>(R.id.enable_thread)
     val list = view.findById<RecyclerView>(R.id.list)
     val overlayRoot = view.findById<FrameLayout>(R.id.overlay_root)
   }

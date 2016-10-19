@@ -11,7 +11,7 @@ build:
     - script:
         name: run gradle assembleDebug
         code: |
-          ./gradlew --project-cache-dir=$WERCKER_CACHE_DIR assembleDebug -PdisablePreDex
+          ./gradlew --project-cache-dir=$WERCKER_CACHE_DIR assembleDebug testDebugUnitTest createDebugUnitTestCoverageReport -PdisablePreDex
 
   after-steps:
     - script:

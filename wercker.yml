@@ -14,6 +14,9 @@ build:
           ./gradlew --project-cache-dir=$WERCKER_CACHE_DIR assembleDebug -PdisablePreDex
 
   after-steps:
+    - script:
+        name: codecov integration
+        code: bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN -s "app/build/reports/jacoco/DebugUnitTest"
     - slack-notifier:
         url: $SLACK_URL
         channel: general

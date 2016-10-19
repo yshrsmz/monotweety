@@ -5,6 +5,9 @@ apply plugin: 'com.github.ben-manes.versions'
 apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: 'io.fabric'
 
+
+apply from: rootProject.file("gradle/jacoco.gradle")
+
 def getSecretProperty(name) {
   Properties properties = new Properties()
   properties.load(project.rootProject.file('secret.properties').newDataInputStream())
@@ -91,6 +94,7 @@ dependencies {
   compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
     transitive = true;
   }
+  compile 'com.squareup.okhttp3:okhttp:3.4.1'
 
   compile 'com.google.dagger:dagger:2.7'
   kapt 'com.google.dagger:dagger-compiler:2.7'
@@ -141,6 +145,12 @@ dependencies {
 
 
   testCompile 'junit:junit:4.12'
+  testCompile 'org.mockito:mockito-core:2.0.0-beta.118'
+  testCompile 'org.assertj:assertj-core:1.7.0'
+  testCompile 'com.squareup.okhttp3:mockwebserver:3.4.1'
+  testCompile('org.robolectric:robolectric:3.1.2') {
+    exclude group: 'com.android.support'
+  }
 }
 repositories {
   mavenCentral()

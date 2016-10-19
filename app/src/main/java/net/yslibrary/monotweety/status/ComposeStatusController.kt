@@ -4,6 +4,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SimpleItemAnimator
+import android.util.Pair
 import android.view.*
 import android.widget.FrameLayout
 import com.bluelinelabs.conductor.RouterTransaction
@@ -126,6 +127,7 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
           when (it) {
             ComposeStatusViewModel.ProgressEvent.IN_PROGRESS -> showLoadingState()
             ComposeStatusViewModel.ProgressEvent.FINISHED -> hideLoadingState()
+            else -> hideLoadingState()
           }
         }
 

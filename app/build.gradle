@@ -31,7 +31,7 @@ android {
     }
     release {
       storeFile file("../${getSecretProperty("keystoreFile")}")
-      keyAlias getSecretProperty("keyAlias")
+      keyAlias getSecretProperty("keystoreAlias")
       storePassword getSecretProperty("keystorePassword")
       keyPassword getSecretProperty("keystoreKeyPassword")
     }
@@ -42,7 +42,7 @@ android {
     minSdkVersion 21
     targetSdkVersion 24
     versionCode 1
-    versionName "1.0"
+    versionName "0.1.0-alpha"
 
     buildConfigField 'String', 'TWITTER_API_KEY', TWITTER_API_KEY
     buildConfigField 'String', 'TWITTER_API_SECRET', TWITTER_API_SECRET

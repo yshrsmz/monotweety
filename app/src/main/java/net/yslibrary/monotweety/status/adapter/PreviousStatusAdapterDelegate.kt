@@ -3,8 +3,10 @@ package net.yslibrary.monotweety.status.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import net.yslibrary.monotweety.R
+import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.base.inflate
 
 /**
@@ -19,6 +21,9 @@ class PreviousStatusAdapterDelegate : AdapterDelegate<List<ComposeStatusAdapter.
 
     if (holder is ViewHolder) {
       val item = items[position] as Item
+
+      holder.status.text = item.status
+      holder.timestamp.text = item.createdAt
     }
   }
 
@@ -36,6 +41,9 @@ class PreviousStatusAdapterDelegate : AdapterDelegate<List<ComposeStatusAdapter.
                   override val viewType: ComposeStatusAdapter.ViewType = ComposeStatusAdapter.ViewType.PREVIOUS_STATUS) : ComposeStatusAdapter.Item
 
   class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+    val status = view.findById<TextView>(R.id.status)
+    val timestamp = view.findById<TextView>(R.id.timestamp)
 
     companion object {
       fun create(parent: ViewGroup): ViewHolder {

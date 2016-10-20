@@ -6,11 +6,14 @@ import com.twitter.sdk.android.core.models.Tweet
 import rx.Single
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
+import timber.log.Timber
 
 /**
  * Created by yshrsmz on 2016/10/13.
  */
 class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapter<List<ComposeStatusAdapter.Item>>() {
+
+  var editorInitialized = false
 
   init {
     delegatesManager.addDelegate(PreviousStatusAdapterDelegate())
@@ -28,6 +31,12 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
         listener.onKeepDialogOpenChanged(enabled)
       }
     }))
+
+    items = mutableListOf()
+  }
+
+  private fun editorItem(): EditorAdapterDelegate.Item {
+    return items.last() as EditorAdapterDelegate.Item
   }
 
   fun setPreviousStatus(tweets: List<Tweet>) {
@@ -38,15 +47,77 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
           createdAt = it.createdAt)
     }
 
-    notifyChange(items, tweetItems + items.last())
+    calculateDiff(items, tweetItems + items.last())
+        .subscribe {
+          synchronized(ComposeStatusAdapter@this, {
+            Timber.d("update previous status")
+            items = it.second
+            it.first.dispatchUpdatesTo(this)
+          })
+        }
+  }
+
+  fun updateEditorInternal(item: EditorAdapterDelegate.Item) {
+    val change: Single<Pair<DiffUtil.DiffResult, List<Item>>>
+    if (items.isEmpty() || items.last().viewType != ViewType.EDITOR) {
+      // list is empty or last item is not editor
+      change = calculateDiff(items, items + item)
+    } else {
+      // list item is not empty and last item is editor
+      change = calculateDiff(items, items.dropLast(1) + item)
+    }
+    change.subscribe {
+      synchronized(ComposeStatusAdapter@this, {
+        Timber.d("update editor")
+        items = it.second
+        it.first.dispatchUpdatesTo(this)
+        editorInitialized = true
+      })
+    }
   }
 
   fun updateEditor(item: EditorAdapterDelegate.Item) {
-    notifyChange(items, items.dropLast(1) + item)
+    updateEditorInternal(item.copy(initialValue = !editorInitialized))
   }
 
-  fun notifyChange(oldList: List<Item>, newList: List<Item>) {
-    Single.fromCallable {
+  fun updatePreviousTweetAndClearEditor(tweets: List<Tweet>) {
+    val tweetItems = tweets.map {
+      PreviousStatusAdapterDelegate.Item(
+          id = it.id,
+          status = it.text,
+          createdAt = it.createdAt)
+    }
+    calculateDiff(items, tweetItems + editorItem()
+        .copy(status = "",
+            statusLength = 0,
+            valid = false,
+            initialValue = false,
+            clear = true))
+        .subscribe {
+          Timber.d("update tweet & clear editor")
+          items = it.second
+          it.first.dispatchUpdatesTo(this)
+        }
+  }
+
+  fun clearEditor() {
+    updateEditorInternal(editorItem()
+        .copy(status = "",
+            statusLength = 0,
+            valid = false,
+            initialValue = false,
+            clear = true))
+  }
+
+  fun updateStatusCounter(valid: Boolean, length: Int, maxLength: Int) {
+    updateEditorInternal(editorItem()
+        .copy(valid = valid,
+            statusLength = length,
+            maxLength = maxLength))
+  }
+
+  fun calculateDiff(oldList: List<Item>, newList: List<Item>): Single<Pair<DiffUtil.DiffResult, List<Item>>> {
+    return Single.fromCallable {
       DiffUtil.calculateDiff(object : DiffUtil.Callback() {
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
           val oldItem = oldList[oldItemPosition]
@@ -86,12 +157,9 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
         }
       })
     }
+        .map { Pair<DiffUtil.DiffResult, List<Item>>(it, newList) }
         .subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe {
-          items = newList
-          it.dispatchUpdatesTo(this)
-        }
   }
 
   interface Item {

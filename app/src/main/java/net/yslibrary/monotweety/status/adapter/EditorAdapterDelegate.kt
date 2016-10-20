@@ -1,6 +1,7 @@
 package net.yslibrary.monotweety.status.adapter
 
 import android.support.design.widget.TextInputEditText
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SwitchCompat
 import android.view.View
@@ -12,11 +13,17 @@ import com.jakewharton.rxbinding.widget.textChanges
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.base.inflate
+import net.yslibrary.monotweety.base.setTo
+import rx.subscriptions.SerialSubscription
 
 /**
  * Created by yshrsmz on 2016/10/13.
  */
 class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<List<ComposeStatusAdapter.Item>>() {
+
+  val statusInputSubscription = SerialSubscription()
+  val enableThreadSwitchSubscription = SerialSubscription()
+  val keepDialogOpenSubscription = SerialSubscription()
 
   override fun isForViewType(items: List<ComposeStatusAdapter.Item>, position: Int): Boolean {
     return items[position].viewType == ComposeStatusAdapter.ViewType.EDITOR
@@ -35,7 +42,9 @@ class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
       if (shouldUpdateStatus) {
         holder.statusInput.setText(item.status, TextView.BufferType.EDITABLE)
       }
-      holder.statusCounter.text = item.statusLength.toString()
+      val counterColor = if (item.valid) R.color.colorTextSecondary else R.color.red
+      holder.statusCounter.setTextColor(ContextCompat.getColor(holder.itemView.context, counterColor))
+      holder.statusCounter.text = "${item.statusLength}/${item.maxLength}"
 
       // update only if value is updated at somewhere
       if (item.keepDialogOpen != holder.keepDialogOpenSwitch.isChecked) {
@@ -45,28 +54,36 @@ class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
       if (item.enableThread != holder.enableThreadSwitch.isChecked) {
         holder.enableThreadSwitch.isChecked = item.enableThread
       }
-
-      holder.statusInput.textChanges()
-          .subscribe { listener.onStatusChanged(it.toString()) }
-
-      holder.enableThreadSwitch.checkedChanges()
-          .subscribe { listener.onEnableThreadChanged(it) }
-
-      holder.keepDialogOpenSwitch.checkedChanges()
-          .subscribe { listener.onKeepDialogOpenChanged(it) }
     }
   }
 
   override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
-    return ViewHolder.create(parent)
+    val holder = ViewHolder.create(parent)
+
+    holder.statusInput.textChanges()
+        .skip(1)
+        .subscribe { listener.onStatusChanged(it.toString()) }
+        .setTo(statusInputSubscription)
+
+    holder.enableThreadSwitch.checkedChanges()
+        .subscribe { listener.onEnableThreadChanged(it) }
+        .setTo(enableThreadSwitchSubscription)
+
+    holder.keepDialogOpenSwitch.checkedChanges()
+        .subscribe { listener.onKeepDialogOpenChanged(it) }
+        .setTo(keepDialogOpenSubscription)
+
+    return holder
   }
 
   data class Item(val status: String,
                   val statusLength: Int,
+                  val maxLength: Int,
+                  val valid: Boolean,
                   val keepDialogOpen: Boolean,
                   val enableThread: Boolean,
-                  val initialValue: Boolean,
                   val clear: Boolean,
+                  val initialValue: Boolean = false,
                   override val viewType: ComposeStatusAdapter.ViewType = ComposeStatusAdapter.ViewType.EDITOR) : ComposeStatusAdapter.Item
 
   class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

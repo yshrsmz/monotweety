@@ -2,11 +2,13 @@ package net.yslibrary.monotweety.status
 
 import com.twitter.sdk.android.core.TwitterApiException
 import com.twitter.sdk.android.core.models.Tweet
+import net.yslibrary.monotweety.Config
 import net.yslibrary.monotweety.setting.domain.KeepDialogOpenManager
 import net.yslibrary.monotweety.status.domain.CheckStatusLength
 import net.yslibrary.monotweety.status.domain.GetPreviousStatus
 import net.yslibrary.monotweety.status.domain.UpdateStatus
 import rx.Observable
+import rx.Single
 import rx.lang.kotlin.BehaviorSubject
 import rx.lang.kotlin.PublishSubject
 import rx.schedulers.Schedulers
@@ -16,6 +18,7 @@ import timber.log.Timber
  * Created by yshrsmz on 2016/10/02.
  */
 class ComposeStatusViewModel(status: String,
+                             private val config: Config,
                              private val checkStatusLength: CheckStatusLength,
                              private val updateStatus: UpdateStatus,
                              private val getPreviousStatus: GetPreviousStatus,
@@ -36,6 +39,8 @@ class ComposeStatusViewModel(status: String,
   private val messagesSubject = PublishSubject<String>()
 
   private val allowCloseViewSubject = BehaviorSubject<Boolean>(false)
+
+  private val previousStatusSubject = BehaviorSubject<Tweet?>(null)
 
   val isSendableStatus: Observable<Boolean>
     get() = isSendableStatusSubject.asObservable()
@@ -61,6 +66,12 @@ class ComposeStatusViewModel(status: String,
   val allowCloseView: Observable<Boolean>
     get() = allowCloseViewSubject.asObservable()
 
+  val statusMaxLength: Single<Int>
+    get() = Single.just(config.statusMaxLength)
+
+  val previousStatus: Observable<Tweet?>
+    get() = previousStatusSubject.asObservable()
+
   val closeViewRequests: Observable<Unit>
     get() {
       return statusUpdatedSubject
@@ -81,20 +92,22 @@ class ComposeStatusViewModel(status: String,
   init {
     getPreviousStatus.execute()
         .subscribe {
-          Timber.d("previous status: ${it?.id}")
+          Timber.d("previous status: ${it?.text}")
+          previousStatusSubject.onNext(it)
         }
 
     keepDialogOpenManager.get().first()
         .subscribe { keepDialogOpenSubject.onNext(it) }
 
-    onStatusUpdated(status)
+    onStatusChanged(status)
   }
 
-  fun onStatusUpdated(status: String) {
+  fun onStatusChanged(status: String) {
     checkStatusLength.execute(status)
         .subscribeOn(Schedulers.io())
         .subscribe {
           statusLengthSubject.onNext(StatusInfo(status, it.valid, it.length))
+
           isSendableStatusSubject.onNext(it.valid)
         }
   }

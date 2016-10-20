@@ -19,7 +19,7 @@ class StatusRepositoryImpl @Inject constructor(private val remoteRepository: Sta
   override fun updateStatus(status: String, inReplyToStatusId: Long?): Completable {
     return remoteRepository.update(status, inReplyToStatusId)
         .doOnSuccess {
-          Timber.d("status updated: $it")
+          Timber.d("status updated: ${it.text}")
         }
         .flatMapCompletable { localRepository.update(it) }
   }

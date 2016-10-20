@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="colorPrimary">#3F51B5</color>
-  <color name="colorPrimaryDark">#303F9F</color>
-  <color name="colorAccent">#FF4081</color>
+
+  <!-- https://www.materialpalette.com/grey/orange -->
+  <color name="colorPrimary">#757575</color>
+  <color name="colorPrimaryDark">#424242</color>
+  <color name="colorPrimaryLight">#F5F5F5</color>
+  <color name="colorAccent">#FF9800</color>
+  <color name="colorAccentDark">#F57C00</color>
 
   <color name="colorTextIcon">#212121</color>
   <color name="colorTextPrimary">#212121</color>
-  <color name="colorTextSecondary">#727272</color>
-  <color name="colorDivider">#b6b6b6</color>
+  <color name="colorTextSecondary">#757575</color>
+  <color name="colorDivider">#BDBDBD</color>
 
 
   <color name="transparentGray">#1e000000</color>

@@ -3,6 +3,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:background="@color/colorPrimaryLight"
               android:orientation="vertical"
               android:paddingBottom="@dimen/tile_vertical_padding"
               android:paddingLeft="@dimen/tile_horizontal_padding"
@@ -10,16 +11,17 @@
               android:paddingTop="@dimen/tile_vertical_padding">
 
   <TextView
-      android:id="@+id/status"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"/>
-
-  <TextView
       android:id="@+id/timestamp"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:layout_marginBottom="8dp"
       android:gravity="right"
       android:maxLines="1"
       tools:text="timestamp"/>
+
+  <TextView
+      android:id="@+id/status"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"/>
 
 </LinearLayout>

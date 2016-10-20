@@ -132,10 +132,12 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
         }
 
     viewModel.statusUpdated
-        .zipWith(viewModel.previousStatus, { unit, tweet -> tweet })
+        .zipWith(viewModel.previousStatus.skip(1), { unit, tweet -> tweet })
+        .filter { it != null }
         .bindToLifecycle()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe {
+          Timber.d("status updated, and previous status loaded: ${it?.text}")
           adapter.updatePreviousTweetAndClearEditor(if (it == null) emptyList() else listOf(it))
         }
 

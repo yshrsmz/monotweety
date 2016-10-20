@@ -92,7 +92,7 @@ class ComposeStatusViewModel(status: String,
   init {
     getPreviousStatus.execute()
         .subscribe {
-          Timber.d("previous status: ${it?.id}")
+          Timber.d("previous status: ${it?.text}")
           previousStatusSubject.onNext(it)
         }
 

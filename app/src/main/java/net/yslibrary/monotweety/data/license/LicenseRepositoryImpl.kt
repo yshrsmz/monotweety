@@ -14,6 +14,8 @@ class LicenseRepositoryImpl @Inject constructor() : LicenseRepository {
   override fun get(): Single<List<LicenseEntry>> {
     return Single.fromCallable {
       val list = listOf(
+          Licenses.noContent("Android SDK", "Google Inc.", "https://developer.android.com/sdk/terms.html"),
+          Licenses.noContent("Fabric", "Twitter", "https://fabric.io/terms"),
           Licenses.fromGitHub("bluelinelabs/Conductor"),
           Licenses.fromGitHub("hdodenhof/CircleImageView"),
           Licenses.fromGitHub("gabrielemariotti/changeloglib", Licenses.LICENSE_APACHE_V2),

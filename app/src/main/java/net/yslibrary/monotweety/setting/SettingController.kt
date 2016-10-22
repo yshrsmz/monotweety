@@ -1,5 +1,6 @@
 package net.yslibrary.monotweety.setting
 
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SwitchCompat
@@ -65,7 +66,20 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
     }
 
     override fun onLogoutClick() {
-      viewModel.onLogoutRequested()
+      AlertDialog.Builder(activity)
+          .setTitle(R.string.label_confirm)
+          .setMessage(R.string.label_logout_confirm)
+          .setCancelable(true)
+          .setPositiveButton(R.string.label_logout,
+              { dialog, which ->
+                viewModel.onLogoutRequested()
+                dialog.dismiss()
+              })
+          .setNegativeButton(R.string.label_no,
+              { dialog, which ->
+                dialog.cancel()
+              })
+          .show()
     }
 
     override fun onOpenProfileClick() {

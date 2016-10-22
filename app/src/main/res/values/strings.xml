@@ -31,10 +31,12 @@
   <string name="label_googleplay">Rate in Google Play Store</string>
   <string name="label_github">Star on Github</string>
 
-  <string name="title_cancel_confirm">Confirm</string>
+  <string name="label_confirm">Confirm</string>
   <string name="label_cancel_confirm">Quit without tweeting?</string>
   <string name="label_quit">Quit</string>
   <string name="label_no">No</string>
+
+  <string name="label_logout_confirm">Do you want to logout?</string>
 
   <string name="action_send_tweet">tweet</string>
 

@@ -90,6 +90,7 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
     bindings.list.adapter = adapter
     bindings.list.layoutManager = LinearLayoutManager(activity)
 
+    // FIXME: this should be handled in ViewModel
     Observable.combineLatest(
         viewModel.statusInfo.distinctUntilChanged(),
         viewModel.keepDialogOpen,
@@ -203,7 +204,7 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
   fun showConfirmCloseDialog() {
 
     AlertDialog.Builder(activity)
-        .setTitle(R.string.title_cancel_confirm)
+        .setTitle(R.string.label_confirm)
         .setMessage(R.string.label_cancel_confirm)
         .setCancelable(true)
         .setNegativeButton(

@@ -213,6 +213,8 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
         .setContentTitle(getString(R.string.app_name))
         .setContentText(getString(R.string.label_notification_content))
         .setContentIntent(openDialogIntent)
+        .setShowWhen(false)
+        .setPriority(NotificationCompat.PRIORITY_MAX)
 
 
     // add remote input if and only if device sdk version is greater than Nougat

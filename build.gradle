@@ -5,6 +5,7 @@ buildscript {
   repositories {
     jcenter()
     maven { url 'https://maven.fabric.io/public' }
+    maven { url 'http://dl.bintray.com/kotlin/kotlin-eap' }
   }
   dependencies {
     classpath 'com.android.tools.build:gradle:2.2.2'
@@ -24,6 +25,7 @@ allprojects {
   repositories {
     jcenter()
     maven { url 'https://maven.fabric.io/public' }
+    maven { url 'http://dl.bintray.com/kotlin/kotlin-eap' }
   }
 }
 

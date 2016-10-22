@@ -9,6 +9,9 @@ build:
         name: obtain release jks
         code: echo $RELEASE_JKS | base64 -d > ./monotweety.jks
     - script:
+        name: obtain google-services.json
+        code: echo $GOOGLE_SERVICES_JSON | base64 -d > ./app/google-services.json
+    - script:
         name: run gradle assembleDebug
         code: |
           ./gradlew --project-cache-dir=$WERCKER_CACHE_DIR assembleDebug testDebugUnitTest createDebugUnitTestCoverageReport -PdisablePreDex

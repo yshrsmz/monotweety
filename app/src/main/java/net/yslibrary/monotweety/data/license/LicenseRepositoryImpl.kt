@@ -1,5 +1,6 @@
 package net.yslibrary.monotweety.data.license
 
+import net.yslibrary.licenseadapter.GitHubLicenseEntry
 import net.yslibrary.licenseadapter.LicenseEntry
 import net.yslibrary.licenseadapter.Licenses
 import net.yslibrary.monotweety.base.di.UserScope
@@ -25,8 +26,8 @@ class LicenseRepositoryImpl @Inject constructor() : LicenseRepository {
           Licenses.fromGitHub("JakeWharton/timber"),
           Licenses.fromGitHub("f2prateek/rx-preferences"),
           Licenses.fromGitHub("pushtorefresh/storio"),
-          Licenses.fromGitHub("ReactiveX/RxJava", "1.x/${Licenses.FILE_NO_EXTENSION}"),
-          Licenses.fromGitHub("ReactiveX/RxAndroid", "1.x/${Licenses.FILE_NO_EXTENSION}"),
+          GitHubLicenseEntry(Licenses.NAME_APACHE_V2, "ReactiveX/RxJava", "1.x", null, Licenses.FILE_NO_EXTENSION),
+          GitHubLicenseEntry(Licenses.NAME_APACHE_V2, "ReactiveX/RxAndroid", "1.x", null, Licenses.FILE_NO_EXTENSION),
           Licenses.fromGitHub("sockeqwe/AdapterDelegates", Licenses.FILE_NO_EXTENSION),
           Licenses.fromGitHub("twitter/twitter-text", Licenses.FILE_NO_EXTENSION),
           Licenses.fromGitHub("twitter/twitter-kit-android", Licenses.FILE_NO_EXTENSION),

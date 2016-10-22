@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import net.yslibrary.monotweety.base.di.Names
+import net.yslibrary.monotweety.data.analytics.Analytics
 import net.yslibrary.rxeventbus.EventBus
 import rx.Completable
 import rx.Observable
@@ -16,9 +17,12 @@ import javax.inject.Named
 /**
  * Created by yshrsmz on 2016/09/24.
  */
-abstract class BaseController : RefWatchingController() {
+abstract class BaseController() : RefWatchingController() {
   @field:[Inject Named(Names.FOR_ACTIVITY)]
   lateinit var activityBus: EventBus
+
+  @field:[Inject]
+  lateinit var analytics: Analytics
 
   private var created: Boolean = false
 

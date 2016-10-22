@@ -63,6 +63,7 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
     super.onCreate()
     Timber.d("status: $status")
     component.inject(this)
+    analytics.viewEvent(getString(R.string.title_compose_status))
   }
 
   override fun inflateView(inflater: LayoutInflater, container: ViewGroup): View {
@@ -139,6 +140,7 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe {
           Timber.d("status updated, and previous status loaded: ${it?.text}")
+          analytics.tweetFromEditor()
           adapter.updatePreviousTweetAndClearEditor(if (it == null) emptyList() else listOf(it))
         }
 

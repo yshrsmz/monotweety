@@ -1,8 +1,10 @@
 <resources>
-  <string name="setting_title">Settings</string>
-  <string name="compose_title">Compose Tweet</string>
-  <string name="license_title">Open Source License</string>
-  <string name="changelog_title">Changelog</string>
+  <string name="title_splash">Splash</string>
+  <string name="title_login">Login</string>
+  <string name="title_setting">Settings</string>
+  <string name="title_compose_status">Compose Tweet</string>
+  <string name="title_license">Open Source License</string>
+  <string name="title_changelog">Changelog</string>
 
   <string name="label_on" translatable="false">ON</string>
   <string name="label_off" translatable="false">OFF</string>

@@ -3,6 +3,7 @@ package net.yslibrary.monotweety
 import dagger.Subcomponent
 import net.yslibrary.monotweety.base.di.UserScope
 import net.yslibrary.monotweety.data.UserDataModule
+import net.yslibrary.monotweety.data.analytics.Analytics
 import net.yslibrary.monotweety.license.domain.GetLicenses
 import net.yslibrary.monotweety.login.domain.DoLogout
 import net.yslibrary.monotweety.setting.domain.KeepDialogOpenManager
@@ -36,6 +37,8 @@ interface UserComponent : AppModule.Provider {
   fun doLogout(): DoLogout
 
   fun getLicenses(): GetLicenses
+
+  fun analytics(): Analytics
 
   interface ComponentProvider {
     fun userComponent(): UserComponent

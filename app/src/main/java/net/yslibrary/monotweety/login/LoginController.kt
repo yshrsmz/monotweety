@@ -40,6 +40,7 @@ class LoginController : ActionBarController(), HasComponent<LoginComponent> {
   override fun onCreate() {
     super.onCreate()
     component.inject(this)
+    analytics.viewEvent(getString(R.string.title_login))
   }
 
   override fun inflateView(inflater: LayoutInflater, container: ViewGroup): View {
@@ -63,6 +64,7 @@ class LoginController : ActionBarController(), HasComponent<LoginComponent> {
         .bindToLifecycle()
         .doOnNext { toast(getString(R.string.message_login_succeeded, it.userName)).show() }
         .subscribe {
+          analytics.loginCompleted()
           router.setRoot(RouterTransaction.with(SettingController())
               .popChangeHandler(FadeChangeHandler())
               .pushChangeHandler(FadeChangeHandler()))

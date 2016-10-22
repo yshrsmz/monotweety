@@ -21,6 +21,7 @@ import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.activity.compose.ComposeActivity
 import net.yslibrary.monotweety.activity.main.MainActivity
 import net.yslibrary.monotweety.base.HasComponent
+import net.yslibrary.monotweety.data.analytics.Analytics
 import rx.Completable
 import rx.android.schedulers.AndroidSchedulers
 import rx.lang.kotlin.addTo
@@ -65,6 +66,9 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
 
   @field:[Inject]
   lateinit var notificationManager: NotificationManagerCompat
+
+  @field:[Inject]
+  lateinit var analytics: Analytics
 
   private val subscriptions = CompositeSubscription()
 
@@ -151,6 +155,7 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
           showTweetFailedBecauseOfLength()
           updateNotification()
           showTweetDialog(it.status)
+          analytics.tweetFromNotificationButTooLong()
         }
         .addTo(subscriptions)
 
@@ -159,6 +164,7 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
           updateNotification()
           closeNotificationDrawer()
           showTweetSucceeded()
+          analytics.tweetFromNotification()
         }.addTo(subscriptions)
 
     viewModel.closeNotification

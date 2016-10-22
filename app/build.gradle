@@ -87,6 +87,8 @@ dependencies {
   compile "com.android.support:recyclerview-v7:$support_lib_version"
   compile "com.android.support:design:$support_lib_version"
 
+  compile 'com.google.firebase:firebase-core:9.6.1'
+
   compile 'com.twitter:twitter-text:1.13.0'
   compile('com.twitter.sdk.android:twitter:2.1.1@aar') {
     transitive = true;
@@ -154,6 +156,7 @@ dependencies {
 }
 repositories {
   mavenCentral()
-  maven { url 'http://dl.bintray.com/kotlin/kotlin-eap' }
   maven { url 'http://oss.sonatype.org/content/repositories/snapshots' }
 }
+
+apply plugin: 'com.google.gms.google-services'

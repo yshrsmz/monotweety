@@ -36,6 +36,7 @@ class SplashController : ActionBarController(), HasComponent<SplashComponent> {
   override fun onCreate() {
     super.onCreate()
     component.inject(this)
+    analytics.viewEvent(getString(R.string.title_splash))
   }
 
   override fun inflateView(inflater: LayoutInflater, container: ViewGroup): View {

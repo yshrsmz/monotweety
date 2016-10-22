@@ -37,7 +37,7 @@
 
     <activity
         android:name=".activity.compose.ComposeActivity"
-        android:label="@string/compose_title"
+        android:label="@string/title_compose_status"
         android:theme="@style/AppTheme.Dialog"/>
 
     <meta-data

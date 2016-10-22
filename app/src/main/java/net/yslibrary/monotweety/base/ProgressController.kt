@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import net.yslibrary.monotweety.R
 
 /**
+ * Controller to show ProgressBar
  * Created by yshrsmz on 2016/10/05.
  */
 class ProgressController : BaseController() {

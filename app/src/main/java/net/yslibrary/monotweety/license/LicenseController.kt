@@ -27,7 +27,7 @@ class LicenseController : ActionBarController() {
   lateinit var viewModel: LicenseViewModel
 
   override val title: String?
-    get() = applicationContext.getString(R.string.license_title)
+    get() = getString(R.string.title_license)
 
   val component: LicenseComponent by lazy {
     val activityBus = getComponentProvider<LicenseViewModule.DependencyProvider>(activity).activityBus()
@@ -40,6 +40,7 @@ class LicenseController : ActionBarController() {
   override fun onCreate() {
     super.onCreate()
     component.inject(this)
+    analytics.viewEvent(getString(R.string.title_license))
   }
 
   override fun inflateView(inflater: LayoutInflater, container: ViewGroup): View {

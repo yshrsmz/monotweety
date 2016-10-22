@@ -88,7 +88,7 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
   }
 
   override val title: String?
-    get() = getString(R.string.setting_title)
+    get() = getString(R.string.title_setting)
 
   override val component: SettingComponent by lazy {
     val provider = getComponentProvider<SettingViewModule.DependencyProvider>(activity)
@@ -106,6 +106,7 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
   override fun onCreate() {
     super.onCreate()
     component.inject(this)
+    analytics.viewEvent(getString(R.string.title_setting))
   }
 
   override fun inflateView(inflater: LayoutInflater, container: ViewGroup): View {

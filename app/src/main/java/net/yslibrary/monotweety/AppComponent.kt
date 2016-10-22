@@ -4,6 +4,7 @@ import com.squareup.leakcanary.RefWatcher
 import dagger.Component
 import net.yslibrary.monotweety.base.di.AppScope
 import net.yslibrary.monotweety.data.DataModule
+import net.yslibrary.monotweety.data.analytics.Analytics
 import net.yslibrary.monotweety.login.domain.IsLoggedIn
 import net.yslibrary.monotweety.setting.domain.KeepDialogOpenManager
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
@@ -25,4 +26,6 @@ interface AppComponent : UserComponent.ComponentProvider {
   fun keepDialogOpenManager(): KeepDialogOpenManager
 
   fun refWatcher(): RefWatcher
+
+  fun analytics(): Analytics
 }

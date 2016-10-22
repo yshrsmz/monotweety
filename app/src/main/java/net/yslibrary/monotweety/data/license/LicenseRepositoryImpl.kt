@@ -14,13 +14,13 @@ class LicenseRepositoryImpl @Inject constructor() : LicenseRepository {
   override fun get(): Single<List<LicenseEntry>> {
     return Single.fromCallable {
       val list = listOf(
-          Licenses.fromGitHub("bluelinelabs/conductor"),
+          Licenses.fromGitHub("bluelinelabs/Conductor"),
           Licenses.fromGitHub("hdodenhof/CircleImageView"),
           Licenses.fromGitHub("gabrielemariotti/changeloglib", Licenses.LICENSE_APACHE_V2),
           Licenses.fromGitHub("google/dagger"),
           Licenses.fromGitHub("bumptech/glide", Licenses.FILE_NO_EXTENSION),
-          Licenses.fromGitHub("jakewharton/rxbinding"),
-          Licenses.fromGitHub("jakewharton/timber"),
+          Licenses.fromGitHub("JakeWharton/RxBinding"),
+          Licenses.fromGitHub("JakeWharton/timber"),
           Licenses.fromGitHub("f2prateek/rx-preferences"),
           Licenses.fromGitHub("pushtorefresh/storio"),
           Licenses.fromGitHub("ReactiveX/RxJava", "1.x/${Licenses.FILE_NO_EXTENSION}"),
@@ -28,8 +28,8 @@ class LicenseRepositoryImpl @Inject constructor() : LicenseRepository {
           Licenses.fromGitHub("sockeqwe/AdapterDelegates", Licenses.FILE_NO_EXTENSION),
           Licenses.fromGitHub("twitter/twitter-text", Licenses.FILE_NO_EXTENSION),
           Licenses.fromGitHub("twitter/twitter-kit-android", Licenses.FILE_NO_EXTENSION),
-          Licenses.fromGitHub("yshrsmz/licenseadapter", Licenses.FILE_NO_EXTENSION),
-          Licenses.fromGitHub("yshrsmz/rxeventbus", Licenses.FILE_NO_EXTENSION))
+          Licenses.fromGitHub("yshrsmz/LicenseAdapter", Licenses.FILE_NO_EXTENSION),
+          Licenses.fromGitHub("yshrsmz/RxEventBus", Licenses.FILE_NO_EXTENSION))
 
       Licenses.load(list)
 

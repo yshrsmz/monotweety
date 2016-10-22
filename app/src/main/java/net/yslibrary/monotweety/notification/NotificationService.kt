@@ -173,14 +173,14 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
   }
 
   fun buildNotification(): Notification {
-    val directTweetIntent = PendingIntent
-        .getBroadcast(applicationContext, 0, commandIntent(COMMAND_DIRECT_TWEET), PendingIntent.FLAG_UPDATE_CURRENT)
-    val openDialogIntent = TaskStackBuilder.create(applicationContext)
-        .addParentStack(ComposeActivity::class.java)
-        .addNextIntent(ComposeActivity.callingIntent(applicationContext))
-        .getPendingIntent(2, PendingIntent.FLAG_UPDATE_CURRENT)
-    val closeIntent = PendingIntent
-        .getBroadcast(applicationContext, 2, commandIntent(COMMAND_CLOSE_NOTIFICATION), PendingIntent.FLAG_CANCEL_CURRENT)
+    val directTweetIntent = PendingIntent.getBroadcast(applicationContext, 0,
+        commandIntent(COMMAND_DIRECT_TWEET), PendingIntent.FLAG_UPDATE_CURRENT)
+
+    val openDialogIntent = PendingIntent.getActivity(applicationContext, 1,
+        ComposeActivity.callingIntent(applicationContext), PendingIntent.FLAG_CANCEL_CURRENT)
+
+    val closeIntent = PendingIntent.getBroadcast(applicationContext, 2,
+        commandIntent(COMMAND_CLOSE_NOTIFICATION), PendingIntent.FLAG_CANCEL_CURRENT)
 
     val openSettingIntent = TaskStackBuilder.create(applicationContext)
         .addParentStack(MainActivity::class.java)

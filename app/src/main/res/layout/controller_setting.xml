@@ -11,7 +11,6 @@
       android:background="@color/colorPrimary"
       android:paddingLeft="16dp"
       android:paddingRight="16dp"
-      android:text="@string/setting_enable_notification"
       android:textAppearance="@style/TextAppearance.AppCompat.Medium"
       android:textColor="@android:color/white"
       android:textStyle="bold"

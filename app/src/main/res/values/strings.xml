@@ -4,7 +4,8 @@
   <string name="license_title">Open Source License</string>
   <string name="changelog_title">Changelog</string>
 
-  <string name="setting_enable_notification" translatable="false">ON</string>
+  <string name="label_on" translatable="false">ON</string>
+  <string name="label_off" translatable="false">OFF</string>
 
   <string name="label_tweet_now">tweet</string>
   <string name="label_open_dialog">open dialog</string>

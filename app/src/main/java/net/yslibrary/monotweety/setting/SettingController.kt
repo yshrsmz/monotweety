@@ -116,7 +116,11 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
     // make sure to get saved status before subscribes to view events
     viewModel.notificationEnabledChanged
         .bindToLifecycle()
-        .doOnNext { bindings.notificationSwitch.isChecked = it }
+        .doOnNext {
+          val res = if (it) R.string.label_on else R.string.label_off
+          bindings.notificationSwitch.text = applicationContext.getString(res)
+          bindings.notificationSwitch.isChecked = it
+        }
         .subscribe {
           Timber.d("notification enabled: $it")
           if (it) startNotificationService() else stopNotificationService()

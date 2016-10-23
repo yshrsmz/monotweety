@@ -7,7 +7,8 @@ import rx.Single
 import javax.inject.Inject
 
 /**
- * Created by yshrsmz on 2016/10/18.
+ * This is a test implementation of StatusRemoteRepository.
+ * you can switch to this implementation to test editor locally.
  */
 @UserScope
 class TestStatusRemoteRepositoryImpl @Inject constructor() : StatusRemoteRepository {

@@ -30,6 +30,9 @@ class ComposeActivity : BaseActivity(), ActionBarProvider, HasComponent<ComposeA
         intent.putExtra(KEY_STATUS, status)
       }
 
+      intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
+          or Intent.FLAG_ACTIVITY_NEW_TASK)
+
       return intent
     }
   }

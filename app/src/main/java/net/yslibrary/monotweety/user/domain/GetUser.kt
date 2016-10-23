@@ -16,18 +16,34 @@ import javax.inject.Inject
 class GetUser @Inject constructor(private val userRepository: UserRepository,
                                   private val sessionManager: SessionManager<TwitterSession>) {
 
-  private var loaded: Boolean = false
+  private var progress: Progress = Progress.IDLE
+
   fun execute(): Observable<User?> {
     return Observable.defer {
       val session = sessionManager.activeSession
       userRepository.get(session.id)
     }.doOnNext {
-      if (loaded) {
-        return@doOnNext
+      if (progress == Progress.LOADING || userRepository.isValid(it)) {
+        // no-op
+        Timber.d("currently loading user or cache is valid")
+      } else {
+        Timber.d("start fetching user")
+        progress = Progress.LOADING
+        userRepository.fetch()
+            .subscribe({
+              Timber.d("loading user finished")
+              progress = Progress.LOADED
+            }, {
+              progress = Progress.IDLE
+              Timber.e(it, it.message)
+            })
       }
-      loaded = true
-      userRepository.fetch()
-          .subscribe({}, { Timber.e(it, it.message) })
     }
+  }
+
+  enum class Progress {
+    IDLE,
+    LOADING,
+    LOADED
   }
 }

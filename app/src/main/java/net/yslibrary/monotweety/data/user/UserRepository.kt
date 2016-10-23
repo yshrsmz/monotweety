@@ -12,4 +12,5 @@ interface UserRepository {
   fun fetch(): Completable
   fun set(user: User): Completable
   fun delete(id: Long): Completable
+  fun isValid(user: User?): Boolean
 }

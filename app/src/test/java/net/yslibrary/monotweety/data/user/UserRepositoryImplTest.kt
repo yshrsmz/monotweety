@@ -34,7 +34,7 @@ class UserRepositoryImplTest {
   }
 
   @Test
-  fun checkIfValid_valid() {
+  fun isValid_valid() {
     val timestamp = System.currentTimeMillis()
     val before11hours = timestamp - TimeUnit.HOURS.toMillis(11)
     whenever(clock.currentTimeMillis()).thenReturn(timestamp)
@@ -45,13 +45,16 @@ class UserRepositoryImplTest {
         profileImageUrl = "http://test.com/profile.jpg",
         _updatedAt = before11hours)
 
-    val result = repository.checkIfValid(user)
-
-    Assertions.assertThat(result).isEqualTo(user)
+    Assertions.assertThat(repository.isValid(user)).isTrue()
   }
 
   @Test
-  fun checkIfValid_invalid() {
+  fun isValid_null_user() {
+    Assertions.assertThat(repository.isValid(null)).isFalse()
+  }
+
+  @Test
+  fun isValid_outdated() {
     val timestamp = System.currentTimeMillis()
     val before13hours = timestamp - TimeUnit.HOURS.toMillis(13)
     whenever(clock.currentTimeMillis()).thenReturn(timestamp)
@@ -62,15 +65,6 @@ class UserRepositoryImplTest {
         profileImageUrl = "http://test.com/profile.jpg",
         _updatedAt = before13hours)
 
-    val result = repository.checkIfValid(user)
-
-    Assertions.assertThat(result).isNull()
-  }
-
-  @Test
-  fun checkIfValid_null() {
-    val result = repository.checkIfValid(null)
-
-    Assertions.assertThat(result).isNull()
+    Assertions.assertThat(repository.isValid(user)).isFalse()
   }
 }

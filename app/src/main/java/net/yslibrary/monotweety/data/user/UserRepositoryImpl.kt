@@ -19,7 +19,6 @@ class UserRepositoryImpl @Inject constructor(private val remoteRepository: UserR
 
   override fun get(id: Long): Observable<User?> {
     return localRepository.getById(id)
-        .map { checkIfValid(it) }
   }
 
   override fun delete(id: Long): Completable {
@@ -43,18 +42,12 @@ class UserRepositoryImpl @Inject constructor(private val remoteRepository: UserR
     return localRepository.set(user)
   }
 
-  /**
-   * check if stored User is valid or not
-   * if user is invalid, return null
-   */
-  fun checkIfValid(user: User?): User? {
-    return user?.let {
-      val diff = clock.currentTimeMillis() - it._updatedAt
-      if (TimeUnit.MILLISECONDS.toHours(diff) > 12) {
-        null
-      } else {
-        it
-      }
+  override fun isValid(user: User?): Boolean {
+    if (user == null) {
+      return false
     }
+
+    val diff = clock.currentTimeMillis() - user._updatedAt
+    return TimeUnit.MILLISECONDS.toHours(diff) < 12
   }
 }

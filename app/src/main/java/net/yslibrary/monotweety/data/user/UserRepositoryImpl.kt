@@ -6,6 +6,7 @@ import net.yslibrary.monotweety.data.user.local.UserLocalRepository
 import net.yslibrary.monotweety.data.user.remote.UserRemoteRepository
 import rx.Completable
 import rx.Observable
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 /**
@@ -18,6 +19,7 @@ class UserRepositoryImpl @Inject constructor(private val remoteRepository: UserR
 
   override fun get(id: Long): Observable<User?> {
     return localRepository.getById(id)
+        .map { checkIfValid(it) }
   }
 
   override fun delete(id: Long): Completable {
@@ -39,5 +41,20 @@ class UserRepositoryImpl @Inject constructor(private val remoteRepository: UserR
 
   override fun set(user: User): Completable {
     return localRepository.set(user)
+  }
+
+  /**
+   * check if stored User is valid or not
+   * if user is invalid, return null
+   */
+  fun checkIfValid(user: User?): User? {
+    return user?.let {
+      val diff = clock.currentTimeMillis() - it._updatedAt
+      if (TimeUnit.MILLISECONDS.toHours(diff) > 12) {
+        null
+      } else {
+        it
+      }
+    }
   }
 }

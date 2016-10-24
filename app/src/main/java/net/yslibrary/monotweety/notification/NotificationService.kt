@@ -146,7 +146,11 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
 
   fun setEvents() {
     viewModel.error
-        .subscribe { showError(it) }
+        .subscribe {
+          closeNotificationDrawer()
+          updateNotification()
+          showError(it)
+        }
         .addTo(subscriptions)
 
     viewModel.overlongStatus

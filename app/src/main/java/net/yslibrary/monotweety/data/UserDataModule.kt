@@ -3,17 +3,19 @@ package net.yslibrary.monotweety.data
 import com.twitter.Extractor
 import com.twitter.Validator
 import com.twitter.sdk.android.core.SessionManager
-import com.twitter.sdk.android.core.TwitterCore
 import com.twitter.sdk.android.core.TwitterSession
 import com.twitter.sdk.android.core.services.AccountService
 import com.twitter.sdk.android.core.services.ConfigurationService
-import com.twitter.sdk.android.core.services.StatusesService
 import dagger.Module
 import dagger.Provides
 import net.yslibrary.monotweety.base.di.UserScope
 import net.yslibrary.monotweety.data.config.ConfigModule
 import net.yslibrary.monotweety.data.status.StatusModule
+import net.yslibrary.monotweety.data.status.remote.TwitterApiClient
+import net.yslibrary.monotweety.data.status.remote.UpdateStatusService
 import net.yslibrary.monotweety.data.user.UserModule
+import java.util.concurrent.ConcurrentHashMap
+
 
 /**
  * Created by yshrsmz on 2016/09/27.
@@ -26,19 +28,28 @@ import net.yslibrary.monotweety.data.user.UserModule
 )
 class UserDataModule {
 
+  val apiClients = ConcurrentHashMap<TwitterSession, TwitterApiClient>()
+
+  private fun getApiClient(session: TwitterSession): TwitterApiClient {
+    if (!apiClients.containsKey(session)) {
+      apiClients.putIfAbsent(session, TwitterApiClient(session))
+    }
+    return apiClients.get(session)!!
+  }
+
   @Provides
-  fun provideTwitterStatusService(sessionManager: SessionManager<TwitterSession>): StatusesService {
-    return TwitterCore.getInstance().getApiClient(sessionManager.activeSession).statusesService
+  fun provideTwitterStatusService(sessionManager: SessionManager<TwitterSession>): UpdateStatusService {
+    return getApiClient(sessionManager.activeSession).updateStatusService
   }
 
   @Provides
   fun provideTwitterConfigurationService(sessionManager: SessionManager<TwitterSession>): ConfigurationService {
-    return TwitterCore.getInstance().getApiClient(sessionManager.activeSession).configurationService
+    return getApiClient(sessionManager.activeSession).configurationService
   }
 
   @Provides
   fun provideTwitterAccountService(sessionManager: SessionManager<TwitterSession>): AccountService {
-    return TwitterCore.getInstance().getApiClient(sessionManager.activeSession).accountService
+    return getApiClient(sessionManager.activeSession).accountService
   }
 
   @UserScope

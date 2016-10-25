@@ -2,6 +2,7 @@ package net.yslibrary.monotweety
 
 import android.content.Context
 import com.crashlytics.android.Crashlytics
+import com.jakewharton.threetenabp.AndroidThreeTen
 import com.twitter.sdk.android.Twitter
 import com.twitter.sdk.android.core.TwitterAuthConfig
 import io.fabric.sdk.android.Fabric
@@ -12,11 +13,16 @@ import io.fabric.sdk.android.Fabric
 open class AppLifecycleCallbacks(val context: Context) : App.LifecycleCallbacks {
   override fun onCreate() {
     initTimber()
+    initThreeTenABP()
     initFabric()
   }
 
   override fun onTerminate() {
 
+  }
+
+  fun initThreeTenABP() {
+    AndroidThreeTen.init(context)
   }
 
   open fun initTimber() {

@@ -24,6 +24,7 @@ class LicenseRepositoryImpl @Inject constructor() : LicenseRepository {
           Licenses.fromGitHub("bumptech/glide", Licenses.FILE_NO_EXTENSION),
           Licenses.fromGitHub("JakeWharton/RxBinding"),
           Licenses.fromGitHub("JakeWharton/timber"),
+          Licenses.fromGitHub("JakeWharton/ThreeTenABP", Licenses.FILE_TXT),
           Licenses.fromGitHub("f2prateek/rx-preferences"),
           Licenses.fromGitHub("pushtorefresh/storio"),
           GitHubLicenseEntry(Licenses.NAME_APACHE_V2, "ReactiveX/RxJava", "1.x", null, Licenses.FILE_NO_EXTENSION),

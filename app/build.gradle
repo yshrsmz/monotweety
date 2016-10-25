@@ -130,6 +130,7 @@ dependencies {
   compile 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar'
 
   compile 'com.jakewharton.timber:timber:4.3.1'
+  compile 'com.jakewharton.threetenabp:threetenabp:1.0.4'
 
   compile 'net.yslibrary.rxeventbus:rxeventbus:1.0.1'
   compile 'net.yslibrary.licenseadapter:licenseadapter:1.2.4'

@@ -8,11 +8,18 @@ import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.base.inflate
+import org.threeten.bp.ZoneId
+import org.threeten.bp.ZonedDateTime
+import org.threeten.bp.format.DateTimeFormatter
+import java.util.*
 
 /**
  * Created by yshrsmz on 2016/10/14.
  */
 class PreviousStatusAdapterDelegate : AdapterDelegate<List<ComposeStatusAdapter.Item>>() {
+
+  private val createdAtRawFormatter = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss Z yyyy", Locale.ENGLISH)
+  private val createdAtFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")
 
   override fun onBindViewHolder(items: List<ComposeStatusAdapter.Item>,
                                 position: Int,
@@ -23,7 +30,7 @@ class PreviousStatusAdapterDelegate : AdapterDelegate<List<ComposeStatusAdapter.
       val item = items[position] as Item
 
       holder.status.text = item.status
-      holder.timestamp.text = item.createdAt
+      holder.timestamp.text = getFormattedCreatedAt(item.createdAt)
     }
   }
 
@@ -33,6 +40,12 @@ class PreviousStatusAdapterDelegate : AdapterDelegate<List<ComposeStatusAdapter.
 
   override fun isForViewType(items: List<ComposeStatusAdapter.Item>, position: Int): Boolean {
     return items[position].viewType == ComposeStatusAdapter.ViewType.PREVIOUS_STATUS
+  }
+
+  fun getFormattedCreatedAt(rawDate: String): String {
+    val createdAtDate = ZonedDateTime.parse(rawDate, createdAtRawFormatter)
+        .withZoneSameInstant(ZoneId.systemDefault())
+    return createdAtDate.format(createdAtFormatter)
   }
 
   data class Item(val id: Long,

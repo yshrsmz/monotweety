@@ -213,7 +213,7 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
         openSettingIntent).build()
 
     val builder = NotificationCompat.Builder(applicationContext)
-        .setSmallIcon(R.drawable.ic_chat_bubble_outline_black_24dp)
+        .setSmallIcon(R.drawable.ic_notification)
         .setContentTitle(getString(R.string.app_name))
         .setContentText(getString(R.string.label_notification_content))
         .setContentIntent(openDialogIntent)

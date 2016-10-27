@@ -1,4 +1,4 @@
-package net.yslibrary.monotweety.data.analytics
+package net.yslibrary.monotweety.analytics
 
 import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics

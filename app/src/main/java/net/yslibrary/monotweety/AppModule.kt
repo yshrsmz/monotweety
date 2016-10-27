@@ -3,6 +3,7 @@ package net.yslibrary.monotweety
 import android.app.Application
 import android.content.Context
 import android.support.v4.app.NotificationManagerCompat
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
 import dagger.Module
@@ -52,6 +53,11 @@ open class AppModule(private val context: Context) {
   @Provides
   open fun provideRefWatcher(): RefWatcher {
     return LeakCanary.install(context.applicationContext as Application)
+  }
+
+  @Provides
+  fun provideAnalytics(@Named(Names.FOR_APP) context: Context): FirebaseAnalytics {
+    return FirebaseAnalytics.getInstance(context)
   }
 
   interface Provider {

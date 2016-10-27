@@ -20,8 +20,8 @@ import net.yslibrary.monotweety.App
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.activity.compose.ComposeActivity
 import net.yslibrary.monotweety.activity.main.MainActivity
+import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.base.HasComponent
-import net.yslibrary.monotweety.data.analytics.Analytics
 import rx.Completable
 import rx.android.schedulers.AndroidSchedulers
 import rx.lang.kotlin.addTo

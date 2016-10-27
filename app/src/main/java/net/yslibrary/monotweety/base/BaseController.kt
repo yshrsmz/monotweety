@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import net.yslibrary.monotweety.base.di.Names
-import net.yslibrary.monotweety.data.analytics.Analytics
+import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.rxeventbus.EventBus
 import rx.Completable
 import rx.Observable

@@ -15,7 +15,7 @@
   <string name="label_close_notification">close</string>
   <string name="label_notification_content">Tap to open tweet dialog:)</string>
   <string name="label_whats_happening">What\'s happening?</string>
-  <string name="label_keep_dialog">Keep dialog open</string>
+  <string name="label_keep">Keep dialog/notification open</string>
   <string name="label_enable_thread">Tweet as a thread</string>
 
   <string name="label_account">Account</string>

@@ -3,7 +3,7 @@ package net.yslibrary.monotweety.status
 import com.twitter.sdk.android.core.TwitterApiException
 import com.twitter.sdk.android.core.models.Tweet
 import net.yslibrary.monotweety.Config
-import net.yslibrary.monotweety.setting.domain.KeepDialogOpenManager
+import net.yslibrary.monotweety.setting.domain.KeepOpenManager
 import net.yslibrary.monotweety.status.domain.CheckStatusLength
 import net.yslibrary.monotweety.status.domain.GetPreviousStatus
 import net.yslibrary.monotweety.status.domain.UpdateStatus
@@ -22,7 +22,7 @@ class ComposeStatusViewModel(status: String,
                              private val checkStatusLength: CheckStatusLength,
                              private val updateStatus: UpdateStatus,
                              private val getPreviousStatus: GetPreviousStatus,
-                             private val keepDialogOpenManager: KeepDialogOpenManager) {
+                             private val keepOpenManager: KeepOpenManager) {
 
   private val isSendableStatusSubject = BehaviorSubject<Boolean>(false)
 
@@ -30,7 +30,7 @@ class ComposeStatusViewModel(status: String,
 
   private val statusUpdatedSubject = PublishSubject<Unit>()
 
-  private val keepDialogOpenSubject = BehaviorSubject<Boolean>()
+  private val keepOpenSubject = BehaviorSubject<Boolean>()
 
   private val tweetAsThreadSubject = BehaviorSubject<Boolean>(false)
 
@@ -51,8 +51,8 @@ class ComposeStatusViewModel(status: String,
   val statusUpdated: Observable<Unit>
     get() = statusUpdatedSubject.asObservable()
 
-  val keepDialogOpen: Observable<Boolean>
-    get() = keepDialogOpenSubject.asObservable()
+  val keepOpen: Observable<Boolean>
+    get() = keepOpenSubject.asObservable()
 
   val tweetAsThread: Observable<Boolean>
     get() = tweetAsThreadSubject.asObservable()
@@ -75,7 +75,7 @@ class ComposeStatusViewModel(status: String,
   val closeViewRequests: Observable<Unit>
     get() {
       return statusUpdatedSubject
-          .switchMap { keepDialogOpenSubject.first() }
+          .switchMap { keepOpenSubject.first() }
           .filter { !it }
           .map { Unit }
     }
@@ -96,8 +96,8 @@ class ComposeStatusViewModel(status: String,
           previousStatusSubject.onNext(it)
         }
 
-    keepDialogOpenManager.get().first()
-        .subscribe { keepDialogOpenSubject.onNext(it) }
+    keepOpenManager.get().first()
+        .subscribe { keepOpenSubject.onNext(it) }
 
     onStatusChanged(status)
   }
@@ -139,14 +139,14 @@ class ComposeStatusViewModel(status: String,
         })
   }
 
-  fun onKeepDialogOpenChanged(keep: Boolean) {
-    keepDialogOpenSubject.onNext(keep)
+  fun onKeepOpenChanged(keep: Boolean) {
+    keepOpenSubject.onNext(keep)
   }
 
   fun onEnableThreadChanged(enable: Boolean) {
     tweetAsThreadSubject.onNext(enable)
     if (enable) {
-      keepDialogOpenSubject.onNext(true)
+      keepOpenSubject.onNext(true)
     }
   }
 

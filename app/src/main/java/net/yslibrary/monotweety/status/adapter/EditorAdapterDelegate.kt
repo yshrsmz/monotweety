@@ -23,7 +23,7 @@ class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
 
   val statusInputSubscription = SerialSubscription()
   val enableThreadSwitchSubscription = SerialSubscription()
-  val keepDialogOpenSubscription = SerialSubscription()
+  val keepOpenSubscription = SerialSubscription()
 
   override fun isForViewType(items: List<ComposeStatusAdapter.Item>, position: Int): Boolean {
     return items[position].viewType == ComposeStatusAdapter.ViewType.EDITOR
@@ -47,8 +47,8 @@ class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
       holder.statusCounter.text = "${item.statusLength}/${item.maxLength}"
 
       // update only if value is updated at somewhere
-      if (item.keepDialogOpen != holder.keepDialogOpenSwitch.isChecked) {
-        holder.keepDialogOpenSwitch.isChecked = item.keepDialogOpen
+      if (item.keepOpen != holder.keepOpenSwitch.isChecked) {
+        holder.keepOpenSwitch.isChecked = item.keepOpen
       }
 
       if (item.enableThread != holder.enableThreadSwitch.isChecked) {
@@ -69,9 +69,9 @@ class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
         .subscribe { listener.onEnableThreadChanged(it) }
         .setTo(enableThreadSwitchSubscription)
 
-    holder.keepDialogOpenSwitch.checkedChanges()
-        .subscribe { listener.onKeepDialogOpenChanged(it) }
-        .setTo(keepDialogOpenSubscription)
+    holder.keepOpenSwitch.checkedChanges()
+        .subscribe { listener.onKeepOpenChanged(it) }
+        .setTo(keepOpenSubscription)
 
     return holder
   }
@@ -80,7 +80,7 @@ class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
                   val statusLength: Int,
                   val maxLength: Int,
                   val valid: Boolean,
-                  val keepDialogOpen: Boolean,
+                  val keepOpen: Boolean,
                   val enableThread: Boolean,
                   val clear: Boolean,
                   val initialValue: Boolean = false,
@@ -90,7 +90,7 @@ class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
 
     val statusInput = view.findById<TextInputEditText>(R.id.status_input)
     val statusCounter = view.findById<TextView>(R.id.status_counter)
-    val keepDialogOpenSwitch = view.findById<SwitchCompat>(R.id.keep_dialog)
+    val keepOpenSwitch = view.findById<SwitchCompat>(R.id.keep_open)
     val enableThreadSwitch = view.findById<SwitchCompat>(R.id.enable_thread)
 
     companion object {
@@ -104,6 +104,6 @@ class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
   interface Listener {
     fun onStatusChanged(status: String)
     fun onEnableThreadChanged(enabled: Boolean)
-    fun onKeepDialogOpenChanged(enabled: Boolean)
+    fun onKeepOpenChanged(enabled: Boolean)
   }
 }

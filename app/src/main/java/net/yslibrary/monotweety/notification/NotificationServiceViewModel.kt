@@ -2,6 +2,7 @@ package net.yslibrary.monotweety.notification
 
 import com.twitter.sdk.android.core.TwitterApiException
 import net.yslibrary.monotweety.data.status.OverlongStatusException
+import net.yslibrary.monotweety.setting.domain.KeepOpenManager
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
 import net.yslibrary.monotweety.status.domain.CheckStatusLength
 import net.yslibrary.monotweety.status.domain.UpdateStatus
@@ -15,6 +16,7 @@ import timber.log.Timber
  * Created by yshrsmz on 2016/09/26.
  */
 class NotificationServiceViewModel(private val notificationEnabledManager: NotificationEnabledManager,
+                                   private val keepOpenManager: KeepOpenManager,
                                    private val checkStatusLength: CheckStatusLength,
                                    private val updateStatus: UpdateStatus) {
 
@@ -22,7 +24,7 @@ class NotificationServiceViewModel(private val notificationEnabledManager: Notif
 
   private val updateCompletedSubject = PublishSubject<Unit>()
 
-  private val closeNotificationSubject = PublishSubject<Unit>()
+  private val stopNotificationServiceSubject = PublishSubject<Unit>()
 
   private val errorSubject = PublishSubject<String>()
 
@@ -32,8 +34,14 @@ class NotificationServiceViewModel(private val notificationEnabledManager: Notif
   val updateCompleted: Observable<Unit>
     get() = updateCompletedSubject.asObservable()
 
-  val closeNotification: Observable<Unit>
-    get() = closeNotificationSubject.asObservable()
+  val stopNotificationService: Observable<Unit>
+    get() = stopNotificationServiceSubject.asObservable()
+
+  val closeNotificationDrawer: Observable<Unit>
+    get() = updateCompletedSubject
+        .switchMap { keepOpenManager.get().first() }
+        .filter { !it }
+        .map { Unit }
 
   val error: Observable<String>
     get() = errorSubject.asObservable()
@@ -45,7 +53,7 @@ class NotificationServiceViewModel(private val notificationEnabledManager: Notif
   fun onCloseNotificationCommand() {
     Timber.d("onCloseNotificationCommand")
     notificationEnabledManager.set(false)
-    closeNotificationSubject.onNext(Unit)
+    stopNotificationServiceSubject.onNext(Unit)
   }
 
   fun onDirectTweetCommand(text: String) {

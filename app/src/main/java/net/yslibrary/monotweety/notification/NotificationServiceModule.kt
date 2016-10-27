@@ -3,6 +3,7 @@ package net.yslibrary.monotweety.notification
 import dagger.Module
 import dagger.Provides
 import net.yslibrary.monotweety.base.di.ServiceScope
+import net.yslibrary.monotweety.setting.domain.KeepOpenManager
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
 import net.yslibrary.monotweety.status.domain.CheckStatusLength
 import net.yslibrary.monotweety.status.domain.UpdateStatus
@@ -16,8 +17,9 @@ class NotificationServiceModule(private val service: NotificationService) {
   @ServiceScope
   @Provides
   fun provideNotificationServiceViewModel(notificationEnabledManager: NotificationEnabledManager,
+                                          keepOpenManager: KeepOpenManager,
                                           checkStatusLength: CheckStatusLength,
                                           updateStatus: UpdateStatus): NotificationServiceViewModel {
-    return NotificationServiceViewModel(notificationEnabledManager, checkStatusLength, updateStatus)
+    return NotificationServiceViewModel(notificationEnabledManager, keepOpenManager, checkStatusLength, updateStatus)
   }
 }

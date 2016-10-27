@@ -41,8 +41,8 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
       viewModel.onEnableThreadChanged(enabled)
     }
 
-    override fun onKeepDialogOpenChanged(enabled: Boolean) {
-      viewModel.onKeepDialogOpenChanged(enabled)
+    override fun onKeepOpenChanged(enabled: Boolean) {
+      viewModel.onKeepOpenChanged(enabled)
     }
 
     override fun onStatusChanged(status: String) {
@@ -94,11 +94,11 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
     // FIXME: this should be handled in ViewModel
     Observable.combineLatest(
         viewModel.statusInfo.distinctUntilChanged(),
-        viewModel.keepDialogOpen,
+        viewModel.keepOpen,
         viewModel.tweetAsThread,
-        { statusInfo, keepDialogOpen, tweetAsThread ->
+        { statusInfo, keepOpen, tweetAsThread ->
           EditorAdapterDelegate.Item(status = statusInfo.status,
-              keepDialogOpen = keepDialogOpen,
+              keepOpen = keepOpen,
               enableThread = tweetAsThread,
               statusLength = statusInfo.length,
               maxLength = statusInfo.maxLength,

@@ -2,7 +2,7 @@ package net.yslibrary.monotweety.setting
 
 import net.yslibrary.monotweety.Config
 import net.yslibrary.monotweety.data.user.User
-import net.yslibrary.monotweety.setting.domain.KeepDialogOpenManager
+import net.yslibrary.monotweety.setting.domain.KeepOpenManager
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
 import net.yslibrary.monotweety.user.domain.GetUser
 import rx.Observable
@@ -18,7 +18,7 @@ import timber.log.Timber
 class SettingViewModel(private val config: Config,
                        private val notificationEnabledManager: NotificationEnabledManager,
                        private val getUser: GetUser,
-                       private val keepDialogOpenManager: KeepDialogOpenManager) {
+                       private val keepOpenManager: KeepOpenManager) {
 
   private val userSubject = BehaviorSubject<User?>(null)
 
@@ -39,8 +39,8 @@ class SettingViewModel(private val config: Config,
   val notificationEnabledChanged: Observable<Boolean>
     get() = notificationEnabledManager.get()
 
-  val keepDialogOpen: Observable<Boolean>
-    get() = keepDialogOpenManager.get()
+  val keepOpen: Observable<Boolean>
+    get() = keepOpenManager.get()
 
   val user: Observable<User?>
     get() = userSubject.asObservable()
@@ -76,8 +76,8 @@ class SettingViewModel(private val config: Config,
     notificationEnabledManager.set(enabled)
   }
 
-  fun onKeepDialogOpenChanged(enabled: Boolean) {
-    keepDialogOpenManager.set(enabled)
+  fun onKeepOpenChanged(enabled: Boolean) {
+    keepOpenManager.set(enabled)
   }
 
   fun onOpenProfileRequested() {

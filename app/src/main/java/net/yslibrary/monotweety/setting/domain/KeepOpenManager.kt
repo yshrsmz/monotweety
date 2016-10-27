@@ -9,9 +9,9 @@ import javax.inject.Inject
  * Created by yshrsmz on 2016/10/03.
  */
 @AppScope
-class KeepDialogOpenManager @Inject constructor(private val settingDataManager: SettingDataManager) {
+class KeepOpenManager @Inject constructor(private val settingDataManager: SettingDataManager) {
 
-  fun get(): Observable<Boolean> = settingDataManager.keepDialogOpen()
+  fun get(): Observable<Boolean> = settingDataManager.keepOpen()
 
-  fun set(enabled: Boolean) = settingDataManager.keepDialogOpen(enabled)
+  fun set(enabled: Boolean) = settingDataManager.keepOpen(enabled)
 }

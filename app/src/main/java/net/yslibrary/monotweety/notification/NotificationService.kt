@@ -166,12 +166,15 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
     viewModel.updateCompleted
         .subscribe {
           updateNotification()
-          closeNotificationDrawer()
           showTweetSucceeded()
           analytics.tweetFromNotification()
         }.addTo(subscriptions)
 
-    viewModel.closeNotification
+    viewModel.closeNotificationDrawer
+        .subscribe { closeNotificationDrawer() }
+        .addTo(subscriptions)
+
+    viewModel.stopNotificationService
         .subscribe { stopSelf() }
         .addTo(subscriptions)
   }

@@ -61,8 +61,8 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
       viewModel.onLicenseRequested()
     }
 
-    override fun onKeepDialogOpenClick(enabled: Boolean) {
-      viewModel.onKeepDialogOpenChanged(enabled)
+    override fun onKeepOpenClick(enabled: Boolean) {
+      viewModel.onKeepOpenChanged(enabled)
     }
 
     override fun onLogoutClick() {
@@ -141,11 +141,10 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
           if (it) startNotificationService() else stopNotificationService()
         }
 
-    viewModel.keepDialogOpen
-        .first()
+    viewModel.keepOpen
         .bindToLifecycle()
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe { adapter.updateKeepDialogOpen(it) }
+        .subscribe { adapter.updateKeepOpen(it) }
 
     viewModel.user
         .bindToLifecycle()

@@ -6,7 +6,7 @@ import net.yslibrary.monotweety.base.di.UserScope
 import net.yslibrary.monotweety.data.UserDataModule
 import net.yslibrary.monotweety.license.domain.GetLicenses
 import net.yslibrary.monotweety.login.domain.DoLogout
-import net.yslibrary.monotweety.setting.domain.KeepDialogOpenManager
+import net.yslibrary.monotweety.setting.domain.KeepOpenManager
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
 import net.yslibrary.monotweety.status.domain.CheckStatusLength
 import net.yslibrary.monotweety.status.domain.GetPreviousStatus
@@ -24,7 +24,7 @@ interface UserComponent : AppModule.Provider {
 
   fun notificationEnabledManager(): NotificationEnabledManager
 
-  fun keepDialogOpenManager(): KeepDialogOpenManager
+  fun keepOpenManager(): KeepOpenManager
 
   fun checkStatusLength(): CheckStatusLength
 

@@ -28,7 +28,7 @@ class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter
     delegatesManager.addDelegate(SwitchAdapterDelegate(object : SwitchAdapterDelegate.Listener {
       override fun onClick(item: SwitchAdapterDelegate.Item, checked: Boolean) {
         when (item.type) {
-          ViewType.KEEP_DIALOG_OPEN -> listener.onKeepDialogOpenClick(checked)
+          ViewType.KEEP_OPEN -> listener.onKeepOpenClick(checked)
           else -> {
             // no-op
           }
@@ -66,7 +66,7 @@ class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter
         SubHeaderAdapterDelegate.Item(res.getString(R.string.label_account), ViewType.SUBHEADER_ACCOUNT),
         ProfileAdapterDelegate.Item.empty(),
         SubHeaderAdapterDelegate.Item(res.getString(R.string.label_setting), ViewType.SUBHEADER_SETTING),
-        SwitchAdapterDelegate.Item(res.getString(R.string.label_keep_dialog), false, false, ViewType.KEEP_DIALOG_OPEN),
+        SwitchAdapterDelegate.Item(res.getString(R.string.label_keep), false, false, ViewType.KEEP_OPEN),
         SubHeaderAdapterDelegate.Item(res.getString(R.string.label_others), ViewType.SUBHEADER_OTHERS),
         OneLineTextAdapterDelegate.Item(res.getString(R.string.label_howto), true, ViewType.HOWTO),
         TwoLineTextAdapterDelegate.Item(res.getString(R.string.label_app_version, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE),
@@ -85,20 +85,20 @@ class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter
     notifyItemChanged(ViewType.PROFILE.ordinal)
   }
 
-  fun updateKeepDialogOpen(enabled: Boolean) {
-    val item = items[ViewType.KEEP_DIALOG_OPEN.ordinal] as SwitchAdapterDelegate.Item
+  fun updateKeepOpen(enabled: Boolean) {
+    val item = items[ViewType.KEEP_OPEN.ordinal] as SwitchAdapterDelegate.Item
     if (item.checked == enabled && item.enabled) {
       return
     }
-    (items as MutableList).set(ViewType.KEEP_DIALOG_OPEN.ordinal, item.copy(checked = enabled, enabled = true))
-    notifyItemChanged(ViewType.KEEP_DIALOG_OPEN.ordinal)
+    (items as MutableList).set(ViewType.KEEP_OPEN.ordinal, item.copy(checked = enabled, enabled = true))
+    notifyItemChanged(ViewType.KEEP_OPEN.ordinal)
   }
 
   enum class ViewType {
     SUBHEADER_ACCOUNT,
     PROFILE,
     SUBHEADER_SETTING,
-    KEEP_DIALOG_OPEN,
+    KEEP_OPEN,
     SUBHEADER_OTHERS,
     HOWTO,
     APP_VERSION,
@@ -116,7 +116,7 @@ class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter
   interface Listener {
     fun onOpenProfileClick()
     fun onLogoutClick()
-    fun onKeepDialogOpenClick(enabled: Boolean)
+    fun onKeepOpenClick(enabled: Boolean)
     fun onHowtoClick()
     fun onAppVersionClick()
     fun onLicenseClick()

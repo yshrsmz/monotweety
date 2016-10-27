@@ -27,8 +27,8 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
         listener.onEnableThreadChanged(enabled)
       }
 
-      override fun onKeepDialogOpenChanged(enabled: Boolean) {
-        listener.onKeepDialogOpenChanged(enabled)
+      override fun onKeepOpenChanged(enabled: Boolean) {
+        listener.onKeepOpenChanged(enabled)
       }
     }))
 
@@ -49,7 +49,7 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
 
     calculateDiff(items, tweetItems + items.last())
         .subscribe {
-          synchronized(ComposeStatusAdapter@this, {
+          synchronized(ComposeStatusAdapter@ this, {
             Timber.d("update previous status")
             items = it.second
             it.first.dispatchUpdatesTo(this)
@@ -67,7 +67,7 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
       change = calculateDiff(items, items.dropLast(1) + item)
     }
     change.subscribe {
-      synchronized(ComposeStatusAdapter@this, {
+      synchronized(ComposeStatusAdapter@ this, {
         Timber.d("update editor")
         items = it.second
         it.first.dispatchUpdatesTo(this)
@@ -174,6 +174,6 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
   interface Listener {
     fun onStatusChanged(status: String)
     fun onEnableThreadChanged(enabled: Boolean)
-    fun onKeepDialogOpenChanged(enabled: Boolean)
+    fun onKeepOpenChanged(enabled: Boolean)
   }
 }

@@ -6,7 +6,7 @@ import net.yslibrary.monotweety.Config
 import net.yslibrary.monotweety.Navigator
 import net.yslibrary.monotweety.base.di.ControllerScope
 import net.yslibrary.monotweety.base.di.Names
-import net.yslibrary.monotweety.setting.domain.KeepDialogOpenManager
+import net.yslibrary.monotweety.setting.domain.KeepOpenManager
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
 import net.yslibrary.monotweety.user.domain.GetUser
 import net.yslibrary.rxeventbus.EventBus
@@ -33,8 +33,8 @@ class SettingViewModule(private val activityBus: EventBus,
   fun provideSettingViewModel(config: Config,
                               notificationEnabledManager: NotificationEnabledManager,
                               getUser: GetUser,
-                              keepDialogOpenManager: KeepDialogOpenManager): SettingViewModel {
-    return SettingViewModel(config, notificationEnabledManager, getUser, keepDialogOpenManager)
+                              keepOpenManager: KeepOpenManager): SettingViewModel {
+    return SettingViewModel(config, notificationEnabledManager, getUser, keepOpenManager)
   }
 
   interface DependencyProvider {

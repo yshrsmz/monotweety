@@ -6,6 +6,7 @@
   <string name="title_license">Open Source License</string>
   <string name="title_changelog">Changelog</string>
 
+  <string name="label_notificatoin_state">Notification: %s</string>
   <string name="label_on" translatable="false">ON</string>
   <string name="label_off" translatable="false">OFF</string>
 

@@ -133,7 +133,7 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
         .bindToLifecycle()
         .doOnNext {
           val res = if (it) R.string.label_on else R.string.label_off
-          bindings.notificationSwitch.text = applicationContext.getString(res)
+          bindings.notificationSwitch.text = getString(R.string.label_notificatoin_state, getString(res))
           bindings.notificationSwitch.isChecked = it
         }
         .subscribe {

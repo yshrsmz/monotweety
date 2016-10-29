@@ -1,0 +1,24 @@
+# app name
+
+Montweety - just for tweeting
+
+# short description
+
+Open-source Twitter client just for tweeting from notification
+
+# description
+
+Monotweety is an open-source Twitter client just for tweeting from device's notification area.
+
+If you are using Android 7.0 or later, you can literally tweet from notification area. Other wise when you tap the notification, Editor dialog will be launched.
+
+Also, with Monotweety you can chain tweets as a thread with one single tap(from editor dialog).
+
+Features
+- tweet from notification
+- chain tweets as a thread
+
+
+Monotweety is an open-source project.
+If you are interested in contributing, reporting bugs or requesting new feature, visit https://github.com/yshrsmz/monotweety.
+Also, you can contact me via twitter, @yslibnet

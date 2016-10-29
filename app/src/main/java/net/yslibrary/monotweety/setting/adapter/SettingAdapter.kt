@@ -41,7 +41,7 @@ class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter
         when (item.type) {
           ViewType.LICENSE -> listener.onLicenseClick()
           ViewType.GOOGLE_PLAY -> listener.onGooglePlayClick()
-          ViewType.GITHUB -> listener.onGithubClick()
+          ViewType.GITHUB -> listener.onGitHubClick()
           else -> {
             // no-op
           }
@@ -118,6 +118,6 @@ class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter
     fun onLicenseClick()
     fun onDeveloperClick()
     fun onGooglePlayClick()
-    fun onGithubClick()
+    fun onGitHubClick()
   }
 }

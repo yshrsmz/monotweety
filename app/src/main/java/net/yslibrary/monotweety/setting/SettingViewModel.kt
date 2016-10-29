@@ -106,7 +106,7 @@ class SettingViewModel(private val config: Config,
     changelogRequestsSubject.onNext(Unit)
   }
 
-  fun onGithubRequested() {
+  fun onGitHubRequested() {
     githubRequestsSubject.onNext(config.githubUrl)
   }
 }

@@ -49,8 +49,8 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
       viewModel.onGooglePlayRequested()
     }
 
-    override fun onGithubClick() {
-      viewModel.onGithubRequested()
+    override fun onGitHubClick() {
+      viewModel.onGitHubRequested()
     }
 
     override fun onLicenseClick() {

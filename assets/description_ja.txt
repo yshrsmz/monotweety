@@ -22,4 +22,4 @@ Monotweety（モノツイーティ）は通知エリアからツイートする�
 Monotweetyはオープンソースです。
 ソースコードは https://github.com/yshrsmz/monotweety から確認できます。
 
-お問い合わせや要望、不具合報告等は上記Githubレポジトリ、あるいはTwitterアカウント @yslibnet までお願いします。
+お問い合わせや要望、不具合報告等は上記GitHubレポジトリ、あるいはTwitterアカウント @yslibnet までお願いします。

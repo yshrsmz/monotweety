@@ -31,7 +31,7 @@
   <string name="label_developer">Follow Developer</string>
   <string name="sub_label_developer" translatable="false">\@yslibnet (yslibrary.net)</string>
   <string name="label_googleplay">Rate in Google Play Store</string>
-  <string name="label_github">Star on Github</string>
+  <string name="label_github">Star on GitHub</string>
 
   <string name="label_confirm">Confirm</string>
   <string name="label_cancel_confirm">Quit without tweeting?</string>
@@ -53,5 +53,5 @@
   <string name="label_loading_placeholder" translatable="false">-</string>
 
 
-  <string name="transition_name_logo">transition.logo</string>
+  <string name="transition_name_logo" translatable="false">transition.logo</string>
 </resources>

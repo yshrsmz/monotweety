@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="action_send_tweet">ツイートする</string>
+  <string name="error_login_failed">ログインに失敗しました。時間をおいて再度お試しください</string>
+  <string name="error_tweet_failed">ツイートに失敗しました</string>
+  <string name="error_tweet_failed_because_of_length">文章が長すぎます。\n編集ダイアログで調整してください</string>
+  <string name="label_account">アカウント</string>
+  <string name="label_app_version">アプリバージョン: %1$s(%2$d)</string>
+  <string name="label_cancel_confirm">ツイートせずに閉じますか？</string>
+  <string name="label_close_notification">閉じる</string>
+  <string name="label_confirm">確認</string>
+  <string name="label_developer">開発者をフォローする</string>
+  <string name="label_enable_thread">連ツイする</string>
+  <string name="label_github">GitHubでStarをつける</string>
+  <string name="label_googleplay">Google Play Storeで評価する</string>
+  <string name="label_keep">ダイアログ/通知エリアを閉じない</string>
+  <string name="label_license">オープンソース・ライセンス</string>
+  <string name="label_logout">ログアウト</string>
+  <string name="label_logout_confirm">ログアウトしますか？</string>
+  <string name="label_no">いいえ</string>
+  <string name="label_notification_content">タップして編集ダイアログを開く</string>
+  <string name="label_notificatoin_state">通知エリアに常駐: %s</string>
+  <string name="label_open_dialog">ダイアログを開く</string>
+  <string name="label_open_profile">プロフィールを開く</string>
+  <string name="label_open_settings">設定</string>
+  <string name="label_others">その他</string>
+  <string name="label_quit">閉じる</string>
+  <string name="label_setting">設定</string>
+  <string name="label_support_developer">開発者を支援する</string>
+  <string name="label_tweet_now">ツイートする</string>
+  <string name="label_whats_happening">いまどうしてる？</string>
+  <string name="message_login_succeeded">\@%sとしてログインしました</string>
+  <string name="message_tweet_succeeded">ステータスを更新しました！</string>
+  <string name="sub_label_app_version">更新履歴を確認する</string>
+  <string name="title_changelog">更新履歴</string>
+  <string name="title_license">オープンソース・ライセンス</string>
+  <string name="title_compose_status">ツイートを編集</string>
+  <string name="title_login">ログイン</string>
+  <string name="title_setting">設定</string>
+  <string name="title_splash">スプラッシュ</string>
+</resources>

@@ -39,7 +39,6 @@ class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter
     delegatesManager.addDelegate(OneLineTextAdapterDelegate(object : OneLineTextAdapterDelegate.Listener {
       override fun onClick(item: OneLineTextAdapterDelegate.Item) {
         when (item.type) {
-          ViewType.HOWTO -> listener.onHowtoClick()
           ViewType.LICENSE -> listener.onLicenseClick()
           ViewType.GOOGLE_PLAY -> listener.onGooglePlayClick()
           ViewType.GITHUB -> listener.onGithubClick()
@@ -68,7 +67,6 @@ class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter
         SubHeaderAdapterDelegate.Item(res.getString(R.string.label_setting), ViewType.SUBHEADER_SETTING),
         SwitchAdapterDelegate.Item(res.getString(R.string.label_keep), false, false, ViewType.KEEP_OPEN),
         SubHeaderAdapterDelegate.Item(res.getString(R.string.label_others), ViewType.SUBHEADER_OTHERS),
-        OneLineTextAdapterDelegate.Item(res.getString(R.string.label_howto), true, ViewType.HOWTO),
         TwoLineTextAdapterDelegate.Item(res.getString(R.string.label_app_version, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE),
             res.getString(R.string.sub_label_app_version), true, ViewType.APP_VERSION),
         OneLineTextAdapterDelegate.Item(res.getString(R.string.label_license), true, ViewType.LICENSE),
@@ -100,7 +98,6 @@ class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter
     SUBHEADER_SETTING,
     KEEP_OPEN,
     SUBHEADER_OTHERS,
-    HOWTO,
     APP_VERSION,
     LICENSE,
     SUBHEADER_DEVELOPER,
@@ -117,7 +114,6 @@ class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter
     fun onOpenProfileClick()
     fun onLogoutClick()
     fun onKeepOpenClick(enabled: Boolean)
-    fun onHowtoClick()
     fun onAppVersionClick()
     fun onLicenseClick()
     fun onDeveloperClick()

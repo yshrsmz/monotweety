@@ -53,10 +53,6 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
       viewModel.onGithubRequested()
     }
 
-    override fun onHowtoClick() {
-
-    }
-
     override fun onLicenseClick() {
       viewModel.onLicenseRequested()
     }

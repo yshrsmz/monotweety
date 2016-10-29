@@ -52,4 +52,7 @@
 
   <string name="label_loading" translatable="false">Loading…</string>
   <string name="label_loading_placeholder" translatable="false">-</string>
+
+
+  <string name="transition_name_logo">transition.logo</string>
 </resources>

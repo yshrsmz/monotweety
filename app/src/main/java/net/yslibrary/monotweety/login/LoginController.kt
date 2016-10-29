@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bluelinelabs.conductor.RouterTransaction
-import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
+import com.bluelinelabs.conductor.changehandler.SimpleSwapChangeHandler
 import com.twitter.sdk.android.core.Callback
 import com.twitter.sdk.android.core.Result
 import com.twitter.sdk.android.core.TwitterException
@@ -66,8 +66,8 @@ class LoginController : ActionBarController(), HasComponent<LoginComponent> {
         .subscribe {
           analytics.loginCompleted()
           router.setRoot(RouterTransaction.with(SettingController())
-              .popChangeHandler(FadeChangeHandler())
-              .pushChangeHandler(FadeChangeHandler()))
+              .popChangeHandler(SimpleSwapChangeHandler())
+              .pushChangeHandler(SimpleSwapChangeHandler()))
         }
 
     viewModel.loginFailed

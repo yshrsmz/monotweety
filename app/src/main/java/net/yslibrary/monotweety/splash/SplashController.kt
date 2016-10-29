@@ -5,11 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.RouterTransaction
-import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
+import com.bluelinelabs.conductor.changehandler.SimpleSwapChangeHandler
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.HasComponent
 import net.yslibrary.monotweety.login.LoginController
+import net.yslibrary.monotweety.login.LoginTransitionChangeHandler
 import net.yslibrary.monotweety.setting.SettingController
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
@@ -57,8 +58,8 @@ class SplashController : ActionBarController(), HasComponent<SplashComponent> {
           val next: Controller = if (it) SettingController() else LoginController()
 
           router.setRoot(RouterTransaction.with(next)
-              .popChangeHandler(FadeChangeHandler())
-              .pushChangeHandler(FadeChangeHandler()))
+              .pushChangeHandler(if (it) SimpleSwapChangeHandler() else LoginTransitionChangeHandler())
+              .popChangeHandler(if (it) SimpleSwapChangeHandler() else LoginTransitionChangeHandler()))
         }
   }
 }

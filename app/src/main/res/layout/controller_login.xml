@@ -5,15 +5,18 @@
                 android:background="@color/colorPrimary">
 
   <ImageView
+      android:id="@+id/logo"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_centerHorizontal="true"
       android:layout_marginTop="48dp"
       android:contentDescription="@string/app_name"
       android:scaleType="centerInside"
-      android:src="@drawable/logo"/>
+      android:src="@drawable/logo"
+      android:transitionName="@string/transition_name_logo"/>
 
   <ImageView
+      android:id="@+id/app_icon"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_centerInParent="true"

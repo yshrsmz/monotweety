@@ -28,6 +28,7 @@ Features include:
 
 Monotweety uses following approach/libraries
 
+- [Kotlin](https://kotlinlang.org/)
 - Reactive MVVM-like architecture
 - [Dagger2](https://github.com/google/dagger) for Dependency Injection
 - [Conductor](https://github.com/bluelinelabs/Conductor) for building View-based application

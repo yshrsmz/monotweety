@@ -24,6 +24,10 @@ Features include:
 
 ## Screenshots
 
+|splash|setting|notification|editor
+|---|---|---|---|
+![](./assets/screenshots/screenshot_splash.png)|![](./assets/screenshots/screenshot_setting.png)|![](./assets/screenshots/screenshot_notification_2.png)|![](./assets/screenshots/screenshot_editor_1.png)
+
 TBD
 
 

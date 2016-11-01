@@ -28,6 +28,8 @@ class SettingViewModel(private val config: Config,
 
   private val developerRequestsSubject = PublishSubject<String>()
 
+  private val shareRequestsSubject = PublishSubject<String>()
+
   private val googlePlayRequestsSubject = PublishSubject<String>()
 
   private val openProfileRequestsSubject = PublishSubject<String>()
@@ -56,6 +58,9 @@ class SettingViewModel(private val config: Config,
 
   val developerRequests: Observable<String>
     get() = developerRequestsSubject.asObservable()
+
+  val shareRequests: Observable<String>
+    get() = shareRequestsSubject.asObservable()
 
   val googlePlayRequests: Observable<String>
     get() = googlePlayRequestsSubject.asObservable()
@@ -96,6 +101,10 @@ class SettingViewModel(private val config: Config,
 
   fun onDeveloperRequested() {
     developerRequestsSubject.onNext(config.developerUrl)
+  }
+
+  fun onShareRequested() {
+    shareRequestsSubject.onNext(config.googlePlayUrl)
   }
 
   fun onGooglePlayRequested() {

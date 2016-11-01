@@ -45,6 +45,10 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
       viewModel.onDeveloperRequested()
     }
 
+    override fun onShareClick() {
+      viewModel.onShareRequested()
+    }
+
     override fun onGooglePlayClick() {
       viewModel.onGooglePlayRequested()
     }
@@ -169,6 +173,11 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
         .bindToLifecycle()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe { navigator.openExternalAppWithUrl(it) }
+
+    viewModel.shareRequests
+        .bindToLifecycle()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe { navigator.openExternalAppWithShareIntent(getString(R.string.message_share, it)) }
 
     viewModel.googlePlayRequests
         .bindToLifecycle()

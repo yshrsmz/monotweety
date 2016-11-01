@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
   <changelogversion
+      changeDate="XXXX"
+      versionName="1.1.0">
+    <chagnelogtext>"Monotweetyをシェア"を追加</chagnelogtext>
+  </changelogversion>
+  <changelogversion
       changeDate="Nov 1st, 2016"
       versionName="1.0.0">
     <changelogtext>初回リリース</changelogtext>

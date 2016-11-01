@@ -45,4 +45,13 @@ class Navigator(private val activity: BaseActivity,
   fun openProfileWithTwitterApp(name: String) {
     openExternalAppWithUrl("https://twitter.com/$name")
   }
+
+  fun openExternalAppWithShareIntent(message: String) {
+    val intent = Intent(Intent.ACTION_SEND)
+        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        .putExtra(Intent.EXTRA_TEXT, message)
+        .setType("text/plain")
+
+    activity.startActivity(intent)
+  }
 }

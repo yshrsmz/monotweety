@@ -111,7 +111,8 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
     bindings = Bindings(view)
 
     bindings.list.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-    bindings.list.addItemDecoration(SubHeaderDividerDecoration(applicationContext))
+    bindings.list.setHasFixedSize(true)
+    bindings.list.addItemDecoration(SubHeaderDividerDecoration(activity))
     bindings.list.adapter = adapter
 
     setEvents()

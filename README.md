@@ -24,6 +24,15 @@ Features include:
 - tweet from notification area
 - chain tweets as a thread 
 
+## Architecture
+
+Monotweety uses following approach/libraries
+
+- Reactive MVVM-like architecture
+- [Dagger2](https://github.com/google/dagger) for Dependency Injection
+- [Conductor](https://github.com/bluelinelabs/Conductor) for building View-based application
+- [RxJava](https://github.com/reactivex/rxjava) for async/reactive programming
+
 ## Screenshots
 
 |splash|setting|notification|editor

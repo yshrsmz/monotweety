@@ -40,7 +40,6 @@ Monotweety uses following approach/libraries
 |---|---|---|---|
 ![](./assets/screenshots/screenshot_splash.png)|![](./assets/screenshots/screenshot_setting.png)|![](./assets/screenshots/screenshot_notification_2.png)|![](./assets/screenshots/screenshot_editor_1.png)
 
-TBD
 
 
 
@@ -48,5 +47,3 @@ TBD
 
 - Fill `secrets.properties.template` and rename to `secrets.properties`.
 - Create Firebase project and download `google-services.json`, which should have two properties; `net.yslibrary.monotweety` and `net.yslibrary.monotweety.debug`.
-
-TBD

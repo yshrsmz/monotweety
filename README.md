@@ -9,6 +9,8 @@
 
 Simple Twitter Client just for tweeting.
 
+<a href='https://play.google.com/store/apps/details?id=net.yslibrary.monotweety&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height="80"/></a>
+
 ## Overview
 
 Monotweety is Twitter client app which specializes in tweeting right from your device's notification area.

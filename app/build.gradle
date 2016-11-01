@@ -31,9 +31,9 @@ android {
     }
     release {
       storeFile file("../${getSecretProperty("keystoreFile")}")
-      keyAlias getSecretProperty("keystoreAlias")
       storePassword getSecretProperty("keystorePassword")
-      keyPassword getSecretProperty("keystoreKeyPassword")
+      keyAlias getSecretProperty("keyAlias")
+      keyPassword getSecretProperty("keyPassword")
     }
   }
 

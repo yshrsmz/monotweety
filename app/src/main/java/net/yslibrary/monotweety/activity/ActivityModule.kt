@@ -1,6 +1,5 @@
 package net.yslibrary.monotweety.activity
 
-import com.bluelinelabs.conductor.Router
 import dagger.Module
 import dagger.Provides
 import net.yslibrary.monotweety.Navigator
@@ -15,8 +14,7 @@ import javax.inject.Named
  * Created by yshrsmz on 2016/09/24.
  */
 @Module
-class ActivityModule(protected val activity: BaseActivity,
-                     protected val router: Router) {
+class ActivityModule(protected val activity: BaseActivity) {
 
   @Provides
   @Named(Names.FOR_ACTIVITY)
@@ -26,7 +24,7 @@ class ActivityModule(protected val activity: BaseActivity,
   @Provides
   @ActivityScope
   fun provideNavigator(): Navigator {
-    return Navigator(activity, router)
+    return Navigator(activity)
   }
 
   interface Provider {

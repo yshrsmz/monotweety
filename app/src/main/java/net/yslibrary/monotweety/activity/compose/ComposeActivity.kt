@@ -48,7 +48,7 @@ class ComposeActivity : BaseActivity(), ActionBarProvider, HasComponent<ComposeA
 
   override val component: ComposeActivityComponent by lazy {
     DaggerComposeActivityComponent.builder()
-        .activityModule(ActivityModule(this, router))
+        .activityModule(ActivityModule(this))
         .userComponent(App.userComponent(this))
         .build()
   }

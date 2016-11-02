@@ -16,6 +16,7 @@ import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.event.ActivityResult
 import net.yslibrary.monotweety.event.NewIntent
 import net.yslibrary.monotweety.splash.SplashController
+import timber.log.Timber
 
 /**
  * Created by yshrsmz on 2016/09/24.
@@ -41,7 +42,7 @@ class MainActivity : BaseActivity(), ActionBarProvider, HasComponent<MainActivit
   override val component: MainActivityComponent by lazy {
     DaggerMainActivityComponent.builder()
         .appComponent(App.appComponent(this))
-        .activityModule(ActivityModule(this, router))
+        .activityModule(ActivityModule(this))
         .build()
   }
 

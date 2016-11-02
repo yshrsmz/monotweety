@@ -2,7 +2,6 @@ package net.yslibrary.monotweety
 
 import android.content.Intent
 import android.net.Uri
-import com.bluelinelabs.conductor.Router
 import net.yslibrary.monotweety.base.BaseActivity
 import net.yslibrary.monotweety.logout.LogoutService
 import net.yslibrary.monotweety.notification.NotificationService
@@ -10,8 +9,7 @@ import net.yslibrary.monotweety.notification.NotificationService
 /**
  * Created by yshrsmz on 2016/10/09.
  */
-class Navigator(private val activity: BaseActivity,
-                private val router: Router) {
+class Navigator(private val activity: BaseActivity) {
 
   fun toSplash() {
 

@@ -33,12 +33,14 @@ class LoginController : ActionBarController(), HasComponent<LoginComponent> {
   lateinit var viewModel: LoginViewModel
 
   override val component: LoginComponent by lazy {
+    Timber.i("create LoginComponent")
     getComponentProvider<LoginComponent.ComponentProvider>(activity)
         .loginComponent(LoginViewModule())
   }
 
   override fun onCreate() {
     super.onCreate()
+    Timber.i("onCreate - LoginController")
     component.inject(this)
     analytics.viewEvent(getString(R.string.title_login))
   }
@@ -54,6 +56,7 @@ class LoginController : ActionBarController(), HasComponent<LoginComponent> {
   }
 
   fun setEvents() {
+    Timber.i("setEvents - LoginController")
     activityBus.on(ActivityResult::class.java)
         .observeOn(AndroidSchedulers.mainThread())
         .bindToLifecycle()

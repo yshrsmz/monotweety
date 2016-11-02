@@ -39,4 +39,6 @@
   <string name="title_login">ログイン</string>
   <string name="title_setting">設定</string>
   <string name="title_splash">スプラッシュ</string>
+  <string name="message_share">Monotweetyをチェック！ %s</string>
+  <string name="label_share">Monotweetyをシェア</string>
 </resources>

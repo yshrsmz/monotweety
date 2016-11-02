@@ -30,20 +30,20 @@ class SplashController : ActionBarController(), HasComponent<SplashComponent> {
   override val shouldShowActionBar: Boolean = false
 
   override val component: SplashComponent by lazy {
+    Timber.i("create SplashComponent")
     getComponentProvider<SplashComponent.ComponentProvider>(activity)
         .splashComponent(SplashViewModule())
   }
 
   override fun onCreate() {
     super.onCreate()
+    Timber.i("onCreate - SplashController")
     component.inject(this)
     analytics.viewEvent(getString(R.string.title_splash))
   }
 
   override fun inflateView(inflater: LayoutInflater, container: ViewGroup): View {
     val view = inflater.inflate(R.layout.controller_splash, container, false)
-
-    Timber.d("onCreate")
 
     setEvents()
 

@@ -1,13 +1,17 @@
 package net.yslibrary.monotweety
 
 import com.squareup.leakcanary.RefWatcher
+import com.twitter.sdk.android.core.TwitterSession
 import dagger.Component
 import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.base.di.AppScope
+import net.yslibrary.monotweety.base.di.Names
 import net.yslibrary.monotweety.data.DataModule
 import net.yslibrary.monotweety.login.domain.IsLoggedIn
 import net.yslibrary.monotweety.setting.domain.KeepOpenManager
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
+import rx.subjects.PublishSubject
+import javax.inject.Named
 
 /**
  * Created by yshrsmz on 2016/09/24.
@@ -28,4 +32,7 @@ interface AppComponent : UserComponent.ComponentProvider {
   fun refWatcher(): RefWatcher
 
   fun analytics(): Analytics
+
+  @Named(Names.FOR_LOGIN)
+  fun loginCompletedSubject(): PublishSubject<TwitterSession>
 }

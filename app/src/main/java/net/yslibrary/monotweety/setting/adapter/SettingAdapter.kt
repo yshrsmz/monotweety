@@ -40,6 +40,7 @@ class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter
       override fun onClick(item: OneLineTextAdapterDelegate.Item) {
         when (item.type) {
           ViewType.LICENSE -> listener.onLicenseClick()
+          ViewType.SHARE -> listener.onShareClick()
           ViewType.GOOGLE_PLAY -> listener.onGooglePlayClick()
           ViewType.GITHUB -> listener.onGitHubClick()
           else -> {
@@ -73,6 +74,7 @@ class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter
         SubHeaderAdapterDelegate.Item(res.getString(R.string.label_support_developer), ViewType.SUBHEADER_DEVELOPER),
         TwoLineTextAdapterDelegate.Item(res.getString(R.string.label_developer),
             res.getString(R.string.sub_label_developer), true, ViewType.DEVELOPER),
+        OneLineTextAdapterDelegate.Item(res.getString(R.string.label_share), true, ViewType.SHARE),
         OneLineTextAdapterDelegate.Item(res.getString(R.string.label_googleplay), true, ViewType.GOOGLE_PLAY),
         OneLineTextAdapterDelegate.Item(res.getString(R.string.label_github), true, ViewType.GITHUB)
     )
@@ -102,6 +104,7 @@ class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter
     LICENSE,
     SUBHEADER_DEVELOPER,
     DEVELOPER,
+    SHARE,
     GOOGLE_PLAY,
     GITHUB;
   }
@@ -117,6 +120,7 @@ class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter
     fun onAppVersionClick()
     fun onLicenseClick()
     fun onDeveloperClick()
+    fun onShareClick()
     fun onGooglePlayClick()
     fun onGitHubClick()
   }

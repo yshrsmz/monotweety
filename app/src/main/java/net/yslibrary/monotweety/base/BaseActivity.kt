@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.bluelinelabs.conductor.*
 import net.yslibrary.monotweety.base.di.Names
 import net.yslibrary.rxeventbus.EventBus
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -28,6 +29,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    Timber.i("onCreate - BaseActivity")
     setContentView(layoutResId)
 
     router = Conductor.attachRouter(this, container, savedInstanceState)
@@ -44,6 +46,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
+    Timber.i("onActivityResult - BaseActivity")
     router.onActivityResult(requestCode, resultCode, data)
   }
 

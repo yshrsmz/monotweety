@@ -33,6 +33,11 @@ open class AppLifecycleCallbacks(val context: Context) : App.LifecycleCallbacks 
 
   fun initFabric() {
     val authConfig = TwitterAuthConfig(BuildConfig.TWITTER_API_KEY, BuildConfig.TWITTER_API_SECRET)
-    Fabric.with(context, Twitter(authConfig), Crashlytics())
+    val fabric = Fabric.Builder(context)
+        .kits(Twitter(authConfig), Crashlytics())
+//        .debuggable(true)
+        .build()
+
+    Fabric.with(fabric)
   }
 }

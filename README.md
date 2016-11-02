@@ -24,13 +24,23 @@ Features include:
 - tweet from notification area
 - chain tweets as a thread 
 
+## Architecture
+
+Monotweety uses following approach/libraries
+
+- [Kotlin](https://kotlinlang.org/)
+- Reactive MVVM-like architecture
+- [Dagger2](https://github.com/google/dagger) for Dependency Injection
+- [Conductor](https://github.com/bluelinelabs/Conductor) for building View-based application
+- [RxJava](https://github.com/reactivex/rxjava) for async/reactive programming
+- [StorIO](https://github.com/pushtorefresh/storio) for SQLite
+
 ## Screenshots
 
 |splash|setting|notification|editor
 |---|---|---|---|
 ![](./assets/screenshots/screenshot_splash.png)|![](./assets/screenshots/screenshot_setting.png)|![](./assets/screenshots/screenshot_notification_2.png)|![](./assets/screenshots/screenshot_editor_1.png)
 
-TBD
 
 
 
@@ -38,5 +48,3 @@ TBD
 
 - Fill `secrets.properties.template` and rename to `secrets.properties`.
 - Create Firebase project and download `google-services.json`, which should have two properties; `net.yslibrary.monotweety` and `net.yslibrary.monotweety.debug`.
-
-TBD

@@ -16,6 +16,7 @@ import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.event.ActivityResult
 import net.yslibrary.monotweety.event.NewIntent
 import net.yslibrary.monotweety.splash.SplashController
+import timber.log.Timber
 
 /**
  * Created by yshrsmz on 2016/09/24.
@@ -41,18 +42,19 @@ class MainActivity : BaseActivity(), ActionBarProvider, HasComponent<MainActivit
   override val component: MainActivityComponent by lazy {
     DaggerMainActivityComponent.builder()
         .appComponent(App.appComponent(this))
-        .activityModule(ActivityModule(this, router))
+        .activityModule(ActivityModule(this))
         .build()
   }
 
   override fun onNewIntent(intent: Intent?) {
     super.onNewIntent(intent)
+    Timber.i("onNewIntent - MainActivity")
     intent?.let { activityBus.emit(NewIntent(it)) }
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-
+    Timber.i("onCreate - MainActivity")
     val toolbar = findById<Toolbar>(R.id.toolbar)
     setSupportActionBar(toolbar)
 
@@ -61,6 +63,7 @@ class MainActivity : BaseActivity(), ActionBarProvider, HasComponent<MainActivit
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
+    Timber.i("onActivityResult - MainActivity")
     activityBus.emit(ActivityResult(requestCode, resultCode, data))
   }
 }

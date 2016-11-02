@@ -2,8 +2,9 @@
 <changelog>
   <changelogversion
       changeDate="XXXX"
-      versionName="1.1.0">
+      versionName="1.0.1">
     <chagnelogtext>"Monotweetyをシェア"を追加</chagnelogtext>
+    <changelogtext>ログイン時のクラッシュを修正</changelogtext>
   </changelogversion>
   <changelogversion
       changeDate="Nov 1st, 2016"

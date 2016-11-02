@@ -14,6 +14,7 @@
   <string name="label_github">GitHubでStarをつける</string>
   <string name="label_googleplay">Google Play Storeで評価する</string>
   <string name="label_keep">ダイアログ/通知エリアを閉じない</string>
+  <string name="sub_label_keep">続けてツイートできます</string>
   <string name="label_license">オープンソース・ライセンス</string>
   <string name="label_logout">ログアウト</string>
   <string name="label_logout_confirm">ログアウトしますか？</string>

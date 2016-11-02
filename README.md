@@ -33,7 +33,7 @@ Monotweety uses following approach/libraries
 - [Dagger2](https://github.com/google/dagger) for Dependency Injection
 - [Conductor](https://github.com/bluelinelabs/Conductor) for building View-based application
 - [RxJava](https://github.com/reactivex/rxjava) for async/reactive programming
-- [StorIO] for SQLite
+- [StorIO](https://github.com/pushtorefresh/storio) for SQLite
 
 ## Screenshots
 

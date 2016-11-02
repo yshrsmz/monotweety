@@ -3,7 +3,7 @@
   <changelogversion
       changeDate="XXXX"
       versionName="1.0.1">
-    <chagnelogtext>"Monotweetyをシェア"を追加</chagnelogtext>
+    <changelogtext>"Monotweetyをシェア"を追加</changelogtext>
     <changelogtext>ログイン時のクラッシュを修正</changelogtext>
   </changelogversion>
   <changelogversion

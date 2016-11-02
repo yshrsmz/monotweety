@@ -3,7 +3,7 @@
   <changelogversion
       changeDate="XXXX"
       versionName="1.0.1">
-    <chagnelogtext>Add "Share Monotweety"</chagnelogtext>
+    <changelogtext>Add "Share Monotweety"</changelogtext>
     <changelogtext>Fix crash on login</changelogtext>
   </changelogversion>
   <changelogversion

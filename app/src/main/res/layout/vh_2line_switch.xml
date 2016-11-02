@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              style="@style/AppTheme.Setting.ListItem2"
+              android:gravity="center_vertical"
+              android:orientation="horizontal">
+
+  <RelativeLayout
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1">
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/AppTheme.Setting.TwoLineTitle"
+        tools:text="title"/>
+
+    <TextView
+        android:id="@+id/sub_title"
+        style="@style/AppTheme.Setting.TwoLineSubTitle"
+        android:layout_alignStart="@+id/title"
+        android:layout_below="@+id/title"
+        android:maxLines="4"
+        tools:text="summary"/>
+
+  </RelativeLayout>
+
+  <android.support.v7.widget.SwitchCompat
+      android:id="@+id/switch_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:clickable="false"
+      android:focusable="false"/>
+
+</LinearLayout>

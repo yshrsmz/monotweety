@@ -25,8 +25,8 @@ class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter
       }
     }))
 
-    delegatesManager.addDelegate(SwitchAdapterDelegate(object : SwitchAdapterDelegate.Listener {
-      override fun onClick(item: SwitchAdapterDelegate.Item, checked: Boolean) {
+    delegatesManager.addDelegate(TwoLineSwitchAdapterDelegate(object : TwoLineSwitchAdapterDelegate.Listener {
+      override fun onClick(item: TwoLineSwitchAdapterDelegate.Item, checked: Boolean) {
         when (item.type) {
           ViewType.KEEP_OPEN -> listener.onKeepOpenClick(checked)
           else -> {
@@ -66,7 +66,8 @@ class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter
         SubHeaderAdapterDelegate.Item(res.getString(R.string.label_account), ViewType.SUBHEADER_ACCOUNT),
         ProfileAdapterDelegate.Item.empty(),
         SubHeaderAdapterDelegate.Item(res.getString(R.string.label_setting), ViewType.SUBHEADER_SETTING),
-        SwitchAdapterDelegate.Item(res.getString(R.string.label_keep), false, false, ViewType.KEEP_OPEN),
+        TwoLineSwitchAdapterDelegate.Item(res.getString(R.string.label_keep),
+            res.getString(R.string.sub_label_keep), false, false, ViewType.KEEP_OPEN),
         SubHeaderAdapterDelegate.Item(res.getString(R.string.label_others), ViewType.SUBHEADER_OTHERS),
         TwoLineTextAdapterDelegate.Item(res.getString(R.string.label_app_version, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE),
             res.getString(R.string.sub_label_app_version), true, ViewType.APP_VERSION),
@@ -86,7 +87,7 @@ class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter
   }
 
   fun updateKeepOpen(enabled: Boolean) {
-    val item = items[ViewType.KEEP_OPEN.ordinal] as SwitchAdapterDelegate.Item
+    val item = items[ViewType.KEEP_OPEN.ordinal] as TwoLineSwitchAdapterDelegate.Item
     if (item.checked == enabled && item.enabled) {
       return
     }

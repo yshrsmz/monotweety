@@ -6,12 +6,15 @@ import android.support.v4.app.NotificationManagerCompat
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
+import com.twitter.sdk.android.core.TwitterSession
 import dagger.Module
 import dagger.Provides
 import net.yslibrary.monotweety.base.Clock
 import net.yslibrary.monotweety.base.ClockImpl
 import net.yslibrary.monotweety.base.di.AppScope
 import net.yslibrary.monotweety.base.di.Names
+import rx.lang.kotlin.PublishSubject
+import rx.subjects.PublishSubject
 import javax.inject.Named
 
 /**
@@ -60,10 +63,19 @@ open class AppModule(private val context: Context) {
     return FirebaseAnalytics.getInstance(context)
   }
 
+  @Named(Names.FOR_LOGIN)
+  @AppScope
+  @Provides
+  fun provideLoginCompletedSubject(): PublishSubject<TwitterSession> {
+    return PublishSubject()
+  }
+
   interface Provider {
     fun notificationManager(): NotificationManagerCompat
     fun clock(): Clock
     fun config(): Config
     fun refWatcher(): RefWatcher
+    @Named(Names.FOR_LOGIN)
+    fun loginCompletedSubject(): PublishSubject<TwitterSession>
   }
 }

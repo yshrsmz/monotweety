@@ -1,8 +1,12 @@
 package net.yslibrary.monotweety.login
 
+import com.twitter.sdk.android.core.TwitterSession
 import dagger.Module
 import dagger.Provides
 import net.yslibrary.monotweety.base.di.ControllerScope
+import net.yslibrary.monotweety.base.di.Names
+import rx.subjects.PublishSubject
+import javax.inject.Named
 
 /**
  * Created by yshrsmz on 2016/09/27.
@@ -12,7 +16,7 @@ class LoginViewModule {
 
   @ControllerScope
   @Provides
-  fun provideLoginViewModel(): LoginViewModel {
-    return LoginViewModel()
+  fun provideLoginViewModel(@Named(Names.FOR_LOGIN) loginCompletedSubject: PublishSubject<TwitterSession>): LoginViewModel {
+    return LoginViewModel(loginCompletedSubject)
   }
 }

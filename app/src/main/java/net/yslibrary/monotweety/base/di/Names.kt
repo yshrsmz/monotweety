@@ -11,5 +11,6 @@ class Names {
 
     const val FOR_SETTING = "for_setting"
     const val FOR_CONFIG = "for_config"
+    const val FOR_LOGIN = "for_login"
   }
 }

@@ -75,7 +75,7 @@
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:maxLines">1</item>
-    <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
+    <item name="android:textAppearance">@style/TextAppearance.AppCompat.Caption</item>
   </style>
 
   <style name="AppTheme.Setting.SubHeaderItem" parent="AppTheme.Setting.ListItem">

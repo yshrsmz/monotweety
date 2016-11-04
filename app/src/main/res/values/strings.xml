@@ -32,6 +32,7 @@
   <string name="label_developer">Follow Developer</string>
   <string name="sub_label_developer" translatable="false">\@yslibnet (yslibrary.net)</string>
   <string name="label_share">Share Monotweety</string>
+  <string name="sub_label_share">Help spread Monotweety!</string>
   <string name="label_googleplay">Rate in Google Play Store</string>
   <string name="label_github">Star on GitHub</string>
 

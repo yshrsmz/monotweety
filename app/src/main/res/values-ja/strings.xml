@@ -41,4 +41,5 @@
   <string name="title_splash">スプラッシュ</string>
   <string name="message_share">Monotweetyをチェック！ %s</string>
   <string name="label_share">Monotweetyをシェア</string>
+  <string name="sub_label_share">Monotweetyの拡散にご協力を！</string>
 </resources>

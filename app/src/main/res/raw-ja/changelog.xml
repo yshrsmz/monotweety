@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
   <changelogversion
-      changeDate="XXXX"
+      changeDate="Nov 5th, 2016"
       versionName="1.0.1">
     <changelogtext>"Monotweetyをシェア"を追加</changelogtext>
     <changelogtext>ログイン時のクラッシュを修正</changelogtext>

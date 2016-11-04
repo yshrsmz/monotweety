@@ -13,6 +13,7 @@ import com.jakewharton.rxbinding.widget.checkedChanges
 import net.yslibrary.monotweety.App
 import net.yslibrary.monotweety.Navigator
 import net.yslibrary.monotweety.R
+import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.HasComponent
 import net.yslibrary.monotweety.base.findById
@@ -106,7 +107,7 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
   override fun onCreate() {
     super.onCreate()
     component.inject(this)
-    analytics.viewEvent(getString(R.string.title_setting))
+    analytics.viewEvent(Analytics.VIEW_SETTING)
   }
 
   override fun inflateView(inflater: LayoutInflater, container: ViewGroup): View {

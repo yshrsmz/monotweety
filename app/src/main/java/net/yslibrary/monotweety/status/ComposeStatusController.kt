@@ -10,6 +10,7 @@ import android.widget.FrameLayout
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
 import net.yslibrary.monotweety.R
+import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.HasComponent
 import net.yslibrary.monotweety.base.ProgressController
@@ -63,7 +64,7 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
     super.onCreate()
     Timber.d("status: $status")
     component.inject(this)
-    analytics.viewEvent(getString(R.string.title_compose_status))
+    analytics.viewEvent(Analytics.VIEW_COMPOSE_STATUS)
   }
 
   override fun inflateView(inflater: LayoutInflater, container: ViewGroup): View {

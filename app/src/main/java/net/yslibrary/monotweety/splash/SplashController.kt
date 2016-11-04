@@ -7,6 +7,7 @@ import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.SimpleSwapChangeHandler
 import net.yslibrary.monotweety.R
+import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.HasComponent
 import net.yslibrary.monotweety.login.LoginController
@@ -39,7 +40,7 @@ class SplashController : ActionBarController(), HasComponent<SplashComponent> {
     super.onCreate()
     Timber.i("onCreate - SplashController")
     component.inject(this)
-    analytics.viewEvent(getString(R.string.title_splash))
+    analytics.viewEvent(Analytics.VIEW_SPLASH)
   }
 
   override fun inflateView(inflater: LayoutInflater, container: ViewGroup): View {

@@ -9,6 +9,7 @@ import net.yslibrary.licenseadapter.LicenseAdapter
 import net.yslibrary.licenseadapter.LicenseEntry
 import net.yslibrary.monotweety.App
 import net.yslibrary.monotweety.R
+import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.findById
 import rx.android.schedulers.AndroidSchedulers
@@ -40,7 +41,7 @@ class LicenseController : ActionBarController() {
   override fun onCreate() {
     super.onCreate()
     component.inject(this)
-    analytics.viewEvent(getString(R.string.title_license))
+    analytics.viewEvent(Analytics.VIEW_LICENSE)
   }
 
   override fun inflateView(inflater: LayoutInflater, container: ViewGroup): View {

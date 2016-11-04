@@ -11,6 +11,7 @@ import com.twitter.sdk.android.core.TwitterException
 import com.twitter.sdk.android.core.TwitterSession
 import com.twitter.sdk.android.core.identity.TwitterLoginButton
 import net.yslibrary.monotweety.R
+import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.HasComponent
 import net.yslibrary.monotweety.base.findById
@@ -42,7 +43,7 @@ class LoginController : ActionBarController(), HasComponent<LoginComponent> {
     super.onCreate()
     Timber.i("onCreate - LoginController")
     component.inject(this)
-    analytics.viewEvent(getString(R.string.title_login))
+    analytics.viewEvent(Analytics.VIEW_LOGIN)
   }
 
   override fun inflateView(inflater: LayoutInflater, container: ViewGroup): View {

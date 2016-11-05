@@ -147,26 +147,31 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
 
   fun setEvents() {
     viewModel.error
+        .switchMap { error ->
+          viewModel.footerState.first().map { Pair(error, it) }
+        }
         .subscribe {
           closeNotificationDrawer()
-          updateNotification()
-          showError(it)
+          updateNotification(it.second)
+          showError(it.first)
         }
         .addTo(subscriptions)
 
     viewModel.overlongStatus
+        .switchMap { status -> viewModel.footerState.first().map { Pair(status, it) } }
         .subscribe {
           closeNotificationDrawer()
           showTweetFailedBecauseOfLength()
-          updateNotification()
-          showTweetDialog(it.status)
+          updateNotification(it.second)
+          showTweetDialog(it.first.status)
           analytics.tweetFromNotificationButTooLong()
         }
         .addTo(subscriptions)
 
     viewModel.updateCompleted
+        .switchMap { viewModel.footerState.first() }
         .subscribe {
-          updateNotification()
+          updateNotification(it)
           showTweetSucceeded()
           analytics.tweetFromNotification()
         }.addTo(subscriptions)
@@ -184,7 +189,7 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
         .addTo(subscriptions)
   }
 
-  fun buildNotification(footerState: FooterStateManager.FooterState = FooterStateManager.FooterState(false, "")): Notification {
+  fun buildNotification(footerState: FooterStateManager.FooterState): Notification {
     val directTweetIntent = PendingIntent.getBroadcast(applicationContext, 0,
         commandIntent(COMMAND_DIRECT_TWEET), PendingIntent.FLAG_UPDATE_CURRENT)
 
@@ -262,7 +267,7 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
     return noti
   }
 
-  fun updateNotification(footerState: FooterStateManager.FooterState = FooterStateManager.FooterState(false, "")): Notification {
+  fun updateNotification(footerState: FooterStateManager.FooterState): Notification {
     Timber.d("update notification")
 
     val noti = buildNotification(footerState)

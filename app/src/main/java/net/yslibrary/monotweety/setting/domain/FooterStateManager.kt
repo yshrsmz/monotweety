@@ -29,7 +29,7 @@ class FooterStateManager @Inject constructor(private val settingDataManager: Set
 
   fun set(state: FooterState) {
     settingDataManager.footerEnabled(state.enabled)
-    settingDataManager.footerText(state.text)
+    settingDataManager.footerText(state.text.trim())
     subject.onNext(Unit)
   }
 

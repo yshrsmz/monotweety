@@ -59,13 +59,14 @@ class NotificationServiceViewModel(private val notificationEnabledManager: Notif
 
   fun onDirectTweetCommand(text: String) {
     Timber.d("onDirectTweetCommand: $text")
-    checkStatusLength.execute(text)
+    footerStateManager.get().first().toSingle()
+        .map { (if (it.enabled) "$text ${it.text}" else text).trim() }
+        .flatMap { checkStatusLength.execute(it) }
         .flatMapCompletable {
           if (it.valid) {
-            updateStatus.execute(text)
+            updateStatus.execute(it.status)
           } else {
-            Completable.error(OverlongStatusException(status = it.status,
-                length = it.length))
+            Completable.error(OverlongStatusException(status = text.trim(), length = it.length))
           }
         }
         .subscribe({

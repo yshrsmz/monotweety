@@ -38,6 +38,7 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
   val adapter by lazy { SettingAdapter(applicationContext.resources, adapterListener) }
 
   val adapterListener = object : SettingAdapter.Listener {
+
     override fun onAppVersionClick() {
       viewModel.onChangelogRequested()
     }
@@ -64,6 +65,10 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
 
     override fun onKeepOpenClick(enabled: Boolean) {
       viewModel.onKeepOpenChanged(enabled)
+    }
+
+    override fun onFooterStateChanged(enabled: Boolean, text: String) {
+      viewModel.onFooterStateChanged(enabled, text)
     }
 
     override fun onLogoutClick() {
@@ -147,6 +152,11 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
         .bindToLifecycle()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe { adapter.updateKeepOpen(it) }
+
+    viewModel.footerState
+        .bindToLifecycle()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe { adapter.updateFooterState(it.enabled, it.text) }
 
     viewModel.user
         .bindToLifecycle()

@@ -9,7 +9,7 @@ import net.yslibrary.monotweety.data.user.User
 /**
  * Created by yshrsmz on 2016/10/07.
  */
-class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter<List<SettingAdapter.Item>>() {
+class SettingAdapter(private val res: Resources, listener: Listener) : ListDelegationAdapter<List<SettingAdapter.Item>>() {
 
   init {
 
@@ -62,12 +62,19 @@ class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter
       }
     }))
 
+    delegatesManager.addDelegate(FooterEditorAdapterDelegate(object : FooterEditorAdapterDelegate.Listener {
+      override fun onFooterUpdated(enabled: Boolean, footerText: String) {
+        listener.onFooterStateChanged(enabled, footerText)
+      }
+    }))
+
     items = mutableListOf(
         SubHeaderAdapterDelegate.Item(res.getString(R.string.label_account), ViewType.SUBHEADER_ACCOUNT),
         ProfileAdapterDelegate.Item.empty(),
         SubHeaderAdapterDelegate.Item(res.getString(R.string.label_setting), ViewType.SUBHEADER_SETTING),
         TwoLineSwitchAdapterDelegate.Item(res.getString(R.string.label_keep),
             res.getString(R.string.sub_label_keep), false, false, ViewType.KEEP_OPEN),
+        FooterEditorAdapterDelegate.Item(true, false, "", ViewType.FOOTER),
         SubHeaderAdapterDelegate.Item(res.getString(R.string.label_others), ViewType.SUBHEADER_OTHERS),
         TwoLineTextAdapterDelegate.Item(res.getString(R.string.label_app_version, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE),
             res.getString(R.string.sub_label_app_version), true, ViewType.APP_VERSION),
@@ -95,11 +102,18 @@ class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter
     notifyItemChanged(ViewType.KEEP_OPEN.ordinal)
   }
 
+  fun updateFooterState(enabled: Boolean, footerText: String) {
+    val item = items[ViewType.FOOTER.ordinal] as FooterEditorAdapterDelegate.Item
+    (items as MutableList).set(ViewType.FOOTER.ordinal, item.copy(enabled = true, checked = enabled, footerText = footerText))
+    notifyItemChanged(ViewType.FOOTER.ordinal)
+  }
+
   enum class ViewType {
     SUBHEADER_ACCOUNT,
     PROFILE,
     SUBHEADER_SETTING,
     KEEP_OPEN,
+    FOOTER,
     SUBHEADER_OTHERS,
     APP_VERSION,
     LICENSE,
@@ -118,6 +132,7 @@ class SettingAdapter(res: Resources, listener: Listener) : ListDelegationAdapter
     fun onOpenProfileClick()
     fun onLogoutClick()
     fun onKeepOpenClick(enabled: Boolean)
+    fun onFooterStateChanged(enabled: Boolean, text: String)
     fun onAppVersionClick()
     fun onLicenseClick()
     fun onDeveloperClick()

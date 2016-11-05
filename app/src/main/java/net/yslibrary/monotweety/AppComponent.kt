@@ -8,6 +8,7 @@ import net.yslibrary.monotweety.base.di.AppScope
 import net.yslibrary.monotweety.base.di.Names
 import net.yslibrary.monotweety.data.DataModule
 import net.yslibrary.monotweety.login.domain.IsLoggedIn
+import net.yslibrary.monotweety.setting.domain.FooterManager
 import net.yslibrary.monotweety.setting.domain.KeepOpenManager
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
 import rx.subjects.PublishSubject
@@ -28,6 +29,8 @@ interface AppComponent : UserComponent.ComponentProvider {
   fun notificationEnabledManager(): NotificationEnabledManager
 
   fun keepOpenManager(): KeepOpenManager
+
+  fun footerManager(): FooterManager
 
   fun refWatcher(): RefWatcher
 

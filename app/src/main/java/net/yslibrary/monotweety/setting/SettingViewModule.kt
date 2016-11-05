@@ -6,6 +6,7 @@ import net.yslibrary.monotweety.Config
 import net.yslibrary.monotweety.Navigator
 import net.yslibrary.monotweety.base.di.ControllerScope
 import net.yslibrary.monotweety.base.di.Names
+import net.yslibrary.monotweety.setting.domain.FooterManager
 import net.yslibrary.monotweety.setting.domain.KeepOpenManager
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
 import net.yslibrary.monotweety.user.domain.GetUser
@@ -33,8 +34,9 @@ class SettingViewModule(private val activityBus: EventBus,
   fun provideSettingViewModel(config: Config,
                               notificationEnabledManager: NotificationEnabledManager,
                               getUser: GetUser,
-                              keepOpenManager: KeepOpenManager): SettingViewModel {
-    return SettingViewModel(config, notificationEnabledManager, getUser, keepOpenManager)
+                              keepOpenManager: KeepOpenManager,
+                              footerManager: FooterManager): SettingViewModel {
+    return SettingViewModel(config, notificationEnabledManager, getUser, keepOpenManager, footerManager)
   }
 
   interface DependencyProvider {

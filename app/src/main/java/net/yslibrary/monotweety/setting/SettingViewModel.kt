@@ -2,7 +2,7 @@ package net.yslibrary.monotweety.setting
 
 import net.yslibrary.monotweety.Config
 import net.yslibrary.monotweety.data.user.User
-import net.yslibrary.monotweety.setting.domain.FooterManager
+import net.yslibrary.monotweety.setting.domain.FooterStateManager
 import net.yslibrary.monotweety.setting.domain.KeepOpenManager
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
 import net.yslibrary.monotweety.user.domain.GetUser
@@ -20,7 +20,7 @@ class SettingViewModel(private val config: Config,
                        private val notificationEnabledManager: NotificationEnabledManager,
                        private val getUser: GetUser,
                        private val keepOpenManager: KeepOpenManager,
-                       private val footerManager: FooterManager) {
+                       private val footerStateManager: FooterStateManager) {
 
   private val userSubject = BehaviorSubject<User?>(null)
 
@@ -39,8 +39,6 @@ class SettingViewModel(private val config: Config,
   private val changelogRequestsSubject = PublishSubject<Unit>()
 
   private val githubRequestsSubject = PublishSubject<String>()
-
-  private val footerStateChangedSubject = BehaviorSubject(Unit)
 
   val notificationEnabledChanged: Observable<Boolean>
     get() = notificationEnabledManager.get()
@@ -75,16 +73,8 @@ class SettingViewModel(private val config: Config,
   val githubRequests: Observable<String>
     get() = githubRequestsSubject.asObservable()
 
-  val footerState: Observable<FooterState>
-    get() {
-      return footerStateChangedSubject
-          .switchMap {
-            Observable.zip(
-                footerManager.enabled(),
-                footerManager.text(),
-                ::FooterState).first()
-          }
-    }
+  val footerState: Observable<FooterStateManager.FooterState>
+    get() = footerStateManager.get()
 
   init {
     getUser.execute()
@@ -101,9 +91,7 @@ class SettingViewModel(private val config: Config,
   }
 
   fun onFooterStateChanged(enabled: Boolean, footerText: String) {
-    footerManager.enabled(enabled)
-    footerManager.text(footerText)
-    footerStateChangedSubject.onNext(Unit)
+    footerStateManager.set(FooterStateManager.FooterState(enabled, footerText))
   }
 
   fun onOpenProfileRequested() {
@@ -139,7 +127,4 @@ class SettingViewModel(private val config: Config,
   fun onGitHubRequested() {
     githubRequestsSubject.onNext(config.githubUrl)
   }
-
-  data class FooterState(val enabled: Boolean,
-                         val text: String)
 }

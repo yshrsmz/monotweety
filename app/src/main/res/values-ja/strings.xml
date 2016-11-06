@@ -46,4 +46,6 @@
   <string name="label_enable_footer">有効にする</string>
   <string name="label_footer">フッター</string>
   <string name="title_edit_footer">フッターを編集</string>
+  <string name="label_notification_footer_off"><b>フッター</b> - OFF</string>
+  <string name="label_notification_footer_on"><b>フッター</b> - ON: %s</string>
 </resources>

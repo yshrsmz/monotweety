@@ -82,6 +82,9 @@ class ComposeStatusViewModel(status: String,
           .map { Unit }
     }
 
+  val footerState: Observable<FooterStateManager.FooterState>
+    get() = footerStateManager.get()
+
   val canClose: Boolean
     get() {
       val isSending = progressEventsSubject.value == ProgressEvent.IN_PROGRESS

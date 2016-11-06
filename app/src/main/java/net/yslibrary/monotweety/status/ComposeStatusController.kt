@@ -4,7 +4,6 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SimpleItemAnimator
-import android.util.Pair
 import android.view.*
 import android.widget.FrameLayout
 import com.bluelinelabs.conductor.RouterTransaction
@@ -137,12 +136,14 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
     viewModel.statusUpdated
         .zipWith(viewModel.previousStatus.skip(1), { unit, tweet -> tweet })
         .filter { it != null }
+        .zipWith(viewModel.footerState.first(), { tweet, footerState -> Pair(tweet, footerState) })
         .bindToLifecycle()
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe {
-          Timber.d("status updated, and previous status loaded: ${it?.text}")
+        .subscribe { tweetAndFooter ->
+          Timber.d("status updated, and previous status loaded: ${tweetAndFooter.first?.text}")
           analytics.tweetFromEditor()
-          adapter.updatePreviousTweetAndClearEditor(if (it == null) emptyList() else listOf(it))
+          adapter.updatePreviousTweetAndClearEditor(if (tweetAndFooter.first == null) emptyList() else
+            listOf(tweetAndFooter.first!!), tweetAndFooter.second)
         }
 
     viewModel.messages.bindToLifecycle()

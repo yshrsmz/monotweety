@@ -3,6 +3,7 @@ package net.yslibrary.monotweety.status.adapter
 import android.support.v7.util.DiffUtil
 import com.hannesdorfmann.adapterdelegates3.ListDelegationAdapter
 import com.twitter.sdk.android.core.models.Tweet
+import net.yslibrary.monotweety.setting.domain.FooterStateManager
 import rx.Single
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -80,7 +81,7 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
     updateEditorInternal(item.copy(initialValue = !editorInitialized))
   }
 
-  fun updatePreviousTweetAndClearEditor(tweets: List<Tweet>) {
+  fun updatePreviousTweetAndClearEditor(tweets: List<Tweet>, footerState: FooterStateManager.FooterState) {
     val tweetItems = tweets.map {
       PreviousStatusAdapterDelegate.Item(
           id = it.id,
@@ -88,7 +89,7 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
           createdAt = it.createdAt)
     }
     calculateDiff(items, tweetItems + editorItem()
-        .copy(status = "",
+        .copy(status = if (footerState.enabled) footerState.text else "",
             statusLength = 0,
             valid = false,
             initialValue = false,

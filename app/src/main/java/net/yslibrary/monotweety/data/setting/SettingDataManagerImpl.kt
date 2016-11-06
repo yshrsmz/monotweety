@@ -5,9 +5,10 @@ import rx.Completable
 import rx.Observable
 
 /**
- * Created by yshrsmz on 2016/09/29.
+ * Implementation of SettingDataManager.
+ * This class is open just for testing.
  */
-class SettingDataManagerImpl(private val prefs: RxSharedPreferences) : SettingDataManager {
+open class SettingDataManagerImpl(private val prefs: RxSharedPreferences) : SettingDataManager {
 
   private val notificationEnabled = prefs.getBoolean(NOTIFICATION_ENABLED, false)
 

@@ -13,3 +13,5 @@ fun <T : Any> mock(clazz: KClass<T>): T = Mockito.mock(clazz.java)
 fun <T> whenever(methodCall: T): OngoingStubbing<T> = Mockito.`when`(methodCall)
 
 fun <T> verify(methodCall: T): T = Mockito.verify(methodCall)
+
+fun <T : Any> spy(any: T): T = Mockito.spy(any)

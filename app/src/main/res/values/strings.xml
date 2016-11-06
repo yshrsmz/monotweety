@@ -36,6 +36,15 @@
   <string name="label_googleplay">Rate in Google Play Store</string>
   <string name="label_github">Star on GitHub</string>
 
+  <string name="label_footer">Footer</string>
+  <string name="sub_label_footer_on" translatable="false">ON: %s</string>
+  <string name="sub_label_footer_off" translatable="false">OFF</string>
+  <string name="title_edit_footer">Edit Footer</string>
+  <string name="label_enable_footer">Enable Footer</string>
+  <string name="hint_footer_editor">Footer text</string>
+  <string name="label_notification_footer_on"><b>Footer</b> - ON: %s</string>
+  <string name="label_notification_footer_off"><b>Footer</b> - OFF</string>
+
   <string name="label_confirm">Confirm</string>
   <string name="label_cancel_confirm">Quit without tweeting?</string>
   <string name="label_quit">Quit</string>

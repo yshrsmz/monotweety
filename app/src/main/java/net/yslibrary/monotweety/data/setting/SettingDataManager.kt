@@ -16,5 +16,11 @@ interface SettingDataManager {
   fun keepOpen(): Observable<Boolean>
   fun keepOpen(enabled: Boolean)
 
+  fun footerEnabled(): Observable<Boolean>
+  fun footerEnabled(enabled: Boolean)
+
+  fun footerText(): Observable<String>
+  fun footerText(text: String)
+
   fun clear(): Completable
 }

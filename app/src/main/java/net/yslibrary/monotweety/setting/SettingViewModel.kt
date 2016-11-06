@@ -2,6 +2,7 @@ package net.yslibrary.monotweety.setting
 
 import net.yslibrary.monotweety.Config
 import net.yslibrary.monotweety.data.user.User
+import net.yslibrary.monotweety.setting.domain.FooterStateManager
 import net.yslibrary.monotweety.setting.domain.KeepOpenManager
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
 import net.yslibrary.monotweety.user.domain.GetUser
@@ -18,7 +19,8 @@ import timber.log.Timber
 class SettingViewModel(private val config: Config,
                        private val notificationEnabledManager: NotificationEnabledManager,
                        private val getUser: GetUser,
-                       private val keepOpenManager: KeepOpenManager) {
+                       private val keepOpenManager: KeepOpenManager,
+                       private val footerStateManager: FooterStateManager) {
 
   private val userSubject = BehaviorSubject<User?>(null)
 
@@ -71,6 +73,9 @@ class SettingViewModel(private val config: Config,
   val githubRequests: Observable<String>
     get() = githubRequestsSubject.asObservable()
 
+  val footerState: Observable<FooterStateManager.FooterState>
+    get() = footerStateManager.get()
+
   init {
     getUser.execute()
         .subscribe({ userSubject.onNext(it) },
@@ -83,6 +88,10 @@ class SettingViewModel(private val config: Config,
 
   fun onKeepOpenChanged(enabled: Boolean) {
     keepOpenManager.set(enabled)
+  }
+
+  fun onFooterStateChanged(enabled: Boolean, footerText: String) {
+    footerStateManager.set(FooterStateManager.FooterState(enabled, footerText))
   }
 
   fun onOpenProfileRequested() {

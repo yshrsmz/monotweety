@@ -22,6 +22,7 @@ import net.yslibrary.monotweety.activity.compose.ComposeActivity
 import net.yslibrary.monotweety.activity.main.MainActivity
 import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.base.HasComponent
+import net.yslibrary.monotweety.setting.domain.FooterStateManager
 import rx.Completable
 import rx.android.schedulers.AndroidSchedulers
 import rx.lang.kotlin.addTo
@@ -146,26 +147,31 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
 
   fun setEvents() {
     viewModel.error
+        .switchMap { error ->
+          viewModel.footerState.first().map { Pair(error, it) }
+        }
         .subscribe {
           closeNotificationDrawer()
-          updateNotification()
-          showError(it)
+          updateNotification(it.second)
+          showError(it.first)
         }
         .addTo(subscriptions)
 
     viewModel.overlongStatus
+        .switchMap { status -> viewModel.footerState.first().map { Pair(status, it) } }
         .subscribe {
           closeNotificationDrawer()
           showTweetFailedBecauseOfLength()
-          updateNotification()
-          showTweetDialog(it.status)
+          updateNotification(it.second)
+          showTweetDialog(it.first.status)
           analytics.tweetFromNotificationButTooLong()
         }
         .addTo(subscriptions)
 
     viewModel.updateCompleted
+        .switchMap { viewModel.footerState.first() }
         .subscribe {
-          updateNotification()
+          updateNotification(it)
           showTweetSucceeded()
           analytics.tweetFromNotification()
         }.addTo(subscriptions)
@@ -174,12 +180,16 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
         .subscribe { closeNotificationDrawer() }
         .addTo(subscriptions)
 
+    viewModel.footerState
+        .subscribe { updateNotification(it) }
+        .addTo(subscriptions)
+
     viewModel.stopNotificationService
         .subscribe { stopSelf() }
         .addTo(subscriptions)
   }
 
-  fun buildNotification(): Notification {
+  fun buildNotification(footerState: FooterStateManager.FooterState): Notification {
     val directTweetIntent = PendingIntent.getBroadcast(applicationContext, 0,
         commandIntent(COMMAND_DIRECT_TWEET), PendingIntent.FLAG_UPDATE_CURRENT)
 
@@ -215,11 +225,20 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
         getString(R.string.label_open_settings),
         openSettingIntent).build()
 
+    val footerStateString = if (footerState.enabled)
+      getString(R.string.label_notification_footer_on, footerState.text)
+    else
+      getString(R.string.label_notification_footer_off)
+    val inboxStyle = NotificationCompat.InboxStyle()
+    inboxStyle.addLine(getString(R.string.label_notification_content))
+    inboxStyle.addLine(footerStateString)
+
     val builder = NotificationCompat.Builder(applicationContext)
         .setSmallIcon(R.drawable.ic_notification)
         .setContentTitle(getString(R.string.app_name))
         .setContentText(getString(R.string.label_notification_content))
         .setContentIntent(openDialogIntent)
+        .setStyle(inboxStyle)
         .setShowWhen(false)
         .setPriority(NotificationCompat.PRIORITY_MAX)
 
@@ -238,7 +257,8 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
   fun showNotification(): Notification {
     Timber.d("show notification")
 
-    val noti = buildNotification()
+    val footerState = viewModel.footerState.toBlocking().first()
+    val noti = buildNotification(footerState)
 
     noti.flags = NotificationCompat.FLAG_NO_CLEAR
 
@@ -247,10 +267,10 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
     return noti
   }
 
-  fun updateNotification(): Notification {
+  fun updateNotification(footerState: FooterStateManager.FooterState): Notification {
     Timber.d("update notification")
 
-    val noti = buildNotification()
+    val noti = buildNotification(footerState)
 
     noti.flags = NotificationCompat.FLAG_NO_CLEAR
 
@@ -262,10 +282,6 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
   fun closeNotificationDrawer() {
     val intent = Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
     applicationContext.sendBroadcast(intent)
-  }
-
-  fun hideNotification() {
-    Timber.d("hide notification")
   }
 
   fun showTweetDialog(status: String) {
@@ -327,7 +343,6 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
 
       command?.let {
         when (it) {
-          COMMAND_SHOW_NOTIFICATION -> viewModel.onShowNotificationCommand()
           COMMAND_CLOSE_NOTIFICATION -> viewModel.onCloseNotificationCommand()
           COMMAND_DIRECT_TWEET -> {
             val bundle = RemoteInput.getResultsFromIntent(intent)
@@ -335,7 +350,6 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
               viewModel.onDirectTweetCommand(text)
             }
           }
-          COMMAND_SHOW_TWEET_DIALOG -> viewModel.onShowTweetDialogCommand()
           else -> {
             // no-op
           }

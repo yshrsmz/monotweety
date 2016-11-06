@@ -15,6 +15,9 @@ class SettingDataManagerImpl(private val prefs: RxSharedPreferences) : SettingDa
 
   private val keepOpen = prefs.getBoolean(KEEP_OPEN, false)
 
+  private val footerEnabled = prefs.getBoolean(FOOTER_ENABLED, false)
+  private val footerText = prefs.getString(FOOTER_TEXT, "")
+
   override fun notificationEnabled(): Observable<Boolean> {
     return notificationEnabled.asObservable()
   }
@@ -39,6 +42,22 @@ class SettingDataManagerImpl(private val prefs: RxSharedPreferences) : SettingDa
     keepOpen.set(enabled)
   }
 
+  override fun footerEnabled(): Observable<Boolean> {
+    return footerEnabled.asObservable()
+  }
+
+  override fun footerEnabled(enabled: Boolean) {
+    footerEnabled.set(enabled)
+  }
+
+  override fun footerText(): Observable<String> {
+    return footerText.asObservable()
+  }
+
+  override fun footerText(text: String) {
+    footerText.set(text)
+  }
+
   override fun clear(): Completable {
     return Completable.fromAction {
       notificationEnabled.delete()
@@ -51,5 +70,8 @@ class SettingDataManagerImpl(private val prefs: RxSharedPreferences) : SettingDa
     const val NOTIFICATION_ENABLED = "notification_enabled"
     const val START_ON_REBOOT_ENABLED = "start_on_reboot_enabled"
     const val KEEP_OPEN = "keep_open"
+
+    const val FOOTER_ENABLED = "footer_enabled"
+    const val FOOTER_TEXT = "footer_text"
   }
 }

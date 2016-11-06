@@ -2,6 +2,7 @@ package net.yslibrary.monotweety.notification
 
 import com.twitter.sdk.android.core.TwitterApiException
 import net.yslibrary.monotweety.data.status.OverlongStatusException
+import net.yslibrary.monotweety.setting.domain.FooterStateManager
 import net.yslibrary.monotweety.setting.domain.KeepOpenManager
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
 import net.yslibrary.monotweety.status.domain.CheckStatusLength
@@ -18,7 +19,8 @@ import timber.log.Timber
 class NotificationServiceViewModel(private val notificationEnabledManager: NotificationEnabledManager,
                                    private val keepOpenManager: KeepOpenManager,
                                    private val checkStatusLength: CheckStatusLength,
-                                   private val updateStatus: UpdateStatus) {
+                                   private val updateStatus: UpdateStatus,
+                                   private val footerStateManager: FooterStateManager) {
 
   private val overlongStatusSubject = PublishSubject<OverlongStatus>()
 
@@ -43,12 +45,11 @@ class NotificationServiceViewModel(private val notificationEnabledManager: Notif
         .filter { !it }
         .map { Unit }
 
+  val footerState: Observable<FooterStateManager.FooterState>
+    get() = footerStateManager.get()
+
   val error: Observable<String>
     get() = errorSubject.asObservable()
-
-  fun onShowNotificationCommand() {
-    Timber.d("onShowNotificationCommand")
-  }
 
   fun onCloseNotificationCommand() {
     Timber.d("onCloseNotificationCommand")
@@ -58,13 +59,14 @@ class NotificationServiceViewModel(private val notificationEnabledManager: Notif
 
   fun onDirectTweetCommand(text: String) {
     Timber.d("onDirectTweetCommand: $text")
-    checkStatusLength.execute(text)
+    footerStateManager.get().first().toSingle()
+        .map { (if (it.enabled) "$text ${it.text}" else text).trim() }
+        .flatMap { checkStatusLength.execute(it) }
         .flatMapCompletable {
           if (it.valid) {
-            updateStatus.execute(text)
+            updateStatus.execute(it.status)
           } else {
-            Completable.error(OverlongStatusException(status = it.status,
-                length = it.length))
+            Completable.error(OverlongStatusException(status = text.trim(), length = it.length))
           }
         }
         .subscribe({
@@ -83,10 +85,6 @@ class NotificationServiceViewModel(private val notificationEnabledManager: Notif
             }
           }
         })
-  }
-
-  fun onShowTweetDialogCommand() {
-    Timber.d("onShowTweetDialogCommnad")
   }
 
   data class OverlongStatus(val status: String, val length: Int)

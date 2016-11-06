@@ -3,6 +3,7 @@ package net.yslibrary.monotweety.status
 import com.twitter.sdk.android.core.TwitterApiException
 import com.twitter.sdk.android.core.models.Tweet
 import net.yslibrary.monotweety.Config
+import net.yslibrary.monotweety.setting.domain.FooterStateManager
 import net.yslibrary.monotweety.setting.domain.KeepOpenManager
 import net.yslibrary.monotweety.status.domain.CheckStatusLength
 import net.yslibrary.monotweety.status.domain.GetPreviousStatus
@@ -22,7 +23,8 @@ class ComposeStatusViewModel(status: String,
                              private val checkStatusLength: CheckStatusLength,
                              private val updateStatus: UpdateStatus,
                              private val getPreviousStatus: GetPreviousStatus,
-                             private val keepOpenManager: KeepOpenManager) {
+                             private val keepOpenManager: KeepOpenManager,
+                             private val footerStateManager: FooterStateManager) {
 
   private val isSendableStatusSubject = BehaviorSubject<Boolean>(false)
 
@@ -80,6 +82,9 @@ class ComposeStatusViewModel(status: String,
           .map { Unit }
     }
 
+  val footerState: Observable<FooterStateManager.FooterState>
+    get() = footerStateManager.get()
+
   val canClose: Boolean
     get() {
       val isSending = progressEventsSubject.value == ProgressEvent.IN_PROGRESS
@@ -99,7 +104,14 @@ class ComposeStatusViewModel(status: String,
     keepOpenManager.get().first()
         .subscribe { keepOpenSubject.onNext(it) }
 
-    onStatusChanged(status)
+    footerStateManager.get().first()
+        .subscribe {
+          val statusText = if (it.enabled)
+            "$status ${it.text}"
+          else
+            status
+          onStatusChanged(statusText)
+        }
   }
 
   fun onStatusChanged(status: String) {

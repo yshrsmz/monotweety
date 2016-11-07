@@ -6,6 +6,7 @@ import net.yslibrary.monotweety.setting.domain.FooterStateManager
 import net.yslibrary.monotweety.setting.domain.KeepOpenManager
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
 import net.yslibrary.monotweety.status.domain.CheckStatusLength
+import net.yslibrary.monotweety.status.domain.ClearPreviousStatus
 import net.yslibrary.monotweety.status.domain.UpdateStatus
 import rx.Completable
 import rx.Observable
@@ -20,6 +21,7 @@ class NotificationServiceViewModel(private val notificationEnabledManager: Notif
                                    private val keepOpenManager: KeepOpenManager,
                                    private val checkStatusLength: CheckStatusLength,
                                    private val updateStatus: UpdateStatus,
+                                   private val clearPreviousStatus: ClearPreviousStatus,
                                    private val footerStateManager: FooterStateManager) {
 
   private val overlongStatusSubject = PublishSubject<OverlongStatus>()
@@ -69,6 +71,8 @@ class NotificationServiceViewModel(private val notificationEnabledManager: Notif
             Completable.error(OverlongStatusException(status = text.trim(), length = it.length))
           }
         }
+        // clear previous status since tweet from notification does not support "chain tweet as a thread"
+        .andThen(clearPreviousStatus.execute())
         .subscribe({
           Timber.d("tweet succeeded!")
           updateCompletedSubject.onNext(Unit)

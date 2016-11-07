@@ -134,8 +134,7 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
         }
 
     viewModel.statusUpdated
-        .zipWith(viewModel.previousStatus.skip(1), { unit, tweet -> tweet })
-        .filter { it != null }
+        .switchMap { viewModel.previousStatus.first() }
         .switchMap { tweet ->
           viewModel.footerState.first()
               .map { Pair(tweet, it) }

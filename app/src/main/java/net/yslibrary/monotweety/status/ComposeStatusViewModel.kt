@@ -9,6 +9,7 @@ import net.yslibrary.monotweety.status.domain.CheckStatusLength
 import net.yslibrary.monotweety.status.domain.ClearPreviousStatus
 import net.yslibrary.monotweety.status.domain.GetPreviousStatus
 import net.yslibrary.monotweety.status.domain.UpdateStatus
+import rx.Completable
 import rx.Observable
 import rx.Single
 import rx.lang.kotlin.BehaviorSubject
@@ -133,11 +134,20 @@ class ComposeStatusViewModel(status: String,
         getPreviousStatus.execute().first(),
         statusInfo,
         { sendable, asThread, previousTweet, info ->
+          // return previous tweet and current status string
           Pair<Tweet?, String>(if (asThread) previousTweet else null, info.status)
         })
         .first().toSingle()
         .doOnSuccess { progressEventsSubject.onNext(ProgressEvent.IN_PROGRESS) }
         .flatMapCompletable { updateStatus.execute(it.second, it.first?.id) }
+        .andThen(tweetAsThread.first().toSingle()
+            .flatMapCompletable { asThread ->
+              if (asThread) {
+                Completable.complete()
+              } else {
+                clearPreviousStatus.execute()
+              }
+            })
         .doOnCompleted {
           Timber.d("status updated - complete")
           statusUpdatedSubject.onNext(Unit)

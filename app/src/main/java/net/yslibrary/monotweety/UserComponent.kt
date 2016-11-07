@@ -10,6 +10,7 @@ import net.yslibrary.monotweety.setting.domain.FooterStateManager
 import net.yslibrary.monotweety.setting.domain.KeepOpenManager
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
 import net.yslibrary.monotweety.status.domain.CheckStatusLength
+import net.yslibrary.monotweety.status.domain.ClearPreviousStatus
 import net.yslibrary.monotweety.status.domain.GetPreviousStatus
 import net.yslibrary.monotweety.status.domain.UpdateStatus
 import net.yslibrary.monotweety.user.domain.GetUser
@@ -34,6 +35,8 @@ interface UserComponent : AppModule.Provider {
   fun updateStatus(): UpdateStatus
 
   fun getPreviousStatus(): GetPreviousStatus
+
+  fun clearPreviousStatus(): ClearPreviousStatus
 
   fun getUser(): GetUser
 

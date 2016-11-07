@@ -208,6 +208,11 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
     return true
   }
 
+  override fun onDestroy() {
+    super.onDestroy()
+    viewModel.onDestroy()
+  }
+
   fun showConfirmCloseDialog() {
 
     AlertDialog.Builder(activity)

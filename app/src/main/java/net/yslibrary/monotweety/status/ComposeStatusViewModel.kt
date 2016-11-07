@@ -6,6 +6,7 @@ import net.yslibrary.monotweety.Config
 import net.yslibrary.monotweety.setting.domain.FooterStateManager
 import net.yslibrary.monotweety.setting.domain.KeepOpenManager
 import net.yslibrary.monotweety.status.domain.CheckStatusLength
+import net.yslibrary.monotweety.status.domain.ClearPreviousStatus
 import net.yslibrary.monotweety.status.domain.GetPreviousStatus
 import net.yslibrary.monotweety.status.domain.UpdateStatus
 import rx.Observable
@@ -23,6 +24,7 @@ class ComposeStatusViewModel(status: String,
                              private val checkStatusLength: CheckStatusLength,
                              private val updateStatus: UpdateStatus,
                              private val getPreviousStatus: GetPreviousStatus,
+                             private val clearPreviousStatus: ClearPreviousStatus,
                              private val keepOpenManager: KeepOpenManager,
                              private val footerStateManager: FooterStateManager) {
 
@@ -164,6 +166,11 @@ class ComposeStatusViewModel(status: String,
 
   fun onConfirmCloseView(allowCloseView: Boolean) {
     allowCloseViewSubject.onNext(allowCloseView)
+  }
+
+  fun onDestroy() {
+    clearPreviousStatus.execute()
+        .subscribe({ Timber.d("previous status cleared") })
   }
 
   data class StatusInfo(val status: String, val valid: Boolean, val length: Int, val maxLength: Int = 140)

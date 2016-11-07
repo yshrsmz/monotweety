@@ -7,6 +7,7 @@ import net.yslibrary.monotweety.base.di.ControllerScope
 import net.yslibrary.monotweety.setting.domain.FooterStateManager
 import net.yslibrary.monotweety.setting.domain.KeepOpenManager
 import net.yslibrary.monotweety.status.domain.CheckStatusLength
+import net.yslibrary.monotweety.status.domain.ClearPreviousStatus
 import net.yslibrary.monotweety.status.domain.GetPreviousStatus
 import net.yslibrary.monotweety.status.domain.UpdateStatus
 
@@ -22,6 +23,7 @@ class ComposeStatusViewModule(private val status: String?) {
                                     checkStatusLength: CheckStatusLength,
                                     updateStatus: UpdateStatus,
                                     getPreviousStatus: GetPreviousStatus,
+                                    clearPreviousStatus: ClearPreviousStatus,
                                     keepOpenManager: KeepOpenManager,
                                     footerStateManager: FooterStateManager): ComposeStatusViewModel {
     val _status: String = if (status.isNullOrBlank()) "" else status!!
@@ -30,6 +32,7 @@ class ComposeStatusViewModule(private val status: String?) {
         checkStatusLength,
         updateStatus,
         getPreviousStatus,
+        clearPreviousStatus,
         keepOpenManager,
         footerStateManager)
   }

@@ -136,7 +136,10 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
     viewModel.statusUpdated
         .zipWith(viewModel.previousStatus.skip(1), { unit, tweet -> tweet })
         .filter { it != null }
-        .zipWith(viewModel.footerState.first(), { tweet, footerState -> Pair(tweet, footerState) })
+        .switchMap { tweet ->
+          viewModel.footerState.first()
+              .map { Pair(tweet, it) }
+        }
         .bindToLifecycle()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe { tweetAndFooter ->

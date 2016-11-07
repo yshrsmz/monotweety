@@ -89,7 +89,7 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
           createdAt = it.createdAt)
     }
     calculateDiff(items, tweetItems + editorItem()
-        .copy(status = if (footerState.enabled) footerState.text else "",
+        .copy(status = if (footerState.enabled) " ${footerState.text}" else "",
             statusLength = 0,
             valid = false,
             initialValue = false,

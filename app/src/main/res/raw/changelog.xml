@@ -6,6 +6,10 @@
     <changelogtext>Add Footer. When tweeting from notification, footer will be automatically added
       before sending
     </changelogtext>
+    <changelogtext>Fix tweet dialog not updated after tweeting</changelogtext>
+    <changelogtext>Fix first tweet after enabling "tweet as a thread" mistakenly tweeted as a reply
+      to the previous tweet
+    </changelogtext>
   </changelogversion>
   <changelogversion
       changeDate="Nov 5th, 2016"

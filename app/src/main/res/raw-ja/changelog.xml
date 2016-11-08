@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
   <changelogversion
-      changeDate="XXX"
+      changeDate="Nov 9th, 2016"
       versionName="1.1.0">
     <changelogtext>フッター機能の追加。通知バーからのツイート時は、投稿前に自動で付加されます</changelogtext>
-    <changelogtext>ツイート後に編集ダイアログが更新されない問題の修正</changelogtext>
     <changelogtext>連ツイ有効化後の最初のツイートが、連ツイ有効化前のツイートへのリプライになってしまう件の修正</changelogtext>
   </changelogversion>
   <changelogversion

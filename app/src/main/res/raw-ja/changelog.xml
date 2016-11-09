@@ -5,6 +5,7 @@
       versionName="1.1.0">
     <changelogtext>フッター機能の追加。通知バーからのツイート時は、投稿前に自動で付加されます</changelogtext>
     <changelogtext>連ツイ有効化後の最初のツイートが、連ツイ有効化前のツイートへのリプライになってしまう件の修正</changelogtext>
+    <changelogtext>編集ダイアログ内の前回のステータス表示の挙動を調整。連ツイモード有効時のみ表示</changelogtext>
   </changelogversion>
   <changelogversion
       changeDate="Nov 5th, 2016"

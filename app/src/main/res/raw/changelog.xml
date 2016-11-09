@@ -9,6 +9,10 @@
     <changelogtext>Fix first tweet after enabling "tweet as a thread" mistakenly tweeted as a reply
       to the previous tweet
     </changelogtext>
+    <changelogtext>
+      Tweak previous status behavior in editor dialog. Now only visible when "tweet as a thread" is
+      enabled
+    </changelogtext>
   </changelogversion>
   <changelogversion
       changeDate="Nov 5th, 2016"

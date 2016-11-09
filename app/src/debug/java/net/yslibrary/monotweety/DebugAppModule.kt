@@ -7,7 +7,7 @@ import android.content.Context
  */
 class DebugAppModule(context: Context) : AppModule(context) {
 
-  override fun provideAppLifecycleCallbacks(context: Context): App.LifecycleCallbacks {
+  override fun provideAppLifecycleCallbacks(context: Context): ApplicationLifecycleCallbacks {
     return DebugAppLifecycleCallbacks(context)
   }
 }

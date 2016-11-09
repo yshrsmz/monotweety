@@ -12,7 +12,7 @@ import timber.log.Timber
 /**
  * Created by yshrsmz on 2016/09/24.
  */
-open class AppLifecycleCallbacks(val context: Context) : App.LifecycleCallbacks {
+open class AppLifecycleCallbacks(val context: Context) : ApplicationLifecycleCallbacks {
   override fun onCreate() {
     initTimber()
     initThreeTenABP()

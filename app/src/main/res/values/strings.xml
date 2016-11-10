@@ -64,7 +64,7 @@
   <string name="label_loading" translatable="false">Loading…</string>
   <string name="label_loading_placeholder" translatable="false">-</string>
 
-  <string name="message_share">Check out Monotweety! %s</string>
+  <string name="message_share">Check out #Monotweety! %s #Android</string>
 
   <string name="transition_name_logo" translatable="false">transition.logo</string>
 </resources>

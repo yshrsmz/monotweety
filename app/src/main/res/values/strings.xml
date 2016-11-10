@@ -5,6 +5,7 @@
   <string name="title_compose_status">Compose Tweet</string>
   <string name="title_license">Open Source License</string>
   <string name="title_changelog">Changelog</string>
+  <string name="title_shortcut_editor">Open Editor Dialog</string>
 
   <string name="label_notificatoin_state">Notification: %s</string>
   <string name="label_on" translatable="false">ON</string>
@@ -60,6 +61,7 @@
   <string name="error_login_failed">Failed to login. Please try again later.</string>
   <string name="error_tweet_failed">Tweet failed.</string>
   <string name="error_tweet_failed_because_of_length">Content is too long. \nPlease edit on the following dialog</string>
+  <string name="error_not_authorized">Please login first to use this feature.</string>
 
   <string name="label_loading" translatable="false">Loading…</string>
   <string name="label_loading_placeholder" translatable="false">-</string>

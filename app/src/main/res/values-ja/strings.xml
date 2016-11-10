@@ -48,4 +48,6 @@
   <string name="title_edit_footer">フッターを編集</string>
   <string name="label_notification_footer_off"><b>フッター</b> - OFF</string>
   <string name="label_notification_footer_on"><b>フッター</b> - ON: %s</string>
+  <string name="title_shortcut_editor">編集ダイアログを開く</string>
+  <string name="error_not_authorized">ログインしてからご利用ください</string>
 </resources>

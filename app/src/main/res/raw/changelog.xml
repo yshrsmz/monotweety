@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
   <changelogversion
+      changeDate="XXX"
+      versionName="1.2.0">
+    <changelogtext>Add shortcut for the Editor dialog. Now you can assign open editor action to
+      gesture of launcher apps.
+    </changelogtext>
+  </changelogversion>
+  <changelogversion
       changeDate="Nov 9th, 2016"
       versionName="1.1.0">
     <changelogtext>Add Footer. When tweeting from notification, footer will be automatically added

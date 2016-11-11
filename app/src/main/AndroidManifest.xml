@@ -41,6 +41,20 @@
         android:launchMode="singleInstance"
         android:theme="@style/AppTheme.Dialog"/>
 
+    <activity
+        android:name=".activity.shortcut.ShortcutActivity"
+        android:exported="true"
+        android:launchMode="singleInstance"
+        android:theme="@android:style/Theme.NoDisplay"/>
+
+    <activity
+        android:name=".activity.shortcut.CreateShortcutActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.CREATE_SHORTCUT"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
+    </activity>
+
     <meta-data
         android:name="io.fabric.ApiKey"
         android:value="${fabricApiKey}"/>

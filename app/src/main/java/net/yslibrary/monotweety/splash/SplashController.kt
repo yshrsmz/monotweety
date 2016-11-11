@@ -15,6 +15,8 @@ import net.yslibrary.monotweety.login.LoginTransitionChangeHandler
 import net.yslibrary.monotweety.setting.SettingController
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
+import rx.lang.kotlin.addTo
+import rx.subscriptions.CompositeSubscription
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -27,6 +29,8 @@ class SplashController : ActionBarController(), HasComponent<SplashComponent> {
 
   @field:[Inject]
   lateinit var viewModel: SplashViewModel
+
+  var subscriptions: CompositeSubscription = CompositeSubscription()
 
   override val shouldShowActionBar: Boolean = false
 
@@ -46,6 +50,7 @@ class SplashController : ActionBarController(), HasComponent<SplashComponent> {
   override fun inflateView(inflater: LayoutInflater, container: ViewGroup): View {
     val view = inflater.inflate(R.layout.controller_splash, container, false)
 
+    subscriptions = CompositeSubscription()
     setEvents()
 
     return view
@@ -61,6 +66,11 @@ class SplashController : ActionBarController(), HasComponent<SplashComponent> {
           router.setRoot(RouterTransaction.with(next)
               .pushChangeHandler(if (it) SimpleSwapChangeHandler() else LoginTransitionChangeHandler())
               .popChangeHandler(if (it) SimpleSwapChangeHandler() else LoginTransitionChangeHandler()))
-        }
+        }.addTo(subscriptions)
+  }
+
+  override fun onDestroyView(view: View?) {
+    super.onDestroyView(view)
+    subscriptions.unsubscribe()
   }
 }

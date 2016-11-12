@@ -10,9 +10,6 @@ interface SettingDataManager {
   fun notificationEnabled(): Observable<Boolean>
   fun notificationEnabled(enabled: Boolean)
 
-  fun startOnRebootEnabled(): Observable<Boolean>
-  fun startOnRebootEnabled(enabled: Boolean)
-
   fun keepOpen(): Observable<Boolean>
   fun keepOpen(enabled: Boolean)
 

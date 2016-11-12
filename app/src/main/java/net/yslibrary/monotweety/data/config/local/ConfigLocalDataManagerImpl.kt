@@ -7,9 +7,10 @@ import java.util.concurrent.TimeUnit
 
 /**
  * Created by yshrsmz on 2016/10/01.
+ * this class is open just for testing
  */
-class ConfigLocalDataManagerImpl(private val prefs: RxSharedPreferences,
-                                 private val clock: Clock) : ConfigLocalDataManager {
+open class ConfigLocalDataManagerImpl(private val prefs: RxSharedPreferences,
+                                      private val clock: Clock) : ConfigLocalDataManager {
 
   private val shortUrlLengthHttps = prefs.getInteger(SHORT_URL_LENGTH_HTTPS, 23)
   private val updatedAt = prefs.getLong(UPDATED_AT, 0)

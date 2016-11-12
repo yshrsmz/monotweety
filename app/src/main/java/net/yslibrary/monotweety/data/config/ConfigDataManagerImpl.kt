@@ -1,5 +1,6 @@
 package net.yslibrary.monotweety.data.config
 
+import android.support.annotation.VisibleForTesting
 import com.twitter.sdk.android.core.models.Configuration
 import net.yslibrary.monotweety.base.Clock
 import net.yslibrary.monotweety.data.config.local.ConfigLocalDataManager
@@ -11,10 +12,11 @@ import timber.log.Timber
 
 /**
  * Created by yshrsmz on 2016/10/01.
+ * this class is open just for testing
  */
-class ConfigDataManagerImpl(private val remoteDataManager: ConfigRemoteDataManager,
-                            private val localDataManager: ConfigLocalDataManager,
-                            private val clock: Clock) : ConfigDataManager {
+open class ConfigDataManagerImpl(private val remoteDataManager: ConfigRemoteDataManager,
+                                 private val localDataManager: ConfigLocalDataManager,
+                                 private val clock: Clock) : ConfigDataManager {
 
   private var subscription = Subscriptions.unsubscribed()
 
@@ -25,14 +27,21 @@ class ConfigDataManagerImpl(private val remoteDataManager: ConfigRemoteDataManag
             Timber.d("fetch new config from api")
             subscription = remoteDataManager.get()
                 .subscribeOn(Schedulers.io())
-                .doOnSuccess { updateConfig(it) }
-                .doOnError { Timber.e(it, it.message) }
+                .doOnSuccess {
+                  updateConfig(it)
+                  subscription.unsubscribe()
+                }
+                .doOnError {
+                  Timber.e(it, it.message)
+                  subscription.unsubscribe()
+                }
                 .subscribe()
           }
         }
   }
 
-  private fun updateConfig(configuration: Configuration) {
+  @VisibleForTesting
+  open fun updateConfig(configuration: Configuration) {
     Timber.d("update local config: $configuration")
     localDataManager.shortUrlLengthHttps(configuration.shortUrlLengthHttps)
     localDataManager.updatedAt(clock.currentTimeMillis())

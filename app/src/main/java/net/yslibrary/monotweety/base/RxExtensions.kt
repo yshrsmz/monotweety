@@ -1,6 +1,7 @@
 package net.yslibrary.monotweety.base
 
 import rx.Observable
+import rx.Single
 import rx.Subscription
 import rx.functions.Action1
 import rx.subscriptions.SerialSubscription
@@ -27,3 +28,5 @@ fun Subscription.setTo(subscription: SerialSubscription): Subscription {
   subscription.set(this)
   return this
 }
+
+fun <T> T.toSingle(): Single<T> = Single.just(this)

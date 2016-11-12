@@ -1,6 +1,7 @@
 package net.yslibrary.monotweety.data.setting
 
 import android.content.Context
+import android.content.pm.PackageManager
 import com.f2prateek.rx.preferences.RxSharedPreferences
 import dagger.Module
 import dagger.Provides
@@ -24,8 +25,9 @@ class SettingModule {
 
   @AppScope
   @Provides
-  fun provideSettingDataManager(@Named(Names.FOR_SETTING) prefs: RxSharedPreferences): SettingDataManager {
-    return SettingDataManagerImpl(prefs)
+  fun provideSettingDataManager(packageManager: PackageManager,
+                                @Named(Names.FOR_SETTING) prefs: RxSharedPreferences): SettingDataManager {
+    return SettingDataManagerImpl(packageManager, prefs)
   }
 
   interface Provider {

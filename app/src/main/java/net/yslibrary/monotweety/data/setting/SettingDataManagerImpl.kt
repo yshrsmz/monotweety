@@ -1,14 +1,20 @@
 package net.yslibrary.monotweety.data.setting
 
+import android.content.Intent
+import android.content.pm.PackageManager
 import com.f2prateek.rx.preferences.RxSharedPreferences
+import net.yslibrary.monotweety.base.toSingle
+import net.yslibrary.monotweety.data.AppInfo
 import rx.Completable
 import rx.Observable
+import rx.Single
 
 /**
  * Implementation of SettingDataManager.
  * This class is open just for testing.
  */
-open class SettingDataManagerImpl(private val prefs: RxSharedPreferences) : SettingDataManager {
+open class SettingDataManagerImpl(private val packageManager: PackageManager,
+                                  private val prefs: RxSharedPreferences) : SettingDataManager {
 
   private val notificationEnabled = prefs.getBoolean(NOTIFICATION_ENABLED, false)
 
@@ -16,6 +22,8 @@ open class SettingDataManagerImpl(private val prefs: RxSharedPreferences) : Sett
 
   private val footerEnabled = prefs.getBoolean(FOOTER_ENABLED, false)
   private val footerText = prefs.getString(FOOTER_TEXT, "")
+
+  private val selectedApp = prefs.getString(SELECTED_APP, "")
 
   override fun notificationEnabled(): Observable<Boolean> {
     return notificationEnabled.asObservable()
@@ -49,6 +57,40 @@ open class SettingDataManagerImpl(private val prefs: RxSharedPreferences) : Sett
     footerText.set(text)
   }
 
+  override fun installedApps(): Single<List<AppInfo>> {
+    val intent = Intent(Intent.ACTION_MAIN)
+    intent.addCategory(Intent.CATEGORY_LAUNCHER)
+
+    return packageManager.queryIntentActivities(intent, 0)
+        .map { AppInfo(name = it.activityInfo.name, packageName = it.activityInfo.packageName) }
+        .toSingle()
+  }
+
+  override fun selectedApp(): Observable<AppInfo?> {
+    return selectedApp.asObservable()
+        .map {
+          if (isAppInstalled(it)) {
+            val packageInfo = packageManager.getPackageInfo(it, PackageManager.GET_ACTIVITIES)
+            AppInfo(name = packageInfo.applicationInfo.name, packageName = it)
+          } else {
+            null
+          }
+        }
+  }
+
+  override fun selectedApp(appInfo: AppInfo) {
+    throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
+
+  fun isAppInstalled(packageName: String): Boolean {
+    try {
+      packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
+      return true
+    } catch (e: PackageManager.NameNotFoundException) {
+      return false
+    }
+  }
+
   override fun clear(): Completable {
     return Completable.fromAction {
       notificationEnabled.delete()
@@ -64,5 +106,7 @@ open class SettingDataManagerImpl(private val prefs: RxSharedPreferences) : Sett
 
     const val FOOTER_ENABLED = "footer_enabled"
     const val FOOTER_TEXT = "footer_text"
+
+    const val SELECTED_APP = "selected_app"
   }
 }

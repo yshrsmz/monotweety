@@ -1,6 +1,5 @@
 package net.yslibrary.monotweety.data.setting
 
-import android.content.pm.PackageManager
 import com.f2prateek.rx.preferences.RxSharedPreferences
 import rx.Completable
 import rx.Observable
@@ -9,8 +8,7 @@ import rx.Observable
  * Implementation of SettingDataManager.
  * This class is open just for testing.
  */
-open class SettingDataManagerImpl(private val packageManager: PackageManager,
-                                  private val prefs: RxSharedPreferences) : SettingDataManager {
+open class SettingDataManagerImpl(private val prefs: RxSharedPreferences) : SettingDataManager {
 
   private val notificationEnabled = prefs.getBoolean(NOTIFICATION_ENABLED, false)
 

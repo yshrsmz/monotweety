@@ -13,12 +13,14 @@ import javax.inject.Inject
 @AppScope
 class AppInfoManagerImpl @Inject constructor(private val packageManager: PackageManager) : AppInfoManager {
 
-  override fun isInstalled(packageName: String): Boolean {
-    try {
-      packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
-      return true
-    } catch (e: PackageManager.NameNotFoundException) {
-      return false
+  override fun isInstalled(packageName: String): Single<Boolean> {
+    return Single.fromCallable {
+      try {
+        packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
+        true
+      } catch (e: PackageManager.NameNotFoundException) {
+        false
+      }
     }
   }
 
@@ -36,6 +38,9 @@ class AppInfoManagerImpl @Inject constructor(private val packageManager: Package
   }
 
   override fun appInfo(packageName: String): Single<AppInfo> {
-    throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+    return Single.fromCallable {
+      packageManager.getPackageInfo(packageName, 0)
+    }.map { AppInfo(name = it.applicationInfo.name, packageName = it.packageName, installed = true) }
+        .onErrorResumeNext { Single.just(AppInfo(name = "", packageName = packageName, installed = false)) }
   }
 }

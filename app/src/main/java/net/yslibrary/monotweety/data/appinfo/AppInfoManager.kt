@@ -7,7 +7,7 @@ import rx.Single
  */
 interface AppInfoManager {
 
-  fun isInstalled(packageName: String): Boolean
+  fun isInstalled(packageName: String): Single<Boolean>
 
   fun installedApps(): Single<List<AppInfo>>
 

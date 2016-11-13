@@ -1,13 +1,9 @@
 package net.yslibrary.monotweety.data.setting
 
-import android.content.Intent
 import android.content.pm.PackageManager
 import com.f2prateek.rx.preferences.RxSharedPreferences
-import net.yslibrary.monotweety.base.toSingle
-import net.yslibrary.monotweety.data.AppInfo
 import rx.Completable
 import rx.Observable
-import rx.Single
 
 /**
  * Implementation of SettingDataManager.
@@ -23,7 +19,7 @@ open class SettingDataManagerImpl(private val packageManager: PackageManager,
   private val footerEnabled = prefs.getBoolean(FOOTER_ENABLED, false)
   private val footerText = prefs.getString(FOOTER_TEXT, "")
 
-  private val selectedApp = prefs.getString(SELECTED_APP, "")
+  private val selectedPackageName = prefs.getString(SELECTED_PACKAGE_NAME, "")
 
   override fun notificationEnabled(): Observable<Boolean> {
     return notificationEnabled.asObservable()
@@ -57,38 +53,12 @@ open class SettingDataManagerImpl(private val packageManager: PackageManager,
     footerText.set(text)
   }
 
-  override fun installedApps(): Single<List<AppInfo>> {
-    val intent = Intent(Intent.ACTION_MAIN)
-    intent.addCategory(Intent.CATEGORY_LAUNCHER)
-
-    return packageManager.queryIntentActivities(intent, 0)
-        .map { AppInfo(name = it.activityInfo.name, packageName = it.activityInfo.packageName) }
-        .toSingle()
+  override fun selectedPackageName(): Observable<String> {
+    return selectedPackageName.asObservable()
   }
 
-  override fun selectedApp(): Observable<AppInfo?> {
-    return selectedApp.asObservable()
-        .map {
-          if (isAppInstalled(it)) {
-            val packageInfo = packageManager.getPackageInfo(it, PackageManager.GET_ACTIVITIES)
-            AppInfo(name = packageInfo.applicationInfo.name, packageName = it)
-          } else {
-            null
-          }
-        }
-  }
-
-  override fun selectedApp(appInfo: AppInfo) {
-    throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-  }
-
-  fun isAppInstalled(packageName: String): Boolean {
-    try {
-      packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
-      return true
-    } catch (e: PackageManager.NameNotFoundException) {
-      return false
-    }
+  override fun selectedPackageName(packageName: String) {
+    selectedPackageName.set(packageName)
   }
 
   override fun clear(): Completable {
@@ -97,6 +67,7 @@ open class SettingDataManagerImpl(private val packageManager: PackageManager,
       keepOpen.delete()
       footerEnabled.delete()
       footerText.delete()
+      selectedPackageName.delete()
     }
   }
 
@@ -107,6 +78,6 @@ open class SettingDataManagerImpl(private val packageManager: PackageManager,
     const val FOOTER_ENABLED = "footer_enabled"
     const val FOOTER_TEXT = "footer_text"
 
-    const val SELECTED_APP = "selected_app"
+    const val SELECTED_PACKAGE_NAME = "selected_package_name"
   }
 }

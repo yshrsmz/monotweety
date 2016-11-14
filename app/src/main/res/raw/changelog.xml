@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
   <changelogversion
-      changeDate="XXX"
+      changeDate="Nov 15th, 2016"
       versionName="1.2.0">
     <changelogtext>Add shortcut for the Editor dialog. Now you can assign open editor action to
       gesture of launcher apps.

@@ -20,8 +20,11 @@ interface SettingDataManager {
   fun footerText(text: String)
 
 
-  fun selectedPackageName(): Observable<String>
-  fun selectedPackageName(packageName: String)
+  fun timelineAppEnabled(): Observable<Boolean>
+  fun timelineAppEnabled(enabled: Boolean)
+
+  fun timelineAppPackageName(): Observable<String>
+  fun timelineAppPackageName(packageName: String)
 
   fun clear(): Completable
 }

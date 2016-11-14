@@ -40,7 +40,10 @@ class AppInfoManagerImpl @Inject constructor(private val packageManager: Package
   override fun appInfo(packageName: String): Single<AppInfo> {
     return Single.fromCallable {
       packageManager.getPackageInfo(packageName, 0)
-    }.map { AppInfo(name = it.applicationInfo.name, packageName = it.packageName, installed = true) }
-        .onErrorResumeNext { Single.just(AppInfo(name = "", packageName = packageName, installed = false)) }
+    }.map {
+      AppInfo(name = it.applicationInfo.loadLabel(packageManager).toString(),
+          packageName = it.packageName,
+          installed = true)
+    }.onErrorResumeNext { Single.just(AppInfo(name = "", packageName = packageName, installed = false)) }
   }
 }

@@ -18,6 +18,7 @@ import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.HasComponent
 import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.changelog.ChangelogController
+import net.yslibrary.monotweety.data.appinfo.AppInfo
 import net.yslibrary.monotweety.license.LicenseController
 import net.yslibrary.monotweety.setting.adapter.SettingAdapter
 import net.yslibrary.monotweety.setting.adapter.SubHeaderDividerDecoration
@@ -69,6 +70,10 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
 
     override fun onFooterStateChanged(enabled: Boolean, text: String) {
       viewModel.onFooterStateChanged(enabled, text)
+    }
+
+    override fun onTimelineAppChanged(enabled: Boolean, selectedApp: AppInfo?) {
+      throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onLogoutClick() {

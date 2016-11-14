@@ -17,7 +17,8 @@ open class SettingDataManagerImpl(private val prefs: RxSharedPreferences) : Sett
   private val footerEnabled = prefs.getBoolean(FOOTER_ENABLED, false)
   private val footerText = prefs.getString(FOOTER_TEXT, "")
 
-  private val selectedPackageName = prefs.getString(SELECTED_PACKAGE_NAME, "")
+  private val timelineAppEnabled = prefs.getBoolean(TIMELINE_APP_ENABLED, false)
+  private val timelineAppPackageName = prefs.getString(TIMELINE_APP_PACKAGE_NAME, "")
 
   override fun notificationEnabled(): Observable<Boolean> {
     return notificationEnabled.asObservable()
@@ -51,12 +52,20 @@ open class SettingDataManagerImpl(private val prefs: RxSharedPreferences) : Sett
     footerText.set(text)
   }
 
-  override fun selectedPackageName(): Observable<String> {
-    return selectedPackageName.asObservable()
+  override fun timelineAppEnabled(): Observable<Boolean> {
+    return timelineAppEnabled.asObservable()
   }
 
-  override fun selectedPackageName(packageName: String) {
-    selectedPackageName.set(packageName)
+  override fun timelineAppEnabled(enabled: Boolean) {
+    timelineAppEnabled.set(enabled)
+  }
+
+  override fun timelineAppPackageName(): Observable<String> {
+    return timelineAppPackageName.asObservable()
+  }
+
+  override fun timelineAppPackageName(packageName: String) {
+    timelineAppPackageName.set(packageName)
   }
 
   override fun clear(): Completable {
@@ -65,7 +74,7 @@ open class SettingDataManagerImpl(private val prefs: RxSharedPreferences) : Sett
       keepOpen.delete()
       footerEnabled.delete()
       footerText.delete()
-      selectedPackageName.delete()
+      timelineAppPackageName.delete()
     }
   }
 
@@ -76,6 +85,7 @@ open class SettingDataManagerImpl(private val prefs: RxSharedPreferences) : Sett
     const val FOOTER_ENABLED = "footer_enabled"
     const val FOOTER_TEXT = "footer_text"
 
-    const val SELECTED_PACKAGE_NAME = "selected_package_name"
+    const val TIMELINE_APP_ENABLED = "timeline_app_enabled"
+    const val TIMELINE_APP_PACKAGE_NAME = "timeline_app_package_name"
   }
 }

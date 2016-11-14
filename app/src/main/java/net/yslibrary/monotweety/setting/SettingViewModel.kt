@@ -3,10 +3,7 @@ package net.yslibrary.monotweety.setting
 import net.yslibrary.monotweety.Config
 import net.yslibrary.monotweety.data.appinfo.AppInfo
 import net.yslibrary.monotweety.data.user.User
-import net.yslibrary.monotweety.setting.domain.FooterStateManager
-import net.yslibrary.monotweety.setting.domain.GetInstalledSupportedApps
-import net.yslibrary.monotweety.setting.domain.KeepOpenManager
-import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
+import net.yslibrary.monotweety.setting.domain.*
 import net.yslibrary.monotweety.user.domain.GetUser
 import rx.Observable
 import rx.Single
@@ -24,7 +21,8 @@ class SettingViewModel(private val config: Config,
                        private val getUser: GetUser,
                        private val keepOpenManager: KeepOpenManager,
                        private val footerStateManager: FooterStateManager,
-                       private val getInstalledSupportedApps: GetInstalledSupportedApps) {
+                       private val getInstalledSupportedApps: GetInstalledSupportedApps,
+                       private val getSelectedTimelineAppState: GetSelectedTimelineAppState) {
 
   private val userSubject = BehaviorSubject<User?>(null)
 
@@ -83,6 +81,9 @@ class SettingViewModel(private val config: Config,
   val installedSupportedApps: Single<List<AppInfo>>
     get() = getInstalledSupportedApps.execute()
 
+  val selectedTimelineApp: Observable<AppInfo>
+    get() = getSelectedTimelineAppState.execute()
+
   init {
     getUser.execute()
         .subscribe({ userSubject.onNext(it) },
@@ -134,4 +135,6 @@ class SettingViewModel(private val config: Config,
   fun onGitHubRequested() {
     githubRequestsSubject.onNext(config.githubUrl)
   }
+
+  data class TimelineAppInfo(private val )
 }

@@ -4,6 +4,7 @@ import android.content.res.Resources
 import com.hannesdorfmann.adapterdelegates3.ListDelegationAdapter
 import net.yslibrary.monotweety.BuildConfig
 import net.yslibrary.monotweety.R
+import net.yslibrary.monotweety.data.appinfo.AppInfo
 import net.yslibrary.monotweety.data.user.User
 
 /**
@@ -114,6 +115,7 @@ class SettingAdapter(private val res: Resources, listener: Listener) : ListDeleg
     SUBHEADER_SETTING,
     KEEP_OPEN,
     FOOTER,
+    TIMELINE_APP,
     SUBHEADER_OTHERS,
     APP_VERSION,
     LICENSE,
@@ -133,6 +135,7 @@ class SettingAdapter(private val res: Resources, listener: Listener) : ListDeleg
     fun onLogoutClick()
     fun onKeepOpenClick(enabled: Boolean)
     fun onFooterStateChanged(enabled: Boolean, text: String)
+    fun onTimelineAppChanged(enabled: Boolean, selectedApp: AppInfo?)
     fun onAppVersionClick()
     fun onLicenseClick()
     fun onDeveloperClick()

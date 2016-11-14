@@ -49,7 +49,7 @@ enum class TwitterApp(val packageName: String) {
 
     fun fromPackageName(packageName: String): TwitterApp {
       return values().filter { it.packageName == packageName }
-          .firstOrNull()?.apply { NONE }!!
+          .firstOrNull() ?: NONE
     }
   }
 }

@@ -83,7 +83,6 @@ class FooterEditorAdapterDelegate(private val listener: Listener) : AdapterDeleg
         return ViewHolder(view)
       }
     }
-
   }
 
   data class Item(val enabled: Boolean,

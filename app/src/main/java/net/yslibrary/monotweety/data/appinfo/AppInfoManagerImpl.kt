@@ -30,7 +30,7 @@ class AppInfoManagerImpl @Inject constructor(private val packageManager: Package
 
     return packageManager.queryIntentActivities(intent, 0)
         .map {
-          AppInfo(name = it.activityInfo.name,
+          AppInfo(name = it.activityInfo.applicationInfo.loadLabel(packageManager).toString(),
               packageName = it.activityInfo.packageName,
               installed = true)
         }

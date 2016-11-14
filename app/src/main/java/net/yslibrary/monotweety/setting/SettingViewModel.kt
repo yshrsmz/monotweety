@@ -1,12 +1,15 @@
 package net.yslibrary.monotweety.setting
 
 import net.yslibrary.monotweety.Config
+import net.yslibrary.monotweety.data.appinfo.AppInfo
 import net.yslibrary.monotweety.data.user.User
 import net.yslibrary.monotweety.setting.domain.FooterStateManager
+import net.yslibrary.monotweety.setting.domain.GetInstalledSupportedApps
 import net.yslibrary.monotweety.setting.domain.KeepOpenManager
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
 import net.yslibrary.monotweety.user.domain.GetUser
 import rx.Observable
+import rx.Single
 import rx.lang.kotlin.BehaviorSubject
 import rx.lang.kotlin.PublishSubject
 import timber.log.Timber
@@ -20,7 +23,8 @@ class SettingViewModel(private val config: Config,
                        private val notificationEnabledManager: NotificationEnabledManager,
                        private val getUser: GetUser,
                        private val keepOpenManager: KeepOpenManager,
-                       private val footerStateManager: FooterStateManager) {
+                       private val footerStateManager: FooterStateManager,
+                       private val getInstalledSupportedApps: GetInstalledSupportedApps) {
 
   private val userSubject = BehaviorSubject<User?>(null)
 
@@ -75,6 +79,9 @@ class SettingViewModel(private val config: Config,
 
   val footerState: Observable<FooterStateManager.FooterState>
     get() = footerStateManager.get()
+
+  val installedSupportedApps: Single<List<AppInfo>>
+    get() = getInstalledSupportedApps.execute()
 
   init {
     getUser.execute()

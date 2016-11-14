@@ -46,6 +46,12 @@
   <string name="label_notification_footer_on"><b>Footer</b> - ON: %s</string>
   <string name="label_notification_footer_off"><b>Footer</b> - OFF</string>
 
+  <string name="label_timelineapp">Select app to view timeline</string>
+  <string name="sub_label_timelineapp_on" translatable="false">ON: %s</string>
+  <string name="sub_label_timelineapp_off" translatable="false">OFF</string>
+  <string name="label_enable_timelineapp">Enable shortcut</string>
+  <string name="label_no_favorite_app">Suggest your favorite twitter app</string>
+
   <string name="label_confirm">Confirm</string>
   <string name="label_cancel_confirm">Quit without tweeting?</string>
   <string name="label_quit">Quit</string>

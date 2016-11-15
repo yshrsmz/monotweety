@@ -48,7 +48,8 @@
         android:theme="@android:style/Theme.NoDisplay"/>
 
     <activity
-        android:name=".activity.shortcut.CreateShortcutActivity">
+        android:name=".activity.shortcut.CreateShortcutActivity"
+        android:label="@string/title_shortcut_editor">
       <intent-filter>
         <action android:name="android.intent.action.CREATE_SHORTCUT"/>
         <category android:name="android.intent.category.DEFAULT"/>

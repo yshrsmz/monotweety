@@ -41,8 +41,8 @@ android {
     applicationId "net.yslibrary.monotweety"
     minSdkVersion 21
     targetSdkVersion 25
-    versionCode 16
-    versionName "1.2.0-beta1"
+    versionCode 17
+    versionName "1.2.0"
 
     buildConfigField 'String', 'TWITTER_API_KEY', TWITTER_API_KEY
     buildConfigField 'String', 'TWITTER_API_SECRET', TWITTER_API_SECRET

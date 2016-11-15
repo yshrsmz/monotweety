@@ -47,7 +47,7 @@ class NotificationServiceViewModel(private val notificationEnabledManager: Notif
         .filter { !it }
         .map { Unit }
 
-  val footerState: Observable<FooterStateManager.FooterState>
+  val footerState: Observable<FooterStateManager.State>
     get() = footerStateManager.get()
 
   val error: Observable<String>

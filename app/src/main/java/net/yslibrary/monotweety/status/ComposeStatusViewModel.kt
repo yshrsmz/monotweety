@@ -85,7 +85,7 @@ class ComposeStatusViewModel(status: String,
           .map { Unit }
     }
 
-  val footerState: Observable<FooterStateManager.FooterState>
+  val footerState: Observable<FooterStateManager.State>
     get() = footerStateManager.get()
 
   val canClose: Boolean

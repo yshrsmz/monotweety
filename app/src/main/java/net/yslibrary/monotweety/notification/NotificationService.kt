@@ -189,7 +189,7 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
         .addTo(subscriptions)
   }
 
-  fun buildNotification(footerState: FooterStateManager.FooterState): Notification {
+  fun buildNotification(footerState: FooterStateManager.State): Notification {
     val directTweetIntent = PendingIntent.getBroadcast(applicationContext, 0,
         commandIntent(COMMAND_DIRECT_TWEET), PendingIntent.FLAG_UPDATE_CURRENT)
 
@@ -267,7 +267,7 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
     return noti
   }
 
-  fun updateNotification(footerState: FooterStateManager.FooterState): Notification {
+  fun updateNotification(footerState: FooterStateManager.State): Notification {
     Timber.d("update notification")
 
     val noti = buildNotification(footerState)

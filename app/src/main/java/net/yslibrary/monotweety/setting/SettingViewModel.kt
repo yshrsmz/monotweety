@@ -75,7 +75,7 @@ class SettingViewModel(private val config: Config,
   val githubRequests: Observable<String>
     get() = githubRequestsSubject.asObservable()
 
-  val footerState: Observable<FooterStateManager.FooterState>
+  val footerState: Observable<FooterStateManager.State>
     get() = footerStateManager.get()
 
   val installedSupportedApps: Single<List<AppInfo>>
@@ -99,7 +99,7 @@ class SettingViewModel(private val config: Config,
   }
 
   fun onFooterStateChanged(enabled: Boolean, footerText: String) {
-    footerStateManager.set(FooterStateManager.FooterState(enabled, footerText))
+    footerStateManager.set(FooterStateManager.State(enabled, footerText))
   }
 
   fun onOpenProfileRequested() {

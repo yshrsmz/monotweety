@@ -14,15 +14,14 @@ import javax.inject.Inject
 class GetSelectedTimelineAppState @Inject constructor(private val appInfoManager: AppInfoManager,
                                                       private val settingDataManager: SettingDataManager) {
 
-  fun execute(): Observable<SelectedTimelineAppState> {
+  fun execute(): Observable<State> {
     return Observable.combineLatest(
         settingDataManager.timelineAppEnabled(),
         settingDataManager.timelineAppPackageName()
             .flatMap { appInfoManager.appInfo(it).toObservable() },
-        { enabled, appInfo -> SelectedTimelineAppState(enabled, appInfo) }
-    )
+        ::State)
   }
 
-  data class SelectedTimelineAppState(val enabled: Boolean,
-                                      val selectedApp: AppInfo)
+  data class State(val enabled: Boolean,
+                   val selectedApp: AppInfo)
 }

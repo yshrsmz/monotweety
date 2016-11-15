@@ -81,7 +81,7 @@ class SettingViewModel(private val config: Config,
   val installedSupportedApps: Single<List<AppInfo>>
     get() = getInstalledSupportedApps.execute()
 
-  val selectedTimelineApp: Observable<AppInfo>
+  val selectedTimelineApp: Observable<GetSelectedTimelineAppState.State>
     get() = getSelectedTimelineAppState.execute()
 
   init {
@@ -136,5 +136,7 @@ class SettingViewModel(private val config: Config,
     githubRequestsSubject.onNext(config.githubUrl)
   }
 
-  data class TimelineAppInfo(private val )
+  data class TimelineAppInfo(val enabled: Boolean,
+                             val supportedApps: List<AppInfo>,
+                             val selectedApp: AppInfo)
 }

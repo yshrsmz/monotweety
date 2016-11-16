@@ -25,7 +25,7 @@ fun <T> ViewGroup.findById(@IdRes id: Int): T = findViewById(id) as T
 fun <T> Activity.findById(@IdRes id: Int): T = findViewById(id) as T
 
 @Suppress("UNCHECKED_CAST")
-fun <T> Controller.findById(@IdRes id: Int): T = view.findViewById(id) as T
+fun <T> Controller.findById(@IdRes id: Int): T = view?.findViewById(id) as T
 
 fun ImageView.load(url: String) {
   Glide.with(this.context)

@@ -46,7 +46,7 @@ abstract class ActionBarController : BaseController() {
     val itemId = item.itemId
     when (itemId) {
       android.R.id.home -> {
-        activity.onBackPressed()
+        activity?.onBackPressed()
         return true
       }
       else -> {

@@ -32,7 +32,7 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
   override val hasOptionsMenu: Boolean = true
 
   override val component: ComposeStatusComponent by lazy {
-    getComponentProvider<ComposeStatusComponent.ComponentProvider>(activity)
+    getComponentProvider<ComposeStatusComponent.ComponentProvider>(activity!!)
         .composeStatusComponent(ComposeStatusViewModule(status))
   }
 
@@ -213,27 +213,28 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
   }
 
   fun showConfirmCloseDialog() {
-
-    AlertDialog.Builder(activity)
-        .setTitle(R.string.label_confirm)
-        .setMessage(R.string.label_cancel_confirm)
-        .setCancelable(true)
-        .setNegativeButton(
-            R.string.label_no,
-            { dialog, which ->
-              viewModel.onConfirmCloseView(allowCloseView = false)
-              dialog.dismiss()
-            })
-        .setPositiveButton(
-            R.string.label_quit,
-            { dialog, which ->
-              viewModel.onConfirmCloseView(allowCloseView = true)
-              activity.onBackPressed()
-            }).show()
+    activity?.let {
+      AlertDialog.Builder(it)
+          .setTitle(R.string.label_confirm)
+          .setMessage(R.string.label_cancel_confirm)
+          .setCancelable(true)
+          .setNegativeButton(
+              R.string.label_no,
+              { dialog, which ->
+                viewModel.onConfirmCloseView(allowCloseView = false)
+                dialog.dismiss()
+              })
+          .setPositiveButton(
+              R.string.label_quit,
+              { dialog, which ->
+                viewModel.onConfirmCloseView(allowCloseView = true)
+                activity?.onBackPressed()
+              }).show()
+    }
   }
 
   fun showLoadingState() {
-    activity.invalidateOptionsMenu()
+    activity?.invalidateOptionsMenu()
     getChildRouter(bindings.overlayRoot, null)
         .setPopsLastView(true)
         .setRoot(RouterTransaction.with(ProgressController())
@@ -247,7 +248,7 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
       return
     }
 
-    activity.invalidateOptionsMenu()
+    activity?.invalidateOptionsMenu()
     childRouter.popCurrentController()
   }
 

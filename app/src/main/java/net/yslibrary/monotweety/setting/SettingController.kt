@@ -36,7 +36,7 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
 
   lateinit var bindings: Bindings
 
-  val adapter by lazy { SettingAdapter(applicationContext.resources, adapterListener) }
+  val adapter by lazy { SettingAdapter(applicationContext!!.resources, adapterListener) }
 
   val adapterListener = object : SettingAdapter.Listener {
 
@@ -77,20 +77,22 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
     }
 
     override fun onLogoutClick() {
-      AlertDialog.Builder(activity)
-          .setTitle(R.string.label_confirm)
-          .setMessage(R.string.label_logout_confirm)
-          .setCancelable(true)
-          .setPositiveButton(R.string.label_logout,
-              { dialog, which ->
-                viewModel.onLogoutRequested()
-                dialog.dismiss()
-              })
-          .setNegativeButton(R.string.label_no,
-              { dialog, which ->
-                dialog.cancel()
-              })
-          .show()
+      activity?.let {
+        AlertDialog.Builder(it)
+            .setTitle(R.string.label_confirm)
+            .setMessage(R.string.label_logout_confirm)
+            .setCancelable(true)
+            .setPositiveButton(R.string.label_logout,
+                { dialog, which ->
+                  viewModel.onLogoutRequested()
+                  dialog.dismiss()
+                })
+            .setNegativeButton(R.string.label_no,
+                { dialog, which ->
+                  dialog.cancel()
+                })
+            .show()
+      }
     }
 
     override fun onOpenProfileClick() {
@@ -102,11 +104,11 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
     get() = getString(R.string.title_setting)
 
   override val component: SettingComponent by lazy {
-    val provider = getComponentProvider<SettingViewModule.DependencyProvider>(activity)
+    val provider = getComponentProvider<SettingViewModule.DependencyProvider>(activity!!)
     val activityBus = provider.activityBus()
     val navigator = provider.navigator()
     DaggerSettingComponent.builder()
-        .userComponent(App.userComponent(applicationContext))
+        .userComponent(App.userComponent(applicationContext!!))
         .settingViewModule(SettingViewModule(activityBus, navigator))
         .build()
   }
@@ -127,7 +129,7 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
 
     bindings.list.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
     bindings.list.setHasFixedSize(true)
-    bindings.list.addItemDecoration(SubHeaderDividerDecoration(activity))
+    bindings.list.addItemDecoration(SubHeaderDividerDecoration(activity!!))
     bindings.list.adapter = adapter
 
     setEvents()
@@ -226,7 +228,7 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
 
   fun logout() {
     navigator.startLogoutService()
-    activity.finish()
+    activity?.finish()
   }
 
   fun showLicense() {

@@ -36,7 +36,7 @@ class SplashController : ActionBarController(), HasComponent<SplashComponent> {
 
   override val component: SplashComponent by lazy {
     Timber.i("create SplashComponent")
-    getComponentProvider<SplashComponent.ComponentProvider>(activity)
+    getComponentProvider<SplashComponent.ComponentProvider>(activity!!)
         .splashComponent(SplashViewModule())
   }
 
@@ -69,7 +69,7 @@ class SplashController : ActionBarController(), HasComponent<SplashComponent> {
         }.addTo(subscriptions)
   }
 
-  override fun onDestroyView(view: View?) {
+  override fun onDestroyView(view: View) {
     super.onDestroyView(view)
     subscriptions.unsubscribe()
   }

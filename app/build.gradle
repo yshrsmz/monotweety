@@ -77,9 +77,9 @@ android {
   }
 }
 
-ext.support_lib_version = '25.0.0'
+ext.support_lib_version = '25.0.1'
 ext.rxbinding_version = '0.4.0'
-ext.conductor_version = '2.0.3'
+ext.conductor_version = '2.0.4'
 dependencies {
   compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
@@ -109,6 +109,7 @@ dependencies {
   compile 'io.reactivex:rxandroid:1.2.1'
   testCompile 'io.reactivex:rxandroid:1.2.1'
   compile 'io.reactivex:rxkotlin:0.60.0'
+  compile 'com.artemzin.rxjava:proguard-rules:1.2.2.0'
 
   compile "com.jakewharton.rxbinding:rxbinding-kotlin:$rxbinding_version"
   compile "com.jakewharton.rxbinding:rxbinding-support-v4-kotlin:$rxbinding_version"

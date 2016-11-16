@@ -28,17 +28,6 @@
 # Glide
 -keep public class * implements com.bumptech.glide.module.GlideModule
 
-# RxJava
--dontwarn sun.misc.**
--keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
-   long producerIndex;
-   long consumerIndex;
-}
--keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
-   long producerNode;
-   long consumerNode;
-}
-
 # configs for app
 -dontwarn net.yslibrary.monotweety.activity.main.MainActivity
 -dontwarn net.yslibrary.monotweety.activity.compose.ComposeActivity

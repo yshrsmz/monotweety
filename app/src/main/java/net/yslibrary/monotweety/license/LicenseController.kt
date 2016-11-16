@@ -31,9 +31,9 @@ class LicenseController : ActionBarController() {
     get() = getString(R.string.title_license)
 
   val component: LicenseComponent by lazy {
-    val activityBus = getComponentProvider<LicenseViewModule.DependencyProvider>(activity).activityBus()
+    val activityBus = getComponentProvider<LicenseViewModule.DependencyProvider>(activity!!).activityBus()
     DaggerLicenseComponent.builder()
-        .userComponent(App.userComponent(applicationContext))
+        .userComponent(App.userComponent(applicationContext!!))
         .licenseViewModule(LicenseViewModule(activityBus))
         .build()
   }

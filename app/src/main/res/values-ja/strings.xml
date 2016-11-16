@@ -51,7 +51,6 @@
   <string name="title_shortcut_editor">編集ダイアログを開く</string>
   <string name="error_not_authorized">ログインしてからご利用ください</string>
   <string name="label_timelineapp">タイムラインを閲覧するアプリを選択する</string>
-  <string name="label_no_favorite_app">連携できるTwitterアプリの追加を依頼する</string>
   <string name="label_timelineapp_initial_value">未選択(無効)</string>
   <string name="label_open_timeline">タイムライン</string>
   <string name="label_timelineapp_description">通知にショートカットを追加する</string>

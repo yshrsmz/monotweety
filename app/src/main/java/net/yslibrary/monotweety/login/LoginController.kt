@@ -35,7 +35,7 @@ class LoginController : ActionBarController(), HasComponent<LoginComponent> {
 
   override val component: LoginComponent by lazy {
     Timber.i("create LoginComponent")
-    getComponentProvider<LoginComponent.ComponentProvider>(activity)
+    getComponentProvider<LoginComponent.ComponentProvider>(activity!!)
         .loginComponent(LoginViewModule())
   }
 

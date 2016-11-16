@@ -16,12 +16,12 @@ class ChangelogController : ActionBarController() {
   override val hasBackButton: Boolean = true
 
   override val title: String?
-    get() = applicationContext.getString(R.string.title_changelog)
+    get() = applicationContext?.getString(R.string.title_changelog)
 
   val component: ChangelogComponent by lazy {
-    val activityBus = getComponentProvider<ChangelogViewModule.DependencyProvider>(activity).activityBus()
+    val activityBus = getComponentProvider<ChangelogViewModule.DependencyProvider>(activity!!).activityBus()
     DaggerChangelogComponent.builder()
-        .userComponent(App.userComponent(applicationContext))
+        .userComponent(App.userComponent(applicationContext!!))
         .changelogViewModule(ChangelogViewModule(activityBus))
         .build()
   }

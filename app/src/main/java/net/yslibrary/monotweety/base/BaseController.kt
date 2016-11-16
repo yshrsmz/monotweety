@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import net.yslibrary.monotweety.base.di.Names
 import net.yslibrary.monotweety.analytics.Analytics
+import net.yslibrary.monotweety.base.di.Names
 import net.yslibrary.rxeventbus.EventBus
 import rx.Completable
 import rx.Observable
@@ -58,7 +58,7 @@ abstract class BaseController() : RefWatchingController() {
 
   fun toastLong(message: String): Toast = Toast.makeText(applicationContext, message, Toast.LENGTH_LONG)
 
-  fun getString(@StringRes id: Int): String = applicationContext.getString(id)
+  fun getString(@StringRes id: Int): String = applicationContext?.getString(id) ?: ""
 
-  fun getString(@StringRes id: Int, vararg formatArgs: Any): String = applicationContext.getString(id, *formatArgs)
+  fun getString(@StringRes id: Int, vararg formatArgs: Any): String = applicationContext?.getString(id, *formatArgs) ?: ""
 }

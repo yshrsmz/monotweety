@@ -16,7 +16,7 @@ class AppInfoManagerImpl @Inject constructor(private val packageManager: Package
   override fun isInstalled(packageName: String): Single<Boolean> {
     return Single.fromCallable {
       try {
-        packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
+        packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA)
         true
       } catch (e: PackageManager.NameNotFoundException) {
         false
@@ -39,9 +39,9 @@ class AppInfoManagerImpl @Inject constructor(private val packageManager: Package
 
   override fun appInfo(packageName: String): Single<AppInfo> {
     return Single.fromCallable {
-      packageManager.getPackageInfo(packageName, 0)
+      packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA)
     }.map {
-      AppInfo(name = it.applicationInfo.loadLabel(packageManager).toString(),
+      AppInfo(name = it.loadLabel(packageManager).toString(),
           packageName = it.packageName,
           installed = true)
     }.onErrorResumeNext { Single.just(AppInfo(name = "", packageName = packageName, installed = false)) }

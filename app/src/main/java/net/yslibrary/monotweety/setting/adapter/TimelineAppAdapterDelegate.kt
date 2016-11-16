@@ -6,13 +6,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Spinner
 import android.widget.TextView
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.findById
-import net.yslibrary.monotweety.base.inflate
 import net.yslibrary.monotweety.data.appinfo.AppInfo
 
 /**
@@ -51,22 +48,17 @@ class TimelineAppAdapterDelegate(private val listener: Listener) : AdapterDelega
   }
 
   private fun onClick(context: Context, item: Item) {
-    val view = context.inflate(R.layout.dialog_timelineapp_selector)
-    val spinner = view.findById<Spinner>(R.id.timelineapp_spinner)
-
-    val adapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item)
-    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-    adapter.addAll(listOf(context.getString(R.string.label_timelineapp_initial_value)) + item.apps.map { it.name })
-    spinner.adapter = adapter
     val position = item.apps.indexOf(item.selectedApp)
-    spinner.setSelection(if (position < 0) 0 else position + 1)
 
     AlertDialog.Builder(context)
-        .setTitle(R.string.label_timelineapp)
-        .setView(view)
+        .setTitle(R.string.label_timelineapp_description)
+        .setSingleChoiceItems(
+            (listOf(context.getString(R.string.label_timelineapp_initial_value)) + item.apps.map { it.name }).toTypedArray(),
+            if (position < 0) 0 else position + 1,
+            null)
         .setPositiveButton(R.string.label_confirm,
             { dialog, buttonPosition ->
-              val selected = spinner.selectedItemPosition
+              val selected = (dialog as AlertDialog).listView.checkedItemPosition
               val app = item.apps.getOrElse(selected - 1, { AppInfo.empty() })
               listener.onTimelineAppChanged(app)
             }).show()

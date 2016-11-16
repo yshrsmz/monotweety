@@ -3,24 +3,26 @@ package net.yslibrary.monotweety.setting.adapter
 import android.content.Context
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.SwitchCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.TextView
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.findById
-import net.yslibrary.monotweety.base.inflate
+import net.yslibrary.monotweety.data.appinfo.AppInfo
 
 /**
- * Created by yshrsmz on 2016/11/05.
+ * Created by yshrsmz on 2016/11/14.
  */
-class FooterEditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<List<SettingAdapter.Item>>() {
+class TimelineAppAdapterDelegate(private val listener: Listener) : AdapterDelegate<List<SettingAdapter.Item>>() {
 
   override fun isForViewType(items: List<SettingAdapter.Item>, position: Int): Boolean {
     return items[position] is Item
+  }
+
+  override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
+    return ViewHolder.create(parent)
   }
 
   override fun onBindViewHolder(items: List<SettingAdapter.Item>,
@@ -33,44 +35,35 @@ class FooterEditorAdapterDelegate(private val listener: Listener) : AdapterDeleg
       val context = holder.itemView.context
       val res = context.resources
 
-      val subTitle = if (item.checked)
-        res.getString(R.string.sub_label_footer_on, item.footerText)
+      val subTitle = if (item.selectedApp.installed)
+        res.getString(R.string.sub_label_timelineapp_on, item.selectedApp.name)
       else
-        res.getString(R.string.sub_label_footer_off)
+        res.getString(R.string.sub_label_timelineapp_off)
 
-      holder.title.text = res.getString(R.string.label_footer)
+      holder.title.text = res.getString(R.string.label_timelineapp)
       holder.subTitle.text = subTitle
       holder.itemView.isEnabled = item.enabled
       holder.itemView.setOnClickListener { onClick(context, item) }
     }
   }
 
-  override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
-    return ViewHolder.create(parent)
-  }
-
   private fun onClick(context: Context, item: Item) {
-    // show dialog
-    val view = context.inflate(R.layout.dialog_footer_editor)
-    val enabledSwitch = view.findById<SwitchCompat>(R.id.switch_button)
-    val input = view.findById<EditText>(R.id.input)
-
-    enabledSwitch.isChecked = item.checked
-    input.setText(item.footerText, TextView.BufferType.EDITABLE)
-
-    input.isEnabled = item.checked
-    enabledSwitch.setOnCheckedChangeListener { compoundButton, checked -> input.isEnabled = checked }
+    val position = item.apps.indexOf(item.selectedApp)
 
     AlertDialog.Builder(context)
-        .setTitle(R.string.title_edit_footer)
-        .setView(view)
+        .setTitle(R.string.label_timelineapp_description)
+        .setSingleChoiceItems(
+            (listOf(context.getString(R.string.label_timelineapp_initial_value)) + item.apps.map { it.name }).toTypedArray(),
+            if (position < 0) 0 else position + 1,
+            null)
         .setPositiveButton(R.string.label_confirm,
             { dialog, buttonPosition ->
-              val enabled = enabledSwitch.isChecked
-              val footerText = input.text.toString()
-              listener.onFooterUpdated(enabled, footerText)
+              val selected = (dialog as AlertDialog).listView.checkedItemPosition
+              val app = item.apps.getOrElse(selected - 1, { AppInfo.empty() })
+              listener.onTimelineAppChanged(app)
             }).show()
   }
+
 
   class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -85,12 +78,15 @@ class FooterEditorAdapterDelegate(private val listener: Listener) : AdapterDeleg
     }
   }
 
+
   data class Item(val enabled: Boolean,
-                  val checked: Boolean,
-                  val footerText: String,
-                  override val type: SettingAdapter.ViewType) : SettingAdapter.Item
+                  val apps: List<AppInfo>,
+                  val selectedApp: AppInfo) : SettingAdapter.Item {
+
+    override val type: SettingAdapter.ViewType = SettingAdapter.ViewType.TIMELINE_APP
+  }
 
   interface Listener {
-    fun onFooterUpdated(enabled: Boolean, footerText: String)
+    fun onTimelineAppChanged(selectedApp: AppInfo)
   }
 }

@@ -1,12 +1,12 @@
 package net.yslibrary.monotweety.setting
 
 import net.yslibrary.monotweety.Config
+import net.yslibrary.monotweety.data.appinfo.AppInfo
 import net.yslibrary.monotweety.data.user.User
-import net.yslibrary.monotweety.setting.domain.FooterStateManager
-import net.yslibrary.monotweety.setting.domain.KeepOpenManager
-import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
+import net.yslibrary.monotweety.setting.domain.*
 import net.yslibrary.monotweety.user.domain.GetUser
 import rx.Observable
+import rx.Single
 import rx.lang.kotlin.BehaviorSubject
 import rx.lang.kotlin.PublishSubject
 import timber.log.Timber
@@ -20,7 +20,9 @@ class SettingViewModel(private val config: Config,
                        private val notificationEnabledManager: NotificationEnabledManager,
                        private val getUser: GetUser,
                        private val keepOpenManager: KeepOpenManager,
-                       private val footerStateManager: FooterStateManager) {
+                       private val footerStateManager: FooterStateManager,
+                       private val getInstalledSupportedApps: GetInstalledSupportedApps,
+                       private val selectedTimelineAppInfoManager: SelectedTimelineAppInfoManager) {
 
   private val userSubject = BehaviorSubject<User?>(null)
 
@@ -73,8 +75,14 @@ class SettingViewModel(private val config: Config,
   val githubRequests: Observable<String>
     get() = githubRequestsSubject.asObservable()
 
-  val footerState: Observable<FooterStateManager.FooterState>
+  val footerState: Observable<FooterStateManager.State>
     get() = footerStateManager.get()
+
+  val installedSupportedApps: Single<List<AppInfo>>
+    get() = getInstalledSupportedApps.execute()
+
+  val selectedTimelineApp: Observable<AppInfo>
+    get() = selectedTimelineAppInfoManager.get()
 
   init {
     getUser.execute()
@@ -91,7 +99,11 @@ class SettingViewModel(private val config: Config,
   }
 
   fun onFooterStateChanged(enabled: Boolean, footerText: String) {
-    footerStateManager.set(FooterStateManager.FooterState(enabled, footerText))
+    footerStateManager.set(FooterStateManager.State(enabled, footerText))
+  }
+
+  fun onTimelineAppChanged(selectedApp: AppInfo) {
+    selectedTimelineAppInfoManager.set(selectedApp)
   }
 
   fun onOpenProfileRequested() {
@@ -127,4 +139,8 @@ class SettingViewModel(private val config: Config,
   fun onGitHubRequested() {
     githubRequestsSubject.onNext(config.githubUrl)
   }
+
+  data class TimelineAppInfo(val enabled: Boolean,
+                             val supportedApps: List<AppInfo>,
+                             val selectedApp: AppInfo)
 }

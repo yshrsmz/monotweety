@@ -81,7 +81,7 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
     updateEditorInternal(item.copy(initialValue = !editorInitialized))
   }
 
-  fun updatePreviousTweetAndClearEditor(tweets: List<Tweet>, footerState: FooterStateManager.FooterState) {
+  fun updatePreviousTweetAndClearEditor(tweets: List<Tweet>, footerState: FooterStateManager.State) {
     val tweetItems = tweets.map {
       PreviousStatusAdapterDelegate.Item(
           id = it.id,

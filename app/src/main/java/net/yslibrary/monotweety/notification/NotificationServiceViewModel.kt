@@ -1,10 +1,12 @@
 package net.yslibrary.monotweety.notification
 
 import com.twitter.sdk.android.core.TwitterApiException
+import net.yslibrary.monotweety.data.appinfo.AppInfo
 import net.yslibrary.monotweety.data.status.OverlongStatusException
 import net.yslibrary.monotweety.setting.domain.FooterStateManager
 import net.yslibrary.monotweety.setting.domain.KeepOpenManager
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
+import net.yslibrary.monotweety.setting.domain.SelectedTimelineAppInfoManager
 import net.yslibrary.monotweety.status.domain.CheckStatusLength
 import net.yslibrary.monotweety.status.domain.ClearPreviousStatus
 import net.yslibrary.monotweety.status.domain.UpdateStatus
@@ -22,13 +24,16 @@ class NotificationServiceViewModel(private val notificationEnabledManager: Notif
                                    private val checkStatusLength: CheckStatusLength,
                                    private val updateStatus: UpdateStatus,
                                    private val clearPreviousStatus: ClearPreviousStatus,
-                                   private val footerStateManager: FooterStateManager) {
+                                   private val footerStateManager: FooterStateManager,
+                                   private val selectedTimelineAppInfoManager: SelectedTimelineAppInfoManager) {
 
   private val overlongStatusSubject = PublishSubject<OverlongStatus>()
 
   private val updateCompletedSubject = PublishSubject<Unit>()
 
   private val stopNotificationServiceSubject = PublishSubject<Unit>()
+
+  private val updateNotificatoinRequestsSubject = PublishSubject<Unit>()
 
   private val errorSubject = PublishSubject<String>()
 
@@ -47,8 +52,18 @@ class NotificationServiceViewModel(private val notificationEnabledManager: Notif
         .filter { !it }
         .map { Unit }
 
-  val footerState: Observable<FooterStateManager.FooterState>
+  val updateNotificationRequests: Observable<NotificationInfo>
+    get() = Observable.combineLatest(
+        updateNotificatoinRequestsSubject.startWith(Unit),
+        footerStateManager.get(),
+        selectedTimelineAppInfoManager.get(),
+        { aUnit, footerState, appInfo -> NotificationInfo(footerState, appInfo) })
+
+  val footerState: Observable<FooterStateManager.State>
     get() = footerStateManager.get()
+
+  val selectedTimelineApp: Observable<AppInfo>
+    get() = selectedTimelineAppInfoManager.get()
 
   val error: Observable<String>
     get() = errorSubject.asObservable()
@@ -91,5 +106,12 @@ class NotificationServiceViewModel(private val notificationEnabledManager: Notif
         })
   }
 
+  fun onUpdateNotificationRequested() {
+    updateNotificatoinRequestsSubject.onNext(Unit)
+  }
+
   data class OverlongStatus(val status: String, val length: Int)
+
+  data class NotificationInfo(val footerState: FooterStateManager.State,
+                              val timelineApp: AppInfo)
 }

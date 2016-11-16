@@ -21,7 +21,7 @@ class FooterStateManagerTest {
 
   lateinit var footerStateManager: FooterStateManager
 
-  lateinit var ts: TestSubscriber<FooterStateManager.FooterState>
+  lateinit var ts: TestSubscriber<FooterStateManager.State>
 
   @Before
   fun setup() {
@@ -30,7 +30,7 @@ class FooterStateManagerTest {
 
     footerStateManager = FooterStateManager(settingDataManager)
 
-    ts = TestSubscriber.create<FooterStateManager.FooterState>()
+    ts = TestSubscriber.create<FooterStateManager.State>()
   }
 
   @Test
@@ -42,14 +42,14 @@ class FooterStateManagerTest {
     verify(settingDataManager).footerText()
 
     ts.assertNotCompleted()
-    ts.assertValue(FooterStateManager.FooterState(false, ""))
+    ts.assertValue(FooterStateManager.State(false, ""))
 
-    footerStateManager.set(FooterStateManager.FooterState(true, "this_is_footer"))
+    footerStateManager.set(FooterStateManager.State(true, "this_is_footer"))
 
     verify(settingDataManager).footerEnabled(true)
     verify(settingDataManager).footerText("this_is_footer")
 
-    ts.assertValues(FooterStateManager.FooterState(false, ""), FooterStateManager.FooterState(true, "this_is_footer"))
+    ts.assertValues(FooterStateManager.State(false, ""), FooterStateManager.State(true, "this_is_footer"))
     ts.assertNotCompleted()
   }
 }

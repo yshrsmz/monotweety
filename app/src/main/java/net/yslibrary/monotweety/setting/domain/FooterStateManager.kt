@@ -16,23 +16,23 @@ class FooterStateManager @Inject constructor(private val settingDataManager: Set
 
   private val subject: PublishSubject<Unit> = PublishSubject()
 
-  fun get(): Observable<FooterState> {
+  fun get(): Observable<State> {
     return subject
         .startWith(Unit)
         .switchMap {
           Observable.zip(
               settingDataManager.footerEnabled(),
               settingDataManager.footerText(),
-              ::FooterState).first()
+              ::State).first()
         }
   }
 
-  fun set(state: FooterState) {
+  fun set(state: State) {
     settingDataManager.footerEnabled(state.enabled)
     settingDataManager.footerText(state.text.trim())
     subject.onNext(Unit)
   }
 
-  data class FooterState(val enabled: Boolean,
-                         val text: String)
+  data class State(val enabled: Boolean,
+                   val text: String)
 }

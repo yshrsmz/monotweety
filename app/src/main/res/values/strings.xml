@@ -15,6 +15,7 @@
   <string name="label_open_dialog">open dialog</string>
   <string name="label_open_settings">settings</string>
   <string name="label_close_notification">close</string>
+  <string name="label_open_timeline">timeline</string>
   <string name="label_notification_content">Tap to open tweet dialog:)</string>
   <string name="label_whats_happening">What\'s happening?</string>
   <string name="label_keep">Keep dialog/notification open</string>
@@ -45,6 +46,12 @@
   <string name="hint_footer_editor">Footer text</string>
   <string name="label_notification_footer_on"><b>Footer</b> - ON: %s</string>
   <string name="label_notification_footer_off"><b>Footer</b> - OFF</string>
+
+  <string name="label_timelineapp">Select app to view timeline</string>
+  <string name="sub_label_timelineapp_on" translatable="false">ON: %s</string>
+  <string name="sub_label_timelineapp_off" translatable="false">OFF</string>
+  <string name="label_timelineapp_description">Add shortcut to the notification</string>
+  <string name="label_timelineapp_initial_value">None(disable)</string>
 
   <string name="label_confirm">Confirm</string>
   <string name="label_cancel_confirm">Quit without tweeting?</string>

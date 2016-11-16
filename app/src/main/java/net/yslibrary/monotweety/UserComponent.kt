@@ -6,9 +6,7 @@ import net.yslibrary.monotweety.base.di.UserScope
 import net.yslibrary.monotweety.data.UserDataModule
 import net.yslibrary.monotweety.license.domain.GetLicenses
 import net.yslibrary.monotweety.login.domain.DoLogout
-import net.yslibrary.monotweety.setting.domain.FooterStateManager
-import net.yslibrary.monotweety.setting.domain.KeepOpenManager
-import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
+import net.yslibrary.monotweety.setting.domain.*
 import net.yslibrary.monotweety.status.domain.CheckStatusLength
 import net.yslibrary.monotweety.status.domain.ClearPreviousStatus
 import net.yslibrary.monotweety.status.domain.GetPreviousStatus
@@ -43,6 +41,10 @@ interface UserComponent : AppModule.Provider {
   fun doLogout(): DoLogout
 
   fun getLicenses(): GetLicenses
+
+  fun getInstalledSupportedApps(): GetInstalledSupportedApps
+
+  fun selectedTimelineAppInfoManager(): SelectedTimelineAppInfoManager
 
   fun analytics(): Analytics
 

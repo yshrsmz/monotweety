@@ -2,6 +2,7 @@ package net.yslibrary.monotweety
 
 import android.app.Application
 import android.content.Context
+import android.content.pm.PackageManager
 import android.support.v4.app.NotificationManagerCompat
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.leakcanary.LeakCanary
@@ -38,6 +39,12 @@ open class AppModule(private val context: Context) {
   @Provides
   fun provideNotificationManager(@Named(Names.FOR_APP) context: Context): NotificationManagerCompat {
     return NotificationManagerCompat.from(context)
+  }
+
+  @AppScope
+  @Provides
+  fun providePackageManager(@Named(Names.FOR_APP) context: Context): PackageManager {
+    return context.packageManager
   }
 
   @AppScope

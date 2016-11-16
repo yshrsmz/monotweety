@@ -22,6 +22,7 @@ import net.yslibrary.monotweety.activity.compose.ComposeActivity
 import net.yslibrary.monotweety.activity.main.MainActivity
 import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.base.HasComponent
+import net.yslibrary.monotweety.data.appinfo.AppInfo
 import net.yslibrary.monotweety.setting.domain.FooterStateManager
 import rx.Completable
 import rx.android.schedulers.AndroidSchedulers
@@ -147,41 +148,36 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
 
   fun setEvents() {
     viewModel.error
-        .switchMap { error ->
-          viewModel.footerState.first().map { Pair(error, it) }
-        }
         .subscribe {
           closeNotificationDrawer()
-          updateNotification(it.second)
-          showError(it.first)
+          viewModel.onUpdateNotificationRequested()
+          showError(it)
         }
         .addTo(subscriptions)
 
     viewModel.overlongStatus
-        .switchMap { status -> viewModel.footerState.first().map { Pair(status, it) } }
         .subscribe {
           closeNotificationDrawer()
           showTweetFailedBecauseOfLength()
-          updateNotification(it.second)
-          showTweetDialog(it.first.status)
+          viewModel.onUpdateNotificationRequested()
+          showTweetDialog(it.status)
           analytics.tweetFromNotificationButTooLong()
         }
         .addTo(subscriptions)
-
-    viewModel.updateCompleted
-        .switchMap { viewModel.footerState.first() }
-        .subscribe {
-          updateNotification(it)
-          showTweetSucceeded()
-          analytics.tweetFromNotification()
-        }.addTo(subscriptions)
 
     viewModel.closeNotificationDrawer
         .subscribe { closeNotificationDrawer() }
         .addTo(subscriptions)
 
-    viewModel.footerState
-        .subscribe { updateNotification(it) }
+    viewModel.updateCompleted
+        .subscribe {
+          viewModel.onUpdateNotificationRequested()
+          showTweetSucceeded()
+          analytics.tweetFromNotification()
+        }.addTo(subscriptions)
+
+    viewModel.updateNotificationRequests
+        .subscribe { updateNotification(it.footerState, it.timelineApp) }
         .addTo(subscriptions)
 
     viewModel.stopNotificationService
@@ -189,7 +185,7 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
         .addTo(subscriptions)
   }
 
-  fun buildNotification(footerState: FooterStateManager.State): Notification {
+  fun buildNotification(footerState: FooterStateManager.State, appInfo: AppInfo): Notification {
     val directTweetIntent = PendingIntent.getBroadcast(applicationContext, 0,
         commandIntent(COMMAND_DIRECT_TWEET), PendingIntent.FLAG_UPDATE_CURRENT)
 
@@ -249,7 +245,20 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
     }
 
     builder.addAction(settingAction)
-        .addAction(closeAction)
+
+    if (appInfo.installed) {
+      val openTimelineIntent = PendingIntent.getActivity(applicationContext, 1,
+          packageManager.getLaunchIntentForPackage(appInfo.packageName), PendingIntent.FLAG_CANCEL_CURRENT)
+
+      val timelineAction = NotificationCompat.Action.Builder(
+          R.drawable.ic_view_headline_black_24dp,
+          getString(R.string.label_open_timeline),
+          openTimelineIntent).build()
+
+      builder.addAction(timelineAction)
+    }
+
+    builder.addAction(closeAction)
 
     return builder.build()
   }
@@ -258,7 +267,8 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
     Timber.d("show notification")
 
     val footerState = viewModel.footerState.toBlocking().first()
-    val noti = buildNotification(footerState)
+    val appInfo = viewModel.selectedTimelineApp.toBlocking().first()
+    val noti = buildNotification(footerState, appInfo)
 
     noti.flags = NotificationCompat.FLAG_NO_CLEAR
 
@@ -267,10 +277,10 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
     return noti
   }
 
-  fun updateNotification(footerState: FooterStateManager.State): Notification {
+  fun updateNotification(footerState: FooterStateManager.State, appInfo: AppInfo): Notification {
     Timber.d("update notification")
 
-    val noti = buildNotification(footerState)
+    val noti = buildNotification(footerState, appInfo)
 
     noti.flags = NotificationCompat.FLAG_NO_CLEAR
 

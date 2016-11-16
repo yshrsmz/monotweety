@@ -6,6 +6,7 @@ import net.yslibrary.monotweety.base.di.ServiceScope
 import net.yslibrary.monotweety.setting.domain.FooterStateManager
 import net.yslibrary.monotweety.setting.domain.KeepOpenManager
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
+import net.yslibrary.monotweety.setting.domain.SelectedTimelineAppInfoManager
 import net.yslibrary.monotweety.status.domain.CheckStatusLength
 import net.yslibrary.monotweety.status.domain.ClearPreviousStatus
 import net.yslibrary.monotweety.status.domain.UpdateStatus
@@ -23,7 +24,14 @@ class NotificationServiceModule(private val service: NotificationService) {
                                           checkStatusLength: CheckStatusLength,
                                           updateStatus: UpdateStatus,
                                           clearPreviousStatus: ClearPreviousStatus,
-                                          footerStateManager: FooterStateManager): NotificationServiceViewModel {
-    return NotificationServiceViewModel(notificationEnabledManager, keepOpenManager, checkStatusLength, updateStatus, clearPreviousStatus, footerStateManager)
+                                          footerStateManager: FooterStateManager,
+                                          selectedTimelineAppInfoManager: SelectedTimelineAppInfoManager): NotificationServiceViewModel {
+    return NotificationServiceViewModel(notificationEnabledManager,
+        keepOpenManager,
+        checkStatusLength,
+        updateStatus,
+        clearPreviousStatus,
+        footerStateManager,
+        selectedTimelineAppInfoManager)
   }
 }

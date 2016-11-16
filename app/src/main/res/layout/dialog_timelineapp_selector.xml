@@ -7,14 +7,6 @@
               android:paddingRight="20dp"
               android:paddingTop="10dp">
 
-  <android.support.v7.widget.SwitchCompat
-      android:id="@+id/switch_button"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginBottom="8dp"
-      android:paddingLeft="4dp"
-      android:text="@string/label_enable_timelineapp"/>
-
   <Spinner
       android:id="@+id/timelineapp_spinner"
       android:layout_width="match_parent"

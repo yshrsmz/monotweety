@@ -51,6 +51,7 @@
   <string name="sub_label_timelineapp_off" translatable="false">OFF</string>
   <string name="label_enable_timelineapp">Enable shortcut on notification</string>
   <string name="label_no_favorite_app">Suggest your favorite twitter app</string>
+  <string name="label_timelineapp_initial_value">None(disable)</string>
 
   <string name="label_confirm">Confirm</string>
   <string name="label_cancel_confirm">Quit without tweeting?</string>

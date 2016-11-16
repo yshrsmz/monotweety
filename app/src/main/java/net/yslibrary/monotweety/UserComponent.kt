@@ -44,7 +44,7 @@ interface UserComponent : AppModule.Provider {
 
   fun getInstalledSupportedApps(): GetInstalledSupportedApps
 
-  fun getSelectedTimelineAppState(): GetSelectedTimelineAppState
+  fun selectedTimelineAppInfoManager(): SelectedTimelineAppInfoManager
 
   fun analytics(): Analytics
 

@@ -35,14 +35,14 @@ class SettingViewModule(private val activityBus: EventBus,
                               keepOpenManager: KeepOpenManager,
                               footerStateManager: FooterStateManager,
                               getInstalledSupportedApps: GetInstalledSupportedApps,
-                              getSelectedTimelineAppState: GetSelectedTimelineAppState): SettingViewModel {
+                              selectedTimelineAppInfoManager: SelectedTimelineAppInfoManager): SettingViewModel {
     return SettingViewModel(config,
         notificationEnabledManager,
         getUser,
         keepOpenManager,
         footerStateManager,
         getInstalledSupportedApps,
-        getSelectedTimelineAppState)
+        selectedTimelineAppInfoManager)
   }
 
   interface DependencyProvider {

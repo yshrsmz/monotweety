@@ -1,19 +1,24 @@
 package net.yslibrary.monotweety.setting.adapter
 
+import android.content.Context
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.TextView
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.findById
+import net.yslibrary.monotweety.base.inflate
 import net.yslibrary.monotweety.data.appinfo.AppInfo
 
 /**
  * Created by yshrsmz on 2016/11/14.
  */
-class TimelineAppAdapterDelegate : AdapterDelegate<List<SettingAdapter.Item>>() {
+class TimelineAppAdapterDelegate(private val listener: Listener) : AdapterDelegate<List<SettingAdapter.Item>>() {
 
   override fun isForViewType(items: List<SettingAdapter.Item>, position: Int): Boolean {
     return items[position] is Item
@@ -33,15 +38,38 @@ class TimelineAppAdapterDelegate : AdapterDelegate<List<SettingAdapter.Item>>() 
       val context = holder.itemView.context
       val res = context.resources
 
-      val subTitle = if (item.checked)
-        res.getString(R.string.sub_label_timelineapp_on, item.selectedApp!!.name)
+      val subTitle = if (item.selectedApp.installed)
+        res.getString(R.string.sub_label_timelineapp_on, item.selectedApp.name)
       else
         res.getString(R.string.sub_label_timelineapp_off)
 
       holder.title.text = res.getString(R.string.label_timelineapp)
       holder.subTitle.text = subTitle
       holder.itemView.isEnabled = item.enabled
+      holder.itemView.setOnClickListener { onClick(context, item) }
     }
+  }
+
+  private fun onClick(context: Context, item: Item) {
+    val view = context.inflate(R.layout.dialog_timelineapp_selector)
+    val spinner = view.findById<Spinner>(R.id.timelineapp_spinner)
+
+    val adapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item)
+    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+    adapter.addAll(listOf(context.getString(R.string.label_timelineapp_initial_value)) + item.apps.map { it.name })
+    spinner.adapter = adapter
+    val position = item.apps.indexOf(item.selectedApp)
+    spinner.setSelection(if (position < 0) 0 else position + 1)
+
+    AlertDialog.Builder(context)
+        .setTitle(R.string.label_timelineapp)
+        .setView(view)
+        .setPositiveButton(R.string.label_confirm,
+            { dialog, buttonPosition ->
+              val selected = spinner.selectedItemPosition
+              val app = item.apps.getOrElse(selected - 1, { AppInfo.empty() })
+              listener.onTimelineAppChanged(app)
+            }).show()
   }
 
 
@@ -60,14 +88,13 @@ class TimelineAppAdapterDelegate : AdapterDelegate<List<SettingAdapter.Item>>() 
 
 
   data class Item(val enabled: Boolean,
-                  val checked: Boolean,
                   val apps: List<AppInfo>,
-                  val selectedApp: AppInfo?) : SettingAdapter.Item {
+                  val selectedApp: AppInfo) : SettingAdapter.Item {
 
     override val type: SettingAdapter.ViewType = SettingAdapter.ViewType.TIMELINE_APP
   }
 
   interface Listener {
-    fun onTimelineAppChanged(enabled: Boolean, selectedApp: AppInfo?)
+    fun onTimelineAppChanged(selectedApp: AppInfo)
   }
 }

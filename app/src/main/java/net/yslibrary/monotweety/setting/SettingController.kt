@@ -72,8 +72,8 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
       viewModel.onFooterStateChanged(enabled, text)
     }
 
-    override fun onTimelineAppChanged(enabled: Boolean, selectedApp: AppInfo?) {
-      throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onTimelineAppChanged(selectedApp: AppInfo) {
+      viewModel.onTimelineAppChanged(selectedApp)
     }
 
     override fun onLogoutClick() {
@@ -164,6 +164,15 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
         .bindToLifecycle()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe { adapter.updateFooterState(it.enabled, it.text) }
+
+    viewModel.selectedTimelineApp
+        .switchMap { app ->
+          viewModel.installedSupportedApps
+              .map { Pair(app, it) }.toObservable()
+        }
+        .bindToLifecycle()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe { adapter.updateTimelineApp(it.first, it.second) }
 
     viewModel.user
         .bindToLifecycle()

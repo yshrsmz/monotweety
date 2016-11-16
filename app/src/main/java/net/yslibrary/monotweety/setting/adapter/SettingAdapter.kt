@@ -69,6 +69,12 @@ class SettingAdapter(private val res: Resources, listener: Listener) : ListDeleg
       }
     }))
 
+    delegatesManager.addDelegate(TimelineAppAdapterDelegate(object : TimelineAppAdapterDelegate.Listener {
+      override fun onTimelineAppChanged(selectedApp: AppInfo) {
+        listener.onTimelineAppChanged(selectedApp)
+      }
+    }))
+
     items = mutableListOf(
         SubHeaderAdapterDelegate.Item(res.getString(R.string.label_account), ViewType.SUBHEADER_ACCOUNT),
         ProfileAdapterDelegate.Item.empty(),
@@ -76,6 +82,7 @@ class SettingAdapter(private val res: Resources, listener: Listener) : ListDeleg
         TwoLineSwitchAdapterDelegate.Item(res.getString(R.string.label_keep),
             res.getString(R.string.sub_label_keep), false, false, ViewType.KEEP_OPEN),
         FooterEditorAdapterDelegate.Item(true, false, "", ViewType.FOOTER),
+        TimelineAppAdapterDelegate.Item(true, emptyList(), AppInfo.empty()),
         SubHeaderAdapterDelegate.Item(res.getString(R.string.label_others), ViewType.SUBHEADER_OTHERS),
         TwoLineTextAdapterDelegate.Item(res.getString(R.string.label_app_version, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE),
             res.getString(R.string.sub_label_app_version), true, ViewType.APP_VERSION),
@@ -109,6 +116,12 @@ class SettingAdapter(private val res: Resources, listener: Listener) : ListDeleg
     notifyItemChanged(ViewType.FOOTER.ordinal)
   }
 
+  fun updateTimelineApp(selectedApp: AppInfo, apps: List<AppInfo>) {
+    val item = items[ViewType.TIMELINE_APP.ordinal] as TimelineAppAdapterDelegate.Item
+    (items as MutableList).set(ViewType.TIMELINE_APP.ordinal, item.copy(enabled = true, selectedApp = selectedApp, apps = apps))
+    notifyItemChanged(ViewType.TIMELINE_APP.ordinal)
+  }
+
   enum class ViewType {
     SUBHEADER_ACCOUNT,
     PROFILE,
@@ -135,7 +148,7 @@ class SettingAdapter(private val res: Resources, listener: Listener) : ListDeleg
     fun onLogoutClick()
     fun onKeepOpenClick(enabled: Boolean)
     fun onFooterStateChanged(enabled: Boolean, text: String)
-    fun onTimelineAppChanged(enabled: Boolean, selectedApp: AppInfo?)
+    fun onTimelineAppChanged(selectedApp: AppInfo)
     fun onAppVersionClick()
     fun onLicenseClick()
     fun onDeveloperClick()

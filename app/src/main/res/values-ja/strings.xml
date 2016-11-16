@@ -53,4 +53,5 @@
   <string name="label_enable_timelineapp">通知からのショートカット</string>
   <string name="label_timelineapp">タイムラインを閲覧するアプリを選択する</string>
   <string name="label_no_favorite_app">連携できるTwitterアプリの追加を依頼する</string>
+  <string name="label_timelineapp_initial_value">未選択(無効)</string>
 </resources>

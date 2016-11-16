@@ -22,7 +22,7 @@ class SettingViewModel(private val config: Config,
                        private val keepOpenManager: KeepOpenManager,
                        private val footerStateManager: FooterStateManager,
                        private val getInstalledSupportedApps: GetInstalledSupportedApps,
-                       private val getSelectedTimelineAppState: GetSelectedTimelineAppState) {
+                       private val selectedTimelineAppInfoManager: SelectedTimelineAppInfoManager) {
 
   private val userSubject = BehaviorSubject<User?>(null)
 
@@ -81,8 +81,8 @@ class SettingViewModel(private val config: Config,
   val installedSupportedApps: Single<List<AppInfo>>
     get() = getInstalledSupportedApps.execute()
 
-  val selectedTimelineApp: Observable<GetSelectedTimelineAppState.State>
-    get() = getSelectedTimelineAppState.execute()
+  val selectedTimelineApp: Observable<AppInfo>
+    get() = selectedTimelineAppInfoManager.get()
 
   init {
     getUser.execute()
@@ -100,6 +100,10 @@ class SettingViewModel(private val config: Config,
 
   fun onFooterStateChanged(enabled: Boolean, footerText: String) {
     footerStateManager.set(FooterStateManager.State(enabled, footerText))
+  }
+
+  fun onTimelineAppChanged(selectedApp: AppInfo) {
+    selectedTimelineAppInfoManager.set(selectedApp)
   }
 
   fun onOpenProfileRequested() {

@@ -1,4 +1,4 @@
-box: yshrsmz/android:sdk25
+box: yshrsmz/android:latest
 
 build:
   steps:

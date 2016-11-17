@@ -6,6 +6,9 @@
     <changelogtext>Add shortcut to other Twitter apps on the notification. If your favorite app is
       not on the list, please contact me via @yslibnet.
     </changelogtext>
+    <changelogtext>
+      Add a tile for Quick Settings(only available on devices running Android 7.0 or later)
+    </changelogtext>
   </changelogversion>
   <changelogversion
       changeDate="Nov 15th, 2016"

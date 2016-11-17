@@ -22,6 +22,7 @@ import net.yslibrary.monotweety.activity.compose.ComposeActivity
 import net.yslibrary.monotweety.activity.main.MainActivity
 import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.base.HasComponent
+import net.yslibrary.monotweety.base.closeNotificationDrawer
 import net.yslibrary.monotweety.data.appinfo.AppInfo
 import net.yslibrary.monotweety.setting.domain.FooterStateManager
 import rx.Completable
@@ -287,11 +288,6 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
     notificationManager.notify(R.id.tweet_notification, noti)
 
     return noti
-  }
-
-  fun closeNotificationDrawer() {
-    val intent = Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
-    applicationContext.sendBroadcast(intent)
   }
 
   fun showTweetDialog(status: String) {

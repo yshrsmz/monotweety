@@ -6,6 +6,9 @@
     <changelogtext>
       他のTwitterクライアントへのショートカットを通知に追加。ご利用のTwitterクライアントが選択肢にない場合は@yslibnetまでお伝えいただけると幸いです
     </changelogtext>
+    <changelogtext>
+      クイック設定用のタイルを追加(Android 7.0以降のみ)
+    </changelogtext>
   </changelogversion>
   <changelogversion
       changeDate="Nov 15, 2016"

@@ -67,6 +67,16 @@
 
     <service android:name=".logout.LogoutService"/>
 
+    <service
+        android:name=".quicksetting.EditorTileService"
+        android:icon="@drawable/ic_notification"
+        android:label="@string/label_tile_open_dialog"
+        android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+      <intent-filter>
+        <action android:name="android.service.quicksettings.action.QS_TILE"/>
+      </intent-filter>
+    </service>
+
     <receiver android:name=".notification.BootCompletedReceiver">
       <intent-filter>
         <action android:name="android.intent.action.BOOT_COMPLETED"/>

@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
+import net.yslibrary.monotweety.quicksetting.EditorTileService
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -60,6 +61,9 @@ open class App : Application() {
 
     appComponent(this).inject(this)
     lifecycleCallbacks.onCreate()
+
+    // start Service for Quick Settings' Tile
+    startService(EditorTileService.callingIntent(this))
 
     Timber.d("App#onCreate")
   }

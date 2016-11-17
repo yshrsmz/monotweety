@@ -54,4 +54,5 @@
   <string name="label_timelineapp_initial_value">未選択(無効)</string>
   <string name="label_open_timeline">タイムライン</string>
   <string name="label_timelineapp_description">通知にショートカットを追加する</string>
+  <string name="label_tile_open_dialog">ダイアログを開く</string>
 </resources>

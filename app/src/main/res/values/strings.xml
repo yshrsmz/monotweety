@@ -62,6 +62,8 @@
 
   <string name="action_send_tweet">tweet</string>
 
+  <string name="label_tile_open_dialog">Open Dialog</string>
+
   <string name="message_tweet_succeeded">Status successfully updated!</string>
   <string name="message_login_succeeded">Successfully logged in as \@%s</string>
 

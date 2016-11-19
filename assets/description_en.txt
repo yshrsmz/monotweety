@@ -17,6 +17,8 @@ Also, with Monotweety you can chain tweets as a thread with one single tap(from 
 Features
 - tweet from notification
 - chain tweets as a thread
+- Open selected twitter app from notification
+- Quick Settings' tile to opening editor dialog(Android 7.0 and up).
 
 
 Monotweety is an open-source project.

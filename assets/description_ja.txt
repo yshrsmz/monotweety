@@ -18,6 +18,8 @@ Monotweety（モノツイーティ）は通知エリアからツイートする�
 機能一覧
 - 通知エリアからツイート
 - 連ツイ(複数のツイートをリプライとして紐付け)
+- 通知から任意のTwitterアプリを起動する
+- クイック設定タイル(Android 7.0以降)
 
 Monotweetyはオープンソースです。
 ソースコードは https://github.com/yshrsmz/monotweety から確認できます。

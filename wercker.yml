@@ -1,6 +1,9 @@
-box: yshrsmz/android:latest
-
 build:
+  box:
+    id: yshrsmz/android
+    username: $DOCKERHUB_USERNAME
+    password: $DOCKERHUB_PASSWORD
+    tag: latest
   steps:
     - script:
         name: obtain secrets

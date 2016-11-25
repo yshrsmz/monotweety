@@ -1,10 +1,11 @@
 machine:
+  pre:
+    - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
   services:
     - docker
 
 dependencies:
   override:
-    - curl -sSL https://get.docker.com/ | sh
     - docker login -e $DOCKER_EMAIL -u $DOCKER_USERNAME -p $DOCKER_PASS
     - docker pull yshrsmz/android
     - echo $JKS | base64 -d > ./monotweety.jks

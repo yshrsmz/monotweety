@@ -14,4 +14,4 @@ dependencies:
 
 test:
   override:
-    - docker run -v `pwd`:/monotweety -t yshrsmz/android /bin/bash /monotweety/scripts.ci.sh
+    - docker run -v $(pwd):/monotweety -t yshrsmz/android /bin/bash /monotweety/scripts/ci.sh

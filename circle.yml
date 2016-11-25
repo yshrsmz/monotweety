@@ -4,11 +4,12 @@ machine:
 
 dependencies:
   override:
+    - docker login -u $DOCKER_USERNAME -p $DOCKER_PASS
+    - docker pull yshrsmz/android
     - echo $JKS | base64 -d > ./monotweety.jks
     - echo $SECRETS | base64 -d > ./secret.properties
     - echo $GOOGLE_SERVICE_JSON | base64 -d > ./app/google-services.json
 
 test:
   override:
-    - docker login -e $DOCKER_EMAIL -u $DOCKER_USERNAME -p $DOCKER_PASS
-    - docker run -v .:/monotweety yshrsmz/android /bin/bash /monotweety/scripts.ci.sh
+    - docker run -v .:/monotweety -t yshrsmz/android /bin/bash /monotweety/scripts.ci.sh

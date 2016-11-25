@@ -5,7 +5,6 @@ apply plugin: 'com.github.ben-manes.versions'
 apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: 'io.fabric'
 
-
 apply from: rootProject.file("gradle/jacoco.gradle")
 
 def getSecretProperty(name) {

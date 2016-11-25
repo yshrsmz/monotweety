@@ -72,7 +72,7 @@ android {
   }
 
   lintOptions {
-//    abortOnError false
+    abortOnError false
     textReport true
     textOutput 'stdout'
   }

@@ -14,4 +14,12 @@ dependencies:
 
 test:
   override:
-    - docker run -v $(pwd):/monotweety -t yshrsmz/android /bin/bash /monotweety/scripts/ci.sh
+    - echo $CIRCLE_BRANCH
+    - docker run -v $(pwd):/monotweety -t yshrsmz/android /bin/bash /monotweety/scripts/ci.sh \
+      -e CI_PULL_REQUEST \
+      -e CIRCLE_PR_NUMBER \
+      -e CIRCLE_PROJECT_USERNAME \
+      -e CIRCLE_PROJECT_REPONAME \
+      -e CIRCLE_SHA1 \
+      -e CIRCLE_BRANCH \
+      -e REVIEWDOG_GITHUB_API_TOKEN

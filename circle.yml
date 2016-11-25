@@ -11,4 +11,4 @@ dependencies:
 
 test:
   override:
-    - docker run -v .:/monotweety yshrsmz/android:latest /bin/bash /monotweety/scripts.ci.sh
+    - docker run -v .:/monotweety yshrsmz/android /bin/bash /monotweety/scripts.ci.sh

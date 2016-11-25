@@ -4,7 +4,8 @@ machine:
 
 dependencies:
   override:
-    - apt-get update docker
+    - sudo apt-get update
+    - sudo apt-get upgrade
     - docker login -e $DOCKER_EMAIL -u $DOCKER_USERNAME -p $DOCKER_PASS
     - docker pull yshrsmz/android
     - echo $JKS | base64 -d > ./monotweety.jks

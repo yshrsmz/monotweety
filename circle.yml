@@ -1,25 +1,21 @@
 machine:
-  pre:
-    - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
-  services:
-    - docker
+  environment:
+    REVIEWDOG_VERSION: 0.9.2
 
 dependencies:
   override:
-    - docker login -e $DOCKER_EMAIL -u $DOCKER_USERNAME -p $DOCKER_PASS
-    - docker pull yshrsmz/android
+    - curl -fSL https://github.com/haya14busa/reviewdog/releases/download/$REVIEWDOG_VERSION/reviewdog_linux_amd64 -o reviewdog && chmod +x ./reviewdog
     - echo $JKS | base64 -d > ./monotweety.jks
     - echo $SECRETS | base64 -d > ./secret.properties
     - echo $GOOGLE_SERVICE_JSON | base64 -d > ./app/google-services.json
+    - sudo add-apt-repository -y ppa:webupd8team/java
+    - sudo apt-get update
+    - echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
+    - sudo apt-get install oracle-java8-installer
+    - echo yes | android update sdk --no-ui --all --filter tools
+    - echo yes | android update sdk --no-ui --all --filter platform-tools,build-tools-25.0.1,android-25
+    - echo yes | android update sdk --no-ui --all --filter extra-android-m2repository,extra-google-m2repository
 
 test:
   override:
-    - echo $CIRCLE_BRANCH
-    - docker run -v $(pwd):/monotweety -t yshrsmz/android /bin/bash /monotweety/scripts/ci.sh \
-      -e CI_PULL_REQUEST \
-      -e CIRCLE_PR_NUMBER \
-      -e CIRCLE_PROJECT_USERNAME \
-      -e CIRCLE_PROJECT_REPONAME \
-      -e CIRCLE_SHA1 \
-      -e CIRCLE_BRANCH \
-      -e REVIEWDOG_GITHUB_API_TOKEN
+    - ./gradlew lintDebug 2>&1 | reviewdog -efm="%f:%l: %m" -ci="circle-ci"

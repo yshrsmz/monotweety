@@ -11,7 +11,6 @@ dependencies:
     - sudo service memcached stop
     - sudo service mysql stop
     - sudo service rabbitmq-server stop
-    - sudo service zookeeper stop
     - curl -fSL https://github.com/haya14busa/reviewdog/releases/download/$REVIEWDOG_VERSION/reviewdog_linux_amd64 -o reviewdog && chmod +x ./reviewdog
     - echo $JKS | base64 -d > ./monotweety.jks
     - echo $SECRETS | base64 -d > ./secret.properties

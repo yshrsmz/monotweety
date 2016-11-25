@@ -1,11 +1,12 @@
 machine:
   environment:
-    REVIEWDOG_VERSION: 0.9.2
+#    REVIEWDOG_VERSION: 0.9.2
+    JAVA_HOME: /usr/lib/jvm/java-8-oracle
 
 dependencies:
   override:
     - echo "1"
-    - curl -fSL https://github.com/haya14busa/reviewdog/releases/download/$REVIEWDOG_VERSION/reviewdog_linux_amd64 -o reviewdog && chmod +x ./reviewdog
+    - curl -fSL https://github.com/haya14busa/reviewdog/releases/download/0.9.2/reviewdog_linux_amd64 -o reviewdog && chmod +x ./reviewdog
     - echo "2"
     - echo $JKS | base64 -d > ./monotweety.jks
     - echo $SECRETS | base64 -d > ./secret.properties

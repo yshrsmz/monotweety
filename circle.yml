@@ -4,7 +4,9 @@ machine:
 
 dependencies:
   override:
+    - echo "1"
     - curl -fSL https://github.com/haya14busa/reviewdog/releases/download/$REVIEWDOG_VERSION/reviewdog_linux_amd64 -o reviewdog && chmod +x ./reviewdog
+    - echo "2"
     - echo $JKS | base64 -d > ./monotweety.jks
     - echo $SECRETS | base64 -d > ./secret.properties
     - echo $GOOGLE_SERVICE_JSON | base64 -d > ./app/google-services.json

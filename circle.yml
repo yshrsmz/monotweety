@@ -8,7 +8,6 @@ machine:
 dependencies:
   override:
     - sudo service postgresql stop
-    - sudo service mongodb stop
     - sudo service memcached stop
     - sudo service mysql stop
     - sudo service couchdb stop

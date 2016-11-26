@@ -99,8 +99,8 @@ dependencies {
   }
   compile 'com.squareup.okhttp3:okhttp:3.4.2'
 
-  compile 'com.google.dagger:dagger:2.8'
-  kapt 'com.google.dagger:dagger-compiler:2.8'
+  compile 'com.google.dagger:dagger:2.7'
+  kapt 'com.google.dagger:dagger-compiler:2.7'
   provided 'org.glassfish:javax.annotation:10.0-b28'
 
   compile 'com.pushtorefresh.storio:sqlite:1.11.0'

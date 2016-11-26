@@ -1,14 +1,26 @@
+---
 machine:
-  services:
-    - docker
+  environment:
+    REVIEWDOG_VERSION: 0.9.2
+  java:
+    version: oraclejdk8
 
 dependencies:
   override:
-    - docker login -e $DOCKER_EMAIL -u $DOCKER_USERNAME -p $DOCKER_PASS
+    - sudo service postgresql stop
+    - sudo service memcached stop
+    - sudo service mysql stop
+    - sudo service rabbitmq-server stop
+    - curl -fSL https://github.com/haya14busa/reviewdog/releases/download/$REVIEWDOG_VERSION/reviewdog_linux_amd64 -o reviewdog && chmod +x ./reviewdog
     - echo $JKS | base64 -d > ./monotweety.jks
     - echo $SECRETS | base64 -d > ./secret.properties
     - echo $GOOGLE_SERVICE_JSON | base64 -d > ./app/google-services.json
+    - echo yes | android update sdk --no-ui --all --filter tools
+    - echo yes | android update sdk --no-ui --all --filter platform-tools,build-tools-25.0.1,android-25
+    - echo yes | android update sdk --no-ui --all --filter extra-android-m2repository,extra-google-m2repository
 
 test:
   override:
-    - docker run -v .:/monotweety yshrsmz/android /bin/bash /monotweety/scripts.ci.sh
+    - ./gradlew assembleDebug
+    - "./gradlew lintDebug 2>&1 | ./reviewdog -efm='%f:%l: %m' -ci='circle-ci'"
+    - "./graldew findbugs 2>&1 | ./reviewdog -efm='%f:%l: %m' -ci='circle-ci'"

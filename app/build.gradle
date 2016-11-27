@@ -87,10 +87,10 @@ dependencies {
   compile "com.android.support:recyclerview-v7:$support_lib_version"
   compile "com.android.support:design:$support_lib_version"
 
-  compile 'com.google.firebase:firebase-core:9.8.0'
+  compile 'com.google.firebase:firebase-core:10.0.0'
 
   compile 'com.twitter:twitter-text:1.13.0'
-  compile('com.twitter.sdk.android:twitter:2.1.1@aar') {
+  compile('com.twitter.sdk.android:twitter:2.2.0@aar') {
     transitive = true;
   }
   compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
@@ -149,7 +149,7 @@ dependencies {
 
 
   testCompile 'junit:junit:4.12'
-  testCompile 'org.mockito:mockito-core:2.2.25'
+  testCompile 'org.mockito:mockito-core:2.2.26'
   testCompile 'org.assertj:assertj-core:1.7.0'
   testCompile 'com.squareup.okhttp3:mockwebserver:3.4.2'
   testCompile 'org.robolectric:robolectric:3.1.4'

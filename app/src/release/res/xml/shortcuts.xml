@@ -4,7 +4,7 @@
       android:enabled="true"
       android:icon="@drawable/ic_shortcut_editor"
       android:shortcutDisabledMessage="@string/label_shortcut_editor_disabled"
-      android:shortcutId="compose"
+      android:shortcutId="@string/shortcut_id_open_editor"
       android:shortcutLongLabel="@string/label_shortcut_editor_longlabel"
       android:shortcutShortLabel="@string/label_shortcut_editor_shortlabel">
     <intent

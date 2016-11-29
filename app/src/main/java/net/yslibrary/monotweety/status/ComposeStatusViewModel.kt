@@ -31,7 +31,7 @@ class ComposeStatusViewModel(status: String,
 
   private val isSendableStatusSubject = BehaviorSubject<Boolean>(false)
 
-  private val statusLengthSubject = BehaviorSubject<StatusInfo>()
+  private val statusInfoSubject = BehaviorSubject<StatusInfo>()
 
   private val statusUpdatedSubject = PublishSubject<Unit>()
 
@@ -51,7 +51,7 @@ class ComposeStatusViewModel(status: String,
     get() = isSendableStatusSubject.asObservable()
 
   val statusInfo: Observable<StatusInfo>
-    get() = statusLengthSubject.asObservable()
+    get() = statusInfoSubject.asObservable()
 
   val statusUpdated: Observable<Unit>
     get() = statusUpdatedSubject.asObservable()
@@ -91,7 +91,7 @@ class ComposeStatusViewModel(status: String,
   val canClose: Boolean
     get() {
       val isSending = progressEventsSubject.value == ProgressEvent.IN_PROGRESS
-      val hasContent = statusLengthSubject.value.length > 0
+      val hasContent = statusInfoSubject.value.length > 0
       val allowCloseView = allowCloseViewSubject.value
 
       return !isSending && (!hasContent || allowCloseView)
@@ -121,7 +121,7 @@ class ComposeStatusViewModel(status: String,
     checkStatusLength.execute(status)
         .subscribeOn(Schedulers.io())
         .subscribe {
-          statusLengthSubject.onNext(StatusInfo(status, it.valid, it.length))
+          statusInfoSubject.onNext(StatusInfo(status, it.valid, it.length))
 
           isSendableStatusSubject.onNext(it.valid)
         }

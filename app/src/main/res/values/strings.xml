@@ -5,14 +5,13 @@
   <string name="title_compose_status">Compose Tweet</string>
   <string name="title_license">Open Source License</string>
   <string name="title_changelog">Changelog</string>
-  <string name="title_shortcut_editor">Open Editor Dialog</string>
+  <string name="title_shortcut_editor">New Tweet</string>
 
   <string name="label_notificatoin_state">Notification: %s</string>
   <string name="label_on" translatable="false">ON</string>
   <string name="label_off" translatable="false">OFF</string>
 
   <string name="label_tweet_now">tweet</string>
-  <string name="label_open_dialog">open dialog</string>
   <string name="label_open_settings">settings</string>
   <string name="label_close_notification">close</string>
   <string name="label_open_timeline">timeline</string>
@@ -62,11 +61,11 @@
 
   <string name="action_send_tweet">tweet</string>
 
-  <string name="label_tile_open_dialog">Open Dialog</string>
+  <string name="label_tile_new_tweet">New Tweet</string>
 
   <!-- App Shortcuts -->
-  <string name="label_shortcut_editor_shortlabel">Open Editor</string>
-  <string name="label_shortcut_editor_longlabel">Open Editor Dialog</string>
+  <string name="label_shortcut_editor_shortlabel">New Tweet</string>
+  <string name="label_shortcut_editor_longlabel">New Tweet</string>
   <string name="label_shortcut_editor_disabled">Disabled</string>
 
   <string name="message_tweet_succeeded">Status successfully updated!</string>

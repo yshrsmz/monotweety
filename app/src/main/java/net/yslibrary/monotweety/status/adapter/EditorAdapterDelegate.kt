@@ -37,7 +37,7 @@ class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
     if (holder is ViewHolder) {
       val item = items[position] as Item
 
-      val shouldUpdateStatus = item.clear || item.initialValue
+      val shouldUpdateStatus = item.clear || item.initialValue || holder.statusInput.text.isBlank()
 
       if (shouldUpdateStatus) {
         holder.statusInput.setText(item.status, TextView.BufferType.EDITABLE)

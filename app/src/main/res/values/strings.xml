@@ -64,6 +64,11 @@
 
   <string name="label_tile_open_dialog">Open Dialog</string>
 
+  <!-- App Shortcuts -->
+  <string name="label_shortcut_editor_shortlabel">Open Editor</string>
+  <string name="label_shortcut_editor_longlabel">Open Editor Dialog</string>
+  <string name="label_shortcut_editor_disabled">Disabled</string>
+
   <string name="message_tweet_succeeded">Status successfully updated!</string>
   <string name="message_login_succeeded">Successfully logged in as \@%s</string>
 
@@ -78,4 +83,5 @@
   <string name="message_share">Check out #Monotweety! %s #Android</string>
 
   <string name="transition_name_logo" translatable="false">transition.logo</string>
+  <string name="shortcut_id_open_editor">open_editor</string>
 </resources>

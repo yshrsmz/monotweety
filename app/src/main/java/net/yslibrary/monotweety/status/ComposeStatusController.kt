@@ -1,5 +1,8 @@
 package net.yslibrary.monotweety.status
 
+import android.annotation.TargetApi
+import android.content.pm.ShortcutManager
+import android.os.Build
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -63,6 +66,8 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
     super.onCreate()
     Timber.d("status: $status")
     component.inject(this)
+
+    reportShortcutUsedIfNeeded(status)
     analytics.viewEvent(Analytics.VIEW_COMPOSE_STATUS)
   }
 
@@ -250,6 +255,14 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
 
     activity?.invalidateOptionsMenu()
     childRouter.popCurrentController()
+  }
+
+  @TargetApi(Build.VERSION_CODES.N_MR1)
+  fun reportShortcutUsedIfNeeded(status: String?) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1 && status.isNullOrEmpty()) {
+      applicationContext?.getSystemService(ShortcutManager::class.java)
+          ?.reportShortcutUsed(getString(R.string.shortcut_id_open_editor))
+    }
   }
 
   inner class Bindings(view: View) {

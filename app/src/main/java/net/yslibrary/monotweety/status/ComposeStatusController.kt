@@ -1,5 +1,6 @@
 package net.yslibrary.monotweety.status
 
+import android.annotation.TargetApi
 import android.content.pm.ShortcutManager
 import android.os.Build
 import android.support.v7.app.AlertDialog
@@ -256,6 +257,7 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
     childRouter.popCurrentController()
   }
 
+  @TargetApi(Build.VERSION_CODES.N_MR1)
   fun reportShortcutUsedIfNeeded(status: String?) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1 && status.isNullOrEmpty()) {
       applicationContext?.getSystemService(ShortcutManager::class.java)

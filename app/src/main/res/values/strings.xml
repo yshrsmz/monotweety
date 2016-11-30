@@ -82,5 +82,4 @@
   <string name="message_share">Check out #Monotweety! %s #Android</string>
 
   <string name="transition_name_logo" translatable="false">transition.logo</string>
-  <string name="shortcut_id_open_editor" translatable="false">open_editor</string>
 </resources>

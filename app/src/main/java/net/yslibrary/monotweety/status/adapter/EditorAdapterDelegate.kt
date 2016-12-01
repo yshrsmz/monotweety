@@ -44,7 +44,7 @@ class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
       }
       val counterColor = if (item.valid) R.color.colorTextSecondary else R.color.red
       holder.statusCounter.setTextColor(ContextCompat.getColor(holder.itemView.context, counterColor))
-      holder.statusCounter.text = "${item.statusLength}/${item.maxLength}"
+      holder.statusCounter.text = holder.itemView.context.getString(R.string.label_status_counter, item.statusLength, item.maxLength)
 
       // update only if value is updated at somewhere
       if (item.keepOpen != holder.keepOpenSwitch.isChecked) {

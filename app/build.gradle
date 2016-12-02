@@ -87,7 +87,7 @@ dependencies {
   compile "com.android.support:recyclerview-v7:$support_lib_version"
   compile "com.android.support:design:$support_lib_version"
 
-  compile 'com.google.firebase:firebase-core:10.0.0'
+  compile 'com.google.firebase:firebase-core:10.0.1'
 
   compile 'com.twitter:twitter-text:1.13.0'
   compile('com.twitter.sdk.android:twitter:2.2.0@aar') {

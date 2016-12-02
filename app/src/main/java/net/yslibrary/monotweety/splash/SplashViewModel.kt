@@ -2,6 +2,7 @@ package net.yslibrary.monotweety.splash
 
 import net.yslibrary.monotweety.login.domain.IsLoggedIn
 import rx.Observable
+import rx.schedulers.Schedulers
 import rx.subjects.BehaviorSubject
 
 /**
@@ -16,6 +17,7 @@ class SplashViewModel(private val isLoggedIn: IsLoggedIn) {
 
   init {
     isLoggedIn.execute()
+        .subscribeOn(Schedulers.io())
         .subscribe { loggedInSubject.onNext(it) }
   }
 }

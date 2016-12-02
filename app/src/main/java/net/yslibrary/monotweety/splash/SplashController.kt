@@ -16,6 +16,7 @@ import net.yslibrary.monotweety.setting.SettingController
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.lang.kotlin.addTo
+import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
@@ -59,6 +60,7 @@ class SplashController : ActionBarController(), HasComponent<SplashComponent> {
   fun setEvents() {
     viewModel.loggedIn
         .zipWith(Observable.interval(2, TimeUnit.SECONDS).first()) { t1, t2 -> t1 }
+        .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe {
           val next: Controller = if (it) SettingController() else LoginController()

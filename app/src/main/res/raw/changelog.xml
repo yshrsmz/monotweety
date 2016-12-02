@@ -2,7 +2,7 @@
 <changelog>
   <changelogversion
       changeDate="Dec 3rd, 2016"
-      versionName="1.4.0">
+      versionName="1.4.1">
     <changelogtext>
       Add App Shortcuts(supported launchers are Pixel Launcher, Action Launcher 3, Nova
       Launcher, etc)

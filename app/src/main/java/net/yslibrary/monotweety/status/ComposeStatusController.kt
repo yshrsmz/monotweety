@@ -11,6 +11,7 @@ import android.view.*
 import android.widget.FrameLayout
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
+import com.twitter.sdk.android.core.models.Tweet
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.base.ActionBarController
@@ -147,10 +148,10 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
         .bindToLifecycle()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe { tweetAndFooter ->
-          Timber.d("status updated, and previous status loaded: ${tweetAndFooter.first?.text}")
+          val tweet = tweetAndFooter.first
+          Timber.d("status updated, and previous status loaded: ${tweet?.text}")
           analytics.tweetFromEditor()
-          adapter.updatePreviousTweetAndClearEditor(if (tweetAndFooter.first == null) emptyList() else
-            listOf(tweetAndFooter.first!!), tweetAndFooter.second)
+          adapter.updatePreviousTweetAndClearEditor(if (tweet == null) emptyList<Tweet>() else listOf(tweet), tweetAndFooter.second)
         }
 
     viewModel.messages.bindToLifecycle()

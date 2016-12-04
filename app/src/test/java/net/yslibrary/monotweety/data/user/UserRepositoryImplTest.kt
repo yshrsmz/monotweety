@@ -1,16 +1,21 @@
 package net.yslibrary.monotweety.data.user
 
+import com.google.gson.Gson
+import net.yslibrary.monotweety.*
 import net.yslibrary.monotweety.base.Clock
 import net.yslibrary.monotweety.data.user.local.UserLocalRepository
 import net.yslibrary.monotweety.data.user.remote.UserRemoteRepository
-import net.yslibrary.monotweety.mock
-import net.yslibrary.monotweety.whenever
 import org.assertj.core.api.Assertions
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import rx.Completable
+import rx.Observable
+import rx.Single
+import rx.observers.TestSubscriber
 import java.util.concurrent.TimeUnit
+import com.twitter.sdk.android.core.models.User as TwitterUser
 
 /**
  * Created by yshrsmz on 2016/10/23.
@@ -23,6 +28,8 @@ class UserRepositoryImplTest {
   lateinit var remoteRepository: UserRemoteRepository
   lateinit var repository: UserRepositoryImpl
 
+  val gson = Gson()
+
   @Before
   fun setup() {
     clock = mock(Clock::class)
@@ -31,6 +38,69 @@ class UserRepositoryImplTest {
     repository = UserRepositoryImpl(remoteRepository = remoteRepository,
         localRepository = localRepository,
         clock = clock)
+  }
+
+  @Test
+  fun get() {
+    whenever(localRepository.getById(anyLong()))
+        .thenReturn(Observable.just(null))
+
+    val ts = TestSubscriber<User?>()
+
+    repository.get(1).subscribe(ts)
+
+    ts.assertValue(null)
+
+    verify(localRepository).getById(1)
+    verifyNoMoreInteractions(localRepository, remoteRepository)
+  }
+
+  @Test
+  fun set() {
+    val ts = TestSubscriber<Unit>()
+    val time = System.currentTimeMillis()
+    val twitterUser = gson.fromJson(readJsonFromAssets("user.json"), TwitterUser::class.java)
+    val user = User(id = twitterUser.id,
+        name = twitterUser.name,
+        screenName = twitterUser.screenName,
+        profileImageUrl = twitterUser.profileImageUrl,
+        _updatedAt = time)
+    whenever(localRepository.set(user)).thenReturn(Completable.complete())
+
+    repository.set(user).subscribe(ts)
+
+    ts.assertNoValues()
+    ts.assertCompleted()
+
+    verify(localRepository).set(user)
+    verifyNoMoreInteractions(localRepository, remoteRepository)
+  }
+
+  @Test
+  fun fetch() {
+    val ts = TestSubscriber<Unit>()
+    val time = System.currentTimeMillis()
+    val twitterUser = gson.fromJson(readJsonFromAssets("user.json"), TwitterUser::class.java)
+    val user = User(id = twitterUser.id,
+        name = twitterUser.name,
+        screenName = twitterUser.screenName,
+        profileImageUrl = twitterUser.profileImageUrl,
+        _updatedAt = time)
+
+    whenever(remoteRepository.get())
+        .thenReturn(Single.just(twitterUser))
+    whenever(localRepository.set(user)).thenReturn(Completable.complete())
+
+    whenever(clock.currentTimeMillis()).thenReturn(time)
+
+    repository.fetch().subscribe(ts)
+
+    ts.assertNoValues()
+    ts.assertCompleted()
+
+    verify(remoteRepository).get()
+    verify(localRepository).set(user)
+    verifyNoMoreInteractions(remoteRepository, localRepository)
   }
 
   @Test

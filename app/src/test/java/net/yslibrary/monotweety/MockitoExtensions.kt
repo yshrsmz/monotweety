@@ -17,3 +17,5 @@ fun <T> verify(methodCall: T): T = Mockito.verify(methodCall)
 fun verifyNoMoreInteractions(vararg mocks: Any) = Mockito.verifyNoMoreInteractions(*mocks)
 
 fun <T : Any> spy(any: T): T = Mockito.spy(any)
+
+fun anyLong(): Long = Mockito.anyLong()

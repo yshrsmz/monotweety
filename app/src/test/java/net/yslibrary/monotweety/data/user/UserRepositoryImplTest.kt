@@ -77,6 +77,20 @@ class UserRepositoryImplTest {
   }
 
   @Test
+  fun delete() {
+    val ts = TestSubscriber<Unit>()
+    whenever(localRepository.delete(anyLong())).thenReturn(Completable.complete())
+
+    repository.delete(1234).subscribe(ts)
+
+    ts.assertNoValues()
+    ts.assertCompleted()
+
+    verify(localRepository).delete(1234)
+    verifyNoMoreInteractions(localRepository, remoteRepository)
+  }
+
+  @Test
   fun fetch() {
     val ts = TestSubscriber<Unit>()
     val time = System.currentTimeMillis()

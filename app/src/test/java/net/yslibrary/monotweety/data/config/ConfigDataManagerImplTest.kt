@@ -14,6 +14,8 @@ import org.junit.runner.RunWith
 import org.robolectric.RuntimeEnvironment
 import rx.Single
 import rx.observers.TestSubscriber
+import rx.plugins.RxJavaHooks
+import rx.schedulers.Schedulers
 
 /**
  * Created by yshrsmz on 2016/11/12.
@@ -46,6 +48,8 @@ class ConfigDataManagerImplTest {
 
   @Test
   fun shortUrlLengthHttps_outdated() {
+    RxJavaHooks.setOnIOScheduler { Schedulers.immediate() }
+
     val time = System.currentTimeMillis()
     whenever(configRemoteDataManager.get())
         .thenReturn(Single.just(config))
@@ -72,6 +76,8 @@ class ConfigDataManagerImplTest {
     verify(configDataManager).updateConfig(config)
 
     verifyNoMoreInteractions(configLocalDataManager, configRemoteDataManager)
+
+    RxJavaHooks.reset()
   }
 
   @Test

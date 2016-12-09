@@ -14,7 +14,8 @@ import org.junit.runner.RunWith
 import org.robolectric.RuntimeEnvironment
 import rx.Single
 import rx.observers.TestSubscriber
-import java.util.concurrent.CountDownLatch
+import rx.plugins.RxJavaHooks
+import rx.schedulers.Schedulers
 
 /**
  * Created by yshrsmz on 2016/11/12.
@@ -47,8 +48,9 @@ class ConfigDataManagerImplTest {
 
   @Test
   fun shortUrlLengthHttps_outdated() {
+    RxJavaHooks.setOnIOScheduler { Schedulers.immediate() }
+
     val time = System.currentTimeMillis()
-    val latch = CountDownLatch(1)
     whenever(configRemoteDataManager.get())
         .thenReturn(Single.just(config))
 
@@ -58,11 +60,7 @@ class ConfigDataManagerImplTest {
     prefs.getInteger(ConfigLocalDataManagerImpl.SHORT_URL_LENGTH_HTTPS).set(22)
 
     configDataManager.shortUrlLengthHttps()
-        .doOnNext { latch.countDown() }
-        .doOnError { latch.countDown() }
         .subscribe(ts)
-
-    latch.await()
 
     ts.assertValue(22)
     ts.assertNotCompleted()
@@ -78,6 +76,8 @@ class ConfigDataManagerImplTest {
     verify(configDataManager).updateConfig(config)
 
     verifyNoMoreInteractions(configLocalDataManager, configRemoteDataManager)
+
+    RxJavaHooks.reset()
   }
 
   @Test

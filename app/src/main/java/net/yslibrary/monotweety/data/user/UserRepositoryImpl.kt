@@ -27,14 +27,7 @@ class UserRepositoryImpl @Inject constructor(private val remoteRepository: UserR
 
   override fun fetch(): Completable {
     return remoteRepository.get()
-        .map {
-          User(
-              id = it.id,
-              name = it.name,
-              screenName = it.screenName,
-              profileImageUrl = it.profileImageUrl,
-              _updatedAt = clock.currentTimeMillis())
-        }
+        .map { it.copy(_updatedAt = clock.currentTimeMillis()) }
         .flatMapCompletable { localRepository.set(it) }
   }
 

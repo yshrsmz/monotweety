@@ -102,7 +102,7 @@ class UserRepositoryImplTest {
         _updatedAt = time)
 
     whenever(remoteRepository.get())
-        .thenReturn(Single.just(twitterUser))
+        .thenReturn(Single.just(user.copy(_updatedAt = -1)))
     whenever(localRepository.set(user)).thenReturn(Completable.complete())
 
     whenever(clock.currentTimeMillis()).thenReturn(time)

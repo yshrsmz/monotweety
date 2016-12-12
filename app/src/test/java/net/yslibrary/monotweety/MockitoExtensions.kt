@@ -21,3 +21,5 @@ fun <T : Any> spy(any: T): T = Mockito.spy(any)
 fun anyLong(): Long = Mockito.anyLong()
 
 fun anyString(): String = Mockito.anyString()
+
+fun anyBoolean(): Boolean = Mockito.anyBoolean()

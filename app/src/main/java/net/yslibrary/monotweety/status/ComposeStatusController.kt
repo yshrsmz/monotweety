@@ -56,7 +56,7 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
 
   lateinit var bindings: Bindings
 
-  val adapter: ComposeStatusAdapter by lazy { ComposeStatusAdapter(adapterListener) }
+  val statusAdapter: ComposeStatusAdapter by lazy { ComposeStatusAdapter(adapterListener) }
 
   @field:[Inject]
   lateinit var viewModel: ComposeStatusViewModel
@@ -91,11 +91,13 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
 
     // https://code.google.com/p/android/issues/detail?id=161559
     // disable animation to avoid duplicated viewholder
-    if (bindings.list.itemAnimator is SimpleItemAnimator) {
-      (bindings.list.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+    bindings.list.apply {
+      if (itemAnimator is SimpleItemAnimator) {
+        (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+      }
+      adapter = statusAdapter
+      layoutManager = LinearLayoutManager(activity)
     }
-    bindings.list.adapter = adapter
-    bindings.list.layoutManager = LinearLayoutManager(activity)
 
     // FIXME: this should be handled in ViewModel
     Observable.combineLatest(
@@ -115,7 +117,7 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
         .bindToLifecycle()
         .subscribe {
           Timber.d("item updated: $it")
-          adapter.updateEditor(it)
+          statusAdapter.updateEditor(it)
         }
 
     viewModel.closeViewRequests
@@ -151,7 +153,7 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
           val tweet = tweetAndFooter.first
           Timber.d("status updated, and previous status loaded: ${tweet?.text}")
           analytics.tweetFromEditor()
-          adapter.updatePreviousTweetAndClearEditor(if (tweet == null) emptyList<Tweet>() else listOf(tweet), tweetAndFooter.second)
+          statusAdapter.updatePreviousTweetAndClearEditor(if (tweet == null) emptyList<Tweet>() else listOf(tweet), tweetAndFooter.second)
         }
 
     viewModel.messages.bindToLifecycle()

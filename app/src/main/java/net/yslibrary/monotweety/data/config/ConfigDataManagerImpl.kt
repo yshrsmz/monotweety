@@ -27,15 +27,13 @@ open class ConfigDataManagerImpl(private val remoteDataManager: ConfigRemoteData
             Timber.d("fetch new config from api")
             subscription = remoteDataManager.get()
                 .subscribeOn(Schedulers.io())
-                .doOnSuccess {
+                .subscribe({
                   updateConfig(it)
                   subscription.unsubscribe()
-                }
-                .doOnError {
+                }, {
                   Timber.e(it, it.message)
                   subscription.unsubscribe()
-                }
-                .subscribe()
+                })
           }
         }
   }

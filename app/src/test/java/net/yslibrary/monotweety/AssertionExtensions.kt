@@ -1,5 +1,6 @@
 package net.yslibrary.monotweety
 
+import org.assertj.core.api.AbstractBooleanAssert
 import org.assertj.core.api.AbstractIntegerAssert
 import org.assertj.core.api.AbstractObjectAssert
 import org.assertj.core.api.Assertions
@@ -10,3 +11,5 @@ import org.assertj.core.api.Assertions
 fun <T> assertThat(actual: T): AbstractObjectAssert<*, T> = Assertions.assertThat(actual)
 
 fun assertThat(actual: Int): AbstractIntegerAssert<*> = Assertions.assertThat(actual)
+
+fun assertThat(actual: Boolean): AbstractBooleanAssert<*> = Assertions.assertThat(actual)

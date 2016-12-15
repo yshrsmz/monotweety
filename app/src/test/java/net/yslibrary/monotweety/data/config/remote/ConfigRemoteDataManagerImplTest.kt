@@ -30,6 +30,7 @@ class ConfigRemoteDataManagerImplTest {
 
   val gson = Gson()
 
+  @Suppress("UNCHECKED_CAST")
   @Before
   fun setup() {
     configService = mock(ConfigurationService::class)

@@ -21,6 +21,7 @@ class SessionRepositoryImplTest {
   var mockSessionManager: SessionManager<TwitterSession> by Delegates.notNull<SessionManager<TwitterSession>>()
   var repository: SessionRepositoryImpl by Delegates.notNull<SessionRepositoryImpl>()
 
+  @Suppress("UNCHECKED_CAST")
   @Before
   fun setup() {
     mockSessionManager = mock(SessionManager::class) as SessionManager<TwitterSession>

@@ -26,6 +26,7 @@ class UserRemoteRepositoryImplTest {
   val gson = Gson()
 
 
+  @Suppress("UNCHECKED_CAST")
   @Before
   fun setup() {
     mockAccountService = mock(AccountService::class)

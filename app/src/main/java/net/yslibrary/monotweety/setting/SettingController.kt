@@ -3,6 +3,7 @@ package net.yslibrary.monotweety.setting
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.SimpleItemAnimator
 import android.support.v7.widget.SwitchCompat
 import android.view.LayoutInflater
 import android.view.View
@@ -36,7 +37,7 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
 
   lateinit var bindings: Bindings
 
-  val adapter by lazy { SettingAdapter(applicationContext!!.resources, adapterListener) }
+  val settingAdapter by lazy { SettingAdapter(applicationContext!!.resources, adapterListener) }
 
   val adapterListener = object : SettingAdapter.Listener {
 
@@ -127,16 +128,17 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
 
     bindings = Bindings(view)
 
-    bindings.list.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-    bindings.list.setHasFixedSize(true)
-    bindings.list.addItemDecoration(SubHeaderDividerDecoration(activity!!))
-    bindings.list.adapter = adapter
+    bindings.list.apply {
+      if (itemAnimator is SimpleItemAnimator) {
+        (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+      }
+      layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+      setHasFixedSize(true)
+      addItemDecoration(SubHeaderDividerDecoration(activity!!))
+      adapter = settingAdapter
+    }
 
     setEvents()
-
-    // how to
-
-    // padding for ad?
 
     return view
   }
@@ -158,12 +160,12 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
     viewModel.keepOpen
         .bindToLifecycle()
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe { adapter.updateKeepOpen(it) }
+        .subscribe { settingAdapter.updateKeepOpen(it) }
 
     viewModel.footerState
         .bindToLifecycle()
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe { adapter.updateFooterState(it.enabled, it.text) }
+        .subscribe { settingAdapter.updateFooterState(it.enabled, it.text) }
 
     viewModel.selectedTimelineApp
         .switchMap { app ->
@@ -172,14 +174,14 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
         }
         .bindToLifecycle()
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe { adapter.updateTimelineApp(it.first, it.second) }
+        .subscribe { settingAdapter.updateTimelineApp(it.first, it.second) }
 
     viewModel.user
         .bindToLifecycle()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe {
           Timber.d("user: $it")
-          it?.let { adapter.updateProfile(it) }
+          it?.let { settingAdapter.updateProfile(it) }
         }
 
     viewModel.openProfileRequests

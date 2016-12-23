@@ -13,16 +13,19 @@ import rx.Observable
 import rx.Single
 import javax.inject.Inject
 import javax.inject.Named
+import kotlin.properties.Delegates
 
 /**
  * Created by yshrsmz on 2016/09/24.
  */
 abstract class BaseController() : RefWatchingController() {
-  @field:[Inject Named(Names.FOR_ACTIVITY)]
-  lateinit var activityBus: EventBus
 
-  @field:[Inject]
-  lateinit var analytics: Analytics
+  @set:Inject
+  @setparam:Named(Names.FOR_ACTIVITY)
+  var activityBus by Delegates.notNull<EventBus>()
+
+  @set:Inject
+  var analytics by Delegates.notNull<Analytics>()
 
   private var created: Boolean = false
 

@@ -20,6 +20,7 @@ import net.yslibrary.monotweety.setting.SettingController
 import rx.android.schedulers.AndroidSchedulers
 import timber.log.Timber
 import javax.inject.Inject
+import kotlin.properties.Delegates
 
 /**
  * Created by yshrsmz on 2016/09/27.
@@ -30,8 +31,8 @@ class LoginController : ActionBarController(), HasComponent<LoginComponent> {
 
   lateinit var bindings: Bindings
 
-  @field:[Inject]
-  lateinit var viewModel: LoginViewModel
+  @set:[Inject]
+  var viewModel by Delegates.notNull<LoginViewModel>()
 
   override val component: LoginComponent by lazy {
     Timber.i("create LoginComponent")

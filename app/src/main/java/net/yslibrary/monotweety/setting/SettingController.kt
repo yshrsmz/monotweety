@@ -26,14 +26,18 @@ import net.yslibrary.monotweety.setting.adapter.SubHeaderDividerDecoration
 import rx.android.schedulers.AndroidSchedulers
 import timber.log.Timber
 import javax.inject.Inject
+import kotlin.properties.Delegates
 
 /**
  * Created by yshrsmz on 2016/09/24.
  */
 class SettingController : ActionBarController(), HasComponent<SettingComponent> {
 
-  @field:[Inject]
-  lateinit var navigator: Navigator
+  @set:[Inject]
+  var navigator by Delegates.notNull<Navigator>()
+
+  @set:[Inject]
+  var viewModel by Delegates.notNull<SettingViewModel>()
 
   lateinit var bindings: Bindings
 
@@ -113,9 +117,6 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
         .settingViewModule(SettingViewModule(activityBus, navigator))
         .build()
   }
-
-  @field:[Inject]
-  lateinit var viewModel: SettingViewModel
 
   override fun onCreate() {
     super.onCreate()

@@ -31,6 +31,7 @@ import rx.lang.kotlin.addTo
 import rx.subscriptions.CompositeSubscription
 import timber.log.Timber
 import javax.inject.Inject
+import kotlin.properties.Delegates
 
 class NotificationService : Service(), HasComponent<NotificationComponent> {
 
@@ -64,14 +65,14 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
   private val binder: IBinder by lazy { ServiceBinder() }
   private val commandReceiver: NotificationCommandReceiver by lazy { NotificationCommandReceiver() }
 
-  @field:[Inject]
-  lateinit var viewModel: NotificationServiceViewModel
+  @set:[Inject]
+  var viewModel by Delegates.notNull<NotificationServiceViewModel>()
 
-  @field:[Inject]
-  lateinit var notificationManager: NotificationManagerCompat
+  @set:[Inject]
+  var notificationManager by Delegates.notNull<NotificationManagerCompat>()
 
-  @field:[Inject]
-  lateinit var analytics: Analytics
+  @set:[Inject]
+  var analytics by Delegates.notNull<Analytics>()
 
   private val subscriptions = CompositeSubscription()
 

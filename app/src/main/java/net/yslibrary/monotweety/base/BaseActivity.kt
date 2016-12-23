@@ -11,14 +11,16 @@ import net.yslibrary.rxeventbus.EventBus
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Named
+import kotlin.properties.Delegates
 
 /**
  * Created by yshrsmz on 2016/09/24.
  */
 abstract class BaseActivity : AppCompatActivity() {
 
-  @field:[Inject Named(Names.FOR_ACTIVITY)]
-  lateinit var activityBus: EventBus
+  @set:Inject
+  @setparam:Named(Names.FOR_ACTIVITY)
+  var activityBus by Delegates.notNull<EventBus>()
 
   protected abstract val layoutResId: Int
   protected lateinit var router: Router

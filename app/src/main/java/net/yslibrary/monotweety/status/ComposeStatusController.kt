@@ -25,6 +25,7 @@ import rx.android.schedulers.AndroidSchedulers
 import rx.lang.kotlin.PublishSubject
 import timber.log.Timber
 import javax.inject.Inject
+import kotlin.properties.Delegates
 
 
 /**
@@ -58,8 +59,8 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
 
   val statusAdapter: ComposeStatusAdapter by lazy { ComposeStatusAdapter(adapterListener) }
 
-  @field:[Inject]
-  lateinit var viewModel: ComposeStatusViewModel
+  @set:[Inject]
+  var viewModel by Delegates.notNull<ComposeStatusViewModel>()
 
   val sendButtonClicks = PublishSubject<Unit>()
 

@@ -7,14 +7,15 @@ import net.yslibrary.monotweety.App
 import net.yslibrary.monotweety.activity.main.MainActivity
 import net.yslibrary.monotweety.login.domain.DoLogout
 import javax.inject.Inject
+import kotlin.properties.Delegates
 
 /**
  * Created by yshrsmz on 2016/10/09.
  */
 class LogoutService : IntentService(NAME) {
 
-  @field:[Inject]
-  lateinit var doLogout: DoLogout
+  @set:[Inject]
+  var doLogout by Delegates.notNull<DoLogout>()
 
   val component: LogoutComponent by lazy {
     DaggerLogoutComponent.builder()

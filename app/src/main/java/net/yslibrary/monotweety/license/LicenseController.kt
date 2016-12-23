@@ -14,6 +14,7 @@ import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.findById
 import rx.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
+import kotlin.properties.Delegates
 
 /**
  * Created by yshrsmz on 2016/10/10.
@@ -24,8 +25,8 @@ class LicenseController : ActionBarController() {
 
   lateinit var bindings: Bindings
 
-  @field:[Inject]
-  lateinit var viewModel: LicenseViewModel
+  @set:[Inject]
+  var viewModel by Delegates.notNull<LicenseViewModel>()
 
   override val title: String?
     get() = getString(R.string.title_license)

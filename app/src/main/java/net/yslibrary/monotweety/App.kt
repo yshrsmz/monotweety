@@ -8,6 +8,7 @@ import com.squareup.leakcanary.RefWatcher
 import net.yslibrary.monotweety.quicksetting.EditorTileService
 import timber.log.Timber
 import javax.inject.Inject
+import kotlin.properties.Delegates
 
 /**
  * Created by yshrsmz on 2016/09/24.
@@ -44,12 +45,12 @@ open class App : Application() {
 
   var userComponent: UserComponent? = null
 
-  @field:[Inject]
-  lateinit var lifecycleCallbacks: ApplicationLifecycleCallbacks
+  @set:[Inject]
+  var lifecycleCallbacks by Delegates.notNull<ApplicationLifecycleCallbacks>()
 
   // inject here just to make sure that LeakCanary is initialized
-  @field:[Inject]
-  lateinit var refWatcher: RefWatcher
+  @set:[Inject]
+  var refWatcher by Delegates.notNull<RefWatcher>()
 
   override fun onCreate() {
     super.onCreate()

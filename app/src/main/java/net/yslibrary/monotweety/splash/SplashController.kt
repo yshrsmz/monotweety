@@ -21,6 +21,7 @@ import rx.subscriptions.CompositeSubscription
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import kotlin.properties.Delegates
 
 
 /**
@@ -28,8 +29,8 @@ import javax.inject.Inject
  */
 class SplashController : ActionBarController(), HasComponent<SplashComponent> {
 
-  @field:[Inject]
-  lateinit var viewModel: SplashViewModel
+  @set:[Inject]
+  var viewModel by Delegates.notNull<SplashViewModel>()
 
   var subscriptions: CompositeSubscription = CompositeSubscription()
 

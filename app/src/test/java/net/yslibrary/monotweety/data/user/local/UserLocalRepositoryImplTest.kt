@@ -13,8 +13,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RuntimeEnvironment
-import rx.observers.TestSubscriber
-import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import kotlin.properties.Delegates
 import com.twitter.sdk.android.core.models.User as TwitterUser
@@ -42,8 +40,6 @@ class UserLocalRepositoryImplTest {
 
   @Test
   fun getById() {
-    val ts = TestSubscriber<User>()
-    val latch = CountDownLatch(1)
     val twitterUser = gson.fromJson(readJsonFromAssets("user.json"), TwitterUser::class.java)
     val time = System.currentTimeMillis()
     val user = User(id = twitterUser.id,

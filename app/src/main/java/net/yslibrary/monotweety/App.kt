@@ -46,7 +46,7 @@ open class App : Application() {
   var userComponent: UserComponent? = null
 
   @set:[Inject]
-  var lifecycleCallbacks by Delegates.notNull<ApplicationLifecycleCallbacks>()
+  var lifecycleCallbacks by Delegates.notNull<App.LifecycleCallbacks>()
 
   // inject here just to make sure that LeakCanary is initialized
   @set:[Inject]
@@ -83,10 +83,10 @@ open class App : Application() {
     }
   }
 
-// FIXME: https://youtrack.jetbrains.com/issue/KT-14306
+  // FIXME: https://youtrack.jetbrains.com/issue/KT-14306
 // use ApplicationLifecycleCallbacks for now
-//  interface LifecycleCallbacks {
-//    fun onCreate()
-//    fun onTerminate()
-//  }
+  interface LifecycleCallbacks {
+    fun onCreate()
+    fun onTerminate()
+  }
 }

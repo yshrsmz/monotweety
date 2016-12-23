@@ -15,6 +15,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RuntimeEnvironment
 import rx.observers.TestSubscriber
 import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
 import kotlin.properties.Delegates
 import com.twitter.sdk.android.core.models.User as TwitterUser
 
@@ -54,20 +55,14 @@ class UserLocalRepositoryImplTest {
     storio.put().withObject(user).prepare().executeAsBlocking()
 
     repository.getById(user.id)
-        .doOnNext { latch.countDown() }
-        .doOnError { latch.countDown() }
-        .subscribe(ts)
-
-    latch.await()
-
-    ts.assertValue(user)
-    ts.assertNotCompleted()
+        .test()
+        .awaitValueCount(1, 3, TimeUnit.SECONDS)
+        .assertValue(user)
+        .assertNotCompleted()
   }
 
   @Test
   fun set() {
-    val ts = TestSubscriber<User>()
-    val latch = CountDownLatch(1)
     val twitterUser = gson.fromJson(readJsonFromAssets("user.json"), TwitterUser::class.java)
     val time = System.currentTimeMillis()
     val user = User(id = twitterUser.id,
@@ -77,14 +72,10 @@ class UserLocalRepositoryImplTest {
         _updatedAt = time)
 
     repository.set(user)
-        .doOnCompleted { latch.countDown() }
-        .doOnError { latch.countDown() }
-        .subscribe(ts)
-
-    latch.await()
-
-    ts.assertNoValues()
-    ts.assertCompleted()
+        .test()
+        .awaitTerminalEvent()
+        .assertNoValues()
+        .assertCompleted()
 
     val result = storio.get()
         .singleObject(User::class.java)
@@ -96,8 +87,6 @@ class UserLocalRepositoryImplTest {
 
   @Test
   fun delete() {
-    val ts = TestSubscriber<User>()
-    val latch = CountDownLatch(1)
     val twitterUser = gson.fromJson(readJsonFromAssets("user.json"), TwitterUser::class.java)
     val time = System.currentTimeMillis()
     val user = User(id = twitterUser.id,
@@ -109,14 +98,10 @@ class UserLocalRepositoryImplTest {
     storio.put().withObject(user).prepare().executeAsBlocking()
 
     repository.delete(user.id)
-        .doOnCompleted { latch.countDown() }
-        .doOnError { latch.countDown() }
-        .subscribe(ts)
-
-    latch.await()
-
-    ts.assertNoValues()
-    ts.assertCompleted()
+        .test()
+        .awaitTerminalEvent()
+        .assertNoValues()
+        .assertCompleted()
 
     val result = storio.get().numberOfResults()
         .withQuery(UserTable.queryById(user.id))

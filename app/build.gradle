@@ -92,7 +92,7 @@ dependencies {
   compile 'com.google.firebase:firebase-core:10.0.1'
 
   compile 'com.twitter:twitter-text:1.13.0'
-  compile('com.twitter.sdk.android:twitter:2.3.0@aar') {
+  compile('com.twitter.sdk.android:twitter:2.3.1@aar') {
     transitive = true;
   }
   compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
@@ -111,7 +111,7 @@ dependencies {
   compile 'io.reactivex:rxandroid:1.2.1'
   testCompile 'io.reactivex:rxandroid:1.2.1'
   compile 'io.reactivex:rxkotlin:0.60.0'
-  compile 'com.artemzin.rxjava:proguard-rules:1.2.3.0'
+  compile 'com.artemzin.rxjava:proguard-rules:1.2.4.0'
 
   compile "com.jakewharton.rxbinding:rxbinding-kotlin:$rxbinding_version"
   compile "com.jakewharton.rxbinding:rxbinding-support-v4-kotlin:$rxbinding_version"
@@ -151,7 +151,7 @@ dependencies {
 
 
   testCompile 'junit:junit:4.12'
-  testCompile 'org.mockito:mockito-core:2.3.5'
+  testCompile 'org.mockito:mockito-core:2.4.1'
   testCompile 'org.assertj:assertj-core:1.7.0'
   testCompile "com.squareup.okhttp3:mockwebserver:$okhttp_version"
   testCompile 'org.robolectric:robolectric:3.1.4'

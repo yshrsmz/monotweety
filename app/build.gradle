@@ -104,7 +104,7 @@ dependencies {
   kapt "com.google.dagger:dagger-compiler:$dagger_version"
   provided 'org.glassfish:javax.annotation:10.0-b28'
 
-  compile 'com.pushtorefresh.storio:sqlite:1.12.0'
+  compile 'com.pushtorefresh.storio:sqlite:1.12.1'
 
   compile 'io.reactivex:rxjava:1.2.4'
   testCompile 'io.reactivex:rxjava:1.2.4'

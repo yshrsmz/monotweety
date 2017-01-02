@@ -154,7 +154,7 @@ dependencies {
   testCompile 'org.mockito:mockito-core:2.4.1'
   testCompile 'org.assertj:assertj-core:1.7.0'
   testCompile "com.squareup.okhttp3:mockwebserver:$okhttp_version"
-  testCompile 'org.robolectric:robolectric:3.1.4'
+  testCompile 'org.robolectric:robolectric:3.2-rc1'
 }
 repositories {
   mavenCentral()

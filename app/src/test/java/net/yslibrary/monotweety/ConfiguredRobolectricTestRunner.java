@@ -32,6 +32,8 @@ public class ConfiguredRobolectricTestRunner extends RobolectricTestRunner {
 
     return new Config.Implementation(
         sdkLevel,
+        c.minSdk(),
+        c.maxSdk(),
         c.manifest(), c.qualifiers(), c.packageName(),
         c.abiSplit(), c.resourceDir(), c.assetDir(),
         c.buildDir(), c.shadows(), c.instrumentedPackages(),

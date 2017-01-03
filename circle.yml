@@ -22,4 +22,4 @@ dependencies:
 test:
   override:
 #    - "./gradlew lintDebug 2>&1 | ./reviewdog -efm='%f:%l: %m' -ci='circle-ci'"
-    - "./gradlew > /dev/null 2>&1 && cat ./app/build/outputs/lint-results-debug.xml | ./reviewdog -f=checkstyle -name='Android Lint' -ci='circle-ci'"
+    - "./gradlew lintDebug > /dev/null 2>&1 && cat ./app/build/outputs/lint-results-debug.xml | ./reviewdog -f=checkstyle -name='Android Lint' -ci='circle-ci'"

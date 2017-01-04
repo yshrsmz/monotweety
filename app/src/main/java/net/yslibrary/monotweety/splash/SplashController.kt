@@ -11,7 +11,7 @@ import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.HasComponent
 import net.yslibrary.monotweety.login.LoginController
-import net.yslibrary.monotweety.login.LoginTransitionChangeHandler
+import net.yslibrary.monotweety.login.LoginTransitionChangeHandlerCompat
 import net.yslibrary.monotweety.setting.SettingController
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
@@ -67,8 +67,8 @@ class SplashController : ActionBarController(), HasComponent<SplashComponent> {
           val next: Controller = if (it) SettingController() else LoginController()
 
           router.setRoot(RouterTransaction.with(next)
-              .pushChangeHandler(if (it) SimpleSwapChangeHandler() else LoginTransitionChangeHandler())
-              .popChangeHandler(if (it) SimpleSwapChangeHandler() else LoginTransitionChangeHandler()))
+              .pushChangeHandler(if (it) SimpleSwapChangeHandler() else LoginTransitionChangeHandlerCompat())
+              .popChangeHandler(if (it) SimpleSwapChangeHandler() else LoginTransitionChangeHandlerCompat()))
         }.addTo(subscriptions)
   }
 

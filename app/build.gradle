@@ -107,8 +107,8 @@ dependencies {
 
   compile 'com.pushtorefresh.storio:sqlite:1.12.1'
 
-  compile 'io.reactivex:rxjava:1.2.4'
-  testCompile 'io.reactivex:rxjava:1.2.4'
+  compile 'io.reactivex:rxjava:1.2.5'
+  testCompile 'io.reactivex:rxjava:1.2.5'
   compile 'io.reactivex:rxandroid:1.2.1'
   testCompile 'io.reactivex:rxandroid:1.2.1'
   compile 'io.reactivex:rxkotlin:0.60.0'
@@ -155,7 +155,7 @@ dependencies {
   testCompile 'org.mockito:mockito-core:2.5.2'
   testCompile 'org.assertj:assertj-core:1.7.0'
   testCompile "com.squareup.okhttp3:mockwebserver:$okhttp_version"
-  testCompile 'org.robolectric:robolectric:3.2-rc1'
+  testCompile 'org.robolectric:robolectric:3.2.1'
 }
 repositories {
   mavenCentral()

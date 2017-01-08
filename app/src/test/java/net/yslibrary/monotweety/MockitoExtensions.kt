@@ -23,3 +23,7 @@ fun anyLong(): Long = Mockito.anyLong()
 fun anyString(): String = Mockito.anyString()
 
 fun anyBoolean(): Boolean = Mockito.anyBoolean()
+
+fun anyDouble(): Double = Mockito.anyDouble()
+
+fun <T> isNull(): T = Mockito.isNull()

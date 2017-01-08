@@ -1,5 +1,7 @@
 package net.yslibrary.monotweety
 
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageInfo
 import java.io.BufferedReader
 import java.io.FileInputStream
 import java.io.InputStreamReader
@@ -21,4 +23,16 @@ fun readJsonFromAssets(filename: String): String {
 
   br.close()
   return sb.toString()
+}
+
+fun newPackageInfo(appName: String, pacakgeName: String): PackageInfo {
+  return PackageInfo().apply {
+    packageName = pacakgeName
+    applicationInfo = ApplicationInfo()
+
+    applicationInfo.apply {
+      packageName = pacakgeName
+      name = appName
+    }
+  }
 }

@@ -25,10 +25,7 @@ class AppInfoManagerImpl @Inject constructor(private val packageManager: Package
   }
 
   override fun installedApps(): Single<List<AppInfo>> {
-    val intent = Intent(Intent.ACTION_MAIN)
-    intent.addCategory(Intent.CATEGORY_LAUNCHER)
-
-    return packageManager.queryIntentActivities(intent, 0)
+    return packageManager.queryIntentActivities(launcherIntent(), 0)
         .map {
           AppInfo(name = it.activityInfo.applicationInfo.loadLabel(packageManager).toString(),
               packageName = it.activityInfo.packageName,
@@ -46,4 +43,12 @@ class AppInfoManagerImpl @Inject constructor(private val packageManager: Package
           installed = true)
     }.onErrorResumeNext { Single.just(AppInfo(name = "", packageName = packageName, installed = false)) }
   }
+
+  fun launcherIntent(): Intent {
+    val intent = Intent(Intent.ACTION_MAIN)
+    intent.addCategory(Intent.CATEGORY_LAUNCHER)
+
+    return intent
+  }
+
 }

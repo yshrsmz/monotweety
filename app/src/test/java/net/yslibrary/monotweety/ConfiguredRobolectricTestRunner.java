@@ -29,15 +29,10 @@ public class ConfiguredRobolectricTestRunner extends RobolectricTestRunner {
     Class<?> constants = c.constants() == Void.class ? BuildConfig.class : c.constants();
     Class<? extends Application> application = c.constants() == Application.class ? TestApp.class : c.application();
 
-
-    return new Config.Implementation(
-        sdkLevel,
-        c.minSdk(),
-        c.maxSdk(),
-        c.manifest(), c.qualifiers(), c.packageName(),
-        c.abiSplit(), c.resourceDir(), c.assetDir(),
-        c.buildDir(), c.shadows(), c.instrumentedPackages(),
-        application, c.libraries(),
-        constants);
+    return new Config.Builder(c)
+        .setSdk(sdkLevel)
+        .setConstants(constants)
+        .setApplication(application)
+        .build();
   }
 }

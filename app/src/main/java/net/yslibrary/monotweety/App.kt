@@ -2,10 +2,8 @@ package net.yslibrary.monotweety
 
 import android.app.Application
 import android.content.Context
-import android.os.Build
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
-import net.yslibrary.monotweety.quicksetting.EditorTileService
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.properties.Delegates
@@ -64,8 +62,6 @@ open class App : Application() {
     appComponent(this).inject(this)
     lifecycleCallbacks.onCreate()
 
-    startEditorTileServiceIfNeeded()
-
     Timber.d("App#onCreate")
   }
 
@@ -73,14 +69,6 @@ open class App : Application() {
     super.onTerminate()
     Timber.d("App#onTerminate")
     lifecycleCallbacks.onTerminate()
-  }
-
-  fun startEditorTileServiceIfNeeded() {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-      // quick settings is supported on Android N and up
-      // start Service for Quick Settings' Tile
-      startService(EditorTileService.callingIntent(this))
-    }
   }
 
   // FIXME: https://youtrack.jetbrains.com/issue/KT-14306

@@ -46,7 +46,9 @@ class EditorTileService : TileService() {
 
   override fun onStartListening() {
     super.onStartListening()
-    qsTile.state = Tile.STATE_ACTIVE
-    qsTile.updateTile()
+    qsTile?.apply {
+      state = Tile.STATE_ACTIVE
+      updateTile()
+    }
   }
 }

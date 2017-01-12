@@ -1,5 +1,7 @@
 package net.yslibrary.monotweety.login
 
+import android.annotation.TargetApi
+import android.os.Build
 import android.transition.*
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +13,7 @@ import net.yslibrary.monotweety.R
 /**
  * Created by yshrsmz on 2016/10/29.
  */
+@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 class LoginTransitionChangeHandler : TransitionChangeHandler() {
   override fun getTransition(container: ViewGroup, from: View?, to: View?, isPush: Boolean): Transition {
     val context = container.context

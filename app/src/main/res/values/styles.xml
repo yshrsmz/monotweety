@@ -1,4 +1,5 @@
-<resources>
+<resources
+    xmlns:tools="http://schemas.android.com/tools">
 
   <!-- Base application theme. -->
   <style name="AppThemeBase" parent="Theme.AppCompat.Light.NoActionBar">
@@ -10,11 +11,15 @@
     <item name="android:textColorPrimary">@color/colorTextPrimary</item>
     <item name="android:textColorSecondary">@color/colorTextSecondary</item>
 
-    <item name="android:windowContentTransitions">true</item>
-    <item name="android:windowAllowEnterTransitionOverlap">true</item>
-    <item name="android:windowAllowReturnTransitionOverlap">true</item>
-    <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
-    <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
+    <item name="android:windowContentTransitions" tools:targetApi="lollipop">true</item>
+    <item name="android:windowAllowEnterTransitionOverlap" tools:targetApi="lollipop">true</item>
+    <item name="android:windowAllowReturnTransitionOverlap" tools:targetApi="lollipop">true</item>
+    <item name="android:windowSharedElementEnterTransition" tools:targetApi="lollipop">
+      @android:transition/move
+    </item>
+    <item name="android:windowSharedElementExitTransition" tools:targetApi="lollipop">
+      @android:transition/move
+    </item>
   </style>
 
   <style name="AppTheme" parent="AppThemeBase"/>
@@ -29,7 +34,7 @@
   <style name="AppTheme.Dialog" parent="AppTheme">
     <item name="android:windowIsTranslucent">true</item>
     <item name="android:windowBackground">@color/transparentGray</item>
-    <item name="android:statusBarColor">@android:color/transparent</item>
+    <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent</item>
   </style>
 
   <style name="AppTheme.Setting"/>

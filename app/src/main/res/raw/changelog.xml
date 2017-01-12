@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
   <changelogversion
+      changeDate="XXX"
+      versionName="1.4.3">
+    <changelogtext>Happy New Year!</changelogtext>
+    <changelogtext>Hello to Android 4.4(KitKat) users!</changelogtext>
+    <changelogtext>Fix a crash in the Quick Tile</changelogtext>
+  </changelogversion>
+  <changelogversion
       changeDate="Dec 17th, 2016"
       versionName="1.4.2">
     <changelogtext>Stability improvement</changelogtext>

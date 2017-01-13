@@ -2,7 +2,7 @@
 <changelog>
   <changelogversion
       changeDate="XXX"
-      versionName="1.4.3">
+      versionName="1.5.0">
     <changelogtext>Happy New Year!</changelogtext>
     <changelogtext>Android 4.4(KitKat)に対応</changelogtext>
     <changelogtext>クイック設定タイルの不具合を修正</changelogtext>

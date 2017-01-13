@@ -153,6 +153,7 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
         .subscribe { tweetAndFooter ->
           val tweet = tweetAndFooter.first
           Timber.d("status updated, and previous status loaded: ${tweet?.text}")
+          toast(getString(R.string.message_tweet_succeeded)).show()
           analytics.tweetFromEditor()
           statusAdapter.updatePreviousTweetAndClearEditor(if (tweet == null) emptyList<Tweet>() else listOf(tweet), tweetAndFooter.second)
         }

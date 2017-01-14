@@ -15,9 +15,9 @@ dependencies:
     - echo $JKS | base64 -d > ./monotweety.jks
     - echo $SECRETS | base64 -d > ./secret.properties
     - echo $GOOGLE_SERVICE_JSON | base64 -d > ./app/google-services.json
-    - echo yes | android update sdk --no-ui --all --filter tools
-    - echo yes | android update sdk --no-ui --all --filter platform-tools,build-tools-25.0.2,android-25
-    - echo yes | android update sdk --no-ui --all --filter extra-android-m2repository,extra-google-m2repository
+    - mkdir -p "$ANDROID_HOME"/licenses && echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME"/licenses/android-sdk-license
+    - echo yes | android update sdk --no-ui --all --filter tools # get sdkmanager
+    - "$ANDROID_HOME"/tools/bin/sdkmanager "platform-tools" "build-tools;25.0.2" "platforms;android-25" "extras;android;m2repository" "extras;google;m2repository"
 
 test:
   override:

@@ -76,6 +76,19 @@ android {
     textOutput 'stdout'
 //    xmlReport true
   }
+
+  // rename release apk
+  applicationVariants.all { variant ->
+    if (variant.buildType.name.equals("release")) {
+      variant.outputs.each { output ->
+        if (output?.outputFile?.name?.endsWith(".apk")) {
+          final version = "v${defaultConfig.versionName}"
+          final name = "${["monotweety", variant.baseName, version].join("-")}.apk"
+          output.outputFile = new File(output.outputFile.parent, name)
+        }
+      }
+    }
+  }
 }
 
 ext.support_lib_version = '25.1.0'

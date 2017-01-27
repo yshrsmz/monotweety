@@ -93,9 +93,10 @@ android {
 
 ext.support_lib_version = '25.1.0'
 ext.rxbinding_version = '1.0.0'
-ext.conductor_version = '2.0.5'
+ext.conductor_version = '2.0.7'
 ext.okhttp_version = '3.5.0'
 ext.dagger_version = '2.8'
+ext.storio_version = '1.12.2'
 dependencies {
   compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
@@ -109,7 +110,7 @@ dependencies {
   compile('com.twitter.sdk.android:twitter:2.3.1@aar') {
     transitive = true;
   }
-  compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
+  compile('com.crashlytics.sdk.android:crashlytics:2.6.6@aar') {
     transitive = true;
   }
   compile "com.squareup.okhttp3:okhttp:$okhttp_version"
@@ -118,14 +119,14 @@ dependencies {
   kapt "com.google.dagger:dagger-compiler:$dagger_version"
   provided 'org.glassfish:javax.annotation:10.0-b28'
 
-  compile 'com.pushtorefresh.storio:sqlite:1.12.1'
+  compile "com.pushtorefresh.storio:sqlite:$storio_version"
 
   compile 'io.reactivex:rxjava:1.2.5'
   testCompile 'io.reactivex:rxjava:1.2.5'
   compile 'io.reactivex:rxandroid:1.2.1'
   testCompile 'io.reactivex:rxandroid:1.2.1'
   compile 'io.reactivex:rxkotlin:0.60.0'
-  compile 'com.artemzin.rxjava:proguard-rules:1.2.4.0'
+  compile 'com.artemzin.rxjava:proguard-rules:1.2.5.1'
 
   compile "com.jakewharton.rxbinding:rxbinding-kotlin:$rxbinding_version"
   compile "com.jakewharton.rxbinding:rxbinding-support-v4-kotlin:$rxbinding_version"
@@ -140,13 +141,13 @@ dependencies {
   compile "com.bluelinelabs:conductor-support:${conductor_version}"
   compile "com.bluelinelabs:conductor-rxlifecycle:${conductor_version}"
 
-  compile 'com.hannesdorfmann:adapterdelegates3:3.0.0'
+  compile 'com.hannesdorfmann:adapterdelegates3:3.0.1'
 
   compile 'de.hdodenhof:circleimageview:2.1.0'
   compile 'com.github.bumptech.glide:glide:3.7.0'
   compile 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar'
 
-  compile 'com.jakewharton.timber:timber:4.4.0'
+  compile 'com.jakewharton.timber:timber:4.5.1'
   compile 'com.jakewharton.threetenabp:threetenabp:1.0.4'
 
   compile 'net.yslibrary.rxeventbus:rxeventbus:1.0.1'
@@ -165,10 +166,10 @@ dependencies {
 
 
   testCompile 'junit:junit:4.12'
-  testCompile 'org.mockito:mockito-core:2.5.2'
-  testCompile 'org.assertj:assertj-core:1.7.0'
+  testCompile 'org.mockito:mockito-core:2.6.8'
+  testCompile 'org.assertj:assertj-core:3.6.2'
   testCompile "com.squareup.okhttp3:mockwebserver:$okhttp_version"
-  testCompile 'org.robolectric:robolectric:3.2.1'
+  testCompile 'org.robolectric:robolectric:3.2.2'
 }
 repositories {
   mavenCentral()

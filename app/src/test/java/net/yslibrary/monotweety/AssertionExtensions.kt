@@ -13,4 +13,4 @@ fun assertThat(actual: Boolean): AbstractBooleanAssert<*> = Assertions.assertTha
 
 fun assertThat(actual: String): AbstractCharSequenceAssert<*, String> = Assertions.assertThat(actual)
 
-fun <T> assertThat(actual: List<T>): AbstractListAssert<*, out List<T>, T> = Assertions.assertThat(actual)
+fun <T> assertThat(actual: List<T>): ListAssert<T> = Assertions.assertThat(actual)

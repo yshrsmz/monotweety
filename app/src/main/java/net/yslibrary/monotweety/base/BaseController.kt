@@ -57,9 +57,9 @@ abstract class BaseController() : RefWatchingController() {
 
   fun showSnackBar(message: String) = (activity as BaseActivity).showSnackBar(message)
 
-  fun toast(message: String): Toast = Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT)
+  fun toast(message: String): Toast? = applicationContext?.let { Toast.makeText(it, message, Toast.LENGTH_SHORT) }
 
-  fun toastLong(message: String): Toast = Toast.makeText(applicationContext, message, Toast.LENGTH_LONG)
+  fun toastLong(message: String): Toast? = applicationContext?.let { Toast.makeText(it, message, Toast.LENGTH_LONG) }
 
   fun getString(@StringRes id: Int): String = applicationContext?.getString(id) ?: ""
 

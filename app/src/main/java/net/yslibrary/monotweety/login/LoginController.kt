@@ -67,7 +67,7 @@ class LoginController : ActionBarController(), HasComponent<LoginComponent> {
     viewModel.loginCompleted
         .observeOn(AndroidSchedulers.mainThread())
         .bindToLifecycle()
-        .doOnNext { toast(getString(R.string.message_login_succeeded, it.userName)).show() }
+        .doOnNext { toast(getString(R.string.message_login_succeeded, it.userName))?.show() }
         .subscribe {
           analytics.loginCompleted()
           router.setRoot(RouterTransaction.with(SettingController())

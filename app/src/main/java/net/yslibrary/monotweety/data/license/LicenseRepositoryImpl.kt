@@ -36,7 +36,7 @@ class LicenseRepositoryImpl @Inject constructor() : LicenseRepository {
           Licenses.fromGitHubApacheV2("yshrsmz/RxEventBus", Licenses.FILE_NO_EXTENSION))
 
       // sort github hosted repos first
-      list.sortedBy { it.name.toLowerCase(Locale.ENGLISH) }
+      list.sortedBy { it.name().toLowerCase(Locale.ENGLISH) }
           .let {
             val mutable = it.toMutableList()
             mutable.addAll(0, listOf(

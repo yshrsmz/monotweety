@@ -1,10 +1,10 @@
 package net.yslibrary.monotweety.data.session
 
+import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.whenever
 import com.twitter.sdk.android.core.SessionManager
 import com.twitter.sdk.android.core.TwitterSession
-import net.yslibrary.monotweety.mock
-import net.yslibrary.monotweety.verify
-import net.yslibrary.monotweety.whenever
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -24,7 +24,7 @@ class SessionRepositoryImplTest {
   @Suppress("UNCHECKED_CAST")
   @Before
   fun setup() {
-    mockSessionManager = mock(SessionManager::class) as SessionManager<TwitterSession>
+    mockSessionManager = mock<SessionManager<TwitterSession>>()
     repository = SessionRepositoryImpl(mockSessionManager)
   }
 

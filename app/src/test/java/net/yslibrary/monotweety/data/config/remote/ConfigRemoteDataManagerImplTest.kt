@@ -1,12 +1,16 @@
 package net.yslibrary.monotweety.data.config.remote
 
 import com.google.gson.Gson
+import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.whenever
 import com.twitter.sdk.android.core.Callback
 import com.twitter.sdk.android.core.Result
 import com.twitter.sdk.android.core.TwitterException
 import com.twitter.sdk.android.core.models.Configuration
 import com.twitter.sdk.android.core.services.ConfigurationService
-import net.yslibrary.monotweety.*
+import net.yslibrary.monotweety.ConfiguredRobolectricTestRunner
+import net.yslibrary.monotweety.readJsonFromAssets
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -33,8 +37,8 @@ class ConfigRemoteDataManagerImplTest {
   @Suppress("UNCHECKED_CAST")
   @Before
   fun setup() {
-    configService = mock(ConfigurationService::class)
-    mockCall = mock(Call::class) as Call<Configuration>
+    configService = mock<ConfigurationService>()
+    mockCall = mock<Call<Configuration>>()
     callbackCaptor = ArgumentCaptor.forClass(Callback::class.java) as ArgumentCaptor<Callback<Configuration>>
 
     manager = ConfigRemoteDataManagerImpl(configService)

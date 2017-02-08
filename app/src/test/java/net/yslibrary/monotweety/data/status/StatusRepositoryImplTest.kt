@@ -1,10 +1,11 @@
 package net.yslibrary.monotweety.data.status
 
 import com.google.gson.Gson
+import com.nhaarman.mockito_kotlin.*
 import com.twitter.sdk.android.core.models.Tweet
-import net.yslibrary.monotweety.*
 import net.yslibrary.monotweety.data.status.local.StatusLocalRepository
 import net.yslibrary.monotweety.data.status.remote.StatusRemoteRepository
+import net.yslibrary.monotweety.readJsonFromAssets
 import org.junit.Before
 import org.junit.Test
 import rx.Completable
@@ -27,8 +28,8 @@ class StatusRepositoryImplTest {
 
   @Before
   fun setup() {
-    mockLocalRepository = mock(StatusLocalRepository::class)
-    mockRemoteRepository = mock(StatusRemoteRepository::class)
+    mockLocalRepository = mock<StatusLocalRepository>()
+    mockRemoteRepository = mock<StatusRemoteRepository>()
 
     repository = StatusRepositoryImpl(mockRemoteRepository, mockLocalRepository)
   }
@@ -36,7 +37,7 @@ class StatusRepositoryImplTest {
   @Test
   fun updateStatus() {
     val tweet = gson.fromJson(readJsonFromAssets("tweet.json"), Tweet::class.java)
-    whenever(mockRemoteRepository.update(anyString(), isNull())).thenReturn(Single.just(tweet))
+    whenever(mockRemoteRepository.update(any(), anyOrNull())).thenReturn(Single.just(tweet))
     whenever(mockLocalRepository.update(tweet)).thenReturn(Completable.complete())
 
     repository.updateStatus("test status")

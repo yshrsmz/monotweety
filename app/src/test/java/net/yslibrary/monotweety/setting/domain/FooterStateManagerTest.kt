@@ -1,10 +1,10 @@
 package net.yslibrary.monotweety.setting.domain
 
+import com.nhaarman.mockito_kotlin.spy
+import com.nhaarman.mockito_kotlin.verify
 import net.yslibrary.monotweety.ConfiguredRobolectricTestRunner
 import net.yslibrary.monotweety.data.setting.SettingDataManager
 import net.yslibrary.monotweety.data.setting.SettingModule
-import net.yslibrary.monotweety.spy
-import net.yslibrary.monotweety.verify
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

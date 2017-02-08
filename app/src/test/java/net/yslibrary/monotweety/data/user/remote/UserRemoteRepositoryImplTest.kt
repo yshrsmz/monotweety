@@ -1,11 +1,15 @@
 package net.yslibrary.monotweety.data.user.remote
 
 import com.google.gson.Gson
+import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.whenever
 import com.twitter.sdk.android.core.Callback
 import com.twitter.sdk.android.core.Result
 import com.twitter.sdk.android.core.services.AccountService
-import net.yslibrary.monotweety.*
 import net.yslibrary.monotweety.data.user.User
+import net.yslibrary.monotweety.readJsonFromAssets
 import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentCaptor
@@ -29,8 +33,8 @@ class UserRemoteRepositoryImplTest {
   @Suppress("UNCHECKED_CAST")
   @Before
   fun setup() {
-    mockAccountService = mock(AccountService::class)
-    mockCall = mock(Call::class) as Call<TwitterUser>
+    mockAccountService = mock<AccountService>()
+    mockCall = mock<Call<TwitterUser>>()
     callbackCaptor = ArgumentCaptor.forClass(Callback::class.java) as ArgumentCaptor<Callback<TwitterUser>>
 
     repository = UserRemoteRepositoryImpl(mockAccountService)
@@ -47,7 +51,7 @@ class UserRemoteRepositoryImplTest {
         profileImageUrl = user.profileImageUrl,
         _updatedAt = -1)
 
-    whenever(mockAccountService.verifyCredentials(anyBoolean(), anyBoolean()))
+    whenever(mockAccountService.verifyCredentials(any(), any()))
         .thenReturn(mockCall)
 
     repository.get().subscribe(ts)

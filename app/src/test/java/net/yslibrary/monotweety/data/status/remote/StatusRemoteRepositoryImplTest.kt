@@ -1,10 +1,12 @@
 package net.yslibrary.monotweety.data.status.remote
 
 import com.google.gson.Gson
+import com.nhaarman.mockito_kotlin.*
 import com.twitter.sdk.android.core.Callback
 import com.twitter.sdk.android.core.Result
 import com.twitter.sdk.android.core.models.Tweet
-import net.yslibrary.monotweety.*
+import net.yslibrary.monotweety.ConfiguredRobolectricTestRunner
+import net.yslibrary.monotweety.readJsonFromAssets
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -31,8 +33,8 @@ class StatusRemoteRepositoryImplTest {
   @Suppress("UNCHECKED_CAST")
   @Before
   fun setup() {
-    mockService = mock(UpdateStatusService::class)
-    mockCall = mock(Call::class) as Call<Tweet>
+    mockService = mock<UpdateStatusService>()
+    mockCall = mock<Call<Tweet>>()
     callbackCaptor = ArgumentCaptor.forClass(Callback::class.java) as ArgumentCaptor<Callback<Tweet>>
     ts = TestSubscriber()
 
@@ -42,7 +44,7 @@ class StatusRemoteRepositoryImplTest {
   @Test
   fun update() {
     val tweet = gson.fromJson(readJsonFromAssets("tweet.json"), Tweet::class.java)
-    whenever(mockService.update(anyString(), isNull(), isNull(), isNull(), isNull(), isNull(), isNull(), isNull(), isNull()))
+    whenever(mockService.update(any(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull()))
         .thenReturn(mockCall)
 
     repository.update("this is test string").subscribe(ts)
@@ -58,7 +60,7 @@ class StatusRemoteRepositoryImplTest {
   @Test
   fun update_inreplyto() {
     val tweet = gson.fromJson(readJsonFromAssets("tweet.json"), Tweet::class.java)
-    whenever(mockService.update(anyString(), anyLong(), isNull(), isNull(), isNull(), isNull(), isNull(), isNull(), isNull()))
+    whenever(mockService.update(any(), any(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull()))
         .thenReturn(mockCall)
 
     repository.update("this is test string", 12345).subscribe(ts)
@@ -74,7 +76,7 @@ class StatusRemoteRepositoryImplTest {
   @Test
   fun update_asterisk() {
     val tweet = gson.fromJson(readJsonFromAssets("tweet.json"), Tweet::class.java)
-    whenever(mockService.update(anyString(), isNull(), isNull(), isNull(), isNull(), isNull(), isNull(), isNull(), isNull()))
+    whenever(mockService.update(any(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull()))
         .thenReturn(mockCall)
 
     repository.update("**").subscribe(ts)

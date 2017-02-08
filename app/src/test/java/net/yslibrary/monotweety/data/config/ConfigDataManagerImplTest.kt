@@ -2,12 +2,14 @@ package net.yslibrary.monotweety.data.config
 
 import com.f2prateek.rx.preferences.RxSharedPreferences
 import com.google.gson.Gson
+import com.nhaarman.mockito_kotlin.*
 import com.twitter.sdk.android.core.models.Configuration
-import net.yslibrary.monotweety.*
+import net.yslibrary.monotweety.ConfiguredRobolectricTestRunner
 import net.yslibrary.monotweety.base.Clock
 import net.yslibrary.monotweety.data.config.local.ConfigLocalDataManager
 import net.yslibrary.monotweety.data.config.local.ConfigLocalDataManagerImpl
 import net.yslibrary.monotweety.data.config.remote.ConfigRemoteDataManager
+import net.yslibrary.monotweety.readJsonFromAssets
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -37,10 +39,10 @@ class ConfigDataManagerImplTest {
   @Before
   fun setup() {
     val module = ConfigModule()
-    clock = mock(Clock::class)
+    clock = mock<Clock>()
     prefs = module.provideConfigPreferences(RuntimeEnvironment.application)
     configLocalDataManager = spy(module.provideConfigLocalDataManager(prefs, clock))
-    configRemoteDataManager = mock(ConfigRemoteDataManager::class)
+    configRemoteDataManager = mock<ConfigRemoteDataManager>()
     configDataManager = spy(module.provideConfigDataManager(configRemoteDataManager, configLocalDataManager, clock) as ConfigDataManagerImpl)
 
     ts = TestSubscriber.create()

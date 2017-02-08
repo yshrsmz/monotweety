@@ -1,11 +1,11 @@
 package net.yslibrary.monotweety.data.config.local
 
 import com.f2prateek.rx.preferences.RxSharedPreferences
+import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.whenever
 import net.yslibrary.monotweety.ConfiguredRobolectricTestRunner
 import net.yslibrary.monotweety.base.Clock
 import net.yslibrary.monotweety.data.config.ConfigModule
-import net.yslibrary.monotweety.mock
-import net.yslibrary.monotweety.whenever
 import org.assertj.core.api.Assertions
 import org.junit.Before
 import org.junit.Test
@@ -27,7 +27,7 @@ class ConfigLocalDataManagerImplTest {
 
   @Before
   fun setup() {
-    mockClock = mock(Clock::class)
+    mockClock = mock<Clock>()
     val module = ConfigModule()
     rxPrefs = module.provideConfigPreferences(RuntimeEnvironment.application)
     manager = ConfigLocalDataManagerImpl(rxPrefs, mockClock)

@@ -1,10 +1,11 @@
 package net.yslibrary.monotweety.data.user
 
 import com.google.gson.Gson
-import net.yslibrary.monotweety.*
+import com.nhaarman.mockito_kotlin.*
 import net.yslibrary.monotweety.base.Clock
 import net.yslibrary.monotweety.data.user.local.UserLocalRepository
 import net.yslibrary.monotweety.data.user.remote.UserRemoteRepository
+import net.yslibrary.monotweety.readJsonFromAssets
 import org.assertj.core.api.Assertions
 import org.junit.Before
 import org.junit.Test
@@ -32,9 +33,9 @@ class UserRepositoryImplTest {
 
   @Before
   fun setup() {
-    clock = mock(Clock::class)
-    localRepository = mock(UserLocalRepository::class)
-    remoteRepository = mock(UserRemoteRepository::class)
+    clock = mock<Clock>()
+    localRepository = mock<UserLocalRepository>()
+    remoteRepository = mock<UserRemoteRepository>()
     repository = UserRepositoryImpl(remoteRepository = remoteRepository,
         localRepository = localRepository,
         clock = clock)
@@ -42,7 +43,7 @@ class UserRepositoryImplTest {
 
   @Test
   fun get() {
-    whenever(localRepository.getById(anyLong()))
+    whenever(localRepository.getById(any()))
         .thenReturn(Observable.just(null))
 
     val ts = TestSubscriber<User?>()
@@ -79,7 +80,7 @@ class UserRepositoryImplTest {
   @Test
   fun delete() {
     val ts = TestSubscriber<Unit>()
-    whenever(localRepository.delete(anyLong())).thenReturn(Completable.complete())
+    whenever(localRepository.delete(any())).thenReturn(Completable.complete())
 
     repository.delete(1234).subscribe(ts)
 

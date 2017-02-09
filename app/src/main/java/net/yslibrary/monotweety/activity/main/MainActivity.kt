@@ -63,7 +63,7 @@ class MainActivity : BaseActivity(), ActionBarProvider, HasComponent<MainActivit
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
-    Timber.i("onActivityResult - MainActivity")
+    Timber.i("onActivityResult - MainActivity, requestCode: $requestCode, resultCode: $resultCode, data: $data, extra: ${data?.extras}")
     activityBus.emit(ActivityResult(requestCode, resultCode, data))
   }
 }

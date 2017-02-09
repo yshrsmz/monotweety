@@ -62,7 +62,10 @@ class LoginController : ActionBarController(), HasComponent<LoginComponent> {
     activityBus.on(ActivityResult::class.java)
         .observeOn(AndroidSchedulers.mainThread())
         .bindToLifecycle()
-        .subscribe { bindings.loginButton.onActivityResult(it.requestCode, it.resultCode, it.data) }
+        .subscribe {
+          Timber.i("onActivityResult - LoginController, requestCode: ${it.requestCode}, resultCode: ${it.resultCode}, data: ${it.data}, extra: ${it.data?.extras}")
+          bindings.loginButton.onActivityResult(it.requestCode, it.resultCode, it.data)
+        }
 
     viewModel.loginCompleted
         .observeOn(AndroidSchedulers.mainThread())

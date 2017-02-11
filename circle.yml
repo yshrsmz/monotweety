@@ -2,6 +2,7 @@
 machine:
   environment:
     REVIEWDOG_VERSION: 0.9.4
+    GRADLE_OPTS: '-Dorg.gradle.parallel=false -Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-Xmx1560m -XX:+HeapDumpOnOutOfMemoryError"'
   java:
     version: oraclejdk8
 

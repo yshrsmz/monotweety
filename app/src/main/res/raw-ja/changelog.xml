@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
   <changelogversion
+      changeDate="XXX"
+      versionName="1.5.1">
+    <changelogtext>安定性の向上</changelogtext>
+  </changelogversion>
+  <changelogversion
       changeDate="Jan 13th, 2017"
       versionName="1.5.0">
     <changelogtext>Happy New Year!</changelogtext>

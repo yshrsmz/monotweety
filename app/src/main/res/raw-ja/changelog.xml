@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
   <changelogversion
-      changeDate="XXX"
+      changeDate="Feb 15th, 2016"
       versionName="1.5.1">
+    <changelogtext>Happy Valentine's Day!</changelogtext>s
     <changelogtext>安定性の向上</changelogtext>
   </changelogversion>
   <changelogversion

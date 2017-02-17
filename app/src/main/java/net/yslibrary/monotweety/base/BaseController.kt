@@ -19,7 +19,7 @@ import kotlin.properties.Delegates
 /**
  * Created by yshrsmz on 2016/09/24.
  */
-abstract class BaseController() : RxController() {
+abstract class BaseController : RxController() {
 
   @set:Inject
   @setparam:Named(Names.FOR_ACTIVITY)

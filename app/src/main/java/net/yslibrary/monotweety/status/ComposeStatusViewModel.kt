@@ -1,8 +1,9 @@
 package net.yslibrary.monotweety.status
 
 import com.twitter.sdk.android.core.TwitterApiException
-import com.twitter.sdk.android.core.models.Tweet
+
 import net.yslibrary.monotweety.Config
+import net.yslibrary.monotweety.data.status.Tweet
 import net.yslibrary.monotweety.setting.domain.FooterStateManager
 import net.yslibrary.monotweety.setting.domain.KeepOpenManager
 import net.yslibrary.monotweety.status.domain.CheckStatusLength

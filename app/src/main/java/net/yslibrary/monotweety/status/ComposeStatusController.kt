@@ -13,10 +13,11 @@ import com.bluelinelabs.conductor.ControllerChangeHandler
 import com.bluelinelabs.conductor.ControllerChangeType
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
-import com.twitter.sdk.android.core.models.Tweet
+
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.base.*
+import net.yslibrary.monotweety.data.status.Tweet
 import net.yslibrary.monotweety.status.adapter.ComposeStatusAdapter
 import net.yslibrary.monotweety.status.adapter.EditorAdapterDelegate
 import rx.Observable

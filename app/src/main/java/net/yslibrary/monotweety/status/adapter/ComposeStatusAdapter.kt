@@ -2,7 +2,7 @@ package net.yslibrary.monotweety.status.adapter
 
 import android.support.v7.util.DiffUtil
 import com.hannesdorfmann.adapterdelegates3.ListDelegationAdapter
-import com.twitter.sdk.android.core.models.Tweet
+import net.yslibrary.monotweety.data.status.Tweet
 import net.yslibrary.monotweety.setting.domain.FooterStateManager
 import rx.Single
 import rx.android.schedulers.AndroidSchedulers

@@ -1,7 +1,8 @@
 package net.yslibrary.monotweety.data.status.local
 
-import com.twitter.sdk.android.core.models.Tweet
+
 import net.yslibrary.monotweety.base.di.UserScope
+import net.yslibrary.monotweety.data.status.Tweet
 import rx.Completable
 import rx.Observable
 import rx.lang.kotlin.BehaviorSubject

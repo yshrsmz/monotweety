@@ -2,7 +2,6 @@ package net.yslibrary.monotweety.data.status
 
 import com.google.gson.Gson
 import com.nhaarman.mockito_kotlin.*
-import com.twitter.sdk.android.core.models.Tweet
 import net.yslibrary.monotweety.data.status.local.StatusLocalRepository
 import net.yslibrary.monotweety.data.status.remote.StatusRemoteRepository
 import net.yslibrary.monotweety.readJsonFromAssets
@@ -13,6 +12,7 @@ import rx.Emitter
 import rx.Observable
 import rx.Single
 import java.util.concurrent.TimeUnit
+import com.twitter.sdk.android.core.models.Tweet as TwitterTweet
 
 /**
  * Created by yshrsmz on 2017/02/07.
@@ -36,7 +36,7 @@ class StatusRepositoryImplTest {
 
   @Test
   fun updateStatus() {
-    val tweet = gson.fromJson(readJsonFromAssets("tweet.json"), Tweet::class.java)
+    val tweet = Tweet.from(gson.fromJson(readJsonFromAssets("tweet.json"), TwitterTweet::class.java))
     whenever(mockRemoteRepository.update(any(), anyOrNull())).thenReturn(Single.just(tweet))
     whenever(mockLocalRepository.update(tweet)).thenReturn(Completable.complete())
 
@@ -55,7 +55,7 @@ class StatusRepositoryImplTest {
 
   @Test
   fun previousStatus() {
-    val tweet = gson.fromJson(readJsonFromAssets("tweet.json"), Tweet::class.java)
+    val tweet = Tweet.from(gson.fromJson(readJsonFromAssets("tweet.json"), TwitterTweet::class.java))
 
     whenever(mockLocalRepository.getPrevious())
         .thenReturn(Observable.fromEmitter({ emitter ->

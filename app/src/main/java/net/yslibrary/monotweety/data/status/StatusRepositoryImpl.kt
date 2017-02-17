@@ -1,6 +1,5 @@
 package net.yslibrary.monotweety.data.status
 
-import com.twitter.sdk.android.core.models.Tweet
 import net.yslibrary.monotweety.base.di.UserScope
 import net.yslibrary.monotweety.data.status.local.StatusLocalRepository
 import net.yslibrary.monotweety.data.status.remote.StatusRemoteRepository

@@ -1,7 +1,7 @@
 package net.yslibrary.monotweety.data.status.remote
 
-import com.twitter.sdk.android.core.models.Tweet
-import rx.Completable
+
+import net.yslibrary.monotweety.data.status.Tweet
 import rx.Single
 
 /**

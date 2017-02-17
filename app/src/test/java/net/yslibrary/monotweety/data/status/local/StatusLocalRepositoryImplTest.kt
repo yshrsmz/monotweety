@@ -1,12 +1,13 @@
 package net.yslibrary.monotweety.data.status.local
 
 import com.google.gson.Gson
-import com.twitter.sdk.android.core.models.Tweet
 import net.yslibrary.monotweety.assertThat
+import net.yslibrary.monotweety.data.status.Tweet
 import net.yslibrary.monotweety.readJsonFromAssets
 import org.junit.Before
 import org.junit.Test
 import rx.observers.TestSubscriber
+import com.twitter.sdk.android.core.models.Tweet as TwitterTweet
 
 /**
  * Created by yshrsmz on 2016/12/15.
@@ -16,8 +17,8 @@ class StatusLocalRepositoryImplTest {
   lateinit var repository: StatusLocalRepositoryImpl
 
   val gson = Gson()
-  val tweet = gson.fromJson(readJsonFromAssets("tweet.json"), Tweet::class.java)
-  val tweet2 = gson.fromJson(readJsonFromAssets("tweet_2.json"), Tweet::class.java)
+  val tweet = Tweet.from(gson.fromJson(readJsonFromAssets("tweet.json"), TwitterTweet::class.java))
+  val tweet2 = Tweet.from(gson.fromJson(readJsonFromAssets("tweet_2.json"), TwitterTweet::class.java))
 
   @Before
   fun setup() {

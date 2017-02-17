@@ -3,14 +3,13 @@ package net.yslibrary.monotweety.data.status.remote
 import com.twitter.sdk.android.core.Callback
 import com.twitter.sdk.android.core.Result
 import com.twitter.sdk.android.core.TwitterException
-import com.twitter.sdk.android.core.models.Tweet
 import net.yslibrary.monotweety.base.di.UserScope
-import rx.Emitter
-import rx.Observable
+import net.yslibrary.monotweety.data.status.Tweet
 import rx.Single
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
 import javax.inject.Inject
+import com.twitter.sdk.android.core.models.Tweet as TwitterTweet
 
 /**
  * Created by yshrsmz on 2016/09/30.
@@ -19,12 +18,11 @@ import javax.inject.Inject
 class StatusRemoteRepositoryImpl @Inject constructor(private val statusesService: UpdateStatusService) : StatusRemoteRepository {
 
   override fun update(status: String, inReplyToStatusId: Long?): Single<Tweet> {
-    return Observable.fromEmitter<Tweet>({ emitter ->
+    return Single.fromEmitter<TwitterTweet>({ emitter ->
       val call = statusesService.update(encodeStatus(status), inReplyToStatusId, null, null, null, null, null, null, null)
-      call.enqueue(object : Callback<Tweet>() {
-        override fun success(result: Result<Tweet>) {
-          emitter.onNext(result.data)
-          emitter.onCompleted()
+      call.enqueue(object : Callback<TwitterTweet>() {
+        override fun success(result: Result<TwitterTweet>) {
+          emitter.onSuccess(result.data)
         }
 
         override fun failure(exception: TwitterException) {
@@ -32,7 +30,15 @@ class StatusRemoteRepositoryImpl @Inject constructor(private val statusesService
         }
       })
       emitter.setCancellation { call.cancel() }
-    }, Emitter.BackpressureMode.BUFFER).toSingle()
+    })
+        .map {
+          Tweet(
+              id = it.id,
+              inReplyToStatusId = it.inReplyToStatusId,
+              text = it.text,
+              createdAt = it.createdAt
+          )
+        }
   }
 
   /**

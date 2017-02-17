@@ -1,8 +1,8 @@
 package net.yslibrary.monotweety.status.domain
 
-import com.twitter.sdk.android.core.models.Tweet
 import net.yslibrary.monotweety.base.di.UserScope
 import net.yslibrary.monotweety.data.status.StatusRepository
+import net.yslibrary.monotweety.data.status.Tweet
 import rx.Observable
 import javax.inject.Inject
 

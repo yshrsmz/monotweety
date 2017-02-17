@@ -4,8 +4,8 @@ import com.google.gson.Gson
 import com.nhaarman.mockito_kotlin.*
 import com.twitter.sdk.android.core.Callback
 import com.twitter.sdk.android.core.Result
-import com.twitter.sdk.android.core.models.Tweet
 import net.yslibrary.monotweety.ConfiguredRobolectricTestRunner
+import net.yslibrary.monotweety.data.status.Tweet
 import net.yslibrary.monotweety.readJsonFromAssets
 import org.junit.Before
 import org.junit.Test
@@ -14,6 +14,7 @@ import org.mockito.ArgumentCaptor
 import retrofit2.Call
 import rx.observers.TestSubscriber
 import java.net.URLEncoder
+import com.twitter.sdk.android.core.models.Tweet as TwitterTweet
 
 /**
  * Created by yshrsmz on 2017/01/07.
@@ -22,8 +23,8 @@ import java.net.URLEncoder
 class StatusRemoteRepositoryImplTest {
 
   lateinit var mockService: UpdateStatusService
-  lateinit var mockCall: Call<Tweet>
-  lateinit var callbackCaptor: ArgumentCaptor<Callback<Tweet>>
+  lateinit var mockCall: Call<TwitterTweet>
+  lateinit var callbackCaptor: ArgumentCaptor<Callback<TwitterTweet>>
   lateinit var repository: StatusRemoteRepositoryImpl
 
   lateinit var ts: TestSubscriber<Tweet>
@@ -34,8 +35,8 @@ class StatusRemoteRepositoryImplTest {
   @Before
   fun setup() {
     mockService = mock<UpdateStatusService>()
-    mockCall = mock<Call<Tweet>>()
-    callbackCaptor = ArgumentCaptor.forClass(Callback::class.java) as ArgumentCaptor<Callback<Tweet>>
+    mockCall = mock<Call<TwitterTweet>>()
+    callbackCaptor = ArgumentCaptor.forClass(Callback::class.java) as ArgumentCaptor<Callback<TwitterTweet>>
     ts = TestSubscriber()
 
     repository = StatusRemoteRepositoryImpl(mockService)
@@ -43,7 +44,8 @@ class StatusRemoteRepositoryImplTest {
 
   @Test
   fun update() {
-    val tweet = gson.fromJson(readJsonFromAssets("tweet.json"), Tweet::class.java)
+    val tweet = gson.fromJson(readJsonFromAssets("tweet.json"), TwitterTweet::class.java)
+    val result = Tweet.from(tweet)
     whenever(mockService.update(any(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull()))
         .thenReturn(mockCall)
 
@@ -53,13 +55,14 @@ class StatusRemoteRepositoryImplTest {
     verify(mockCall).enqueue(callbackCaptor.capture())
     callbackCaptor.value.success(Result(tweet, null))
 
-    ts.assertValue(tweet)
+    ts.assertValue(result)
     ts.assertCompleted()
   }
 
   @Test
   fun update_inreplyto() {
-    val tweet = gson.fromJson(readJsonFromAssets("tweet.json"), Tweet::class.java)
+    val tweet = gson.fromJson(readJsonFromAssets("tweet.json"), TwitterTweet::class.java)
+    val result = Tweet.from(tweet)
     whenever(mockService.update(any(), any(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull()))
         .thenReturn(mockCall)
 
@@ -69,13 +72,14 @@ class StatusRemoteRepositoryImplTest {
     verify(mockCall).enqueue(callbackCaptor.capture())
     callbackCaptor.value.success(Result(tweet, null))
 
-    ts.assertValue(tweet)
+    ts.assertValue(result)
     ts.assertCompleted()
   }
 
   @Test
   fun update_asterisk() {
-    val tweet = gson.fromJson(readJsonFromAssets("tweet.json"), Tweet::class.java)
+    val tweet = gson.fromJson(readJsonFromAssets("tweet.json"), TwitterTweet::class.java)
+    val result = Tweet.from(tweet)
     whenever(mockService.update(any(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull()))
         .thenReturn(mockCall)
 
@@ -85,7 +89,7 @@ class StatusRemoteRepositoryImplTest {
     verify(mockCall).enqueue(callbackCaptor.capture())
     callbackCaptor.value.success(Result(tweet, null))
 
-    ts.assertValue(tweet)
+    ts.assertValue(result)
     ts.assertCompleted()
   }
 }

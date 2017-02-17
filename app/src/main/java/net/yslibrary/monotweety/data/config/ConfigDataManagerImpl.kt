@@ -1,7 +1,6 @@
 package net.yslibrary.monotweety.data.config
 
 import android.support.annotation.VisibleForTesting
-import com.twitter.sdk.android.core.models.Configuration
 import net.yslibrary.monotweety.base.Clock
 import net.yslibrary.monotweety.data.config.local.ConfigLocalDataManager
 import net.yslibrary.monotweety.data.config.remote.ConfigRemoteDataManager

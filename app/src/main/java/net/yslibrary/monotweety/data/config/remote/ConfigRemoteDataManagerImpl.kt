@@ -3,11 +3,10 @@ package net.yslibrary.monotweety.data.config.remote
 import com.twitter.sdk.android.core.Callback
 import com.twitter.sdk.android.core.Result
 import com.twitter.sdk.android.core.TwitterException
-import com.twitter.sdk.android.core.models.Configuration
 import com.twitter.sdk.android.core.services.ConfigurationService
-import rx.Emitter
-import rx.Observable
+import net.yslibrary.monotweety.data.config.Configuration
 import rx.Single
+import com.twitter.sdk.android.core.models.Configuration as TwitterConfig
 
 /**
  * Created by yshrsmz on 2016/10/01.
@@ -15,14 +14,13 @@ import rx.Single
 class ConfigRemoteDataManagerImpl(private val configurationService: ConfigurationService) : ConfigRemoteDataManager {
 
   override fun get(): Single<Configuration> {
-    return Observable.fromEmitter<Configuration>({ emitter ->
+    return Single.fromEmitter<TwitterConfig>({ emitter ->
       val call = configurationService.configuration()
 
-      call.enqueue(object : Callback<Configuration>() {
+      call.enqueue(object : Callback<TwitterConfig>() {
 
-        override fun success(result: Result<Configuration>) {
-          emitter.onNext(result.data)
-          emitter.onCompleted()
+        override fun success(result: Result<TwitterConfig>) {
+          emitter.onSuccess(result.data)
         }
 
         override fun failure(exception: TwitterException) {
@@ -30,6 +28,7 @@ class ConfigRemoteDataManagerImpl(private val configurationService: Configuratio
         }
       })
       emitter.setCancellation { call.cancel() }
-    }, Emitter.BackpressureMode.BUFFER).toSingle()
+    })
+        .map { Configuration.from(it) }
   }
 }

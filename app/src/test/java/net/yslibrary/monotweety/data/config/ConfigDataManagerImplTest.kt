@@ -3,7 +3,6 @@ package net.yslibrary.monotweety.data.config
 import com.f2prateek.rx.preferences.RxSharedPreferences
 import com.google.gson.Gson
 import com.nhaarman.mockito_kotlin.*
-import com.twitter.sdk.android.core.models.Configuration
 import net.yslibrary.monotweety.ConfiguredRobolectricTestRunner
 import net.yslibrary.monotweety.base.Clock
 import net.yslibrary.monotweety.data.config.local.ConfigLocalDataManager
@@ -18,6 +17,7 @@ import rx.Single
 import rx.observers.TestSubscriber
 import rx.plugins.RxJavaHooks
 import rx.schedulers.Schedulers
+import com.twitter.sdk.android.core.models.Configuration as TwitterConfig
 
 /**
  * Created by yshrsmz on 2016/11/12.
@@ -34,7 +34,7 @@ class ConfigDataManagerImplTest {
   lateinit var ts: TestSubscriber<Int>
 
   val gson = Gson()
-  val config = gson.fromJson(readJsonFromAssets("configuration.json"), Configuration::class.java)
+  val config = Configuration.from(gson.fromJson(readJsonFromAssets("configuration.json"), TwitterConfig::class.java))
 
   @Before
   fun setup() {

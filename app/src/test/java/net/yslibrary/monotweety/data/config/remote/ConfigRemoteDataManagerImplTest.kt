@@ -7,9 +7,9 @@ import com.nhaarman.mockito_kotlin.whenever
 import com.twitter.sdk.android.core.Callback
 import com.twitter.sdk.android.core.Result
 import com.twitter.sdk.android.core.TwitterException
-import com.twitter.sdk.android.core.models.Configuration
 import com.twitter.sdk.android.core.services.ConfigurationService
 import net.yslibrary.monotweety.ConfiguredRobolectricTestRunner
+import net.yslibrary.monotweety.data.config.Configuration
 import net.yslibrary.monotweety.readJsonFromAssets
 import org.junit.Before
 import org.junit.Test
@@ -17,6 +17,7 @@ import org.junit.runner.RunWith
 import org.mockito.ArgumentCaptor
 import retrofit2.Call
 import rx.observers.TestSubscriber
+import com.twitter.sdk.android.core.models.Configuration as TwitterConfig
 
 
 /**
@@ -27,8 +28,8 @@ class ConfigRemoteDataManagerImplTest {
 
   lateinit var manager: ConfigRemoteDataManagerImpl
   lateinit var configService: ConfigurationService
-  lateinit var mockCall: Call<Configuration>
-  lateinit var callbackCaptor: ArgumentCaptor<Callback<Configuration>>
+  lateinit var mockCall: Call<TwitterConfig>
+  lateinit var callbackCaptor: ArgumentCaptor<Callback<TwitterConfig>>
 
   lateinit var ts: TestSubscriber<Configuration>
 
@@ -38,8 +39,8 @@ class ConfigRemoteDataManagerImplTest {
   @Before
   fun setup() {
     configService = mock<ConfigurationService>()
-    mockCall = mock<Call<Configuration>>()
-    callbackCaptor = ArgumentCaptor.forClass(Callback::class.java) as ArgumentCaptor<Callback<Configuration>>
+    mockCall = mock<Call<TwitterConfig>>()
+    callbackCaptor = ArgumentCaptor.forClass(Callback::class.java) as ArgumentCaptor<Callback<TwitterConfig>>
 
     manager = ConfigRemoteDataManagerImpl(configService)
 
@@ -49,7 +50,9 @@ class ConfigRemoteDataManagerImplTest {
   @Test
   fun get() {
     val resString = readJsonFromAssets("configuration.json")
-    val config = gson.fromJson(resString, Configuration::class.java)
+    val config = gson.fromJson(resString, TwitterConfig::class.java)
+    val result = Configuration.from(config)
+
     whenever(configService.configuration()).thenReturn(mockCall)
 
     manager.get().subscribe(ts)
@@ -57,7 +60,7 @@ class ConfigRemoteDataManagerImplTest {
     verify(mockCall).enqueue(callbackCaptor.capture())
     callbackCaptor.value.success(Result(config, null))
 
-    ts.assertValue(config)
+    ts.assertValue(result)
     ts.assertCompleted()
   }
 

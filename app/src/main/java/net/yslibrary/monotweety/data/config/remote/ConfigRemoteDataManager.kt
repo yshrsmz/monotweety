@@ -1,6 +1,6 @@
 package net.yslibrary.monotweety.data.config.remote
 
-import com.twitter.sdk.android.core.models.Configuration
+import net.yslibrary.monotweety.data.config.Configuration
 import rx.Single
 
 /**

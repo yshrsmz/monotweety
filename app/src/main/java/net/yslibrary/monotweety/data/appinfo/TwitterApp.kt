@@ -1,8 +1,5 @@
 package net.yslibrary.monotweety.data.appinfo
 
-/**
- * Created by yshrsmz on 2016/11/12.
- */
 enum class TwitterApp(val packageName: String) {
   BEETER("me.b0ne.android.apps.beeter"),
   ECHOFON("com.echofon"),

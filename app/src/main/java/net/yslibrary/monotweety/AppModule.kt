@@ -20,9 +20,6 @@ import rx.lang.kotlin.PublishSubject
 import rx.subjects.PublishSubject
 import javax.inject.Named
 
-/**
- * Created by yshrsmz on 2016/09/24.
- */
 @Module
 open class AppModule(private val context: Context) {
 

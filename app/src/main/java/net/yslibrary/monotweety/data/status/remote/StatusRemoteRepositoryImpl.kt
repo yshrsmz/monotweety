@@ -11,9 +11,6 @@ import java.net.URLEncoder
 import javax.inject.Inject
 import com.twitter.sdk.android.core.models.Tweet as TwitterTweet
 
-/**
- * Created by yshrsmz on 2016/09/30.
- */
 @UserScope
 class StatusRemoteRepositoryImpl @Inject constructor(private val statusesService: UpdateStatusService) : StatusRemoteRepository {
 

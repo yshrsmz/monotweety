@@ -12,9 +12,6 @@ import net.yslibrary.monotweety.data.user.User
 import net.yslibrary.monotweety.data.user.local.resolver.UserSQLiteTypeMapping
 import javax.inject.Named
 
-/**
- * Created by yshrsmz on 2016/10/08.
- */
 @Module
 class LocalModule {
 

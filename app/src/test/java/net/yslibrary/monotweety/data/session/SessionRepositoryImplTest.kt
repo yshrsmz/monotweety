@@ -12,9 +12,6 @@ import org.junit.runners.JUnit4
 import rx.observers.TestSubscriber
 import kotlin.properties.Delegates
 
-/**
- * Created by yshrsmz on 2016/12/06.
- */
 @RunWith(JUnit4::class)
 class SessionRepositoryImplTest {
 

@@ -18,9 +18,6 @@ import rx.lang.kotlin.PublishSubject
 import rx.schedulers.Schedulers
 import timber.log.Timber
 
-/**
- * Created by yshrsmz on 2016/10/02.
- */
 class ComposeStatusViewModel(status: String,
                              private val config: Config,
                              private val checkStatusLength: CheckStatusLength,
@@ -30,7 +27,7 @@ class ComposeStatusViewModel(status: String,
                              private val keepOpenManager: KeepOpenManager,
                              private val footerStateManager: FooterStateManager) {
 
-  private val isSendableStatusSubject = BehaviorSubject<Boolean>(false)
+  private val isSendableStatusSubject = BehaviorSubject(false)
 
   private val statusInfoSubject = BehaviorSubject<StatusInfo>()
 
@@ -38,13 +35,13 @@ class ComposeStatusViewModel(status: String,
 
   private val keepOpenSubject = BehaviorSubject<Boolean>()
 
-  private val tweetAsThreadSubject = BehaviorSubject<Boolean>(false)
+  private val tweetAsThreadSubject = BehaviorSubject(false)
 
-  private val progressEventsSubject = BehaviorSubject<ProgressEvent>(ProgressEvent.FINISHED)
+  private val progressEventsSubject = BehaviorSubject(ProgressEvent.FINISHED)
 
   private val messagesSubject = PublishSubject<String>()
 
-  private val allowCloseViewSubject = BehaviorSubject<Boolean>(false)
+  private val allowCloseViewSubject = BehaviorSubject(false)
 
   private val previousStatusSubject = BehaviorSubject<Tweet?>(null)
 
@@ -136,7 +133,7 @@ class ComposeStatusViewModel(status: String,
         statusInfo,
         { sendable, asThread, previousTweet, info ->
           // return previous tweet and current status string
-          Pair<Tweet?, String>(if (asThread) previousTweet else null, info.status)
+          Pair(if (asThread) previousTweet else null, info.status)
         })
         .first().toSingle()
         .doOnSuccess { progressEventsSubject.onNext(ProgressEvent.IN_PROGRESS) }

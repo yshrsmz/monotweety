@@ -9,9 +9,6 @@ import net.yslibrary.monotweety.App
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.activity.compose.ComposeActivity
 
-/**
- * Created by yshrsmz on 2016/11/10.
- */
 class ShortcutActivity : Activity() {
 
   companion object {

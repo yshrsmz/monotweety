@@ -19,10 +19,6 @@ import retrofit2.Call
 import rx.observers.TestSubscriber
 import com.twitter.sdk.android.core.models.Configuration as TwitterConfig
 
-
-/**
- * Created by yshrsmz on 2016/10/20.
- */
 @RunWith(ConfiguredRobolectricTestRunner::class)
 class ConfigRemoteDataManagerImplTest {
 

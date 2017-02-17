@@ -9,9 +9,6 @@ import io.fabric.sdk.android.Fabric
 import net.yslibrary.monotweety.analytics.CrashReportingTree
 import timber.log.Timber
 
-/**
- * Created by yshrsmz on 2016/09/24.
- */
 open class AppLifecycleCallbacks(val context: Context) : App.LifecycleCallbacks {
   override fun onCreate() {
     initTimber()

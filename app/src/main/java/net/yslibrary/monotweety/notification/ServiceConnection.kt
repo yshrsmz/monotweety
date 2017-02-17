@@ -9,9 +9,6 @@ import rx.subjects.BehaviorSubject
 import timber.log.Timber
 
 
-/**
- * Created by yshrsmz on 2016/09/26.
- */
 class ServiceConnection(context: Context, private val intent: Intent) : android.content.ServiceConnection {
 
   private val context: Context = context.applicationContext

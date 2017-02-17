@@ -7,9 +7,6 @@ import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.data.appinfo.AppInfo
 import net.yslibrary.monotweety.data.user.User
 
-/**
- * Created by yshrsmz on 2016/10/07.
- */
 class SettingAdapter(private val res: Resources, listener: Listener) : ListDelegationAdapter<List<SettingAdapter.Item>>() {
 
   init {
@@ -97,7 +94,7 @@ class SettingAdapter(private val res: Resources, listener: Listener) : ListDeleg
   }
 
   fun updateProfile(user: User) {
-    (items as MutableList).set(ViewType.PROFILE.ordinal, ProfileAdapterDelegate.Item.from(user))
+    (items as MutableList)[ViewType.PROFILE.ordinal] = ProfileAdapterDelegate.Item.from(user)
     notifyItemChanged(ViewType.PROFILE.ordinal)
   }
 
@@ -106,19 +103,19 @@ class SettingAdapter(private val res: Resources, listener: Listener) : ListDeleg
     if (item.checked == enabled && item.enabled) {
       return
     }
-    (items as MutableList).set(ViewType.KEEP_OPEN.ordinal, item.copy(checked = enabled, enabled = true))
+    (items as MutableList)[ViewType.KEEP_OPEN.ordinal] = item.copy(checked = enabled, enabled = true)
     notifyItemChanged(ViewType.KEEP_OPEN.ordinal)
   }
 
   fun updateFooterState(enabled: Boolean, footerText: String) {
     val item = items[ViewType.FOOTER.ordinal] as FooterEditorAdapterDelegate.Item
-    (items as MutableList).set(ViewType.FOOTER.ordinal, item.copy(enabled = true, checked = enabled, footerText = footerText))
+    (items as MutableList)[ViewType.FOOTER.ordinal] = item.copy(enabled = true, checked = enabled, footerText = footerText)
     notifyItemChanged(ViewType.FOOTER.ordinal)
   }
 
   fun updateTimelineApp(selectedApp: AppInfo, apps: List<AppInfo>) {
     val item = items[ViewType.TIMELINE_APP.ordinal] as TimelineAppAdapterDelegate.Item
-    (items as MutableList).set(ViewType.TIMELINE_APP.ordinal, item.copy(enabled = true, selectedApp = selectedApp, apps = apps))
+    (items as MutableList)[ViewType.TIMELINE_APP.ordinal] = item.copy(enabled = true, selectedApp = selectedApp, apps = apps)
     notifyItemChanged(ViewType.TIMELINE_APP.ordinal)
   }
 

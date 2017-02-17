@@ -14,9 +14,6 @@ import net.yslibrary.monotweety.activity.compose.ComposeActivity
 import net.yslibrary.monotweety.activity.main.MainActivity
 import net.yslibrary.monotweety.base.closeNotificationDrawer
 
-/**
- * Created by yshrsmz on 2016/11/17.
- */
 @TargetApi(Build.VERSION_CODES.N)
 class EditorTileService : TileService() {
 

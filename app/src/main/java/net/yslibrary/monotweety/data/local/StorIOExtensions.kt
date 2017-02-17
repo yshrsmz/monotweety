@@ -4,9 +4,6 @@ import com.pushtorefresh.storio.sqlite.operations.delete.PreparedDelete
 import com.pushtorefresh.storio.sqlite.operations.get.PreparedGet
 import com.pushtorefresh.storio.sqlite.operations.put.PreparedPut
 
-/**
- * Created by yshrsmz on 2016/10/08.
- */
 fun <T> PreparedPut.Builder.withObject(entity: T) = `object`(entity)
 
 fun <T> PreparedPut.Builder.withObjects(entities: Collection<T>) = objects(entities)

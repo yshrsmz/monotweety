@@ -9,9 +9,6 @@ import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.findById
 
-/**
- * Created by yshrsmz on 2016/10/08.
- */
 class SubHeaderAdapterDelegate : AdapterDelegate<List<SettingAdapter.Item>>() {
 
   override fun isForViewType(items: List<SettingAdapter.Item>, position: Int): Boolean {

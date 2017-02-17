@@ -9,10 +9,6 @@ import android.view.animation.DecelerateInterpolator
 import com.bluelinelabs.conductor.changehandler.TransitionChangeHandler
 import net.yslibrary.monotweety.R
 
-
-/**
- * Created by yshrsmz on 2016/10/29.
- */
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 class LoginTransitionChangeHandler : TransitionChangeHandler() {
   override fun getTransition(container: ViewGroup, from: View?, to: View?, isPush: Boolean): Transition {

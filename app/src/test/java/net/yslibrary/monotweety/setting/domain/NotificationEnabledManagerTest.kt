@@ -12,9 +12,6 @@ import org.junit.runner.RunWith
 import org.robolectric.RuntimeEnvironment
 import rx.observers.TestSubscriber
 
-/**
- * Created by yshrsmz on 2016/11/12.
- */
 @RunWith(ConfiguredRobolectricTestRunner::class)
 class NotificationEnabledManagerTest {
 

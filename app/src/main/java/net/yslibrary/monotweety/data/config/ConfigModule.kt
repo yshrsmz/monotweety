@@ -14,9 +14,6 @@ import net.yslibrary.monotweety.data.config.remote.ConfigRemoteDataManager
 import net.yslibrary.monotweety.data.config.remote.ConfigRemoteDataManagerImpl
 import javax.inject.Named
 
-/**
- * Created by yshrsmz on 2016/10/01.
- */
 @Module
 class ConfigModule {
 

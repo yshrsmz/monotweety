@@ -19,9 +19,6 @@ import rx.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
-/**
- * Created by yshrsmz on 2016/10/10.
- */
 class LicenseController : ActionBarController() {
 
   override val hasBackButton: Boolean = true

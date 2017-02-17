@@ -5,9 +5,6 @@ import net.yslibrary.monotweety.data.setting.SettingDataManager
 import rx.Observable
 import javax.inject.Inject
 
-/**
- * Created by yshrsmz on 2016/09/29.
- */
 @AppScope
 class NotificationEnabledManager @Inject constructor(private val settingDataManager: SettingDataManager) {
 

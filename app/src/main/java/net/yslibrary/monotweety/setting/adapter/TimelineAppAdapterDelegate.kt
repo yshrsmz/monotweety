@@ -12,9 +12,6 @@ import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.data.appinfo.AppInfo
 
-/**
- * Created by yshrsmz on 2016/11/14.
- */
 class TimelineAppAdapterDelegate(private val listener: Listener) : AdapterDelegate<List<SettingAdapter.Item>>() {
 
   override fun isForViewType(items: List<SettingAdapter.Item>, position: Int): Boolean {

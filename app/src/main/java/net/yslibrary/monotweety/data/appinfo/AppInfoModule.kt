@@ -4,9 +4,6 @@ import dagger.Binds
 import dagger.Module
 import net.yslibrary.monotweety.base.di.AppScope
 
-/**
- * Created by yshrsmz on 2016/11/13.
- */
 @Module
 abstract class AppInfoModule {
 

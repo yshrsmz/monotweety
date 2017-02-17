@@ -8,9 +8,6 @@ import rx.Observable
 import rx.Single
 import javax.inject.Inject
 
-/**
- * Created by yshrsmz on 2016/11/13.
- */
 @AppScope
 class GetInstalledSupportedApps @Inject constructor(private val appInfoManager: AppInfoManager) {
 

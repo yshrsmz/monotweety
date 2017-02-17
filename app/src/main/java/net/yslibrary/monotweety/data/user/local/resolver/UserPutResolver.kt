@@ -7,9 +7,6 @@ import com.pushtorefresh.storio.sqlite.queries.UpdateQuery
 import net.yslibrary.monotweety.data.user.User
 import net.yslibrary.monotweety.data.user.local.UserTable
 
-/**
- * Created by yshrsmz on 2016/10/08.
- */
 class UserPutResolver : DefaultPutResolver<User>() {
   override fun mapToContentValues(entity: User): ContentValues {
     val cv = ContentValues(5)

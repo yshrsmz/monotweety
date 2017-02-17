@@ -17,9 +17,6 @@ import java.util.concurrent.TimeUnit
 import kotlin.properties.Delegates
 import com.twitter.sdk.android.core.models.User as TwitterUser
 
-/**
- * Created by yshrsmz on 2016/12/09.
- */
 @RunWith(ConfiguredRobolectricTestRunner::class)
 class UserLocalRepositoryImplTest {
 

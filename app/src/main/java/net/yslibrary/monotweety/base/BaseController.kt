@@ -16,9 +16,6 @@ import javax.inject.Inject
 import javax.inject.Named
 import kotlin.properties.Delegates
 
-/**
- * Created by yshrsmz on 2016/09/24.
- */
 abstract class BaseController : RxController() {
 
   @set:Inject

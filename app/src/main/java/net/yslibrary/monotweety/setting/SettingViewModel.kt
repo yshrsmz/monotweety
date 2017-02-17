@@ -11,11 +11,6 @@ import rx.lang.kotlin.BehaviorSubject
 import rx.lang.kotlin.PublishSubject
 import timber.log.Timber
 
-
-/**
- * Created by yshrsmz on 2016/09/29.
- */
-
 class SettingViewModel(private val config: Config,
                        private val notificationEnabledManager: NotificationEnabledManager,
                        private val getUser: GetUser,

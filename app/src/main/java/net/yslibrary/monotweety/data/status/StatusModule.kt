@@ -8,9 +8,6 @@ import net.yslibrary.monotweety.data.status.local.StatusLocalRepositoryImpl
 import net.yslibrary.monotweety.data.status.remote.StatusRemoteRepository
 import net.yslibrary.monotweety.data.status.remote.StatusRemoteRepositoryImpl
 
-/**
- * Created by yshrsmz on 2016/09/30.
- */
 @Module
 abstract class StatusModule {
 

@@ -14,9 +14,6 @@ import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.base.load
 import net.yslibrary.monotweety.data.user.User
 
-/**
- * Created by yshrsmz on 2016/10/08.
- */
 class ProfileAdapterDelegate(private val listener: Listener) : AdapterDelegate<List<SettingAdapter.Item>>() {
   override fun isForViewType(items: List<SettingAdapter.Item>, position: Int): Boolean {
     return items[position] is Item

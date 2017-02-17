@@ -9,9 +9,6 @@ import rx.Single
 import java.util.*
 import javax.inject.Inject
 
-/**
- * Created by yshrsmz on 2016/10/10.
- */
 @UserScope
 class LicenseRepositoryImpl @Inject constructor() : LicenseRepository {
   override fun get(): Single<List<LicenseEntry>> {

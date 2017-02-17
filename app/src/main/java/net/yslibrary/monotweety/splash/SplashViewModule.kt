@@ -5,9 +5,6 @@ import dagger.Provides
 import net.yslibrary.monotweety.base.di.ControllerScope
 import net.yslibrary.monotweety.login.domain.IsLoggedIn
 
-/**
- * Created by yshrsmz on 2016/09/27.
- */
 @Module
 class SplashViewModule {
 

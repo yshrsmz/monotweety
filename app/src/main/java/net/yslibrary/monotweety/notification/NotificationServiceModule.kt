@@ -11,9 +11,6 @@ import net.yslibrary.monotweety.status.domain.CheckStatusLength
 import net.yslibrary.monotweety.status.domain.ClearPreviousStatus
 import net.yslibrary.monotweety.status.domain.UpdateStatus
 
-/**
- * Created by yshrsmz on 2016/09/26.
- */
 @Module
 class NotificationServiceModule(private val service: NotificationService) {
 

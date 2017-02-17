@@ -13,9 +13,6 @@ import net.yslibrary.monotweety.status.domain.GetPreviousStatus
 import net.yslibrary.monotweety.status.domain.UpdateStatus
 import net.yslibrary.monotweety.user.domain.GetUser
 
-/**
- * Created by yshrsmz on 2016/09/24.
- */
 @UserScope
 @Subcomponent(
     modules = arrayOf(UserDataModule::class)

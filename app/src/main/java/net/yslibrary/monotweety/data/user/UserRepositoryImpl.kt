@@ -9,9 +9,6 @@ import rx.Observable
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-/**
- * Created by yshrsmz on 2016/10/08.
- */
 @UserScope
 class UserRepositoryImpl @Inject constructor(private val remoteRepository: UserRemoteRepository,
                                              private val localRepository: UserLocalRepository,

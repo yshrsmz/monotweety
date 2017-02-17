@@ -17,9 +17,6 @@ import retrofit2.Call
 import rx.observers.TestSubscriber
 import com.twitter.sdk.android.core.models.User as TwitterUser
 
-/**
- * Created by yshrsmz on 2016/12/12.
- */
 class UserRemoteRepositoryImplTest {
 
   lateinit var repository: UserRemoteRepositoryImpl

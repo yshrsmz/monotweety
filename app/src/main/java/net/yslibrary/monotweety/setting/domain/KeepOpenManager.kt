@@ -5,9 +5,6 @@ import net.yslibrary.monotweety.data.setting.SettingDataManager
 import rx.Observable
 import javax.inject.Inject
 
-/**
- * Created by yshrsmz on 2016/10/03.
- */
 @AppScope
 class KeepOpenManager @Inject constructor(private val settingDataManager: SettingDataManager) {
 

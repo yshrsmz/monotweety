@@ -16,9 +16,6 @@ import rx.observers.TestSubscriber
 import java.net.URLEncoder
 import com.twitter.sdk.android.core.models.Tweet as TwitterTweet
 
-/**
- * Created by yshrsmz on 2017/01/07.
- */
 @RunWith(ConfiguredRobolectricTestRunner::class)
 class StatusRemoteRepositoryImplTest {
 

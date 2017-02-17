@@ -13,9 +13,6 @@ import net.yslibrary.monotweety.base.RefWatcherDelegate
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
-/**
- * Created by yshrsmz on 2016/10/11.
- */
 class ChangelogController : ActionBarController() {
 
   @set:[Inject]

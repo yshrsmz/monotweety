@@ -9,9 +9,6 @@ import rx.Completable
 import rx.Observable
 import javax.inject.Inject
 
-/**
- * Created by yshrsmz on 2016/09/27.
- */
 @UserScope
 class UserLocalRepositoryImpl @Inject constructor(private val storIOSQLite: StorIOSQLite) : UserLocalRepository {
 

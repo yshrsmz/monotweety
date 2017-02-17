@@ -26,10 +26,6 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
-
-/**
- * Created by yshrsmz on 2016/09/25.
- */
 class SplashController : ActionBarController(), HasComponent<SplashComponent> {
 
   @set:[Inject]

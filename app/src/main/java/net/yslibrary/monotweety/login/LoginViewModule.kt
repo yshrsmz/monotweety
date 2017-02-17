@@ -8,9 +8,6 @@ import net.yslibrary.monotweety.base.di.Names
 import rx.subjects.PublishSubject
 import javax.inject.Named
 
-/**
- * Created by yshrsmz on 2016/09/27.
- */
 @Module
 class LoginViewModule {
 

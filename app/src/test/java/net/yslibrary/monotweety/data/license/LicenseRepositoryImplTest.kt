@@ -8,9 +8,6 @@ import org.junit.runner.RunWith
 import rx.observers.TestSubscriber
 import kotlin.properties.Delegates
 
-/**
- * Created by yshrsmz on 2016/12/06.
- */
 @RunWith(ConfiguredRobolectricTestRunner::class)
 class LicenseRepositoryImplTest {
 

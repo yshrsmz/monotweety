@@ -11,9 +11,6 @@ import net.yslibrary.monotweety.data.local.LocalModule
 import net.yslibrary.monotweety.data.session.SessionModule
 import net.yslibrary.monotweety.data.setting.SettingModule
 
-/**
- * Created by yshrsmz on 2016/09/27.
- */
 @Module(
     includes = arrayOf(
         AppInfoModule::class,

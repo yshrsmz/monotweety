@@ -15,9 +15,6 @@ import net.yslibrary.monotweety.base.HasComponent
 import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.status.ComposeStatusController
 
-/**
- * Created by yshrsmz on 2016/10/01.
- */
 class ComposeActivity : BaseActivity(), ActionBarProvider, HasComponent<ComposeActivityComponent> {
 
   companion object {

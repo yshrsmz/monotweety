@@ -8,9 +8,6 @@ import rx.Observable
 import rx.lang.kotlin.BehaviorSubject
 import javax.inject.Inject
 
-/**
- * Created by yshrsmz on 2016/10/02.
- */
 @UserScope
 class StatusLocalRepositoryImpl @Inject constructor() : StatusLocalRepository {
 

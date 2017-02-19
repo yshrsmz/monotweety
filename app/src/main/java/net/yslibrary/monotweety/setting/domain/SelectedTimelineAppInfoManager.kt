@@ -7,9 +7,6 @@ import net.yslibrary.monotweety.data.setting.SettingDataManager
 import rx.Observable
 import javax.inject.Inject
 
-/**
- * Created by yshrsmz on 2016/11/14.
- */
 @AppScope
 class SelectedTimelineAppInfoManager @Inject constructor(private val appInfoManager: AppInfoManager,
                                                          private val settingDataManager: SettingDataManager) {

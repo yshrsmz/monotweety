@@ -18,9 +18,6 @@ import net.yslibrary.monotweety.event.NewIntent
 import net.yslibrary.monotweety.splash.SplashController
 import timber.log.Timber
 
-/**
- * Created by yshrsmz on 2016/09/24.
- */
 class MainActivity : BaseActivity(), ActionBarProvider, HasComponent<MainActivityComponent> {
 
   companion object {

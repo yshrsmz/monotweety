@@ -16,10 +16,6 @@ import net.yslibrary.monotweety.data.status.remote.UpdateStatusService
 import net.yslibrary.monotweety.data.user.UserModule
 import java.util.concurrent.ConcurrentHashMap
 
-
-/**
- * Created by yshrsmz on 2016/09/27.
- */
 @Module(
     includes = arrayOf(
         StatusModule::class,
@@ -34,7 +30,7 @@ class UserDataModule {
     if (!apiClients.containsKey(session)) {
       apiClients.putIfAbsent(session, TwitterApiClient(session))
     }
-    return apiClients.get(session)!!
+    return apiClients[session]!!
   }
 
   @Provides

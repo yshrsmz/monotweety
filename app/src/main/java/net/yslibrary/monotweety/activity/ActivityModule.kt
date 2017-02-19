@@ -9,12 +9,8 @@ import net.yslibrary.monotweety.base.di.Names
 import net.yslibrary.rxeventbus.EventBus
 import javax.inject.Named
 
-
-/**
- * Created by yshrsmz on 2016/09/24.
- */
 @Module
-class ActivityModule(protected val activity: BaseActivity) {
+class ActivityModule(private val activity: BaseActivity) {
 
   @Provides
   @Named(Names.FOR_ACTIVITY)

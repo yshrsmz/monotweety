@@ -14,9 +14,6 @@ import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.base.inflate
 
-/**
- * Created by yshrsmz on 2016/11/05.
- */
 class FooterEditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<List<SettingAdapter.Item>>() {
 
   override fun isForViewType(items: List<SettingAdapter.Item>, position: Int): Boolean {

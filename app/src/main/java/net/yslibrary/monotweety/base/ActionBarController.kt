@@ -5,9 +5,6 @@ import android.view.MenuItem
 import android.view.View
 import net.yslibrary.monotweety.activity.ActionBarProvider
 
-/**
- * Created by yshrsmz on 2016/09/25.
- */
 abstract class ActionBarController : BaseController() {
 
   open val title: String? = null

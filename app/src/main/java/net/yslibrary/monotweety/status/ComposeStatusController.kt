@@ -28,9 +28,6 @@ import javax.inject.Inject
 import kotlin.properties.Delegates
 
 
-/**
- * Created by yshrsmz on 2016/10/01.
- */
 class ComposeStatusController(private var status: String? = null) : ActionBarController(),
                                                                     HasComponent<ComposeStatusComponent> {
 

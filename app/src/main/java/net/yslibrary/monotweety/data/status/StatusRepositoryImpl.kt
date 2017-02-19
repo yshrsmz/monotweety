@@ -8,9 +8,6 @@ import rx.Observable
 import timber.log.Timber
 import javax.inject.Inject
 
-/**
- * Created by yshrsmz on 2016/09/30.
- */
 @UserScope
 class StatusRepositoryImpl @Inject constructor(private val remoteRepository: StatusRemoteRepository,
                                                private val localRepository: StatusLocalRepository) : StatusRepository {

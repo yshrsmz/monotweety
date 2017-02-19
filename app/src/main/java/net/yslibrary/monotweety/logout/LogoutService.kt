@@ -9,9 +9,6 @@ import net.yslibrary.monotweety.login.domain.DoLogout
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
-/**
- * Created by yshrsmz on 2016/10/09.
- */
 class LogoutService : IntentService(NAME) {
 
   @set:[Inject]

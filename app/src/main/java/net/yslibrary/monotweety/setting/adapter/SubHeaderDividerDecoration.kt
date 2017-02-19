@@ -5,9 +5,6 @@ import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.support.v7.widget.RecyclerView
 
-/**
- * Created by yshrsmz on 2016/10/08.
- */
 class SubHeaderDividerDecoration(context: Context) : RecyclerView.ItemDecoration() {
 
   private val divider: Drawable

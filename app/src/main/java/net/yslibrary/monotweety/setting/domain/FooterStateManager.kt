@@ -8,9 +8,6 @@ import rx.subjects.PublishSubject
 
 import javax.inject.Inject
 
-/**
- * Created by yshrsmz on 2016/11/05.
- */
 @AppScope
 class FooterStateManager @Inject constructor(private val settingDataManager: SettingDataManager) {
 

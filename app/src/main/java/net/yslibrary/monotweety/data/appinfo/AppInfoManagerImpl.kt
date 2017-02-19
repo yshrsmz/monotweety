@@ -7,9 +7,6 @@ import net.yslibrary.monotweety.base.toSingle
 import rx.Single
 import javax.inject.Inject
 
-/**
- * Created by yshrsmz on 2016/11/13.
- */
 @AppScope
 class AppInfoManagerImpl @Inject constructor(private val packageManager: PackageManager) : AppInfoManager {
 

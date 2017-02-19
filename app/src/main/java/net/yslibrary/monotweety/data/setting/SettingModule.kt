@@ -8,9 +8,6 @@ import net.yslibrary.monotweety.base.di.AppScope
 import net.yslibrary.monotweety.base.di.Names
 import javax.inject.Named
 
-/**
- * Created by yshrsmz on 2016/09/29.
- */
 @Module
 class SettingModule {
 

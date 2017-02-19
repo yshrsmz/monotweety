@@ -11,9 +11,6 @@ import org.junit.runner.RunWith
 import org.robolectric.RuntimeEnvironment
 import rx.observers.TestSubscriber
 
-/**
- * Created by yshrsmz on 2016/11/06.
- */
 @RunWith(ConfiguredRobolectricTestRunner::class)
 class FooterStateManagerTest {
 

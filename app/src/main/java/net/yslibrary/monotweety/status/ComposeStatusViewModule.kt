@@ -11,9 +11,6 @@ import net.yslibrary.monotweety.status.domain.ClearPreviousStatus
 import net.yslibrary.monotweety.status.domain.GetPreviousStatus
 import net.yslibrary.monotweety.status.domain.UpdateStatus
 
-/**
- * Created by yshrsmz on 2016/10/02.
- */
 @Module
 class ComposeStatusViewModule(private val status: String?) {
 

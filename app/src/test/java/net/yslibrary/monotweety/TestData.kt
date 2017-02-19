@@ -6,13 +6,10 @@ import java.io.BufferedReader
 import java.io.FileInputStream
 import java.io.InputStreamReader
 
-/**
- * Created by yshrsmz on 2016/10/20.
- */
 fun readJsonFromAssets(filename: String): String {
   val ASSET_BASE_PATH = "../app/src/test/assets/"
 
-  val br = BufferedReader(InputStreamReader(FileInputStream("${ASSET_BASE_PATH}${filename}")))
+  val br = BufferedReader(InputStreamReader(FileInputStream("$ASSET_BASE_PATH$filename")))
 
   val sb = StringBuilder()
   var line = br.readLine()

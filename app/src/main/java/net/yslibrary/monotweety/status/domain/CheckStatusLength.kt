@@ -6,9 +6,6 @@ import net.yslibrary.monotweety.data.config.ConfigDataManager
 import rx.Single
 import javax.inject.Inject
 
-/**
- * Created by yshrsmz on 2016/10/01.
- */
 @UserScope
 class CheckStatusLength @Inject constructor(private val validator: Validator,
                                             private val configDataManager: ConfigDataManager) {

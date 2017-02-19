@@ -16,9 +16,6 @@ import net.yslibrary.monotweety.base.inflate
 import net.yslibrary.monotweety.base.setTo
 import rx.subscriptions.SerialSubscription
 
-/**
- * Created by yshrsmz on 2016/10/13.
- */
 class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<List<ComposeStatusAdapter.Item>>() {
 
   val statusInputSubscription = SerialSubscription()

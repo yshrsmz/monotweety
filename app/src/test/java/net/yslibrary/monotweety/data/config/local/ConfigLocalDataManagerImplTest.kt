@@ -15,9 +15,6 @@ import rx.observers.TestSubscriber
 import java.util.concurrent.TimeUnit
 import kotlin.properties.Delegates
 
-/**
- * Created by yshrsmz on 2016/12/03.
- */
 @RunWith(ConfiguredRobolectricTestRunner::class)
 class ConfigLocalDataManagerImplTest {
 

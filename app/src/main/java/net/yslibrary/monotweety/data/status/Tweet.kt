@@ -1,8 +1,5 @@
 package net.yslibrary.monotweety.data.status
 
-/**
- * Created by yshrsmz on 2017/02/07.
- */
 data class Tweet(val id: Long,
                  val inReplyToStatusId: Long,
                  val text: String,

@@ -13,9 +13,6 @@ import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import java.util.*
 
-/**
- * Created by yshrsmz on 2016/10/14.
- */
 class PreviousStatusAdapterDelegate : AdapterDelegate<List<ComposeStatusAdapter.Item>>() {
 
   private val createdAtRawFormatter = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss Z yyyy", Locale.ENGLISH)

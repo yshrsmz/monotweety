@@ -19,9 +19,6 @@ import rx.plugins.RxJavaHooks
 import rx.schedulers.Schedulers
 import com.twitter.sdk.android.core.models.Configuration as TwitterConfig
 
-/**
- * Created by yshrsmz on 2016/11/12.
- */
 @RunWith(ConfiguredRobolectricTestRunner::class)
 class ConfigDataManagerImplTest {
 

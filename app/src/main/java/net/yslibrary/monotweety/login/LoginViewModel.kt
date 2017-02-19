@@ -5,9 +5,6 @@ import rx.Observable
 import rx.lang.kotlin.PublishSubject
 import rx.subjects.PublishSubject
 
-/**
- * Created by yshrsmz on 2016/09/27.
- */
 class LoginViewModel(private val loginCompletedSubject: PublishSubject<TwitterSession>) {
 
   private val loginFailedSubject = PublishSubject<Exception>()

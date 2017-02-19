@@ -5,9 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import net.yslibrary.monotweety.R
 
-/**
- * Created by yshrsmz on 2016/11/10.
- */
 class CreateShortcutActivity : Activity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {

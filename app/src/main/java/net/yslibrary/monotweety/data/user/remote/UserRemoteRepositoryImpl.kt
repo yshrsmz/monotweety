@@ -10,9 +10,6 @@ import rx.Single
 import javax.inject.Inject
 import com.twitter.sdk.android.core.models.User as TwitterUser
 
-/**
- * Created by yshrsmz on 2016/10/08.
- */
 @UserScope
 class UserRemoteRepositoryImpl @Inject constructor(private val accountService: AccountService) : UserRemoteRepository {
   override fun get(): Single<User> {

@@ -25,9 +25,6 @@ import timber.log.Timber
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
-/**
- * Created by yshrsmz on 2016/09/27.
- */
 class LoginController : ActionBarController(), HasComponent<LoginComponent> {
 
   override val shouldShowActionBar: Boolean = false

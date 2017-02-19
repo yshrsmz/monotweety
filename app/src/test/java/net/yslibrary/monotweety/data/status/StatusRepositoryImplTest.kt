@@ -14,9 +14,6 @@ import rx.Single
 import java.util.concurrent.TimeUnit
 import com.twitter.sdk.android.core.models.Tweet as TwitterTweet
 
-/**
- * Created by yshrsmz on 2017/02/07.
- */
 class StatusRepositoryImplTest {
 
 

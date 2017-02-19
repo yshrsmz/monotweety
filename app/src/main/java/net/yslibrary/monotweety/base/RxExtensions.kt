@@ -6,9 +6,6 @@ import rx.Subscription
 import rx.functions.Action1
 import rx.subscriptions.SerialSubscription
 
-/**
- * Created by yshrsmz on 2016/09/24.
- */
 class SkipUntilCompletedAction1<T>(val doOnSubscribe: (T, () -> Unit) -> Unit) : Action1<T> {
   private var loading: Boolean = false
   override fun call(t: T) {
@@ -21,7 +18,7 @@ class SkipUntilCompletedAction1<T>(val doOnSubscribe: (T, () -> Unit) -> Unit) :
 }
 
 fun <T> Observable<T>.subscribeWhenCompleted(doOnSubscribe: (t: T, completed: () -> Unit) -> Unit): Subscription {
-  return subscribe(SkipUntilCompletedAction1<T>(doOnSubscribe))
+  return subscribe(SkipUntilCompletedAction1(doOnSubscribe))
 }
 
 fun Subscription.setTo(subscription: SerialSubscription): Subscription {

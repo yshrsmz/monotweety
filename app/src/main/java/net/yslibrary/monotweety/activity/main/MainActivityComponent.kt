@@ -10,9 +10,6 @@ import net.yslibrary.monotweety.login.LoginComponent
 import net.yslibrary.monotweety.setting.SettingViewModule
 import net.yslibrary.monotweety.splash.SplashComponent
 
-/**
- * Created by yshrsmz on 2016/09/27.
- */
 @ActivityScope
 @Component(
     dependencies = arrayOf(AppComponent::class),

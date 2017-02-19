@@ -7,9 +7,6 @@ import net.yslibrary.monotweety.data.local.getStringByName
 import net.yslibrary.monotweety.data.user.User
 import net.yslibrary.monotweety.data.user.local.UserTable
 
-/**
- * Created by yshrsmz on 2016/10/08.
- */
 class UserGetResolver : DefaultGetResolver<User>() {
   override fun mapFromCursor(cursor: Cursor): User {
     return User(

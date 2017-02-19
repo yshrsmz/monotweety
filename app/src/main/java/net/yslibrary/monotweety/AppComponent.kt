@@ -14,9 +14,6 @@ import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
 import rx.subjects.PublishSubject
 import javax.inject.Named
 
-/**
- * Created by yshrsmz on 2016/09/24.
- */
 @AppScope
 @Component(
     modules = arrayOf(AppModule::class, DataModule::class)

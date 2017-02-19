@@ -9,9 +9,6 @@ import org.junit.Test
 import rx.observers.TestSubscriber
 import com.twitter.sdk.android.core.models.Tweet as TwitterTweet
 
-/**
- * Created by yshrsmz on 2016/12/15.
- */
 class StatusLocalRepositoryImplTest {
 
   lateinit var repository: StatusLocalRepositoryImpl

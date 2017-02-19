@@ -8,9 +8,6 @@ import net.yslibrary.monotweety.data.config.Configuration
 import rx.Single
 import com.twitter.sdk.android.core.models.Configuration as TwitterConfig
 
-/**
- * Created by yshrsmz on 2016/10/01.
- */
 class ConfigRemoteDataManagerImpl(private val configurationService: ConfigurationService) : ConfigRemoteDataManager {
 
   override fun get(): Single<Configuration> {

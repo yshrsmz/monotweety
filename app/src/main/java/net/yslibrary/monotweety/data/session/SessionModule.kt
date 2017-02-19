@@ -6,9 +6,6 @@ import dagger.Module
 import dagger.Provides
 import net.yslibrary.monotweety.base.di.AppScope
 
-/**
- * Created by yshrsmz on 2016/09/27.
- */
 @Module
 class SessionModule {
 

@@ -31,9 +31,6 @@ import timber.log.Timber
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
-/**
- * Created by yshrsmz on 2016/09/24.
- */
 class SettingController : ActionBarController(), HasComponent<SettingComponent> {
 
   @set:[Inject]

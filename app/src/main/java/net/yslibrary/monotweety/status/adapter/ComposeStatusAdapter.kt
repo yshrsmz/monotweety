@@ -9,9 +9,6 @@ import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import timber.log.Timber
 
-/**
- * Created by yshrsmz on 2016/10/13.
- */
 class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapter<List<ComposeStatusAdapter.Item>>() {
 
   var editorInitialized = false

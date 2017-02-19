@@ -18,9 +18,6 @@ import rx.observers.TestSubscriber
 import java.util.concurrent.TimeUnit
 import com.twitter.sdk.android.core.models.User as TwitterUser
 
-/**
- * Created by yshrsmz on 2016/10/23.
- */
 @RunWith(JUnit4::class)
 class UserRepositoryImplTest {
 

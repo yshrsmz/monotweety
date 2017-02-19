@@ -15,10 +15,6 @@ import rx.Observable
 import rx.lang.kotlin.PublishSubject
 import timber.log.Timber
 
-
-/**
- * Created by yshrsmz on 2016/09/26.
- */
 class NotificationServiceViewModel(private val notificationEnabledManager: NotificationEnabledManager,
                                    private val keepOpenManager: KeepOpenManager,
                                    private val checkStatusLength: CheckStatusLength,

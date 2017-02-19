@@ -5,9 +5,6 @@ import com.pushtorefresh.storio.sqlite.queries.InsertQuery
 import com.pushtorefresh.storio.sqlite.queries.Query
 import com.pushtorefresh.storio.sqlite.queries.UpdateQuery
 
-/**
- * Created by yshrsmz on 2016/10/08.
- */
 class UserTable {
 
   companion object {

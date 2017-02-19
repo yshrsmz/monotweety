@@ -11,9 +11,6 @@ import net.yslibrary.monotweety.user.domain.GetUser
 import net.yslibrary.rxeventbus.EventBus
 import javax.inject.Named
 
-/**
- * Created by yshrsmz on 2016/09/25.
- */
 @Module
 class SettingViewModule(private val activityBus: EventBus,
                         private val navigator: Navigator) {

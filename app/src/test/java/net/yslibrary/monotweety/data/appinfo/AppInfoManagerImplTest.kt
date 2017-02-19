@@ -14,9 +14,6 @@ import org.robolectric.res.builder.RobolectricPackageManager
 import org.robolectric.shadows.ShadowResolveInfo
 import rx.observers.TestSubscriber
 
-/**
- * Created by yshrsmz on 2017/01/08.
- */
 @RunWith(ConfiguredRobolectricTestRunner::class)
 class AppInfoManagerImplTest {
 

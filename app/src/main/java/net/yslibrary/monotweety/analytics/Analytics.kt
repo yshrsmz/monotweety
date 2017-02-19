@@ -6,9 +6,6 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import timber.log.Timber
 import javax.inject.Inject
 
-/**
- * Created by yshrsmz on 2016/10/22.
- */
 class Analytics @Inject constructor(private val analytics: FirebaseAnalytics) {
 
   companion object {

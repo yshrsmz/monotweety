@@ -8,9 +8,6 @@ import net.yslibrary.monotweety.license.domain.GetLicenses
 import net.yslibrary.rxeventbus.EventBus
 import javax.inject.Named
 
-/**
- * Created by yshrsmz on 2016/10/10.
- */
 @Module
 class LicenseViewModule(private val activityBus: EventBus) {
 

@@ -13,9 +13,9 @@ import net.yslibrary.monotweety.status.domain.UpdateStatus
 import rx.Completable
 import rx.Observable
 import rx.Single
-import rx.lang.kotlin.BehaviorSubject
-import rx.lang.kotlin.PublishSubject
 import rx.schedulers.Schedulers
+import rx.subjects.BehaviorSubject
+import rx.subjects.PublishSubject
 import timber.log.Timber
 
 class ComposeStatusViewModel(status: String,
@@ -27,23 +27,23 @@ class ComposeStatusViewModel(status: String,
                              private val keepOpenManager: KeepOpenManager,
                              private val footerStateManager: FooterStateManager) {
 
-  private val isSendableStatusSubject = BehaviorSubject(false)
+  private val isSendableStatusSubject = BehaviorSubject.create(false)
 
-  private val statusInfoSubject = BehaviorSubject<StatusInfo>()
+  private val statusInfoSubject = BehaviorSubject.create<StatusInfo>()
 
-  private val statusUpdatedSubject = PublishSubject<Unit>()
+  private val statusUpdatedSubject = PublishSubject.create<Unit>()
 
-  private val keepOpenSubject = BehaviorSubject<Boolean>()
+  private val keepOpenSubject = BehaviorSubject.create<Boolean>()
 
-  private val tweetAsThreadSubject = BehaviorSubject(false)
+  private val tweetAsThreadSubject = BehaviorSubject.create(false)
 
-  private val progressEventsSubject = BehaviorSubject(ProgressEvent.FINISHED)
+  private val progressEventsSubject = BehaviorSubject.create(ProgressEvent.FINISHED)
 
-  private val messagesSubject = PublishSubject<String>()
+  private val messagesSubject = PublishSubject.create<String>()
 
-  private val allowCloseViewSubject = BehaviorSubject(false)
+  private val allowCloseViewSubject = BehaviorSubject.create(false)
 
-  private val previousStatusSubject = BehaviorSubject<Tweet?>(null)
+  private val previousStatusSubject = BehaviorSubject.create(null as Tweet?)
 
   val isSendableStatus: Observable<Boolean>
     get() = isSendableStatusSubject.asObservable()
@@ -131,9 +131,9 @@ class ComposeStatusViewModel(status: String,
         tweetAsThread,
         getPreviousStatus.execute().first(),
         statusInfo,
-        { sendable, asThread, previousTweet, info ->
+        { _, asThread, previousTweet, (status) ->
           // return previous tweet and current status string
-          Pair(if (asThread) previousTweet else null, info.status)
+          Pair(if (asThread) previousTweet else null, status)
         })
         .first().toSingle()
         .doOnSuccess { progressEventsSubject.onNext(ProgressEvent.IN_PROGRESS) }

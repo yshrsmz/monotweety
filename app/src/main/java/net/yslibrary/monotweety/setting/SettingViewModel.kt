@@ -7,8 +7,8 @@ import net.yslibrary.monotweety.setting.domain.*
 import net.yslibrary.monotweety.user.domain.GetUser
 import rx.Observable
 import rx.Single
-import rx.lang.kotlin.BehaviorSubject
-import rx.lang.kotlin.PublishSubject
+import rx.subjects.BehaviorSubject
+import rx.subjects.PublishSubject
 import timber.log.Timber
 
 class SettingViewModel(private val config: Config,
@@ -19,23 +19,23 @@ class SettingViewModel(private val config: Config,
                        private val getInstalledSupportedApps: GetInstalledSupportedApps,
                        private val selectedTimelineAppInfoManager: SelectedTimelineAppInfoManager) {
 
-  private val userSubject = BehaviorSubject<User?>(null)
+  private val userSubject = BehaviorSubject.create(null as User?)
 
-  private val logoutRequestsSubject = PublishSubject<Unit>()
+  private val logoutRequestsSubject = PublishSubject.create<Unit>()
 
-  private val licenseRequestsSubject = PublishSubject<Unit>()
+  private val licenseRequestsSubject = PublishSubject.create<Unit>()
 
-  private val developerRequestsSubject = PublishSubject<String>()
+  private val developerRequestsSubject = PublishSubject.create<String>()
 
-  private val shareRequestsSubject = PublishSubject<String>()
+  private val shareRequestsSubject = PublishSubject.create<String>()
 
-  private val googlePlayRequestsSubject = PublishSubject<String>()
+  private val googlePlayRequestsSubject = PublishSubject.create<String>()
 
-  private val openProfileRequestsSubject = PublishSubject<String>()
+  private val openProfileRequestsSubject = PublishSubject.create<String>()
 
-  private val changelogRequestsSubject = PublishSubject<Unit>()
+  private val changelogRequestsSubject = PublishSubject.create<Unit>()
 
-  private val githubRequestsSubject = PublishSubject<String>()
+  private val githubRequestsSubject = PublishSubject.create<String>()
 
   val notificationEnabledChanged: Observable<Boolean>
     get() = notificationEnabledManager.get()

@@ -22,7 +22,7 @@ import net.yslibrary.monotweety.status.adapter.ComposeStatusAdapter
 import net.yslibrary.monotweety.status.adapter.EditorAdapterDelegate
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
-import rx.lang.kotlin.PublishSubject
+import rx.subjects.PublishSubject
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.properties.Delegates
@@ -63,7 +63,7 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
   @set:[Inject]
   var refWatcherDelegate by Delegates.notNull<RefWatcherDelegate>()
 
-  val sendButtonClicks = PublishSubject<Unit>()
+  val sendButtonClicks: PublishSubject<Unit> = PublishSubject.create<Unit>()
 
   override fun onCreate() {
     super.onCreate()
@@ -106,13 +106,13 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
         viewModel.statusInfo.distinctUntilChanged(),
         viewModel.keepOpen,
         viewModel.tweetAsThread,
-        { statusInfo, keepOpen, tweetAsThread ->
-          EditorAdapterDelegate.Item(status = statusInfo.status,
+        { (status1, valid, length, maxLength), keepOpen, tweetAsThread ->
+          EditorAdapterDelegate.Item(status = status1,
               keepOpen = keepOpen,
               enableThread = tweetAsThread,
-              statusLength = statusInfo.length,
-              maxLength = statusInfo.maxLength,
-              valid = statusInfo.valid,
+              statusLength = length,
+              maxLength = maxLength,
+              valid = valid,
               clear = false)
         })
         .distinctUntilChanged()
@@ -151,12 +151,11 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
         }
         .bindToLifecycle()
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe { tweetAndFooter ->
-          val tweet = tweetAndFooter.first
+        .subscribe { (tweet, second) ->
           Timber.d("status updated, and previous status loaded: ${tweet?.text}")
           toast(getString(R.string.message_tweet_succeeded))?.show()
           analytics.tweetFromEditor()
-          statusAdapter.updatePreviousTweetAndClearEditor(if (tweet == null) emptyList<Tweet>() else listOf(tweet), tweetAndFooter.second)
+          statusAdapter.updatePreviousTweetAndClearEditor(if (tweet == null) emptyList<Tweet>() else listOf(tweet), second)
         }
 
     viewModel.messages.bindToLifecycle()
@@ -237,13 +236,13 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
           .setCancelable(true)
           .setNegativeButton(
               R.string.label_no,
-              { dialog, which ->
+              { dialog, _ ->
                 viewModel.onConfirmCloseView(allowCloseView = false)
                 dialog.dismiss()
               })
           .setPositiveButton(
               R.string.label_quit,
-              { dialog, which ->
+              { _, _ ->
                 viewModel.onConfirmCloseView(allowCloseView = true)
                 activity?.onBackPressed()
               }).show()

@@ -2,12 +2,11 @@ package net.yslibrary.monotweety.login
 
 import com.twitter.sdk.android.core.TwitterSession
 import rx.Observable
-import rx.lang.kotlin.PublishSubject
 import rx.subjects.PublishSubject
 
 class LoginViewModel(private val loginCompletedSubject: PublishSubject<TwitterSession>) {
 
-  private val loginFailedSubject = PublishSubject<Exception>()
+  private val loginFailedSubject = PublishSubject.create<Exception>()
 
   val loginCompleted: Observable<TwitterSession>
     get() = loginCompletedSubject.asObservable()

@@ -56,13 +56,13 @@ class FooterEditorAdapterDelegate(private val listener: Listener) : AdapterDeleg
     input.setText(item.footerText, TextView.BufferType.EDITABLE)
 
     input.isEnabled = item.checked
-    enabledSwitch.setOnCheckedChangeListener { compoundButton, checked -> input.isEnabled = checked }
+    enabledSwitch.setOnCheckedChangeListener { _, checked -> input.isEnabled = checked }
 
     AlertDialog.Builder(context)
         .setTitle(R.string.title_edit_footer)
         .setView(view)
         .setPositiveButton(R.string.label_confirm,
-            { dialog, buttonPosition ->
+            { _, _ ->
               val enabled = enabledSwitch.isChecked
               val footerText = input.text.toString()
               listener.onFooterUpdated(enabled, footerText)

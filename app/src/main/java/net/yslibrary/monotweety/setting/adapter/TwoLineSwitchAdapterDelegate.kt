@@ -26,7 +26,7 @@ class TwoLineSwitchAdapterDelegate(private val listener: Listener) : AdapterDele
       holder.switch.setOnCheckedChangeListener(null)
       holder.switch.isChecked = item.checked
       holder.itemView.isEnabled = item.enabled
-      holder.switch.setOnCheckedChangeListener { compoundButton, isChecked ->
+      holder.switch.setOnCheckedChangeListener { _, isChecked ->
         listener.onClick(item, isChecked)
       }
       holder.itemView.setOnClickListener { holder.switch.performClick() }

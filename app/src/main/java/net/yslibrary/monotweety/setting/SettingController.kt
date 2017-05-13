@@ -91,12 +91,12 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
             .setMessage(R.string.label_logout_confirm)
             .setCancelable(true)
             .setPositiveButton(R.string.label_logout,
-                { dialog, which ->
+                { dialog, _ ->
                   viewModel.onLogoutRequested()
                   dialog.dismiss()
                 })
             .setNegativeButton(R.string.label_no,
-                { dialog, which ->
+                { dialog, _ ->
                   dialog.cancel()
                 })
             .show()

@@ -5,13 +5,13 @@ import net.yslibrary.monotweety.base.di.UserScope
 import net.yslibrary.monotweety.data.status.Tweet
 import rx.Completable
 import rx.Observable
-import rx.lang.kotlin.BehaviorSubject
+import rx.subjects.BehaviorSubject
 import javax.inject.Inject
 
 @UserScope
 class StatusLocalRepositoryImpl @Inject constructor() : StatusLocalRepository {
 
-  val previousTweetSubject = BehaviorSubject<Tweet?>(null)
+  val previousTweetSubject: BehaviorSubject<Tweet?> = BehaviorSubject.create(null as Tweet?)
 
   override fun clear(): Completable {
     return Completable.fromAction {

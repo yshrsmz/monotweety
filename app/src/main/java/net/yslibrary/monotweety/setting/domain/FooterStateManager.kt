@@ -3,7 +3,6 @@ package net.yslibrary.monotweety.setting.domain
 import net.yslibrary.monotweety.base.di.AppScope
 import net.yslibrary.monotweety.data.setting.SettingDataManager
 import rx.Observable
-import rx.lang.kotlin.PublishSubject
 import rx.subjects.PublishSubject
 
 import javax.inject.Inject
@@ -11,7 +10,7 @@ import javax.inject.Inject
 @AppScope
 class FooterStateManager @Inject constructor(private val settingDataManager: SettingDataManager) {
 
-  private val subject: PublishSubject<Unit> = PublishSubject()
+  private val subject: PublishSubject<Unit> = PublishSubject.create()
 
   fun get(): Observable<State> {
     return subject

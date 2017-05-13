@@ -54,7 +54,7 @@ class TimelineAppAdapterDelegate(private val listener: Listener) : AdapterDelega
             if (position < 0) 0 else position + 1,
             null)
         .setPositiveButton(R.string.label_confirm,
-            { dialog, buttonPosition ->
+            { dialog, _ ->
               val selected = (dialog as AlertDialog).listView.checkedItemPosition
               val app = item.apps.getOrElse(selected - 1, { AppInfo.empty() })
               listener.onTimelineAppChanged(app)

@@ -16,7 +16,7 @@ import net.yslibrary.monotweety.base.RefWatcherDelegate
 import net.yslibrary.monotweety.base.RefWatcherDelegateImpl
 import net.yslibrary.monotweety.base.di.AppScope
 import net.yslibrary.monotweety.base.di.Names
-import rx.lang.kotlin.PublishSubject
+
 import rx.subjects.PublishSubject
 import javax.inject.Named
 
@@ -73,7 +73,7 @@ open class AppModule(private val context: Context) {
   @AppScope
   @Provides
   fun provideLoginCompletedSubject(): PublishSubject<TwitterSession> {
-    return PublishSubject()
+    return PublishSubject.create()
   }
 
   @Provides

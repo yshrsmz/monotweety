@@ -12,7 +12,7 @@ import net.yslibrary.monotweety.status.domain.ClearPreviousStatus
 import net.yslibrary.monotweety.status.domain.UpdateStatus
 import rx.Completable
 import rx.Observable
-import rx.lang.kotlin.PublishSubject
+import rx.subjects.PublishSubject
 import timber.log.Timber
 
 class NotificationServiceViewModel(private val notificationEnabledManager: NotificationEnabledManager,
@@ -23,15 +23,15 @@ class NotificationServiceViewModel(private val notificationEnabledManager: Notif
                                    private val footerStateManager: FooterStateManager,
                                    private val selectedTimelineAppInfoManager: SelectedTimelineAppInfoManager) {
 
-  private val overlongStatusSubject = PublishSubject<OverlongStatus>()
+  private val overlongStatusSubject = PublishSubject.create<OverlongStatus>()
 
-  private val updateCompletedSubject = PublishSubject<Unit>()
+  private val updateCompletedSubject = PublishSubject.create<Unit>()
 
-  private val stopNotificationServiceSubject = PublishSubject<Unit>()
+  private val stopNotificationServiceSubject = PublishSubject.create<Unit>()
 
-  private val updateNotificatoinRequestsSubject = PublishSubject<Unit>()
+  private val updateNotificatoinRequestsSubject = PublishSubject.create<Unit>()
 
-  private val errorSubject = PublishSubject<String>()
+  private val errorSubject = PublishSubject.create<String>()
 
   val overlongStatus: Observable<OverlongStatus>
     get() = overlongStatusSubject.asObservable()

@@ -55,7 +55,7 @@ class StatusRepositoryImplTest {
     val tweet = Tweet.from(gson.fromJson(readJsonFromAssets("tweet.json"), TwitterTweet::class.java))
 
     whenever(mockLocalRepository.getPrevious())
-        .thenReturn(Observable.fromEmitter({ emitter ->
+        .thenReturn(Observable.create({ emitter ->
           emitter.onNext(null)
           emitter.onNext(tweet)
         }, Emitter.BackpressureMode.LATEST))

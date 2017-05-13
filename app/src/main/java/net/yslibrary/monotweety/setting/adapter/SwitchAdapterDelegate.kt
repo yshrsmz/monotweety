@@ -22,7 +22,7 @@ class SwitchAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
       holder.switchButton.isChecked = item.checked
       holder.switchButton.isEnabled = item.enabled
 
-      holder.switchButton.setOnCheckedChangeListener { compoundButton, checked -> listener.onClick(item, checked) }
+      holder.switchButton.setOnCheckedChangeListener { _, checked -> listener.onClick(item, checked) }
     }
   }
 

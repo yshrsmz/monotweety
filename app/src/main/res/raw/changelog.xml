@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
   <changelogversion
-      changeDate="Feb 15th, 2016"
+      changeDate="May 15th, 2017"
+      versionName="1.5.2">
+    <changelogtext>Stability improvement</changelogtext>
+  </changelogversion>
+  <changelogversion
+      changeDate="Feb 15th, 2017"
       versionName="1.5.1">
     <changelogtext>Happy Valentine's Day!</changelogtext>
     <changelogtext>Stability improvement</changelogtext>

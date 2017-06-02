@@ -48,7 +48,7 @@ class UserRemoteRepositoryImplTest {
         profileImageUrl = user.profileImageUrl,
         _updatedAt = -1)
 
-    whenever(mockAccountService.verifyCredentials(any(), any()))
+    whenever(mockAccountService.verifyCredentials(any(), any(), any()))
         .thenReturn(mockCall)
 
     repository.get().subscribe(ts)

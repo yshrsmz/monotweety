@@ -14,7 +14,7 @@ import com.twitter.sdk.android.core.models.User as TwitterUser
 class UserRemoteRepositoryImpl @Inject constructor(private val accountService: AccountService) : UserRemoteRepository {
   override fun get(): Single<User> {
     return Single.fromEmitter<TwitterUser>({ emitter ->
-      val call = accountService.verifyCredentials(false, true)
+      val call = accountService.verifyCredentials(false, true, false)
       call.enqueue(object : Callback<TwitterUser>() {
         override fun failure(exception: TwitterException?) {
           emitter.onError(exception)

@@ -123,9 +123,7 @@ dependencies {
   compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
   compile 'com.twitter:twitter-text:1.13.0'
-  compile('com.twitter.sdk.android:twitter:2.3.2@aar') {
-    transitive = true;
-  }
+  compile 'com.twitter.sdk.android:twitter-core:3.0.0'
   compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
     transitive = true;
   }

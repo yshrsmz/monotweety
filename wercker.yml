@@ -1,6 +1,6 @@
 build:
   box:
-    id: yshrsmz/android
+    id: yshrsmz/android:sdk25
     username: $DOCKERHUB_USERNAME
     password: $DOCKERHUB_PASSWORD
     tag: latest

@@ -53,7 +53,7 @@ class NotificationServiceViewModel(private val notificationEnabledManager: Notif
         updateNotificatoinRequestsSubject.startWith(Unit),
         footerStateManager.get(),
         selectedTimelineAppInfoManager.get(),
-        { aUnit, footerState, appInfo -> NotificationInfo(footerState, appInfo) })
+        { _, footerState, appInfo -> NotificationInfo(footerState, appInfo) })
 
   val footerState: Observable<FooterStateManager.State>
     get() = footerStateManager.get()

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
   <changelogversion
-      changeDate="May 15th, 2017"
+      changeDate="Jul 6th, 2017"
       versionName="1.5.2">
     <changelogtext>Stability improvement</changelogtext>
   </changelogversion>

@@ -38,7 +38,7 @@ class LicenseRepositoryImpl @Inject constructor() : LicenseRepository {
             val mutable = it.toMutableList()
             mutable.addAll(0, listOf(
                 Licenses.noContent("Android SDK", "Google Inc.", "https://developer.android.com/sdk/terms.html"),
-                Licenses.noContent("Fabric", "Twitter", "https://fabric.io/terms")
+                Licenses.noContent("Fabric", "Google Inc.", "https://fabric.io/terms")
             ))
             mutable.toList()
           }

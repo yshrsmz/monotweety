@@ -1,9 +1,6 @@
 package net.yslibrary.monotweety.base
 
 import android.support.annotation.StringRes
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import com.bluelinelabs.conductor.rxlifecycle.RxController
 import net.yslibrary.monotweety.analytics.Analytics
@@ -25,27 +22,10 @@ abstract class BaseController : RxController() {
   @set:Inject
   var analytics by Delegates.notNull<Analytics>()
 
-  private var created: Boolean = false
-
   @Suppress("UNCHECKED_CAST")
   fun <PROVIDER> getComponentProvider(parent: Any): PROVIDER {
     return ((parent as HasComponent<Any>).component as PROVIDER)
   }
-
-  override final fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-    if (!created) {
-      created = true
-      onCreate()
-    }
-
-    return inflateView(inflater, container)
-  }
-
-  open fun onCreate() {
-
-  }
-
-  abstract fun inflateView(inflater: LayoutInflater, container: ViewGroup): View
 
   fun <T> Observable<T>.bindToLifecycle(): Observable<T> = this.compose(this@BaseController.bindToLifecycle<T>())
 

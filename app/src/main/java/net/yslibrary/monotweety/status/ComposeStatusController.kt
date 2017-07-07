@@ -1,6 +1,7 @@
 package net.yslibrary.monotweety.status
 
-import android.annotation.TargetApi
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.pm.ShortcutManager
 import android.os.Build
 import android.support.v7.app.AlertDialog
@@ -13,7 +14,6 @@ import com.bluelinelabs.conductor.ControllerChangeHandler
 import com.bluelinelabs.conductor.ControllerChangeType
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
-
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.base.*
@@ -65,8 +65,8 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
 
   val sendButtonClicks: PublishSubject<Unit> = PublishSubject.create<Unit>()
 
-  override fun onCreate() {
-    super.onCreate()
+  override fun onContextAvailable(context: Context) {
+    super.onContextAvailable(context)
     Timber.d("status: $status")
     component.inject(this)
 
@@ -74,7 +74,7 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
     analytics.viewEvent(Analytics.VIEW_COMPOSE_STATUS)
   }
 
-  override fun inflateView(inflater: LayoutInflater, container: ViewGroup): View {
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
     val view = inflater.inflate(R.layout.controller_compose_status, container, false)
 
     bindings = Bindings(view)
@@ -268,11 +268,12 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
     childRouter.popCurrentController()
   }
 
-  @TargetApi(Build.VERSION_CODES.N_MR1)
+  @SuppressLint("NewApi")
   fun reportShortcutUsedIfNeeded(status: String?) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1 && status.isNullOrEmpty()) {
-      applicationContext?.getSystemService(ShortcutManager::class.java)
-          ?.reportShortcutUsed("newtweet")
+    if (status.isNullOrEmpty()) {
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+        applicationContext?.getSystemService(ShortcutManager::class.java)?.reportShortcutUsed("newtweet")
+      }
     }
   }
 

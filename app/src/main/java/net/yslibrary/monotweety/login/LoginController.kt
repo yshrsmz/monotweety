@@ -1,5 +1,6 @@
 package net.yslibrary.monotweety.login
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,14 +44,14 @@ class LoginController : ActionBarController(), HasComponent<LoginComponent> {
         .loginComponent(LoginViewModule())
   }
 
-  override fun onCreate() {
-    super.onCreate()
-    Timber.i("onCreate - LoginController")
+  override fun onContextAvailable(context: Context) {
+    super.onContextAvailable(context)
+    Timber.i("onContextAvailable - LoginController")
     component.inject(this)
     analytics.viewEvent(Analytics.VIEW_LOGIN)
   }
 
-  override fun inflateView(inflater: LayoutInflater, container: ViewGroup): View {
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
     val view = inflater.inflate(R.layout.controller_login, container, false)
 
     bindings = Bindings(view)

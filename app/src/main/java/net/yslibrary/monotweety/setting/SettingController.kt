@@ -1,5 +1,6 @@
 package net.yslibrary.monotweety.setting
 
+import android.content.Context
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -121,13 +122,13 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
         .build()
   }
 
-  override fun onCreate() {
-    super.onCreate()
+  override fun onContextAvailable(context: Context) {
+    super.onContextAvailable(context)
     component.inject(this)
     analytics.viewEvent(Analytics.VIEW_SETTING)
   }
 
-  override fun inflateView(inflater: LayoutInflater, container: ViewGroup): View {
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
     val view = inflater.inflate(R.layout.controller_setting, container, false)
 
     bindings = Bindings(view)

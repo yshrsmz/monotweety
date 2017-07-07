@@ -1,5 +1,6 @@
 package net.yslibrary.monotweety.splash
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,14 +45,14 @@ class SplashController : ActionBarController(), HasComponent<SplashComponent> {
         .splashComponent(SplashViewModule())
   }
 
-  override fun onCreate() {
-    super.onCreate()
-    Timber.i("onCreate - SplashController")
+  override fun onContextAvailable(context: Context) {
+    super.onContextAvailable(context)
+    Timber.i("onContextAvailable - SplashController")
     component.inject(this)
     analytics.viewEvent(Analytics.VIEW_SPLASH)
   }
 
-  override fun inflateView(inflater: LayoutInflater, container: ViewGroup): View {
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
     val view = inflater.inflate(R.layout.controller_splash, container, false)
 
     subscriptions = CompositeSubscription()

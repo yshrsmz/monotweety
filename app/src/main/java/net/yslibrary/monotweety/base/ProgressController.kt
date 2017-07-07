@@ -10,7 +10,7 @@ import net.yslibrary.monotweety.R
  * Created by yshrsmz on 2016/10/05.
  */
 class ProgressController : BaseController() {
-  override fun inflateView(inflater: LayoutInflater, container: ViewGroup): View {
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
     return inflater.inflate(R.layout.controller_progress, container, false)
   }
 }

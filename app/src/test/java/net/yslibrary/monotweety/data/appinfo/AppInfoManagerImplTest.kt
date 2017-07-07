@@ -1,6 +1,6 @@
 package net.yslibrary.monotweety.data.appinfo
 
-import android.content.pm.PackageManager
+import android.app.Application
 import android.content.pm.ResolveInfo
 import net.yslibrary.monotweety.ConfiguredRobolectricTestRunner
 import net.yslibrary.monotweety.assertThat
@@ -10,22 +10,25 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RuntimeEnvironment
-import org.robolectric.res.builder.RobolectricPackageManager
+import org.robolectric.Shadows
+import org.robolectric.shadows.ShadowPackageManager
 import org.robolectric.shadows.ShadowResolveInfo
 import rx.observers.TestSubscriber
 
 @RunWith(ConfiguredRobolectricTestRunner::class)
 class AppInfoManagerImplTest {
 
-  lateinit var packageManager: RobolectricPackageManager
+  lateinit var application: Application
+  lateinit var packageManager: ShadowPackageManager
 
   lateinit var appInfoManager: AppInfoManagerImpl
 
   @Before
   fun setup() {
-    packageManager = RuntimeEnvironment.getRobolectricPackageManager()
+    application = RuntimeEnvironment.application
+    packageManager = Shadows.shadowOf(application.packageManager)
 
-    appInfoManager = AppInfoManagerImpl(packageManager as PackageManager)
+    appInfoManager = AppInfoManagerImpl(application.packageManager)
   }
 
   @After

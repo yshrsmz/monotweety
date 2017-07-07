@@ -270,8 +270,8 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
   fun reportShortcutUsedIfNeeded(status: String?) {
     if (status.isNullOrEmpty()) {
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-        applicationContext?.getSystemService(ShortcutManager::class.java)
-            ?.reportShortcutUsed("newtweet")
+        @Suppress("NewApi")
+        applicationContext?.getSystemService(ShortcutManager::class.java)?.reportShortcutUsed("newtweet")
       }
     }
   }

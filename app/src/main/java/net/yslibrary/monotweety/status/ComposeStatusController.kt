@@ -1,5 +1,6 @@
 package net.yslibrary.monotweety.status
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.ShortcutManager
 import android.os.Build
@@ -267,10 +268,10 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
     childRouter.popCurrentController()
   }
 
+  @SuppressLint("NewApi")
   fun reportShortcutUsedIfNeeded(status: String?) {
     if (status.isNullOrEmpty()) {
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-        @Suppress("NewApi")
         applicationContext?.getSystemService(ShortcutManager::class.java)?.reportShortcutUsed("newtweet")
       }
     }

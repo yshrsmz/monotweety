@@ -14,7 +14,7 @@ class CrashReportingTree : Timber.Tree() {
 
     t?.let {
       if (priority == Log.ERROR || priority == Log.WARN) {
-        Crashlytics.logException(t)
+        Crashlytics.logException(it)
       }
     }
   }

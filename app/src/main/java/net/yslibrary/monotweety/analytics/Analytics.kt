@@ -24,43 +24,46 @@ class Analytics @Inject constructor(private val analytics: FirebaseAnalytics) {
   }
 
   fun tweetFromNotification() {
-    val bundle = Bundle()
-    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, NAME_TWEET)
-    bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, EVENT_TWEET_FROM_NOTIFICATION)
-
-    Timber.i("analytics event: %s", EVENT_TWEET_FROM_NOTIFICATION)
-    analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    Bundle().apply {
+      putString(FirebaseAnalytics.Param.ITEM_NAME, NAME_TWEET)
+      putString(FirebaseAnalytics.Param.CONTENT_TYPE, EVENT_TWEET_FROM_NOTIFICATION)
+    }.let {
+      Timber.i("analytics event: %s", EVENT_TWEET_FROM_NOTIFICATION)
+      analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, it)
+    }
   }
 
   fun tweetFromNotificationButTooLong() {
-    val bundle = Bundle()
-    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, NAME_TWEET)
-    bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, EVENT_TWEET_FROM_NOTIFICATION_BUT_TOO_LONG)
-
-    Timber.i("analytics event: %s", EVENT_TWEET_FROM_NOTIFICATION_BUT_TOO_LONG)
-    analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    Bundle().apply {
+      putString(FirebaseAnalytics.Param.ITEM_NAME, NAME_TWEET)
+      putString(FirebaseAnalytics.Param.CONTENT_TYPE, EVENT_TWEET_FROM_NOTIFICATION_BUT_TOO_LONG)
+    }.let {
+      Timber.i("analytics event: %s", EVENT_TWEET_FROM_NOTIFICATION_BUT_TOO_LONG)
+      analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, it)
+    }
   }
 
   fun loginCompleted() {
-    val bundle = Bundle()
-    analytics.logEvent(FirebaseAnalytics.Event.SIGN_UP, bundle)
+    Bundle().let { analytics.logEvent(FirebaseAnalytics.Event.SIGN_UP, it) }
   }
 
   fun tweetFromEditor() {
-    val bundle = Bundle()
-    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, NAME_TWEET)
-    bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, EVENT_TWEET_FROM_EDITOR)
-
-    Timber.i("analytics event: %s", EVENT_TWEET_FROM_EDITOR)
-    analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    Bundle().apply {
+      putString(FirebaseAnalytics.Param.ITEM_NAME, NAME_TWEET)
+      putString(FirebaseAnalytics.Param.CONTENT_TYPE, EVENT_TWEET_FROM_EDITOR)
+    }.let {
+      Timber.i("analytics event: %s", EVENT_TWEET_FROM_EDITOR)
+      analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, it)
+    }
   }
 
   fun viewEvent(@ViewEventType name: String) {
-    val bundle = Bundle()
-    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, name)
-
-    Timber.i("analytics screen: %s", name)
-    analytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle)
+    Bundle().apply {
+      putString(FirebaseAnalytics.Param.ITEM_NAME, name)
+    }.let {
+      Timber.i("analytics screen: %s", name)
+      analytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, it)
+    }
   }
 
   @Retention(AnnotationRetention.SOURCE)

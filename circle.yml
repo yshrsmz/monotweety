@@ -1,26 +1,21 @@
 ---
-machine:
-  environment:
-    REVIEWDOG_VERSION: 0.9.4
-    GRADLE_OPTS: '-Dorg.gradle.parallel=false -Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-Xmx1560m -XX:+HeapDumpOnOutOfMemoryError"'
-  java:
-    version: oraclejdk8
+version: 2
+jobs:
+  build:
+    working_directory: ~/working_directory
 
-dependencies:
-  override:
-    - sudo service postgresql stop
-    - sudo service memcached stop
-    - sudo service mysql stop
-    - sudo service rabbitmq-server stop
-    - curl -fSL https://github.com/haya14busa/reviewdog/releases/download/$REVIEWDOG_VERSION/reviewdog_linux_amd64 -o reviewdog && chmod +x ./reviewdog
-    - echo $JKS | base64 -d > ./monotweety.jks
-    - echo $SECRETS | base64 -d > ./secret.properties
-    - echo $GOOGLE_SERVICE_JSON | base64 -d > ./app/google-services.json
-    - echo yes | android update sdk --no-ui --all --filter "tools" # get sdkmanager
-    - mkdir -p "$ANDROID_HOME"/licenses
-    - echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME"/licenses/android-sdk-license
-    - $ANDROID_HOME/tools/bin/sdkmanager "platform-tools" "build-tools;25.0.3" "platforms;android-25" "extras;android;m2repository" "extras;google;m2repository"
+    docker:
+      - image: yshrsmz/android:sdk25
 
-test:
-  override:
-    - "./gradlew lintDebug 2>&1 | ./reviewdog -efm='%f:%l: %m' -name='Android Lint' -ci='circle-ci'"
+    steps:
+      - checkout
+      - run:
+          name: Setup
+          command: |
+            echo $JKS | base64 -d > ./monotweety.jks
+            echo $SECRETS | base64 -d > ./secret.properties
+            echo $GOOGLE_SERVICE_JSON | base64 -d > ./app/google-services.json
+            echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME"/licenses/android-sdk-license
+      - run:
+          name: lint
+          command: "./gradlew lintDebug 2>&1 | ./reviewdog -efm='%f:%l: %m' -name='Android Lint' -ci='circle-ci'"

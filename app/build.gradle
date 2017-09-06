@@ -107,7 +107,7 @@ ext.retrofit_version = '2.3.0'
 ext.support_lib_version = '25.4.0'
 ext.rxbinding_version = '1.0.1'
 ext.conductor_version = '2.1.4'
-ext.okhttp_version = '3.8.1'
+ext.okhttp_version = '3.9.0'
 ext.dagger_version = '2.11'
 ext.storio_version = '1.13.0'
 dependencies {
@@ -123,7 +123,7 @@ dependencies {
   compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
   compile 'com.twitter:twitter-text:1.14.7'
-  compile 'com.twitter.sdk.android:twitter-core:3.0.0'
+  compile 'com.twitter.sdk.android:twitter-core:3.1.1'
   compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
     transitive = true;
   }
@@ -180,11 +180,11 @@ dependencies {
 
 
   testCompile 'junit:junit:4.12'
-  testCompile 'org.mockito:mockito-core:2.8.47'
+  testCompile 'org.mockito:mockito-core:2.9.0'
   testCompile "com.nhaarman:mockito-kotlin:1.5.0"
   testCompile 'org.assertj:assertj-core:3.8.0'
   testCompile "com.squareup.okhttp3:mockwebserver:$okhttp_version"
-  testCompile 'org.robolectric:robolectric:3.3.2'
+  testCompile 'org.robolectric:robolectric:3.4.2'
 }
 repositories {
   mavenCentral()

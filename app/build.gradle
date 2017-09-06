@@ -98,7 +98,8 @@ android {
 configurations {
   all {
     resolutionStrategy {
-      force "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+      force "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+      force "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     }
   }
 }
@@ -111,7 +112,7 @@ ext.okhttp_version = '3.9.0'
 ext.dagger_version = '2.11'
 ext.storio_version = '1.13.0'
 dependencies {
-  compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
   compile "com.android.support:appcompat-v7:$support_lib_version"
   compile "com.android.support:recyclerview-v7:$support_lib_version"

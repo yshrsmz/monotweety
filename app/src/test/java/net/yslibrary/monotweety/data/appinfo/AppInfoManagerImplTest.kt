@@ -5,7 +5,6 @@ import android.content.pm.ResolveInfo
 import net.yslibrary.monotweety.ConfiguredRobolectricTestRunner
 import net.yslibrary.monotweety.assertThat
 import net.yslibrary.monotweety.newPackageInfo
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -29,11 +28,6 @@ class AppInfoManagerImplTest {
     packageManager = Shadows.shadowOf(application.packageManager)
 
     appInfoManager = AppInfoManagerImpl(application.packageManager)
-  }
-
-  @After
-  fun tearDown() {
-    packageManager.reset()
   }
 
   @Test

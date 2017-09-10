@@ -28,7 +28,7 @@ class MainActivity : BaseActivity(), ActionBarProvider, HasComponent<MainActivit
   }
 
   override val container: ChangeHandlerFrameLayout
-    get() = findViewById(R.id.controller_container) as ChangeHandlerFrameLayout
+    get() = findViewById<ChangeHandlerFrameLayout>(R.id.controller_container)
 
   override val layoutResId: Int
     get() = R.layout.activity_main

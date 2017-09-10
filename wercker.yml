@@ -1,6 +1,6 @@
 build:
   box:
-    id: yshrsmz/android:sdk25
+    id: yshrsmz/android
     tag: latest
   steps:
     - script:

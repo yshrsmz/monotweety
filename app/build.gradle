@@ -18,8 +18,8 @@ def TWITTER_API_KEY = "\"${getSecretProperty('twitter.api.key')}\""
 def TWITTER_API_SECRET = "\"${getSecretProperty('twitter.api.secret')}\""
 
 android {
-  compileSdkVersion 25
-  buildToolsVersion "25.0.3"
+  compileSdkVersion 26
+  buildToolsVersion "26.0.1"
 
   signingConfigs {
     debug {
@@ -38,7 +38,7 @@ android {
   defaultConfig {
     applicationId "net.yslibrary.monotweety"
     minSdkVersion 19
-    targetSdkVersion 25
+    targetSdkVersion 26
     versionCode 35
     versionName "1.5.2"
 
@@ -105,7 +105,7 @@ configurations {
 }
 
 ext.retrofit_version = '2.3.0'
-ext.support_lib_version = '25.4.0'
+ext.support_lib_version = '26.0.2'
 ext.rxbinding_version = '1.0.1'
 ext.conductor_version = '2.1.4'
 ext.okhttp_version = '3.9.0'

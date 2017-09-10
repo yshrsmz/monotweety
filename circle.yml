@@ -5,7 +5,7 @@ jobs:
     working_directory: ~/working_directory
 
     docker:
-      - image: yshrsmz/android:sdk25
+      - image: yshrsmz/android:latest
 
     steps:
       - checkout

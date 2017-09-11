@@ -231,7 +231,7 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
     inboxStyle.addLine(getString(R.string.label_notification_content))
     inboxStyle.addLine(footerStateString)
 
-    val builder = NotificationCompat.Builder(applicationContext)
+    val builder = NotificationCompat.Builder(applicationContext, Channel.EDITOR.id)
         .setSmallIcon(R.drawable.ic_notification)
         .setContentTitle(getString(R.string.app_name))
         .setContentText(getString(R.string.label_notification_content))

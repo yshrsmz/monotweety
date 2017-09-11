@@ -57,4 +57,6 @@
   <string name="label_shortcut_editor_disabled">無効</string>
   <string name="label_shortcut_editor_longlabel">新規ツイート</string>
   <string name="label_shortcut_editor_shortlabel">新規ツイート</string>
+  <string name="notification_channel_editor_description">新規ツイート作成</string>
+  <string name="notification_channel_editor_name">新規ツイート作成</string>
 </resources>

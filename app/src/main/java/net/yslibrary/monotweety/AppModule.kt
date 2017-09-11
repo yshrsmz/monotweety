@@ -1,6 +1,7 @@
 package net.yslibrary.monotweety
 
 import android.app.Application
+import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.support.v4.app.NotificationManagerCompat
@@ -30,13 +31,19 @@ open class AppModule(private val context: Context) {
 
   @AppScope
   @Provides
-  open fun provideAppLifecycleCallbacks(@Named(Names.FOR_APP) context: Context): App.LifecycleCallbacks {
-    return AppLifecycleCallbacks(context)
+  open fun provideAppLifecycleCallbacks(@Named(Names.FOR_APP) context: Context, notificationManager: NotificationManager): App.LifecycleCallbacks {
+    return AppLifecycleCallbacks(context, notificationManager)
   }
 
   @AppScope
   @Provides
-  fun provideNotificationManager(@Named(Names.FOR_APP) context: Context): NotificationManagerCompat {
+  fun provideNotificationManager(@Named(Names.FOR_APP) context: Context): NotificationManager {
+    return context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+  }
+
+  @AppScope
+  @Provides
+  fun provideNotificationManagerCompat(@Named(Names.FOR_APP) context: Context): NotificationManagerCompat {
     return NotificationManagerCompat.from(context)
   }
 

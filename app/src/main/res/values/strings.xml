@@ -84,4 +84,8 @@
   <string name="message_share">Check out #Monotweety! %s #Android</string>
 
   <string name="transition_name_logo" translatable="false">transition.logo</string>
+
+  <!-- Notification -->
+  <string name="notification_channel_editor_name">Editor</string>
+  <string name="notification_channel_editor_description">Notification to create new tweet</string>
 </resources>

@@ -2,6 +2,7 @@ package net.yslibrary.monotweety
 
 import android.content.Intent
 import android.net.Uri
+import android.support.v4.content.ContextCompat
 import net.yslibrary.monotweety.base.BaseActivity
 import net.yslibrary.monotweety.logout.LogoutService
 import net.yslibrary.monotweety.notification.NotificationService
@@ -25,7 +26,7 @@ class Navigator(private val activity: BaseActivity) {
   }
 
   fun startNotificationService() {
-    activity.startService(NotificationService.callingIntent(activity))
+    ContextCompat.startForegroundService(activity, NotificationService.callingIntent(activity))
   }
 
   fun stopNotificationService() {

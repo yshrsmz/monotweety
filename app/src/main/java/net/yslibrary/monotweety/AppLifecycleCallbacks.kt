@@ -1,5 +1,6 @@
 package net.yslibrary.monotweety
 
+import android.app.NotificationManager
 import android.content.Context
 import com.crashlytics.android.Crashlytics
 import com.jakewharton.threetenabp.AndroidThreeTen
@@ -8,11 +9,17 @@ import com.twitter.sdk.android.core.TwitterAuthConfig
 import com.twitter.sdk.android.core.TwitterConfig
 import io.fabric.sdk.android.Fabric
 import net.yslibrary.monotweety.analytics.CrashReportingTree
+import net.yslibrary.monotweety.notification.createNotificationChannel
 import timber.log.Timber
 
-open class AppLifecycleCallbacks(val context: Context) : App.LifecycleCallbacks {
+open class AppLifecycleCallbacks(
+    val context: Context,
+    val notificationManager: NotificationManager
+) : App.LifecycleCallbacks {
+
   override fun onCreate() {
     initTimber()
+    initNotificationChannel()
     initThreeTenABP()
     initTwitterKit()
     initFabric()
@@ -20,6 +27,10 @@ open class AppLifecycleCallbacks(val context: Context) : App.LifecycleCallbacks 
 
   override fun onTerminate() {
 
+  }
+
+  fun initNotificationChannel() {
+    createNotificationChannel(context, notificationManager)
   }
 
   fun initThreeTenABP() {

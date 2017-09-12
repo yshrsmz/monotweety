@@ -3,6 +3,7 @@ package net.yslibrary.monotweety.notification
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.support.v4.content.ContextCompat
 import net.yslibrary.monotweety.App
 import rx.Observable
 import timber.log.Timber
@@ -19,7 +20,7 @@ class BootCompletedReceiver : BroadcastReceiver() {
         .subscribe {
           Timber.d("is logged in and notification enabled: $it")
           if (it) {
-            context.startService(NotificationService.callingIntent(context))
+            ContextCompat.startForegroundService(context, NotificationService.callingIntent(context))
           }
         }
   }

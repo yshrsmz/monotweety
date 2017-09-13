@@ -3,7 +3,7 @@
   <dimen name="activity_horizontal_margin">16dp</dimen>
   <dimen name="activity_vertical_margin">16dp</dimen>
 
-  <dimen name="match_parent">-2px</dimen>
+  <dimen name="match_parent">-1px</dimen>
   <dimen name="wrap_content">-3px</dimen>
 
   <dimen name="tile_height_1line">48dp</dimen>

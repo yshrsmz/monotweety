@@ -17,14 +17,16 @@ enum class Channel(
     val nameResId: Int,
     val descriptionResId: Int,
     val importance: Int,
-    val lockScreenVisibility: Int
+    val lockScreenVisibility: Int,
+    val showBadge: Boolean
 ) {
   EDITOR(
             id = "editor",
             nameResId = R.string.notification_channel_editor_name,
             descriptionResId = R.string.notification_channel_editor_description,
-            importance = NotificationManager.IMPORTANCE_DEFAULT,
-            lockScreenVisibility = Notification.VISIBILITY_PUBLIC
+            importance = NotificationManager.IMPORTANCE_LOW,
+            lockScreenVisibility = Notification.VISIBILITY_PUBLIC,
+            showBadge = false
         )
 }
 
@@ -39,6 +41,7 @@ fun createNotificationChannel(context: Context, notificationManager: Notificatio
           description = context.getString(channelInfo.descriptionResId)
           enableLights(false)
           enableVibration(false)
+          setShowBadge(channelInfo.showBadge)
           lockscreenVisibility = channelInfo.lockScreenVisibility
         }
   }

@@ -2,6 +2,7 @@ package net.yslibrary.monotweety.data.appinfo
 
 enum class TwitterApp(val packageName: String) {
   BEETER("me.b0ne.android.apps.beeter"),
+  BIYONTTER("jp.gifu.abs104a.twitterproject"),
   ECHOFON("com.echofon"),
   FALCON_PRO_3("com.jv.materialfalcon"),
   FEATHER("com.covelline.feather"),
@@ -13,6 +14,7 @@ enum class TwitterApp(val packageName: String) {
   JANETTER_PRO("net.janesoft.janetter.android.pro"),
   JIGTWI("jp.jig.jigtwi.android"),
   JUSTAWAY("info.justaway"),
+  MATECHA("net.wakamesoba98.matecha"),
   PLUME("com.levelup.touiteur"),
   ROBIRD("com.aaplab.robird"),
   SOBACHA("net.wakamesoba98.sobacha"),
@@ -37,6 +39,7 @@ enum class TwitterApp(val packageName: String) {
   TWITTNUKER("de.vanita5.twittnuker"),
   TWITWICK("jp.takmurata.twitwick2"),
   TWLTRUS("net.yuzumone.twltrus"),
+  YUKARI("shibafu.yukari"),
 
   NONE("");
 

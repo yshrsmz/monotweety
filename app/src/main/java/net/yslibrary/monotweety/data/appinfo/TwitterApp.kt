@@ -6,6 +6,7 @@ enum class TwitterApp(val packageName: String) {
   FALCON_PRO_3("com.jv.materialfalcon"),
   FEATHER("com.covelline.feather"),
   FENIX("it.mvilla.android.fenix"),
+  FENIX2("it.mvilla.android.fenix2"),
   FLAMINGO("com.samruston.twitter"),
   HOOTSUITE("com.hootsuite.droid.full"),
   JANETTER_FREE("net.janesoft.janetter.android.free"),

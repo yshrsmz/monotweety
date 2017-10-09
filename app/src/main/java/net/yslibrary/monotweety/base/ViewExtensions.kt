@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.bluelinelabs.conductor.Controller
-import com.bumptech.glide.Glide
+import net.yslibrary.monotweety.GlideApp
 
 
 /**
@@ -28,7 +28,7 @@ fun <T : View> Activity.findById(@IdRes id: Int): T = findViewById<T>(id)
 fun <T : View> Controller.findById(@IdRes id: Int): T? = view?.findViewById<T>(id)
 
 fun ImageView.load(url: String) {
-  Glide.with(this.context)
+  GlideApp.with(this)
       .load(url)
       .into(this)
 }

@@ -7,7 +7,7 @@ apply plugin: 'jacoco'
 
 //requires gradle 2.13, just became stable!! Robolectric should be fixed!!
 jacoco {
-  toolVersion = "0.7.7.201606060606"
+  toolVersion = "0.7.9"
 }
 android {
   testOptions {
@@ -49,11 +49,11 @@ project.afterEvaluate {
         reports {
           xml {
             enabled = true
-            destination "${project.buildDir}/reports/jacoco/${sourceName.capitalize()}UnitTest/jacoco-report.xml"
+            destination file("${project.buildDir}/reports/jacoco/${sourceName.capitalize()}UnitTest/jacoco-report.xml")
           }
           html {
             enabled = true
-            destination "${project.buildDir}/reports/jacoco/${sourceName.capitalize()}UnitTest/html"
+            destination file("${project.buildDir}/reports/jacoco/${sourceName.capitalize()}UnitTest/html")
           }
         }
 

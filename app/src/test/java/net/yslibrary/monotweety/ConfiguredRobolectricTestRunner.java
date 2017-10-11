@@ -26,12 +26,10 @@ public class ConfiguredRobolectricTestRunner extends RobolectricTestRunner {
     Config c = super.getConfig(method);
 
     int[] sdkLevel = c.sdk().length == 0 ? SDK : c.sdk();
-    Class<?> constants = c.constants() == Void.class ? BuildConfig.class : c.constants();
-    Class<? extends Application> application = c.constants() == Application.class ? TestApp.class : c.application();
+    Class<? extends Application> application = c.application() == Application.class ? TestApp.class : c.application();
 
     return new Config.Builder(c)
         .setSdk(sdkLevel)
-        .setConstants(constants)
         .setApplication(application)
         .build();
   }

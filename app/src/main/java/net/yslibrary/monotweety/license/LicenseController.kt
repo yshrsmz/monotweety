@@ -8,8 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.bluelinelabs.conductor.ControllerChangeHandler
 import com.bluelinelabs.conductor.ControllerChangeType
+import net.yslibrary.licenseadapter.Library
 import net.yslibrary.licenseadapter.LicenseAdapter
-import net.yslibrary.licenseadapter.LicenseEntry
 import net.yslibrary.monotweety.App
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.analytics.Analytics
@@ -77,7 +77,7 @@ class LicenseController : ActionBarController() {
 
   }
 
-  fun initAdapter(dataSet: List<LicenseEntry>) {
+  fun initAdapter(dataSet: List<Library>) {
     bindings.list.layoutManager = LinearLayoutManager(activity)
     bindings.list.adapter = LicenseAdapter(dataSet)
   }

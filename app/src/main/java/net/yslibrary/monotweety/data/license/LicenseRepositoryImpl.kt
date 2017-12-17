@@ -1,9 +1,7 @@
 package net.yslibrary.monotweety.data.license
 
-import net.yslibrary.licenseadapter.GitHubLicenseEntry
-import net.yslibrary.licenseadapter.LicenseEntry
+import net.yslibrary.licenseadapter.Library
 import net.yslibrary.licenseadapter.Licenses
-import net.yslibrary.licenseadapter.internal.BaseLicenseEntry
 import net.yslibrary.monotweety.base.di.UserScope
 import rx.Single
 import java.util.*
@@ -11,9 +9,9 @@ import javax.inject.Inject
 
 @UserScope
 class LicenseRepositoryImpl @Inject constructor() : LicenseRepository {
-  override fun get(): Single<List<LicenseEntry>> {
+  override fun get(): Single<List<Library>> {
     return Single.fromCallable {
-      val list = listOf<BaseLicenseEntry>(
+      val list = listOf<Library>(
           Licenses.fromGitHubApacheV2("bluelinelabs/Conductor"),
           Licenses.fromGitHubApacheV2("hdodenhof/CircleImageView"),
           Licenses.fromGitHub("gabrielemariotti/changeloglib", Licenses.LICENSE_APACHE_V2),
@@ -24,8 +22,8 @@ class LicenseRepositoryImpl @Inject constructor() : LicenseRepository {
           Licenses.fromGitHubApacheV2("JakeWharton/ThreeTenABP", Licenses.FILE_TXT),
           Licenses.fromGitHubApacheV2("f2prateek/rx-preferences"),
           Licenses.fromGitHubApacheV2("pushtorefresh/storio"),
-          GitHubLicenseEntry(Licenses.NAME_APACHE_V2, "ReactiveX/RxJava", "1.x", null, Licenses.FILE_NO_EXTENSION),
-          GitHubLicenseEntry(Licenses.NAME_APACHE_V2, "ReactiveX/RxAndroid", "1.x", null, Licenses.FILE_NO_EXTENSION),
+          Licenses.fromGitHubApacheV2("ReactiveX/RxJava", "1.x/${Licenses.FILE_NO_EXTENSION}"),
+          Licenses.fromGitHubApacheV2("ReactiveX/RxAndroid", "1.x/${Licenses.FILE_NO_EXTENSION}"),
           Licenses.fromGitHubApacheV2("sockeqwe/AdapterDelegates", Licenses.FILE_NO_EXTENSION),
           Licenses.fromGitHubApacheV2("twitter/twitter-text", Licenses.FILE_NO_EXTENSION),
           Licenses.fromGitHubApacheV2("twitter/twitter-kit-android", Licenses.FILE_NO_EXTENSION),
@@ -33,7 +31,7 @@ class LicenseRepositoryImpl @Inject constructor() : LicenseRepository {
           Licenses.fromGitHubApacheV2("yshrsmz/RxEventBus", Licenses.FILE_NO_EXTENSION))
 
       // sort github hosted repos first
-      list.sortedBy { it.name().toLowerCase(Locale.ENGLISH) }
+      list.sortedBy { it.getName().toLowerCase(Locale.ENGLISH) }
           .let {
             val mutable = it.toMutableList()
             mutable.addAll(0, listOf(
@@ -42,7 +40,6 @@ class LicenseRepositoryImpl @Inject constructor() : LicenseRepository {
             ))
             mutable.toList()
           }
-          .apply { Licenses.load(this) }
     }
   }
 }

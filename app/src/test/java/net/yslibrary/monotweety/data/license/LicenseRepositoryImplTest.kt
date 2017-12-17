@@ -1,6 +1,6 @@
 package net.yslibrary.monotweety.data.license
 
-import net.yslibrary.licenseadapter.LicenseEntry
+import net.yslibrary.licenseadapter.Library
 import net.yslibrary.monotweety.ConfiguredRobolectricTestRunner
 import org.junit.Before
 import org.junit.Test
@@ -20,7 +20,7 @@ class LicenseRepositoryImplTest {
 
   @Test
   fun get() {
-    val ts = TestSubscriber<List<LicenseEntry>>()
+    val ts = TestSubscriber<List<Library>>()
 
     repository.get().subscribe(ts)
 

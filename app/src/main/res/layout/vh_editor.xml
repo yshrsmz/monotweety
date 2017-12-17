@@ -28,7 +28,7 @@
       android:paddingLeft="4dp"
       android:paddingRight="4dp"
       android:textAppearance="@style/TextAppearance.AppCompat.Small"
-      tools:text="0/140"/>
+      tools:text="0/280"/>
 
   <android.support.v7.widget.SwitchCompat
       android:id="@+id/keep_open"

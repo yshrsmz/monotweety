@@ -18,7 +18,7 @@
 
 -keepattributes *Annotation*
 -useuniqueclassmembernames
--keepattributes SourceFile,LineNumberTable
+-keepattributes SourceFile,LineNumberTable,*Annotation*,EnclosingMethod,Signature,Exceptions,InnerClasses
 -allowaccessmodification
 -keep public class * extends java.lang.Exception
 
@@ -36,3 +36,14 @@
 # configs for app
 -dontwarn net.yslibrary.monotweety.activity.main.MainActivity
 -dontwarn net.yslibrary.monotweety.activity.compose.ComposeActivity
+
+# Jackson(via twitter-text)
+-keep class com.fasterxml.jackson.databind.ObjectMapper {
+    public <methods>;
+    protected <methods>;
+}
+-keep class com.fasterxml.jackson.databind.ObjectWriter {
+    public ** writeValueAsString(**);
+}
+-keepnames class com.fasterxml.jackson.** { *; }
+-dontwarn com.fasterxml.jackson.databind.**

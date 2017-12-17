@@ -119,7 +119,7 @@ class ComposeStatusViewModel(status: String,
     checkStatusLength.execute(status)
         .subscribeOn(Schedulers.io())
         .subscribe {
-          statusInfoSubject.onNext(StatusInfo(status, it.valid, it.length))
+          statusInfoSubject.onNext(StatusInfo(status, it.valid, it.length, it.maxLength))
 
           isSendableStatusSubject.onNext(it.valid)
         }
@@ -181,7 +181,7 @@ class ComposeStatusViewModel(status: String,
         .subscribe({ Timber.d("previous status cleared") })
   }
 
-  data class StatusInfo(val status: String, val valid: Boolean, val length: Int, val maxLength: Int = 140)
+  data class StatusInfo(val status: String, val valid: Boolean, val length: Int, val maxLength: Int)
 
   enum class ProgressEvent {
     IN_PROGRESS,

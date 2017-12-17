@@ -1,6 +1,6 @@
 package net.yslibrary.monotweety.status.domain
 
-import com.twitter.Validator
+import com.twitter.twittertext.Validator
 import net.yslibrary.monotweety.base.di.UserScope
 import net.yslibrary.monotweety.data.config.ConfigDataManager
 import rx.Single

@@ -137,7 +137,7 @@ dependencies {
   implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
   implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
-  implementation 'com.twitter:twitter-text:1.14.7'
+  implementation 'com.twitter.twittertext:twitter-text:2.0.8'
   implementation 'com.twitter.sdk.android:twitter-core:3.2.0'
   implementation('com.crashlytics.sdk.android:crashlytics:2.8.0@aar') {
     transitive = true;

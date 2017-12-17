@@ -1,11 +1,11 @@
 package net.yslibrary.monotweety.data
 
-import com.twitter.Extractor
-import com.twitter.Validator
 import com.twitter.sdk.android.core.SessionManager
 import com.twitter.sdk.android.core.TwitterSession
 import com.twitter.sdk.android.core.services.AccountService
 import com.twitter.sdk.android.core.services.ConfigurationService
+import com.twitter.twittertext.Extractor
+import com.twitter.twittertext.Validator
 import dagger.Module
 import dagger.Provides
 import net.yslibrary.monotweety.base.di.UserScope

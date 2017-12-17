@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
   <changelogversion
+      changeDate="Dec, XXth, 2017">
+    <changelogtext>280文字対応</changelogtext>
+  </changelogversion>
+  <changelogversion
       changeDate="Sep 14th, 2017"
       versionName="1.5.3">
     <changelogtext>Android Oreo</changelogtext>

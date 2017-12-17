@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
   <changelogversion
-      changeDate="Dec, XXth, 2017">
+      changeDate="Dec, XXth, 2017"
+      versionName="1.6.0">
     <changelogtext>280文字対応</changelogtext>
   </changelogversion>
   <changelogversion

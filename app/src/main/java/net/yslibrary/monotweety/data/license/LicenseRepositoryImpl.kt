@@ -16,7 +16,7 @@ class LicenseRepositoryImpl @Inject constructor() : LicenseRepository {
           Licenses.fromGitHubApacheV2("hdodenhof/CircleImageView"),
           Licenses.fromGitHub("gabrielemariotti/changeloglib", Licenses.LICENSE_APACHE_V2),
           Licenses.fromGitHubApacheV2("google/dagger"),
-          Licenses.fromGitHubApacheV2("bumptech/glide", Licenses.FILE_NO_EXTENSION),
+          Licenses.fromGitHubApacheV2("bumptech/glide"),
           Licenses.fromGitHubApacheV2("JakeWharton/RxBinding"),
           Licenses.fromGitHubApacheV2("JakeWharton/timber"),
           Licenses.fromGitHubApacheV2("JakeWharton/ThreeTenABP", Licenses.FILE_TXT),
@@ -24,11 +24,11 @@ class LicenseRepositoryImpl @Inject constructor() : LicenseRepository {
           Licenses.fromGitHubApacheV2("pushtorefresh/storio"),
           Licenses.fromGitHubApacheV2("ReactiveX/RxJava", "1.x/${Licenses.FILE_NO_EXTENSION}"),
           Licenses.fromGitHubApacheV2("ReactiveX/RxAndroid", "1.x/${Licenses.FILE_NO_EXTENSION}"),
-          Licenses.fromGitHubApacheV2("sockeqwe/AdapterDelegates", Licenses.FILE_NO_EXTENSION),
-          Licenses.fromGitHubApacheV2("twitter/twitter-text", Licenses.FILE_NO_EXTENSION),
-          Licenses.fromGitHubApacheV2("twitter/twitter-kit-android", Licenses.FILE_NO_EXTENSION),
-          Licenses.fromGitHubApacheV2("yshrsmz/LicenseAdapter", Licenses.FILE_NO_EXTENSION),
-          Licenses.fromGitHubApacheV2("yshrsmz/RxEventBus", Licenses.FILE_NO_EXTENSION))
+          Licenses.fromGitHubApacheV2("sockeqwe/AdapterDelegates"),
+          Licenses.fromGitHubApacheV2("twitter/twitter-text"),
+          Licenses.fromGitHubApacheV2("twitter/twitter-kit-android"),
+          Licenses.fromGitHubApacheV2("yshrsmz/LicenseAdapter"),
+          Licenses.fromGitHubApacheV2("yshrsmz/RxEventBus"))
 
       // sort github hosted repos first
       list.sortedBy { it.getName().toLowerCase(Locale.ENGLISH) }

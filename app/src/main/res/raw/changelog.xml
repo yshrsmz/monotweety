@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
   <changelogversion
-      changeDate="Dec, XXth, 2017"
+      changeDate="Dec, 19th, 2017"
       versionName="1.6.0">
+    <changelogtext>Merry Christmas and a Happy New Year to all of you!</changelogtext>
     <changelogtext>Support 280 characters</changelogtext>
   </changelogversion>
   <changelogversion

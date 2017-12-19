@@ -87,6 +87,7 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
 
     override fun onLogoutClick() {
       activity?.let {
+        Timber.tag("Dialog").i("onLogoutClick")
         AlertDialog.Builder(it)
             .setTitle(R.string.label_confirm)
             .setMessage(R.string.label_logout_confirm)

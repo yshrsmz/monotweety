@@ -11,6 +11,7 @@ import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.data.appinfo.AppInfo
+import timber.log.Timber
 
 class TimelineAppAdapterDelegate(private val listener: Listener) : AdapterDelegate<List<SettingAdapter.Item>>() {
 
@@ -47,6 +48,7 @@ class TimelineAppAdapterDelegate(private val listener: Listener) : AdapterDelega
   private fun onClick(context: Context, item: Item) {
     val position = item.apps.indexOf(item.selectedApp)
 
+    Timber.tag("Dialog").i("onClick - select timeline app")
     AlertDialog.Builder(context)
         .setTitle(R.string.label_timelineapp_description)
         .setSingleChoiceItems(

@@ -13,6 +13,7 @@ import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.base.inflate
+import timber.log.Timber
 
 class FooterEditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<List<SettingAdapter.Item>>() {
 
@@ -58,6 +59,7 @@ class FooterEditorAdapterDelegate(private val listener: Listener) : AdapterDeleg
     input.isEnabled = item.checked
     enabledSwitch.setOnCheckedChangeListener { _, checked -> input.isEnabled = checked }
 
+    Timber.tag("Dialog").i("onClick - Edit Footer")
     AlertDialog.Builder(context)
         .setTitle(R.string.title_edit_footer)
         .setView(view)

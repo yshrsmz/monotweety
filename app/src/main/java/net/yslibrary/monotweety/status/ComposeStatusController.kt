@@ -230,6 +230,7 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
 
   fun showConfirmCloseDialog() {
     activity?.let {
+      Timber.tag("Dialog").i("showConfirmationCloseDialog")
       AlertDialog.Builder(it)
           .setTitle(R.string.label_confirm)
           .setMessage(R.string.label_cancel_confirm)

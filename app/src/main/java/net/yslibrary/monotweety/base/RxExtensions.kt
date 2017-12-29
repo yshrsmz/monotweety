@@ -1,7 +1,7 @@
 package net.yslibrary.monotweety.base
 
+import io.reactivex.Single
 import rx.Observable
-import rx.Single
 import rx.Subscription
 import rx.functions.Action1
 import rx.subscriptions.SerialSubscription

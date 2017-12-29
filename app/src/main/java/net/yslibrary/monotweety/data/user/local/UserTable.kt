@@ -1,9 +1,9 @@
 package net.yslibrary.monotweety.data.user.local
 
-import com.pushtorefresh.storio.sqlite.queries.DeleteQuery
-import com.pushtorefresh.storio.sqlite.queries.InsertQuery
-import com.pushtorefresh.storio.sqlite.queries.Query
-import com.pushtorefresh.storio.sqlite.queries.UpdateQuery
+import com.pushtorefresh.storio3.sqlite.queries.DeleteQuery
+import com.pushtorefresh.storio3.sqlite.queries.InsertQuery
+import com.pushtorefresh.storio3.sqlite.queries.Query
+import com.pushtorefresh.storio3.sqlite.queries.UpdateQuery
 
 class UserTable {
 

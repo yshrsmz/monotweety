@@ -27,7 +27,7 @@ class LogoutService : IntentService(NAME) {
   }
 
   override fun onHandleIntent(intent: Intent?) {
-    doLogout.execute().await()
+    doLogout.execute().blockingAwait()
     App.clearUserComponent(this)
 
     val activityIntent = MainActivity.callingIntent(this)

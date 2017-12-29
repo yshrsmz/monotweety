@@ -1,8 +1,8 @@
 package net.yslibrary.monotweety.status.domain
 
+import io.reactivex.Completable
 import net.yslibrary.monotweety.base.di.UserScope
 import net.yslibrary.monotweety.data.status.StatusRepository
-import rx.Completable
 import javax.inject.Inject
 
 @UserScope

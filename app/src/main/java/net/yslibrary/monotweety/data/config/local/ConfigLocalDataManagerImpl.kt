@@ -1,8 +1,8 @@
 package net.yslibrary.monotweety.data.config.local
 
-import com.f2prateek.rx.preferences.RxSharedPreferences
+import com.f2prateek.rx.preferences2.RxSharedPreferences
+import io.reactivex.Observable
 import net.yslibrary.monotweety.base.Clock
-import rx.Observable
 import java.util.concurrent.TimeUnit
 
 /**

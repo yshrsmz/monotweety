@@ -1,9 +1,9 @@
 package net.yslibrary.monotweety.data.user.local.resolver
 
 import android.content.ContentValues
-import com.pushtorefresh.storio.sqlite.operations.put.DefaultPutResolver
-import com.pushtorefresh.storio.sqlite.queries.InsertQuery
-import com.pushtorefresh.storio.sqlite.queries.UpdateQuery
+import com.pushtorefresh.storio3.sqlite.operations.put.DefaultPutResolver
+import com.pushtorefresh.storio3.sqlite.queries.InsertQuery
+import com.pushtorefresh.storio3.sqlite.queries.UpdateQuery
 import net.yslibrary.monotweety.data.user.User
 import net.yslibrary.monotweety.data.user.local.UserTable
 

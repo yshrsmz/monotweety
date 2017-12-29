@@ -2,8 +2,8 @@ package net.yslibrary.monotweety.data.local
 
 import android.content.Context
 import android.database.sqlite.SQLiteOpenHelper
-import com.pushtorefresh.storio.sqlite.StorIOSQLite
-import com.pushtorefresh.storio.sqlite.impl.DefaultStorIOSQLite
+import com.pushtorefresh.storio3.sqlite.StorIOSQLite
+import com.pushtorefresh.storio3.sqlite.impl.DefaultStorIOSQLite
 import dagger.Module
 import dagger.Provides
 import net.yslibrary.monotweety.base.di.AppScope

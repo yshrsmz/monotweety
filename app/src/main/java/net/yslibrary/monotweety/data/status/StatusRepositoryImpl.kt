@@ -1,10 +1,11 @@
 package net.yslibrary.monotweety.data.status
 
+import com.gojuno.koptional.Optional
+import io.reactivex.Completable
+import io.reactivex.Observable
 import net.yslibrary.monotweety.base.di.UserScope
 import net.yslibrary.monotweety.data.status.local.StatusLocalRepository
 import net.yslibrary.monotweety.data.status.remote.StatusRemoteRepository
-import rx.Completable
-import rx.Observable
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -20,7 +21,7 @@ class StatusRepositoryImpl @Inject constructor(private val remoteRepository: Sta
         .flatMapCompletable { localRepository.update(it) }
   }
 
-  override fun previousStatus(): Observable<Tweet?> {
+  override fun previousStatus(): Observable<Optional<Tweet>> {
     return localRepository.getPrevious()
   }
 

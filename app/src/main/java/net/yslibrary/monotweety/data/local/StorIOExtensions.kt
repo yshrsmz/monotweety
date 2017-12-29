@@ -1,8 +1,8 @@
 package net.yslibrary.monotweety.data.local
 
-import com.pushtorefresh.storio.sqlite.operations.delete.PreparedDelete
-import com.pushtorefresh.storio.sqlite.operations.get.PreparedGet
-import com.pushtorefresh.storio.sqlite.operations.put.PreparedPut
+import com.pushtorefresh.storio3.sqlite.operations.delete.PreparedDelete
+import com.pushtorefresh.storio3.sqlite.operations.get.PreparedGet
+import com.pushtorefresh.storio3.sqlite.operations.put.PreparedPut
 
 fun <T> PreparedPut.Builder.withObject(entity: T) = `object`(entity)
 

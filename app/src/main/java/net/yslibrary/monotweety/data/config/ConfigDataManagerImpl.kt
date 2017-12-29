@@ -1,12 +1,12 @@
 package net.yslibrary.monotweety.data.config
 
 import android.support.annotation.VisibleForTesting
+import io.reactivex.Observable
+import io.reactivex.disposables.Disposables
+import io.reactivex.schedulers.Schedulers
 import net.yslibrary.monotweety.base.Clock
 import net.yslibrary.monotweety.data.config.local.ConfigLocalDataManager
 import net.yslibrary.monotweety.data.config.remote.ConfigRemoteDataManager
-import rx.Observable
-import rx.schedulers.Schedulers
-import rx.subscriptions.Subscriptions
 import timber.log.Timber
 
 /**
@@ -17,21 +17,21 @@ open class ConfigDataManagerImpl(private val remoteDataManager: ConfigRemoteData
                                  private val localDataManager: ConfigLocalDataManager,
                                  private val clock: Clock) : ConfigDataManager {
 
-  private var subscription = Subscriptions.unsubscribed()
+  private var disposable = Disposables.disposed()
 
   override fun shortUrlLengthHttps(): Observable<Int> {
     return localDataManager.shortUrlLengthHttps()
         .doOnNext {
-          if (subscription.isUnsubscribed && localDataManager.outdated()) {
+          if (disposable.isDisposed && localDataManager.outdated()) {
             Timber.d("fetch new config from api")
-            subscription = remoteDataManager.get()
+            disposable = remoteDataManager.get()
                 .subscribeOn(Schedulers.io())
                 .subscribe({
                   updateConfig(it)
-                  subscription.unsubscribe()
+                  disposable.dispose()
                 }, {
                   Timber.e(it, it.message)
-                  subscription.unsubscribe()
+                  disposable.dispose()
                 })
           }
         }

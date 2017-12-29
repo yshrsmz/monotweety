@@ -16,6 +16,10 @@ import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.app.RemoteInput
 import android.support.v4.app.TaskStackBuilder
 import android.widget.Toast
+import io.reactivex.Completable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
 import net.yslibrary.monotweety.App
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.activity.compose.ComposeActivity
@@ -25,10 +29,6 @@ import net.yslibrary.monotweety.base.HasComponent
 import net.yslibrary.monotweety.base.closeNotificationDrawer
 import net.yslibrary.monotweety.data.appinfo.AppInfo
 import net.yslibrary.monotweety.setting.domain.FooterStateManager
-import rx.Completable
-import rx.android.schedulers.AndroidSchedulers
-import rx.lang.kotlin.addTo
-import rx.subscriptions.CompositeSubscription
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.properties.Delegates
@@ -74,7 +74,7 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
   @set:[Inject]
   var analytics by Delegates.notNull<Analytics>()
 
-  private val subscriptions = CompositeSubscription()
+  private val disposables = CompositeDisposable()
 
 
   override val component: NotificationComponent by lazy {
@@ -99,7 +99,7 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
           } else {
             stopSelf()
           }
-        }.addTo(subscriptions)
+        }.addTo(disposables)
   }
 
   override fun onBind(intent: Intent): IBinder? {
@@ -127,7 +127,7 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
       // https://github.com/yshrsmz/omnitweety-android/issues/22
     }
 
-    subscriptions.unsubscribe()
+    disposables.dispose()
   }
 
   override fun onUnbind(intent: Intent?): Boolean {
@@ -155,7 +155,7 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
           viewModel.onUpdateNotificationRequested()
           showError(it)
         }
-        .addTo(subscriptions)
+        .addTo(disposables)
 
     viewModel.overlongStatus
         .subscribe {
@@ -165,26 +165,26 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
           showTweetDialog(it.status)
           analytics.tweetFromNotificationButTooLong()
         }
-        .addTo(subscriptions)
+        .addTo(disposables)
 
     viewModel.closeNotificationDrawer
         .subscribe { closeNotificationDrawer() }
-        .addTo(subscriptions)
+        .addTo(disposables)
 
     viewModel.updateCompleted
         .subscribe {
           viewModel.onUpdateNotificationRequested()
           showTweetSucceeded()
           analytics.tweetFromNotification()
-        }.addTo(subscriptions)
+        }.addTo(disposables)
 
     viewModel.updateNotificationRequests
         .subscribe { updateNotification(it.footerState, it.timelineApp) }
-        .addTo(subscriptions)
+        .addTo(disposables)
 
     viewModel.stopNotificationService
         .subscribe { stopSelf() }
-        .addTo(subscriptions)
+        .addTo(disposables)
   }
 
   fun buildNotification(footerState: FooterStateManager.State, appInfo: AppInfo): Notification {
@@ -268,8 +268,8 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
   fun showNotification(): Notification {
     Timber.d("show notification")
 
-    val footerState = viewModel.footerState.toBlocking().first()
-    val appInfo = viewModel.selectedTimelineApp.toBlocking().first()
+    val footerState = viewModel.footerState.blockingFirst()
+    val appInfo = viewModel.selectedTimelineApp.blockingFirst()
     val noti = buildNotification(footerState, appInfo)
 
     noti.flags = NotificationCompat.FLAG_NO_CLEAR

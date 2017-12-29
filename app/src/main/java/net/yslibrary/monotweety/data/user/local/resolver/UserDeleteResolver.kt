@@ -1,7 +1,7 @@
 package net.yslibrary.monotweety.data.user.local.resolver
 
-import com.pushtorefresh.storio.sqlite.operations.delete.DefaultDeleteResolver
-import com.pushtorefresh.storio.sqlite.queries.DeleteQuery
+import com.pushtorefresh.storio3.sqlite.operations.delete.DefaultDeleteResolver
+import com.pushtorefresh.storio3.sqlite.queries.DeleteQuery
 import net.yslibrary.monotweety.data.user.User
 import net.yslibrary.monotweety.data.user.local.UserTable
 

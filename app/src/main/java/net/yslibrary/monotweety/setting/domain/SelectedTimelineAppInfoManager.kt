@@ -1,10 +1,10 @@
 package net.yslibrary.monotweety.setting.domain
 
+import io.reactivex.Observable
 import net.yslibrary.monotweety.base.di.AppScope
 import net.yslibrary.monotweety.data.appinfo.AppInfo
 import net.yslibrary.monotweety.data.appinfo.AppInfoManager
 import net.yslibrary.monotweety.data.setting.SettingDataManager
-import rx.Observable
 import javax.inject.Inject
 
 @AppScope

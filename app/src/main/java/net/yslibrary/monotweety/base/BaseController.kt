@@ -2,13 +2,13 @@ package net.yslibrary.monotweety.base
 
 import android.support.annotation.StringRes
 import android.widget.Toast
-import com.bluelinelabs.conductor.rxlifecycle.RxController
+import com.bluelinelabs.conductor.rxlifecycle2.RxController
+import io.reactivex.Completable
+import io.reactivex.Observable
+import io.reactivex.Single
 import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.base.di.Names
 import net.yslibrary.rxeventbus.EventBus
-import rx.Completable
-import rx.Observable
-import rx.Single
 import javax.inject.Inject
 import javax.inject.Named
 import kotlin.properties.Delegates
@@ -29,9 +29,9 @@ abstract class BaseController : RxController() {
 
   fun <T> Observable<T>.bindToLifecycle(): Observable<T> = this.compose(this@BaseController.bindToLifecycle<T>())
 
-  fun <T> Single<T>.bindToLifecycle(): Single<T> = this.compose(this@BaseController.bindToLifecycle<T>().forSingle<T>())
+  fun <T> Single<T>.bindToLifecycle(): Single<T> = this.compose(this@BaseController.bindToLifecycle<T>())
 
-  fun <T> Completable.bindToLifecycle(): Completable = this.compose(this@BaseController.bindToLifecycle<T>().forCompletable())
+  fun <T> Completable.bindToLifecycle(): Completable = this.compose(this@BaseController.bindToLifecycle<T>())
 
   fun showSnackBar(message: String) = (activity as BaseActivity).showSnackBar(message)
 

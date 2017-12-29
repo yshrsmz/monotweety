@@ -3,9 +3,9 @@ package net.yslibrary.monotweety.data.status.remote
 import com.twitter.sdk.android.core.Callback
 import com.twitter.sdk.android.core.Result
 import com.twitter.sdk.android.core.TwitterException
+import io.reactivex.Single
 import net.yslibrary.monotweety.base.di.UserScope
 import net.yslibrary.monotweety.data.status.Tweet
-import rx.Single
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
 import javax.inject.Inject
@@ -15,7 +15,7 @@ import com.twitter.sdk.android.core.models.Tweet as TwitterTweet
 class StatusRemoteRepositoryImpl @Inject constructor(private val statusesService: UpdateStatusService) : StatusRemoteRepository {
 
   override fun update(status: String, inReplyToStatusId: Long?): Single<Tweet> {
-    return Single.fromEmitter<TwitterTweet>({ emitter ->
+    return Single.create<TwitterTweet>({ emitter ->
       val call = statusesService.update(encodeStatus(status), inReplyToStatusId, null, null, null, null, null, null, null)
       call.enqueue(object : Callback<TwitterTweet>() {
         override fun success(result: Result<TwitterTweet>) {
@@ -26,7 +26,7 @@ class StatusRemoteRepositoryImpl @Inject constructor(private val statusesService
           emitter.onError(exception)
         }
       })
-      emitter.setCancellation { call.cancel() }
+      emitter.setCancellable { call.cancel() }
     })
         .map {
           Tweet(

@@ -1,14 +1,15 @@
 package net.yslibrary.monotweety.data.user.local.resolver
 
 import android.database.Cursor
-import com.pushtorefresh.storio.sqlite.operations.get.DefaultGetResolver
+import com.pushtorefresh.storio3.sqlite.StorIOSQLite
+import com.pushtorefresh.storio3.sqlite.operations.get.DefaultGetResolver
 import net.yslibrary.monotweety.data.local.getLongByName
 import net.yslibrary.monotweety.data.local.getStringByName
 import net.yslibrary.monotweety.data.user.User
 import net.yslibrary.monotweety.data.user.local.UserTable
 
 class UserGetResolver : DefaultGetResolver<User>() {
-  override fun mapFromCursor(cursor: Cursor): User {
+  override fun mapFromCursor(storIOSQLite: StorIOSQLite, cursor: Cursor): User {
     return User(
         id = cursor.getLongByName(UserTable.COLUMN_ID),
         name = cursor.getStringByName(UserTable.COLUMN_NAME)!!,

@@ -2,12 +2,12 @@ package net.yslibrary.monotweety.login.domain
 
 import com.twitter.sdk.android.core.SessionManager
 import com.twitter.sdk.android.core.TwitterSession
+import io.reactivex.Completable
+import io.reactivex.Single
 import net.yslibrary.monotweety.base.di.UserScope
 import net.yslibrary.monotweety.data.setting.SettingDataManager
 import net.yslibrary.monotweety.data.status.StatusRepository
 import net.yslibrary.monotweety.data.user.UserRepository
-import rx.Completable
-import rx.Single
 import javax.inject.Inject
 
 
@@ -27,13 +27,7 @@ class DoLogout @Inject constructor(private val settingDataManager: SettingDataMa
 
   fun execute(): Completable {
     return Single.fromCallable { sessionManager.activeSession?.id }
-        .flatMapCompletable {
-          if (it == null) {
-            Completable.complete()
-          } else {
-            userRepository.delete(it)
-          }
-        }
+        .flatMapCompletable { userRepository.delete(it) }
         .andThen(statusRepository.clear())
         .andThen(settingDataManager.clear())
         .andThen(Completable.fromAction { sessionManager.clearActiveSession() })

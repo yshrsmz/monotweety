@@ -1,9 +1,9 @@
 package net.yslibrary.monotweety.status.domain
 
 import com.twitter.twittertext.TwitterTextParser
+import io.reactivex.Single
 import net.yslibrary.monotweety.base.di.UserScope
 import net.yslibrary.monotweety.data.config.ConfigDataManager
-import rx.Single
 import javax.inject.Inject
 
 @UserScope
@@ -11,7 +11,7 @@ class CheckStatusLength @Inject constructor(private val configDataManager: Confi
 
   fun execute(status: String): Single<Result> {
     return configDataManager.shortUrlLengthHttps()
-        .first()
+        .firstOrError()
         .map {
           val result = TwitterTextParser.parseTweet(status)
           Result(
@@ -20,7 +20,7 @@ class CheckStatusLength @Inject constructor(private val configDataManager: Confi
               valid = result.isValid,
               maxLength = TwitterTextParser.TWITTER_TEXT_WEIGHTED_CHAR_COUNT_CONFIG.maxWeightedTweetLength)
         }
-        .toSingle()
+
   }
 
   data class Result(val status: String,

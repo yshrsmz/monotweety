@@ -1,8 +1,8 @@
 package net.yslibrary.monotweety.data.status.remote
 
+import io.reactivex.Single
 import net.yslibrary.monotweety.base.di.UserScope
 import net.yslibrary.monotweety.data.status.Tweet
-import rx.Single
 import javax.inject.Inject
 
 /**

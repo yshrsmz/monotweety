@@ -1,6 +1,6 @@
 package net.yslibrary.monotweety.data.config.local
 
-import rx.Observable
+import io.reactivex.Observable
 
 interface ConfigLocalDataManager {
 

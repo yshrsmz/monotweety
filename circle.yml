@@ -18,4 +18,4 @@ jobs:
             echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME"/licenses/android-sdk-license
       - run:
           name: lint
-          command: "[[ ! -z $CI_PULL_REQUEST ]] && ./gradlew lintDebug 2>&1 | reviewdog -efm='%f:%l: %m' -name='Android Lint' -ci='circle-ci'"
+          command: "if [[ -n $CI_PULL_REQUEST ]] ; then  ./gradlew lintDebug 2>&1 | reviewdog -efm='%f:%l: %m' -name='Android Lint' -ci='circle-ci'; fi"

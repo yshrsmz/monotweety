@@ -16,6 +16,6 @@ jobs:
             echo $SECRETS | base64 -d > ./secret.properties
             echo $GOOGLE_SERVICE_JSON | base64 -d > ./app/google-services.json
             echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME"/licenses/android-sdk-license
-      - run:
-          name: lint
-          command: "./gradlew lintDebug 2>&1 | reviewdog -efm='%f:%l: %m' -name='Android Lint' -ci='circle-ci'"
+#      - run:
+#          name: lint
+#          command: "./gradlew lintDebug 2>&1 | reviewdog -efm='%f:%l: %m' -name='Android Lint' -ci='circle-ci'"

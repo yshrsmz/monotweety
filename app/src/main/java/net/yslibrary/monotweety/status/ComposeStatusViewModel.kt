@@ -6,6 +6,7 @@ import com.twitter.sdk.android.core.TwitterApiException
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.rxkotlin.Singles
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
@@ -129,19 +130,17 @@ class ComposeStatusViewModel(status: String,
   }
 
   fun onSendStatus() {
-    Observable.combineLatest(
-        isSendableStatus.filter { it },
-        tweetAsThread,
+    Singles.zip(
+        isSendableStatus.firstOrError(),
+        tweetAsThread.firstOrError(),
         getPreviousStatus.execute().firstOrError(),
-        statusInfo,
-        { _, asThread, previousTweet, (status) ->
-          // return previous tweet and current status string
-          Pair(if (asThread) previousTweet else null, status)
-        })
-        .first().toSingle()
+        statusInfo.firstOrError()
+    ) { _, asThread, previousTweet, (status) ->
+      Pair(if (asThread) previousTweet.toNullable() else null, status)
+    }
         .doOnSuccess { progressEventsSubject.onNext(ProgressEvent.IN_PROGRESS) }
         .flatMapCompletable { updateStatus.execute(it.second, it.first?.id) }
-        .andThen(tweetAsThread.first().toSingle()
+        .andThen(tweetAsThread.firstOrError()
             .flatMapCompletable { asThread ->
               if (asThread) {
                 Completable.complete()
@@ -149,12 +148,12 @@ class ComposeStatusViewModel(status: String,
                 clearPreviousStatus.execute()
               }
             })
-        .doOnCompleted {
+        .doOnComplete {
           Timber.d("status updated - complete")
           statusUpdatedSubject.onNext(Unit)
         }
         .doOnTerminate { progressEventsSubject.onNext(ProgressEvent.FINISHED) }
-        .subscribe({}, { t ->
+        .subscribeBy(onError = { t ->
           Timber.e(t, t.message)
           if (t is TwitterApiException && t.errorMessage != null) {
             messagesSubject.onNext(t.errorMessage)

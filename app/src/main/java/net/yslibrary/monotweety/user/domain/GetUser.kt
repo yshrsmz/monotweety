@@ -1,11 +1,12 @@
 package net.yslibrary.monotweety.user.domain
 
+import com.gojuno.koptional.Optional
 import com.twitter.sdk.android.core.SessionManager
 import com.twitter.sdk.android.core.TwitterSession
+import io.reactivex.Flowable
 import net.yslibrary.monotweety.base.di.UserScope
 import net.yslibrary.monotweety.data.user.User
 import net.yslibrary.monotweety.data.user.UserRepository
-import rx.Observable
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -15,12 +16,12 @@ class GetUser @Inject constructor(private val userRepository: UserRepository,
 
   private var progress: Progress = Progress.IDLE
 
-  fun execute(): Observable<User?> {
-    return Observable.defer {
+  fun execute(): Flowable<Optional<User>> {
+    return Flowable.defer {
       val session = sessionManager.activeSession
       userRepository.get(session.id)
     }.doOnNext {
-      if (progress == Progress.LOADING || userRepository.isValid(it)) {
+      if (progress == Progress.LOADING || userRepository.isValid(it.toNullable())) {
         // no-op
         Timber.d("currently loading user or cache is valid")
       } else {

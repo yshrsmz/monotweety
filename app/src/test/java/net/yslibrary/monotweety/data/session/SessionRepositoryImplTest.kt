@@ -9,7 +9,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import rx.observers.TestSubscriber
 import kotlin.properties.Delegates
 
 @RunWith(JUnit4::class)
@@ -27,14 +26,14 @@ class SessionRepositoryImplTest {
 
   @Test
   fun getActiveSession() {
-    val ts = TestSubscriber<TwitterSession?>()
     whenever(mockSessionManager.activeSession).thenReturn(null)
 
-    repository.getActiveSession().subscribe(ts)
+    repository.getActiveSession().test()
+        .apply {
+          assertValueCount(1)
+          assertComplete()
 
-    ts.assertValueCount(1)
-    ts.assertCompleted()
-
-    verify(mockSessionManager).activeSession
+          verify(mockSessionManager).activeSession
+        }
   }
 }

@@ -1,7 +1,11 @@
 package net.yslibrary.monotweety.data.user
 
+import com.gojuno.koptional.None
 import com.google.gson.Gson
 import com.nhaarman.mockito_kotlin.*
+import io.reactivex.Completable
+import io.reactivex.Flowable
+import io.reactivex.Single
 import net.yslibrary.monotweety.base.Clock
 import net.yslibrary.monotweety.data.user.local.UserLocalRepository
 import net.yslibrary.monotweety.data.user.remote.UserRemoteRepository
@@ -11,10 +15,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import rx.Completable
-import rx.Observable
-import rx.Single
-import rx.observers.TestSubscriber
 import java.util.concurrent.TimeUnit
 import com.twitter.sdk.android.core.models.User as TwitterUser
 
@@ -41,21 +41,19 @@ class UserRepositoryImplTest {
   @Test
   fun get() {
     whenever(localRepository.getById(any()))
-        .thenReturn(Observable.just(null))
+        .thenReturn(Flowable.just(None))
 
-    val ts = TestSubscriber<User?>()
+    repository.get(1).test()
+        .apply {
+          assertValue(None)
 
-    repository.get(1).subscribe(ts)
-
-    ts.assertValue(null)
-
-    verify(localRepository).getById(1)
-    verifyNoMoreInteractions(localRepository, remoteRepository)
+          verify(localRepository).getById(1)
+          verifyNoMoreInteractions(localRepository, remoteRepository)
+        }
   }
 
   @Test
   fun set() {
-    val ts = TestSubscriber<Unit>()
     val time = System.currentTimeMillis()
     val twitterUser = gson.fromJson(readJsonFromAssets("user.json"), TwitterUser::class.java)
     val user = User(id = twitterUser.id,
@@ -65,32 +63,32 @@ class UserRepositoryImplTest {
         _updatedAt = time)
     whenever(localRepository.set(user)).thenReturn(Completable.complete())
 
-    repository.set(user).subscribe(ts)
+    repository.set(user).test()
+        .apply {
+          assertNoValues()
+          assertComplete()
 
-    ts.assertNoValues()
-    ts.assertCompleted()
-
-    verify(localRepository).set(user)
-    verifyNoMoreInteractions(localRepository, remoteRepository)
+          verify(localRepository).set(user)
+          verifyNoMoreInteractions(localRepository, remoteRepository)
+        }
   }
 
   @Test
   fun delete() {
-    val ts = TestSubscriber<Unit>()
     whenever(localRepository.delete(any())).thenReturn(Completable.complete())
 
-    repository.delete(1234).subscribe(ts)
+    repository.delete(1234).test()
+        .apply {
+          assertNoValues()
+          assertComplete()
 
-    ts.assertNoValues()
-    ts.assertCompleted()
-
-    verify(localRepository).delete(1234)
-    verifyNoMoreInteractions(localRepository, remoteRepository)
+          verify(localRepository).delete(1234)
+          verifyNoMoreInteractions(localRepository, remoteRepository)
+        }
   }
 
   @Test
   fun fetch() {
-    val ts = TestSubscriber<Unit>()
     val time = System.currentTimeMillis()
     val twitterUser = gson.fromJson(readJsonFromAssets("user.json"), TwitterUser::class.java)
     val user = User(id = twitterUser.id,
@@ -105,14 +103,15 @@ class UserRepositoryImplTest {
 
     whenever(clock.currentTimeMillis()).thenReturn(time)
 
-    repository.fetch().subscribe(ts)
+    repository.fetch().test()
+        .apply {
+          assertNoValues()
+          assertComplete()
 
-    ts.assertNoValues()
-    ts.assertCompleted()
-
-    verify(remoteRepository).get()
-    verify(localRepository).set(user)
-    verifyNoMoreInteractions(remoteRepository, localRepository)
+          verify(remoteRepository).get()
+          verify(localRepository).set(user)
+          verifyNoMoreInteractions(remoteRepository, localRepository)
+        }
   }
 
   @Test

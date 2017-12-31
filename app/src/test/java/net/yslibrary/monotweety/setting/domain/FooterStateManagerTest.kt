@@ -9,7 +9,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RuntimeEnvironment
-import rx.observers.TestSubscriber
 
 @RunWith(ConfiguredRobolectricTestRunner::class)
 class FooterStateManagerTest {
@@ -18,35 +17,31 @@ class FooterStateManagerTest {
 
   lateinit var footerStateManager: FooterStateManager
 
-  lateinit var ts: TestSubscriber<FooterStateManager.State>
-
   @Before
   fun setup() {
     val module = SettingModule()
     settingDataManager = spy(module.provideSettingDataManager(module.provideSettingPreferences(RuntimeEnvironment.application)))
 
     footerStateManager = FooterStateManager(settingDataManager)
-
-    ts = TestSubscriber.create<FooterStateManager.State>()
   }
 
   @Test
   fun getAndSet() {
-    footerStateManager.get()
-        .subscribe(ts)
+    footerStateManager.get().test()
+        .apply {
+          verify(settingDataManager).footerEnabled()
+          verify(settingDataManager).footerText()
 
-    verify(settingDataManager).footerEnabled()
-    verify(settingDataManager).footerText()
+          assertNotComplete()
+          assertValue(FooterStateManager.State(false, ""))
 
-    ts.assertNotCompleted()
-    ts.assertValue(FooterStateManager.State(false, ""))
+          footerStateManager.set(FooterStateManager.State(true, "this_is_footer"))
 
-    footerStateManager.set(FooterStateManager.State(true, "this_is_footer"))
+          verify(settingDataManager).footerEnabled(true)
+          verify(settingDataManager).footerText("this_is_footer")
 
-    verify(settingDataManager).footerEnabled(true)
-    verify(settingDataManager).footerText("this_is_footer")
-
-    ts.assertValues(FooterStateManager.State(false, ""), FooterStateManager.State(true, "this_is_footer"))
-    ts.assertNotCompleted()
+          assertValues(FooterStateManager.State(false, ""), FooterStateManager.State(true, "this_is_footer"))
+          assertNotComplete()
+        }
   }
 }

@@ -1,8 +1,11 @@
 package net.yslibrary.monotweety.data.config
 
-import com.f2prateek.rx.preferences.RxSharedPreferences
+import com.f2prateek.rx.preferences2.RxSharedPreferences
 import com.google.gson.Gson
 import com.nhaarman.mockito_kotlin.*
+import io.reactivex.Single
+import io.reactivex.plugins.RxJavaPlugins
+import io.reactivex.schedulers.Schedulers
 import net.yslibrary.monotweety.ConfiguredRobolectricTestRunner
 import net.yslibrary.monotweety.base.Clock
 import net.yslibrary.monotweety.data.config.local.ConfigLocalDataManager
@@ -13,10 +16,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RuntimeEnvironment
-import rx.Single
-import rx.observers.TestSubscriber
-import rx.plugins.RxJavaHooks
-import rx.schedulers.Schedulers
 import com.twitter.sdk.android.core.models.Configuration as TwitterConfig
 
 @RunWith(ConfiguredRobolectricTestRunner::class)
@@ -27,8 +26,6 @@ class ConfigDataManagerImplTest {
   lateinit var configLocalDataManager: ConfigLocalDataManager
   lateinit var configRemoteDataManager: ConfigRemoteDataManager
   lateinit var clock: Clock
-
-  lateinit var ts: TestSubscriber<Int>
 
   val gson = Gson()
   val config = Configuration.from(gson.fromJson(readJsonFromAssets("configuration.json"), TwitterConfig::class.java))
@@ -41,13 +38,11 @@ class ConfigDataManagerImplTest {
     configLocalDataManager = spy(module.provideConfigLocalDataManager(prefs, clock))
     configRemoteDataManager = mock<ConfigRemoteDataManager>()
     configDataManager = spy(module.provideConfigDataManager(configRemoteDataManager, configLocalDataManager, clock) as ConfigDataManagerImpl)
-
-    ts = TestSubscriber.create()
   }
 
   @Test
   fun shortUrlLengthHttps_outdated() {
-    RxJavaHooks.setOnIOScheduler { Schedulers.immediate() }
+    RxJavaPlugins.setIoSchedulerHandler { Schedulers.trampoline() }
 
     val time = System.currentTimeMillis()
     whenever(configRemoteDataManager.get())
@@ -58,11 +53,11 @@ class ConfigDataManagerImplTest {
 
     prefs.getInteger(ConfigLocalDataManagerImpl.SHORT_URL_LENGTH_HTTPS).set(22)
 
-    configDataManager.shortUrlLengthHttps()
-        .subscribe(ts)
-
-    ts.assertValue(22)
-    ts.assertNotCompleted()
+    configDataManager.shortUrlLengthHttps().test()
+        .apply {
+          assertValue(22)
+          assertNotComplete()
+        }
 
     verify(configLocalDataManager).shortUrlLengthHttps()
     verify(configLocalDataManager).updatedAt()
@@ -76,7 +71,7 @@ class ConfigDataManagerImplTest {
 
     verifyNoMoreInteractions(configLocalDataManager, configRemoteDataManager)
 
-    RxJavaHooks.reset()
+    RxJavaPlugins.reset()
   }
 
   @Test
@@ -85,10 +80,11 @@ class ConfigDataManagerImplTest {
     prefs.getInteger(ConfigLocalDataManagerImpl.SHORT_URL_LENGTH_HTTPS).set(22)
     prefs.getLong(ConfigLocalDataManagerImpl.UPDATED_AT).set(time)
 
-    configDataManager.shortUrlLengthHttps().subscribe(ts)
-
-    ts.assertValue(22)
-    ts.assertNotCompleted()
+    configDataManager.shortUrlLengthHttps().test()
+        .apply {
+          assertValue(22)
+          assertNotComplete()
+        }
 
     verify(configLocalDataManager).shortUrlLengthHttps()
     verify(configLocalDataManager).updatedAt()

@@ -1,6 +1,6 @@
 package net.yslibrary.monotweety.data.config.local
 
-import com.f2prateek.rx.preferences.RxSharedPreferences
+import com.f2prateek.rx.preferences2.RxSharedPreferences
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import net.yslibrary.monotweety.ConfiguredRobolectricTestRunner
@@ -11,7 +11,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RuntimeEnvironment
-import rx.observers.TestSubscriber
 import java.util.concurrent.TimeUnit
 import kotlin.properties.Delegates
 
@@ -32,18 +31,17 @@ class ConfigLocalDataManagerImplTest {
 
   @Test
   fun shortUrlLengthHttps_get() {
-    val ts = TestSubscriber<Int>()
 
     val prefs = rxPrefs.getInteger(ConfigLocalDataManagerImpl.SHORT_URL_LENGTH_HTTPS)
 
-    manager.shortUrlLengthHttps()
-        .subscribe(ts)
+    manager.shortUrlLengthHttps().test()
+        .apply {
+          prefs.set(24)
 
-    prefs.set(24)
-
-    ts.assertValues(23, 24) // initial value
-    ts.assertNoErrors()
-    ts.assertNotCompleted()
+          assertValues(23, 24) // initial value
+          assertNoErrors()
+          assertNotComplete()
+        }
   }
 
   @Test

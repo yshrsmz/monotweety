@@ -1,7 +1,8 @@
 package net.yslibrary.monotweety.data.user.local
 
+import com.gojuno.koptional.toOptional
 import com.google.gson.Gson
-import com.pushtorefresh.storio.sqlite.StorIOSQLite
+import com.pushtorefresh.storio3.sqlite.StorIOSQLite
 import net.yslibrary.monotweety.ConfiguredRobolectricTestRunner
 import net.yslibrary.monotweety.assertThat
 import net.yslibrary.monotweety.data.local.LocalModule
@@ -13,7 +14,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RuntimeEnvironment
-import java.util.concurrent.TimeUnit
 import kotlin.properties.Delegates
 import com.twitter.sdk.android.core.models.User as TwitterUser
 
@@ -47,11 +47,13 @@ class UserLocalRepositoryImplTest {
 
     storio.put().withObject(user).prepare().executeAsBlocking()
 
-    repository.getById(user.id)
-        .test()
-        .awaitValueCount(1, 3, TimeUnit.SECONDS)
-        .assertValue(user)
-        .assertNotCompleted()
+    repository.getById(user.id).test()
+        .apply {
+          awaitCount(1)
+
+          assertValue(user.toOptional())
+          assertNotComplete()
+        }
   }
 
   @Test
@@ -64,11 +66,12 @@ class UserLocalRepositoryImplTest {
         profileImageUrl = twitterUser.profileImageUrl,
         _updatedAt = time)
 
-    repository.set(user)
-        .test()
-        .awaitTerminalEvent()
-        .assertNoValues()
-        .assertCompleted()
+    repository.set(user).test()
+        .apply {
+          awaitTerminalEvent()
+          assertNoValues()
+          assertComplete()
+        }
 
     val result = storio.get()
         .singleObject(User::class.java)
@@ -90,11 +93,12 @@ class UserLocalRepositoryImplTest {
 
     storio.put().withObject(user).prepare().executeAsBlocking()
 
-    repository.delete(user.id)
-        .test()
-        .awaitTerminalEvent()
-        .assertNoValues()
-        .assertCompleted()
+    repository.delete(user.id).test()
+        .apply {
+          awaitTerminalEvent()
+          assertNoValues()
+          assertComplete()
+        }
 
     val result = storio.get().numberOfResults()
         .withQuery(UserTable.queryById(user.id))

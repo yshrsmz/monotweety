@@ -13,6 +13,7 @@ import com.bluelinelabs.conductor.ControllerChangeHandler
 import com.bluelinelabs.conductor.ControllerChangeType
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.HorizontalChangeHandler
+import com.gojuno.koptional.rxjava2.filterSome
 import com.jakewharton.rxbinding2.widget.checkedChanges
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -186,9 +187,10 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
     viewModel.user
         .bindToLifecycle()
         .observeOn(AndroidSchedulers.mainThread())
+        .filterSome()
         .subscribeBy {
           Timber.d("user: $it")
-          it?.let { settingAdapter.updateProfile(it) }
+          it.let { settingAdapter.updateProfile(it) }
         }
 
     viewModel.openProfileRequests

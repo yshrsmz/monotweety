@@ -187,7 +187,6 @@ dependencies {
   implementation 'com.jakewharton.timber:timber:4.6.0'
   implementation 'com.jakewharton.threetenabp:threetenabp:1.0.5'
 
-  implementation 'net.yslibrary.rxeventbus:rxeventbus:1.0.1'
   implementation 'net.yslibrary.licenseadapter:licenseadapter:2.0.2'
 
   implementation 'com.github.gabrielemariotti.changeloglib:changelog:2.1.0'

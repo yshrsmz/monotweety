@@ -4,9 +4,9 @@ import dagger.Module
 import dagger.Provides
 import net.yslibrary.monotweety.Navigator
 import net.yslibrary.monotweety.base.BaseActivity
+import net.yslibrary.monotweety.base.EventBus
 import net.yslibrary.monotweety.base.di.ActivityScope
 import net.yslibrary.monotweety.base.di.Names
-import net.yslibrary.rxeventbus.EventBus
 import javax.inject.Named
 
 @Module

@@ -63,7 +63,7 @@ class LoginController : ActionBarController(), HasComponent<LoginComponent> {
 
   fun setEvents() {
     Timber.i("setEvents - LoginController")
-    activityBus.on(ActivityResult::class.java)
+    activityBus.on(ActivityResult::class)
         .observeOn(AndroidSchedulers.mainThread())
         .bindToLifecycle()
         .subscribe {

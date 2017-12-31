@@ -2,6 +2,7 @@ package net.yslibrary.monotweety
 
 import com.twitter.sdk.android.core.TwitterSession
 import dagger.Component
+import io.reactivex.subjects.PublishSubject
 import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.base.RefWatcherDelegate
 import net.yslibrary.monotweety.base.di.AppScope
@@ -11,7 +12,6 @@ import net.yslibrary.monotweety.login.domain.IsLoggedIn
 import net.yslibrary.monotweety.setting.domain.FooterStateManager
 import net.yslibrary.monotweety.setting.domain.KeepOpenManager
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
-import rx.subjects.PublishSubject
 import javax.inject.Named
 
 @AppScope

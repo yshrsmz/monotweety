@@ -8,7 +8,6 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.base.di.Names
-import net.yslibrary.rxeventbus.EventBus
 import javax.inject.Inject
 import javax.inject.Named
 import kotlin.properties.Delegates

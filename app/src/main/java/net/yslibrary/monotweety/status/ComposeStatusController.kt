@@ -14,8 +14,9 @@ import com.bluelinelabs.conductor.ControllerChangeHandler
 import com.bluelinelabs.conductor.ControllerChangeType
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.Observables
+import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.subjects.PublishSubject
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.analytics.Analytics
@@ -102,22 +103,24 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
     }
 
     // FIXME: this should be handled in ViewModel
-    Observable.combineLatest(
+    Observables.combineLatest(
         viewModel.statusInfo.distinctUntilChanged(),
         viewModel.keepOpen,
-        viewModel.tweetAsThread,
-        { (status1, valid, length, maxLength), keepOpen, tweetAsThread ->
-          EditorAdapterDelegate.Item(status = status1,
-              keepOpen = keepOpen,
-              enableThread = tweetAsThread,
-              statusLength = length,
-              maxLength = maxLength,
-              valid = valid,
-              clear = false)
-        })
+        viewModel.tweetAsThread
+    ) { (status1, valid, length, maxLength), keepOpen, tweetAsThread ->
+      EditorAdapterDelegate.Item(
+          status = status1,
+          keepOpen = keepOpen,
+          enableThread = tweetAsThread,
+          statusLength = length,
+          maxLength = maxLength,
+          valid = valid,
+          clear = false
+      )
+    }
         .distinctUntilChanged()
         .bindToLifecycle()
-        .subscribe {
+        .subscribeBy {
           Timber.d("item updated: $it")
           statusAdapter.updateEditor(it)
         }
@@ -144,10 +147,10 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
         }
 
     viewModel.statusUpdated
-        .switchMap { viewModel.previousStatus.first() }
-        .switchMap { tweet ->
-          viewModel.footerState.first()
-              .map { Pair(tweet, it) }
+        .switchMapSingle { viewModel.previousStatus.firstOrError() }
+        .switchMapSingle { tweet ->
+          viewModel.footerState.firstOrError()
+              .map { Pair(tweet.toNullable(), it) }
         }
         .bindToLifecycle()
         .observeOn(AndroidSchedulers.mainThread())
@@ -181,13 +184,12 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
   override fun onPrepareOptionsMenu(menu: Menu) {
     super.onPrepareOptionsMenu(menu)
 
-    Observable.zip(
+    Observables.zip(
         viewModel.isSendableStatus,
-        viewModel.progressEvents,
-        { sendable, progress -> Pair(sendable, progress) })
-        .first()
-        .toBlocking()
-        .subscribe {
+        viewModel.progressEvents
+    ) { sendable, progress -> sendable to progress }
+        .blockingFirst()
+        .let {
           menu.findItem(R.id.action_send_tweet)?.isEnabled = it.first && it.second == ComposeStatusViewModel.ProgressEvent.FINISHED
         }
   }

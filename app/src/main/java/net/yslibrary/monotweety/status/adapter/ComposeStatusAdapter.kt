@@ -2,11 +2,12 @@ package net.yslibrary.monotweety.status.adapter
 
 import android.support.v7.util.DiffUtil
 import com.hannesdorfmann.adapterdelegates3.ListDelegationAdapter
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 import net.yslibrary.monotweety.data.status.Tweet
 import net.yslibrary.monotweety.setting.domain.FooterStateManager
-import rx.Single
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
 import timber.log.Timber
 
 class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapter<List<ComposeStatusAdapter.Item>>() {
@@ -46,7 +47,7 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
     }
 
     calculateDiff(items, tweetItems + items.last())
-        .subscribe {
+        .subscribeBy {
           synchronized(ComposeStatusAdapter@ this, {
             Timber.d("update previous status")
             items = it.second
@@ -64,7 +65,7 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
       // list item is not empty and last item is editor
       change = calculateDiff(items, items.dropLast(1) + item)
     }
-    change.subscribe {
+    change.subscribeBy {
       synchronized(ComposeStatusAdapter@ this, {
         Timber.d("update editor")
         items = it.second
@@ -91,7 +92,7 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
             valid = false,
             initialValue = false,
             clear = true))
-        .subscribe {
+        .subscribeBy {
           Timber.d("update tweet & clear editor")
           items = it.second
           it.first.dispatchUpdatesTo(this)

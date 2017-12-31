@@ -27,8 +27,7 @@ class LicenseRepositoryImpl @Inject constructor() : LicenseRepository {
           Licenses.fromGitHubApacheV2("sockeqwe/AdapterDelegates"),
           Licenses.fromGitHubApacheV2("twitter/twitter-text"),
           Licenses.fromGitHubApacheV2("twitter/twitter-kit-android"),
-          Licenses.fromGitHubApacheV2("yshrsmz/LicenseAdapter"),
-          Licenses.fromGitHubApacheV2("yshrsmz/RxEventBus"))
+          Licenses.fromGitHubApacheV2("yshrsmz/LicenseAdapter"))
 
       // sort github hosted repos first
       list.sortedBy { it.getName().toLowerCase(Locale.ENGLISH) }

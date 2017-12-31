@@ -1,14 +1,14 @@
 package net.yslibrary.monotweety.base
 
+import io.reactivex.Observable
 import io.reactivex.Single
-import rx.Observable
-import rx.Subscription
-import rx.functions.Action1
-import rx.subscriptions.SerialSubscription
+import io.reactivex.disposables.Disposable
+import io.reactivex.disposables.SerialDisposable
+import io.reactivex.functions.Consumer
 
-class SkipUntilCompletedAction1<T>(val doOnSubscribe: (T, () -> Unit) -> Unit) : Action1<T> {
+class SkipUntilCompletedConsumer<T>(val doOnSubscribe: (T, () -> Unit) -> Unit) : Consumer<T> {
   private var loading: Boolean = false
-  override fun call(t: T) {
+  override fun accept(t: T) {
     if (loading) {
       return
     }
@@ -17,12 +17,12 @@ class SkipUntilCompletedAction1<T>(val doOnSubscribe: (T, () -> Unit) -> Unit) :
   }
 }
 
-fun <T> Observable<T>.subscribeWhenCompleted(doOnSubscribe: (t: T, completed: () -> Unit) -> Unit): Subscription {
-  return subscribe(SkipUntilCompletedAction1(doOnSubscribe))
+fun <T> Observable<T>.subscribeWhenCompleted(doOnSubscribe: (t: T, completed: () -> Unit) -> Unit): Disposable {
+  return subscribe(SkipUntilCompletedConsumer(doOnSubscribe))
 }
 
-fun Subscription.setTo(subscription: SerialSubscription): Subscription {
-  subscription.set(this)
+fun Disposable.setTo(disposable: SerialDisposable): Disposable {
+  disposable.set(this)
   return this
 }
 

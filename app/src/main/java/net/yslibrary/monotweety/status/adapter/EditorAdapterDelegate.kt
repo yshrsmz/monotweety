@@ -8,19 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
-import com.jakewharton.rxbinding.widget.checkedChanges
-import com.jakewharton.rxbinding.widget.textChanges
+import com.jakewharton.rxbinding2.widget.checkedChanges
+import com.jakewharton.rxbinding2.widget.textChanges
+import io.reactivex.disposables.SerialDisposable
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.base.inflate
 import net.yslibrary.monotweety.base.setTo
-import rx.subscriptions.SerialSubscription
 
 class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<List<ComposeStatusAdapter.Item>>() {
 
-  val statusInputSubscription = SerialSubscription()
-  val enableThreadSwitchSubscription = SerialSubscription()
-  val keepOpenSubscription = SerialSubscription()
+  val statusInputDisposable = SerialDisposable()
+  val enableThreadSwitchDisposable = SerialDisposable()
+  val keepOpenDisposable = SerialDisposable()
 
   override fun isForViewType(items: List<ComposeStatusAdapter.Item>, position: Int): Boolean {
     return items[position].viewType == ComposeStatusAdapter.ViewType.EDITOR
@@ -60,15 +60,15 @@ class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
     holder.statusInput.textChanges()
         .skip(1)
         .subscribe { listener.onStatusChanged(it.toString()) }
-        .setTo(statusInputSubscription)
+        .setTo(statusInputDisposable)
 
     holder.enableThreadSwitch.checkedChanges()
         .subscribe { listener.onEnableThreadChanged(it) }
-        .setTo(enableThreadSwitchSubscription)
+        .setTo(enableThreadSwitchDisposable)
 
     holder.keepOpenSwitch.checkedChanges()
         .subscribe { listener.onKeepOpenChanged(it) }
-        .setTo(keepOpenSubscription)
+        .setTo(keepOpenDisposable)
 
     return holder
   }

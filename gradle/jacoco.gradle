@@ -1,14 +1,6 @@
 // https://github.com/nomisRev/AndroidGradleJacoco
 apply plugin: 'jacoco'
 
-//jacoco {
-//    toolVersion = "0.7.2.201409121644"
-//}
-
-//requires gradle 2.13, just became stable!! Robolectric should be fixed!!
-jacoco {
-  toolVersion = "0.7.9"
-}
 android {
   testOptions {
     unitTests.all {

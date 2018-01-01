@@ -1,11 +1,9 @@
 package net.yslibrary.monotweety.data.license
 
-import net.yslibrary.licenseadapter.Library
 import net.yslibrary.monotweety.ConfiguredRobolectricTestRunner
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import rx.observers.TestSubscriber
 import kotlin.properties.Delegates
 
 @RunWith(ConfiguredRobolectricTestRunner::class)
@@ -20,11 +18,10 @@ class LicenseRepositoryImplTest {
 
   @Test
   fun get() {
-    val ts = TestSubscriber<List<Library>>()
-
-    repository.get().subscribe(ts)
-
-    ts.assertValueCount(1)
-    ts.assertCompleted()
+    repository.get().test()
+        .apply {
+          assertValueCount(1)
+          assertComplete()
+        }
   }
 }

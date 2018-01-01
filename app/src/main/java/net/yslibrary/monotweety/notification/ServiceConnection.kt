@@ -4,15 +4,19 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.IBinder
-import rx.Observable
-import rx.subjects.BehaviorSubject
+import com.gojuno.koptional.None
+import com.gojuno.koptional.Optional
+import com.gojuno.koptional.rxjava2.filterSome
+import com.gojuno.koptional.toOptional
+import io.reactivex.Observable
+import io.reactivex.subjects.BehaviorSubject
 import timber.log.Timber
 
 
 class ServiceConnection(context: Context, private val intent: Intent) : android.content.ServiceConnection {
 
   private val context: Context = context.applicationContext
-  private val subject = BehaviorSubject.create<NotificationService?>()
+  private val subject = BehaviorSubject.create<Optional<NotificationService>>()
 
   override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
     Timber.d("Service connected")
@@ -27,17 +31,17 @@ class ServiceConnection(context: Context, private val intent: Intent) : android.
   fun initWithBinder(binder: IBinder?) {
     if (binder == null) {
       Timber.d("Service not bound")
-      subject.onNext(null)
+      subject.onNext(None)
       return
     }
 
     Timber.d("Service bound")
     val service = (binder as NotificationService.ServiceBinder).service
-    subject.onNext(service)
+    subject.onNext(service.toOptional())
   }
 
   fun dispose() {
-    subject.onNext(null)
+    subject.onNext(None)
   }
 
   fun bindService(): Observable<NotificationService> {
@@ -45,8 +49,7 @@ class ServiceConnection(context: Context, private val intent: Intent) : android.
       context.bindService(intent, this, Context.BIND_AUTO_CREATE)
     }
 
-    return subject.asObservable()
-        .filter { it != null }
-        .map { it!! }
+    return subject
+        .filterSome()
   }
 }

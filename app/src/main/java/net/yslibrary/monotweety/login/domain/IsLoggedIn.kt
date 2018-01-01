@@ -1,8 +1,8 @@
 package net.yslibrary.monotweety.login.domain
 
+import io.reactivex.Single
 import net.yslibrary.monotweety.base.di.AppScope
 import net.yslibrary.monotweety.data.session.SessionRepository
-import rx.Single
 import javax.inject.Inject
 
 @AppScope
@@ -10,6 +10,6 @@ class IsLoggedIn @Inject constructor(private val sessionRepository: SessionRepos
 
   fun execute(): Single<Boolean> {
     return sessionRepository.getActiveSession()
-        .map { token -> token != null }
+        .map { token -> token.toNullable() != null }
   }
 }

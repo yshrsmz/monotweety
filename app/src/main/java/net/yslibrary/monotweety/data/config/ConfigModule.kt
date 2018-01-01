@@ -1,7 +1,7 @@
 package net.yslibrary.monotweety.data.config
 
 import android.content.Context
-import com.f2prateek.rx.preferences.RxSharedPreferences
+import com.f2prateek.rx.preferences2.RxSharedPreferences
 import com.twitter.sdk.android.core.services.ConfigurationService
 import dagger.Module
 import dagger.Provides

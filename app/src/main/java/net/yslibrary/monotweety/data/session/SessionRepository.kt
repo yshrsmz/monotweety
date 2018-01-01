@@ -1,8 +1,9 @@
 package net.yslibrary.monotweety.data.session
 
+import com.gojuno.koptional.Optional
 import com.twitter.sdk.android.core.TwitterSession
-import rx.Single
+import io.reactivex.Single
 
 interface SessionRepository {
-  fun getActiveSession(): Single<TwitterSession?>
+  fun getActiveSession(): Single<Optional<TwitterSession>>
 }

@@ -20,7 +20,7 @@ class ShortcutActivity : Activity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    val loggedIn = App.appComponent(this).isLoggedIn().execute().toBlocking().value()
+    val loggedIn = App.appComponent(this).isLoggedIn().execute().blockingGet()
 
     if (!loggedIn) {
       Toast.makeText(this, R.string.error_not_authorized, Toast.LENGTH_SHORT).show()

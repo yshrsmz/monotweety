@@ -1,20 +1,21 @@
 package net.yslibrary.monotweety.splash
 
+import io.reactivex.Observable
+import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.BehaviorSubject
 import net.yslibrary.monotweety.login.domain.IsLoggedIn
-import rx.Observable
-import rx.schedulers.Schedulers
-import rx.subjects.BehaviorSubject
 
 class SplashViewModel(private val isLoggedIn: IsLoggedIn) {
 
   private val loggedInSubject = BehaviorSubject.create<Boolean>()
 
   val loggedIn: Observable<Boolean>
-    get() = loggedInSubject.asObservable()
+    get() = loggedInSubject
 
   init {
     isLoggedIn.execute()
         .subscribeOn(Schedulers.io())
-        .subscribe { loggedInSubject.onNext(it) }
+        .subscribeBy { loggedInSubject.onNext(it) }
   }
 }

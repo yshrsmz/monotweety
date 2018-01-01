@@ -1,7 +1,7 @@
 package net.yslibrary.monotweety.data.setting
 
-import rx.Completable
-import rx.Observable
+import io.reactivex.Completable
+import io.reactivex.Observable
 
 interface SettingDataManager {
   fun notificationEnabled(): Observable<Boolean>

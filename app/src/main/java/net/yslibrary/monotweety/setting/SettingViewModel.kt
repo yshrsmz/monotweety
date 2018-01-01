@@ -1,14 +1,16 @@
 package net.yslibrary.monotweety.setting
 
+import com.gojuno.koptional.None
+import com.gojuno.koptional.Optional
+import io.reactivex.Observable
+import io.reactivex.Single
+import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.PublishSubject
 import net.yslibrary.monotweety.Config
 import net.yslibrary.monotweety.data.appinfo.AppInfo
 import net.yslibrary.monotweety.data.user.User
 import net.yslibrary.monotweety.setting.domain.*
 import net.yslibrary.monotweety.user.domain.GetUser
-import rx.Observable
-import rx.Single
-import rx.subjects.BehaviorSubject
-import rx.subjects.PublishSubject
 import timber.log.Timber
 
 class SettingViewModel(private val config: Config,
@@ -19,7 +21,7 @@ class SettingViewModel(private val config: Config,
                        private val getInstalledSupportedApps: GetInstalledSupportedApps,
                        private val selectedTimelineAppInfoManager: SelectedTimelineAppInfoManager) {
 
-  private val userSubject = BehaviorSubject.create(null as User?)
+  private val userSubject = BehaviorSubject.createDefault<Optional<User>>(None)
 
   private val logoutRequestsSubject = PublishSubject.create<Unit>()
 
@@ -43,32 +45,32 @@ class SettingViewModel(private val config: Config,
   val keepOpen: Observable<Boolean>
     get() = keepOpenManager.get()
 
-  val user: Observable<User?>
-    get() = userSubject.asObservable()
+  val user: Observable<Optional<User>>
+    get() = userSubject
 
   val openProfileRequests: Observable<String>
-    get() = openProfileRequestsSubject.asObservable()
+    get() = openProfileRequestsSubject
 
   val logoutRequests: Observable<Unit>
-    get() = logoutRequestsSubject.asObservable()
+    get() = logoutRequestsSubject
 
   val licenseRequests: Observable<Unit>
-    get() = licenseRequestsSubject.asObservable()
+    get() = licenseRequestsSubject
 
   val developerRequests: Observable<String>
-    get() = developerRequestsSubject.asObservable()
+    get() = developerRequestsSubject
 
   val shareRequests: Observable<String>
-    get() = shareRequestsSubject.asObservable()
+    get() = shareRequestsSubject
 
   val googlePlayRequests: Observable<String>
-    get() = googlePlayRequestsSubject.asObservable()
+    get() = googlePlayRequestsSubject
 
   val changelogRequests: Observable<Unit>
-    get() = changelogRequestsSubject.asObservable()
+    get() = changelogRequestsSubject
 
   val githubRequests: Observable<String>
-    get() = githubRequestsSubject.asObservable()
+    get() = githubRequestsSubject
 
   val footerState: Observable<FooterStateManager.State>
     get() = footerStateManager.get()
@@ -102,9 +104,7 @@ class SettingViewModel(private val config: Config,
   }
 
   fun onOpenProfileRequested() {
-    userSubject.value?.let {
-      openProfileRequestsSubject.onNext(it.screenName)
-    }
+    userSubject.value?.toNullable()?.let { openProfileRequestsSubject.onNext(it.screenName) }
   }
 
   fun onLogoutRequested() {

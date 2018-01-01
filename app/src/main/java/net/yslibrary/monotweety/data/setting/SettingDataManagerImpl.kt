@@ -1,8 +1,8 @@
 package net.yslibrary.monotweety.data.setting
 
-import com.f2prateek.rx.preferences.RxSharedPreferences
-import rx.Completable
-import rx.Observable
+import com.f2prateek.rx.preferences2.RxSharedPreferences
+import io.reactivex.Completable
+import io.reactivex.Observable
 
 /**
  * Implementation of SettingDataManager.

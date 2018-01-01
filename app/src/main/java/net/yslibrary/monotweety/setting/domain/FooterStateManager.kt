@@ -1,10 +1,10 @@
 package net.yslibrary.monotweety.setting.domain
 
+import io.reactivex.Observable
+import io.reactivex.functions.BiFunction
+import io.reactivex.subjects.PublishSubject
 import net.yslibrary.monotweety.base.di.AppScope
 import net.yslibrary.monotweety.data.setting.SettingDataManager
-import rx.Observable
-import rx.subjects.PublishSubject
-
 import javax.inject.Inject
 
 @AppScope
@@ -15,11 +15,12 @@ class FooterStateManager @Inject constructor(private val settingDataManager: Set
   fun get(): Observable<State> {
     return subject
         .startWith(Unit)
-        .switchMap {
+        .switchMapSingle {
           Observable.zip(
               settingDataManager.footerEnabled(),
               settingDataManager.footerText(),
-              ::State).first()
+              BiFunction { enabled: Boolean, footer: String -> State(enabled, footer) }
+          ).firstOrError()
         }
   }
 

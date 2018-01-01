@@ -1,11 +1,11 @@
 package net.yslibrary.monotweety.setting.domain
 
+import io.reactivex.Observable
+import io.reactivex.Single
 import net.yslibrary.monotweety.base.di.AppScope
 import net.yslibrary.monotweety.data.appinfo.AppInfo
 import net.yslibrary.monotweety.data.appinfo.AppInfoManager
 import net.yslibrary.monotweety.data.appinfo.TwitterApp
-import rx.Observable
-import rx.Single
 import javax.inject.Inject
 
 @AppScope
@@ -15,8 +15,8 @@ class GetInstalledSupportedApps @Inject constructor(private val appInfoManager: 
 
   fun execute(): Single<List<AppInfo>> {
     return appInfoManager.installedApps()
-        .flatMapObservable { Observable.from(it) }
+        .flatMapObservable { Observable.fromIterable(it) }
         .filter { twitterApps.contains(it.packageName) }
-        .toList().toSingle()
+        .toList()
   }
 }

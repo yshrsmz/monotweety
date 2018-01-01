@@ -11,14 +11,13 @@ import com.squareup.leakcanary.RefWatcher
 import com.twitter.sdk.android.core.TwitterSession
 import dagger.Module
 import dagger.Provides
+import io.reactivex.subjects.PublishSubject
 import net.yslibrary.monotweety.base.Clock
 import net.yslibrary.monotweety.base.ClockImpl
 import net.yslibrary.monotweety.base.RefWatcherDelegate
 import net.yslibrary.monotweety.base.RefWatcherDelegateImpl
 import net.yslibrary.monotweety.base.di.AppScope
 import net.yslibrary.monotweety.base.di.Names
-
-import rx.subjects.PublishSubject
 import javax.inject.Named
 
 @Module

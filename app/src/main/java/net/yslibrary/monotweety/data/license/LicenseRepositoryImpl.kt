@@ -1,9 +1,9 @@
 package net.yslibrary.monotweety.data.license
 
+import io.reactivex.Single
 import net.yslibrary.licenseadapter.Library
 import net.yslibrary.licenseadapter.Licenses
 import net.yslibrary.monotweety.base.di.UserScope
-import rx.Single
 import java.util.*
 import javax.inject.Inject
 
@@ -27,8 +27,7 @@ class LicenseRepositoryImpl @Inject constructor() : LicenseRepository {
           Licenses.fromGitHubApacheV2("sockeqwe/AdapterDelegates"),
           Licenses.fromGitHubApacheV2("twitter/twitter-text"),
           Licenses.fromGitHubApacheV2("twitter/twitter-kit-android"),
-          Licenses.fromGitHubApacheV2("yshrsmz/LicenseAdapter"),
-          Licenses.fromGitHubApacheV2("yshrsmz/RxEventBus"))
+          Licenses.fromGitHubApacheV2("yshrsmz/LicenseAdapter"))
 
       // sort github hosted repos first
       list.sortedBy { it.getName().toLowerCase(Locale.ENGLISH) }

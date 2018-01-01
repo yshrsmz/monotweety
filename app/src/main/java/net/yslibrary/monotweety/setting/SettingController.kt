@@ -13,7 +13,10 @@ import com.bluelinelabs.conductor.ControllerChangeHandler
 import com.bluelinelabs.conductor.ControllerChangeType
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.HorizontalChangeHandler
-import com.jakewharton.rxbinding.widget.checkedChanges
+import com.gojuno.koptional.rxjava2.filterSome
+import com.jakewharton.rxbinding2.widget.checkedChanges
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.subscribeBy
 import net.yslibrary.monotweety.App
 import net.yslibrary.monotweety.Navigator
 import net.yslibrary.monotweety.R
@@ -27,7 +30,6 @@ import net.yslibrary.monotweety.data.appinfo.AppInfo
 import net.yslibrary.monotweety.license.LicenseController
 import net.yslibrary.monotweety.setting.adapter.SettingAdapter
 import net.yslibrary.monotweety.setting.adapter.SubHeaderDividerDecoration
-import rx.android.schedulers.AndroidSchedulers
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.properties.Delegates
@@ -185,9 +187,10 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
     viewModel.user
         .bindToLifecycle()
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe {
+        .filterSome()
+        .subscribeBy {
           Timber.d("user: $it")
-          it?.let { settingAdapter.updateProfile(it) }
+          it.let { settingAdapter.updateProfile(it) }
         }
 
     viewModel.openProfileRequests

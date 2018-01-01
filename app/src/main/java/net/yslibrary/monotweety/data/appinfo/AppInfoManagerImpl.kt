@@ -2,9 +2,9 @@ package net.yslibrary.monotweety.data.appinfo
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import io.reactivex.Single
 import net.yslibrary.monotweety.base.di.AppScope
 import net.yslibrary.monotweety.base.toSingle
-import rx.Single
 import javax.inject.Inject
 
 @AppScope

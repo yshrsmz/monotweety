@@ -1,7 +1,16 @@
 package net.yslibrary.monotweety.status
 
+import com.gojuno.koptional.None
+import com.gojuno.koptional.Optional
 import com.twitter.sdk.android.core.TwitterApiException
-
+import io.reactivex.Completable
+import io.reactivex.Observable
+import io.reactivex.Single
+import io.reactivex.rxkotlin.Singles
+import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.PublishSubject
 import net.yslibrary.monotweety.Config
 import net.yslibrary.monotweety.data.status.Tweet
 import net.yslibrary.monotweety.setting.domain.FooterStateManager
@@ -10,12 +19,6 @@ import net.yslibrary.monotweety.status.domain.CheckStatusLength
 import net.yslibrary.monotweety.status.domain.ClearPreviousStatus
 import net.yslibrary.monotweety.status.domain.GetPreviousStatus
 import net.yslibrary.monotweety.status.domain.UpdateStatus
-import rx.Completable
-import rx.Observable
-import rx.Single
-import rx.schedulers.Schedulers
-import rx.subjects.BehaviorSubject
-import rx.subjects.PublishSubject
 import timber.log.Timber
 
 class ComposeStatusViewModel(status: String,
@@ -27,7 +30,7 @@ class ComposeStatusViewModel(status: String,
                              private val keepOpenManager: KeepOpenManager,
                              private val footerStateManager: FooterStateManager) {
 
-  private val isSendableStatusSubject = BehaviorSubject.create(false)
+  private val isSendableStatusSubject = BehaviorSubject.createDefault(false)
 
   private val statusInfoSubject = BehaviorSubject.create<StatusInfo>()
 
@@ -35,50 +38,50 @@ class ComposeStatusViewModel(status: String,
 
   private val keepOpenSubject = BehaviorSubject.create<Boolean>()
 
-  private val tweetAsThreadSubject = BehaviorSubject.create(false)
+  private val tweetAsThreadSubject = BehaviorSubject.createDefault(false)
 
-  private val progressEventsSubject = BehaviorSubject.create(ProgressEvent.FINISHED)
+  private val progressEventsSubject = BehaviorSubject.createDefault(ProgressEvent.FINISHED)
 
   private val messagesSubject = PublishSubject.create<String>()
 
-  private val allowCloseViewSubject = BehaviorSubject.create(false)
+  private val allowCloseViewSubject = BehaviorSubject.createDefault(false)
 
-  private val previousStatusSubject = BehaviorSubject.create(null as Tweet?)
+  private val previousStatusSubject = BehaviorSubject.createDefault<Optional<Tweet>>(None)
 
   val isSendableStatus: Observable<Boolean>
-    get() = isSendableStatusSubject.asObservable()
+    get() = isSendableStatusSubject
 
   val statusInfo: Observable<StatusInfo>
-    get() = statusInfoSubject.asObservable()
+    get() = statusInfoSubject
 
   val statusUpdated: Observable<Unit>
-    get() = statusUpdatedSubject.asObservable()
+    get() = statusUpdatedSubject
 
   val keepOpen: Observable<Boolean>
-    get() = keepOpenSubject.asObservable()
+    get() = keepOpenSubject
 
   val tweetAsThread: Observable<Boolean>
-    get() = tweetAsThreadSubject.asObservable()
+    get() = tweetAsThreadSubject
 
   val progressEvents: Observable<ProgressEvent>
-    get() = progressEventsSubject.asObservable()
+    get() = progressEventsSubject
 
   val messages: Observable<String>
-    get() = messagesSubject.asObservable()
+    get() = messagesSubject
 
   val allowCloseView: Observable<Boolean>
-    get() = allowCloseViewSubject.asObservable()
+    get() = allowCloseViewSubject
 
   val statusMaxLength: Single<Int>
     get() = Single.just(config.statusMaxLength)
 
-  val previousStatus: Observable<Tweet?>
-    get() = previousStatusSubject.asObservable()
+  val previousStatus: Observable<Optional<Tweet>>
+    get() = previousStatusSubject
 
   val closeViewRequests: Observable<Unit>
     get() {
       return statusUpdatedSubject
-          .switchMap { keepOpenSubject.first() }
+          .switchMapSingle { keepOpenSubject.firstOrError() }
           .filter { !it }
           .map { Unit }
     }
@@ -97,15 +100,16 @@ class ComposeStatusViewModel(status: String,
 
   init {
     getPreviousStatus.execute()
+        .filter { it.toNullable() != null }
         .subscribe {
-          Timber.d("previous status: ${it?.text}")
+          Timber.d("previous status: ${it.toNullable()?.text}")
           previousStatusSubject.onNext(it)
         }
 
-    keepOpenManager.get().first()
+    keepOpenManager.get().firstElement()
         .subscribe { keepOpenSubject.onNext(it) }
 
-    footerStateManager.get().first()
+    footerStateManager.get().firstElement()
         .subscribe {
           val statusText = if (it.enabled)
             "$status ${it.text}"
@@ -118,7 +122,7 @@ class ComposeStatusViewModel(status: String,
   fun onStatusChanged(status: String) {
     checkStatusLength.execute(status)
         .subscribeOn(Schedulers.io())
-        .subscribe {
+        .subscribeBy {
           statusInfoSubject.onNext(StatusInfo(status, it.valid, it.length, it.maxLength))
 
           isSendableStatusSubject.onNext(it.valid)
@@ -126,19 +130,17 @@ class ComposeStatusViewModel(status: String,
   }
 
   fun onSendStatus() {
-    Observable.combineLatest(
-        isSendableStatus.filter { it },
-        tweetAsThread,
-        getPreviousStatus.execute().first(),
-        statusInfo,
-        { _, asThread, previousTweet, (status) ->
-          // return previous tweet and current status string
-          Pair(if (asThread) previousTweet else null, status)
-        })
-        .first().toSingle()
+    Singles.zip(
+        isSendableStatus.firstOrError(),
+        tweetAsThread.firstOrError(),
+        getPreviousStatus.execute().firstOrError(),
+        statusInfo.firstOrError()
+    ) { _, asThread, previousTweet, (status) ->
+      Pair(if (asThread) previousTweet.toNullable() else null, status)
+    }
         .doOnSuccess { progressEventsSubject.onNext(ProgressEvent.IN_PROGRESS) }
         .flatMapCompletable { updateStatus.execute(it.second, it.first?.id) }
-        .andThen(tweetAsThread.first().toSingle()
+        .andThen(tweetAsThread.firstOrError()
             .flatMapCompletable { asThread ->
               if (asThread) {
                 Completable.complete()
@@ -146,12 +148,12 @@ class ComposeStatusViewModel(status: String,
                 clearPreviousStatus.execute()
               }
             })
-        .doOnCompleted {
+        .doOnComplete {
           Timber.d("status updated - complete")
           statusUpdatedSubject.onNext(Unit)
         }
         .doOnTerminate { progressEventsSubject.onNext(ProgressEvent.FINISHED) }
-        .subscribe({}, { t ->
+        .subscribeBy(onError = { t ->
           Timber.e(t, t.message)
           if (t is TwitterApiException && t.errorMessage != null) {
             messagesSubject.onNext(t.errorMessage)

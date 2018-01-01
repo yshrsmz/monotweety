@@ -1,12 +1,13 @@
 package net.yslibrary.monotweety.data.status.local
 
+import com.gojuno.koptional.None
+import com.gojuno.koptional.toOptional
 import com.google.gson.Gson
 import net.yslibrary.monotweety.assertThat
 import net.yslibrary.monotweety.data.status.Tweet
 import net.yslibrary.monotweety.readJsonFromAssets
 import org.junit.Before
 import org.junit.Test
-import rx.observers.TestSubscriber
 import com.twitter.sdk.android.core.models.Tweet as TwitterTweet
 
 class StatusLocalRepositoryImplTest {
@@ -24,41 +25,41 @@ class StatusLocalRepositoryImplTest {
 
   @Test
   fun clear() {
-    val ts = TestSubscriber<Unit>()
-    repository.previousTweetSubject.onNext(tweet)
+    repository.previousTweetSubject.onNext(tweet.toOptional())
 
-    repository.clear().subscribe(ts)
+    repository.clear().test()
+        .apply {
+          assertNoValues()
+          assertComplete()
 
-    ts.assertNoValues()
-    ts.assertCompleted()
-
-    assertThat(repository.previousTweetSubject.hasValue()).isTrue()
-    assertThat(repository.previousTweetSubject.value).isNull()
+          assertThat(repository.previousTweetSubject.hasValue()).isTrue()
+          assertThat(repository.previousTweetSubject.value).isEqualTo(None)
+        }
   }
 
   @Test
   fun getPrevious() {
-    val ts = TestSubscriber<Tweet>()
-    repository.previousTweetSubject.onNext(tweet)
+    repository.previousTweetSubject.onNext(tweet.toOptional())
 
-    repository.getPrevious().subscribe(ts)
+    repository.getPrevious().test()
+        .apply {
+          assertValue(tweet.toOptional())
+          assertNotComplete()
 
-    ts.assertValue(tweet)
-    ts.assertNotCompleted()
-
-    assertThat(repository.previousTweetSubject.value).isEqualTo(tweet)
+          assertThat(repository.previousTweetSubject.value).isEqualTo(tweet.toOptional())
+        }
   }
 
   @Test
   fun update() {
-    val ts = TestSubscriber<Unit>()
-    repository.previousTweetSubject.onNext(tweet)
+    repository.previousTweetSubject.onNext(tweet.toOptional())
 
-    repository.update(tweet2).subscribe(ts)
+    repository.update(tweet2).test()
+        .apply {
+          assertNoValues()
+          assertComplete()
 
-    ts.assertNoValues()
-    ts.assertCompleted()
-
-    assertThat(repository.previousTweetSubject.value).isEqualTo(tweet2)
+          assertThat(repository.previousTweetSubject.value).isEqualTo(tweet2.toOptional())
+        }
   }
 }

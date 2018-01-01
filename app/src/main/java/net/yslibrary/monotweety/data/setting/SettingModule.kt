@@ -1,7 +1,7 @@
 package net.yslibrary.monotweety.data.setting
 
 import android.content.Context
-import com.f2prateek.rx.preferences.RxSharedPreferences
+import com.f2prateek.rx.preferences2.RxSharedPreferences
 import dagger.Module
 import dagger.Provides
 import net.yslibrary.monotweety.base.di.AppScope

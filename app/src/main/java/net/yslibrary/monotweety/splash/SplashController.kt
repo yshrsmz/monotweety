@@ -9,6 +9,12 @@ import com.bluelinelabs.conductor.ControllerChangeHandler
 import com.bluelinelabs.conductor.ControllerChangeType
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.SimpleSwapChangeHandler
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.functions.BiFunction
+import io.reactivex.rxkotlin.addTo
+import io.reactivex.schedulers.Schedulers
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.base.ActionBarController
@@ -17,11 +23,6 @@ import net.yslibrary.monotweety.base.RefWatcherDelegate
 import net.yslibrary.monotweety.login.LoginController
 import net.yslibrary.monotweety.login.LoginTransitionChangeHandlerCompat
 import net.yslibrary.monotweety.setting.SettingController
-import rx.Observable
-import rx.android.schedulers.AndroidSchedulers
-import rx.lang.kotlin.addTo
-import rx.schedulers.Schedulers
-import rx.subscriptions.CompositeSubscription
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -35,7 +36,7 @@ class SplashController : ActionBarController(), HasComponent<SplashComponent> {
   @set:[Inject]
   var refWatcherDelegate by Delegates.notNull<RefWatcherDelegate>()
 
-  var subscriptions: CompositeSubscription = CompositeSubscription()
+  var disposables: CompositeDisposable = CompositeDisposable()
 
   override val shouldShowActionBar: Boolean = false
 
@@ -55,7 +56,7 @@ class SplashController : ActionBarController(), HasComponent<SplashComponent> {
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
     val view = inflater.inflate(R.layout.controller_splash, container, false)
 
-    subscriptions = CompositeSubscription()
+    disposables = CompositeDisposable()
     setEvents()
 
     return view
@@ -63,7 +64,7 @@ class SplashController : ActionBarController(), HasComponent<SplashComponent> {
 
   fun setEvents() {
     viewModel.loggedIn
-        .zipWith(Observable.interval(1500, TimeUnit.MILLISECONDS).first()) { t1, _ -> t1 }
+        .zipWith(Single.timer(1500, TimeUnit.MILLISECONDS).toObservable(), BiFunction { t1: Boolean, _: Long -> t1 })
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe {
@@ -72,12 +73,12 @@ class SplashController : ActionBarController(), HasComponent<SplashComponent> {
           router.setRoot(RouterTransaction.with(next)
               .pushChangeHandler(if (it) SimpleSwapChangeHandler() else LoginTransitionChangeHandlerCompat())
               .popChangeHandler(if (it) SimpleSwapChangeHandler() else LoginTransitionChangeHandlerCompat()))
-        }.addTo(subscriptions)
+        }.addTo(disposables)
   }
 
   override fun onDestroyView(view: View) {
     super.onDestroyView(view)
-    subscriptions.unsubscribe()
+    disposables.dispose()
   }
 
   override fun onChangeEnded(changeHandler: ControllerChangeHandler, changeType: ControllerChangeType) {

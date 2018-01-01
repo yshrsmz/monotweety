@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity
 import android.view.ViewGroup
 import com.bluelinelabs.conductor.*
 import net.yslibrary.monotweety.base.di.Names
-import net.yslibrary.rxeventbus.EventBus
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Named

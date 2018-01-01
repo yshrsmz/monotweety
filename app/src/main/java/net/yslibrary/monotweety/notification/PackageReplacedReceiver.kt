@@ -4,8 +4,10 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.support.v4.content.ContextCompat
+import io.reactivex.Observable
+import io.reactivex.functions.BiFunction
+import io.reactivex.rxkotlin.subscribeBy
 import net.yslibrary.monotweety.App
-import rx.Observable
 import timber.log.Timber
 
 class PackageReplacedReceiver : BroadcastReceiver() {
@@ -16,9 +18,9 @@ class PackageReplacedReceiver : BroadcastReceiver() {
     Observable.zip(
         App.appComponent(context).notificationEnabledManager().get(),
         App.appComponent(context).isLoggedIn().execute().toObservable(),
-        { enabled, loggedIn -> enabled && loggedIn })
-        .first()
-        .subscribe {
+        BiFunction { enabled: Boolean, loggedIn: Boolean -> enabled && loggedIn })
+        .firstOrError()
+        .subscribeBy {
           Timber.d("is logged in and notification enabled: $it")
           if (it) {
             ContextCompat.startForegroundService(context, NotificationService.callingIntent(context))

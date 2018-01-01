@@ -1,6 +1,10 @@
 package net.yslibrary.monotweety.notification
 
 import com.twitter.sdk.android.core.TwitterApiException
+import io.reactivex.Completable
+import io.reactivex.Observable
+import io.reactivex.functions.Function3
+import io.reactivex.subjects.PublishSubject
 import net.yslibrary.monotweety.data.appinfo.AppInfo
 import net.yslibrary.monotweety.data.status.OverlongStatusException
 import net.yslibrary.monotweety.setting.domain.FooterStateManager
@@ -10,9 +14,6 @@ import net.yslibrary.monotweety.setting.domain.SelectedTimelineAppInfoManager
 import net.yslibrary.monotweety.status.domain.CheckStatusLength
 import net.yslibrary.monotweety.status.domain.ClearPreviousStatus
 import net.yslibrary.monotweety.status.domain.UpdateStatus
-import rx.Completable
-import rx.Observable
-import rx.subjects.PublishSubject
 import timber.log.Timber
 
 class NotificationServiceViewModel(private val notificationEnabledManager: NotificationEnabledManager,
@@ -34,17 +35,17 @@ class NotificationServiceViewModel(private val notificationEnabledManager: Notif
   private val errorSubject = PublishSubject.create<String>()
 
   val overlongStatus: Observable<OverlongStatus>
-    get() = overlongStatusSubject.asObservable()
+    get() = overlongStatusSubject
 
   val updateCompleted: Observable<Unit>
-    get() = updateCompletedSubject.asObservable()
+    get() = updateCompletedSubject
 
   val stopNotificationService: Observable<Unit>
-    get() = stopNotificationServiceSubject.asObservable()
+    get() = stopNotificationServiceSubject
 
   val closeNotificationDrawer: Observable<Unit>
     get() = updateCompletedSubject
-        .switchMap { keepOpenManager.get().first() }
+        .switchMapSingle { keepOpenManager.get().firstOrError() }
         .filter { !it }
         .map { Unit }
 
@@ -53,7 +54,7 @@ class NotificationServiceViewModel(private val notificationEnabledManager: Notif
         updateNotificatoinRequestsSubject.startWith(Unit),
         footerStateManager.get(),
         selectedTimelineAppInfoManager.get(),
-        { _, footerState, appInfo -> NotificationInfo(footerState, appInfo) })
+        Function3 { _: Unit, footerState: FooterStateManager.State, appInfo: AppInfo -> NotificationInfo(footerState, appInfo) })
 
   val footerState: Observable<FooterStateManager.State>
     get() = footerStateManager.get()
@@ -62,7 +63,7 @@ class NotificationServiceViewModel(private val notificationEnabledManager: Notif
     get() = selectedTimelineAppInfoManager.get()
 
   val error: Observable<String>
-    get() = errorSubject.asObservable()
+    get() = errorSubject
 
   fun onCloseNotificationCommand() {
     Timber.d("onCloseNotificationCommand")
@@ -72,7 +73,7 @@ class NotificationServiceViewModel(private val notificationEnabledManager: Notif
 
   fun onDirectTweetCommand(text: String) {
     Timber.d("onDirectTweetCommand: $text")
-    footerStateManager.get().first().toSingle()
+    footerStateManager.get().firstOrError()
         .map { (if (it.enabled) "$text ${it.text}" else text).trim() }
         .flatMap { checkStatusLength.execute(it) }
         .flatMapCompletable {
@@ -96,7 +97,7 @@ class NotificationServiceViewModel(private val notificationEnabledManager: Notif
               errorSubject.onNext(it.errorMessage)
             }
             else -> {
-              errorSubject.onNext(it.message)
+              errorSubject.onNext(it.message ?: "")
             }
           }
         })

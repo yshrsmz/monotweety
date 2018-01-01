@@ -1,11 +1,12 @@
 package net.yslibrary.monotweety.data.user
 
+import com.gojuno.koptional.Optional
+import io.reactivex.Completable
+import io.reactivex.Flowable
 import net.yslibrary.monotweety.base.Clock
 import net.yslibrary.monotweety.base.di.UserScope
 import net.yslibrary.monotweety.data.user.local.UserLocalRepository
 import net.yslibrary.monotweety.data.user.remote.UserRemoteRepository
-import rx.Completable
-import rx.Observable
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -14,7 +15,7 @@ class UserRepositoryImpl @Inject constructor(private val remoteRepository: UserR
                                              private val localRepository: UserLocalRepository,
                                              private val clock: Clock) : UserRepository {
 
-  override fun get(id: Long): Observable<User?> {
+  override fun get(id: Long): Flowable<Optional<User>> {
     return localRepository.getById(id)
   }
 

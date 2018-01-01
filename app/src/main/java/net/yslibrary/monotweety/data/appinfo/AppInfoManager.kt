@@ -1,6 +1,6 @@
 package net.yslibrary.monotweety.data.appinfo
 
-import rx.Single
+import io.reactivex.Single
 
 interface AppInfoManager {
 

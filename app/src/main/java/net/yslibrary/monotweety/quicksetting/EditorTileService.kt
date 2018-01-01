@@ -8,6 +8,7 @@ import android.os.Build
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import android.widget.Toast
+import io.reactivex.rxkotlin.subscribeBy
 import net.yslibrary.monotweety.App
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.activity.compose.ComposeActivity
@@ -30,7 +31,7 @@ class EditorTileService : TileService() {
   override fun onClick() {
     super.onClick()
     App.appComponent(this).isLoggedIn().execute()
-        .subscribe {
+        .subscribeBy {
           closeNotificationDrawer()
           if (it) {
             startActivity(ComposeActivity.callingIntent(this))

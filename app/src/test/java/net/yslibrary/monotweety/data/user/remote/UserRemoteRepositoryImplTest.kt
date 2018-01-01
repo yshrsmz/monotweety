@@ -14,7 +14,6 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentCaptor
 import retrofit2.Call
-import rx.observers.TestSubscriber
 import com.twitter.sdk.android.core.models.User as TwitterUser
 
 class UserRemoteRepositoryImplTest {
@@ -39,7 +38,6 @@ class UserRemoteRepositoryImplTest {
 
   @Test
   fun get() {
-    val ts = TestSubscriber<User>()
     val user = gson.fromJson(readJsonFromAssets("user.json"), TwitterUser::class.java)
     val result = User(
         id = user.id,
@@ -51,12 +49,13 @@ class UserRemoteRepositoryImplTest {
     whenever(mockAccountService.verifyCredentials(any(), any(), any()))
         .thenReturn(mockCall)
 
-    repository.get().subscribe(ts)
+    repository.get().test()
+        .apply {
+          verify(mockCall).enqueue(callbackCaptor.capture())
+          callbackCaptor.value.success(Result(user, null))
 
-    verify(mockCall).enqueue(callbackCaptor.capture())
-    callbackCaptor.value.success(Result(user, null))
-
-    ts.assertValue(result)
-    ts.assertCompleted()
+          assertValue(result)
+          assertComplete()
+        }
   }
 }

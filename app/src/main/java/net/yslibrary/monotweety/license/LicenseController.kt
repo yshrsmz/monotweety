@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.bluelinelabs.conductor.ControllerChangeHandler
 import com.bluelinelabs.conductor.ControllerChangeType
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.subscribeBy
 import net.yslibrary.licenseadapter.Library
 import net.yslibrary.licenseadapter.LicenseAdapter
 import net.yslibrary.monotweety.App
@@ -16,7 +18,6 @@ import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.RefWatcherDelegate
 import net.yslibrary.monotweety.base.findById
-import rx.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
@@ -73,7 +74,7 @@ class LicenseController : ActionBarController() {
     viewModel.licenses
         .bindToLifecycle()
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe { initAdapter(it) }
+        .subscribeBy { initAdapter(it) }
 
   }
 

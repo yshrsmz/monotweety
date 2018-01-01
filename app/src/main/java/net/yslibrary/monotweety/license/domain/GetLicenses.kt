@@ -1,9 +1,9 @@
 package net.yslibrary.monotweety.license.domain
 
+import io.reactivex.Single
 import net.yslibrary.licenseadapter.Library
 import net.yslibrary.monotweety.base.di.UserScope
 import net.yslibrary.monotweety.data.license.LicenseRepository
-import rx.Single
 import javax.inject.Inject
 
 @UserScope

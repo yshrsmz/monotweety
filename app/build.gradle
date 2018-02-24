@@ -191,6 +191,8 @@ dependencies {
 
   implementation 'com.github.gabrielemariotti.changeloglib:changelog:2.1.0'
 
+  implementation 'me.drakeet.support:toastcompat:1.0.2'
+
   debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
   releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
   testImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"

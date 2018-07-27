@@ -41,9 +41,10 @@ task clean(type: Delete) {
   delete rootProject.buildDir
 }
 
-task wrapper(type: Wrapper) {
-  gradleVersion = "4.4.1"
-  distributionType "ALL"
+wrapper {
+  gradleVersion = '4.8.1'
+  //noinspection UnnecessaryQualifiedReference
+  distributionType = Wrapper.DistributionType.ALL
 }
 
 buildScan {

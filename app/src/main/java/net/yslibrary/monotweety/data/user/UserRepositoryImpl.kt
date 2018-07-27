@@ -15,30 +15,30 @@ class UserRepositoryImpl @Inject constructor(private val remoteRepository: UserR
                                              private val localRepository: UserLocalRepository,
                                              private val clock: Clock) : UserRepository {
 
-  override fun get(id: Long): Flowable<Optional<User>> {
-    return localRepository.getById(id)
-  }
-
-  override fun delete(id: Long): Completable {
-    return localRepository.delete(id)
-  }
-
-  override fun fetch(): Completable {
-    return remoteRepository.get()
-        .map { it.copy(_updatedAt = clock.currentTimeMillis()) }
-        .flatMapCompletable { localRepository.set(it) }
-  }
-
-  override fun set(user: User): Completable {
-    return localRepository.set(user)
-  }
-
-  override fun isValid(user: User?): Boolean {
-    if (user == null) {
-      return false
+    override fun get(id: Long): Flowable<Optional<User>> {
+        return localRepository.getById(id)
     }
 
-    val diff = clock.currentTimeMillis() - user._updatedAt
-    return TimeUnit.MILLISECONDS.toHours(diff) < 12
-  }
+    override fun delete(id: Long): Completable {
+        return localRepository.delete(id)
+    }
+
+    override fun fetch(): Completable {
+        return remoteRepository.get()
+            .map { it.copy(_updatedAt = clock.currentTimeMillis()) }
+            .flatMapCompletable { localRepository.set(it) }
+    }
+
+    override fun set(user: User): Completable {
+        return localRepository.set(user)
+    }
+
+    override fun isValid(user: User?): Boolean {
+        if (user == null) {
+            return false
+        }
+
+        val diff = clock.currentTimeMillis() - user._updatedAt
+        return TimeUnit.MILLISECONDS.toHours(diff) < 12
+    }
 }

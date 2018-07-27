@@ -19,20 +19,20 @@ import javax.inject.Named
     modules = arrayOf(AppModule::class, DataModule::class)
 )
 interface AppComponent : UserComponent.ComponentProvider {
-  fun inject(app: App)
+    fun inject(app: App)
 
-  fun isLoggedIn(): IsLoggedIn
+    fun isLoggedIn(): IsLoggedIn
 
-  fun notificationEnabledManager(): NotificationEnabledManager
+    fun notificationEnabledManager(): NotificationEnabledManager
 
-  fun keepOpenManager(): KeepOpenManager
+    fun keepOpenManager(): KeepOpenManager
 
-  fun footerStateManager(): FooterStateManager
+    fun footerStateManager(): FooterStateManager
 
-  fun refWatcherDelegate(): RefWatcherDelegate
+    fun refWatcherDelegate(): RefWatcherDelegate
 
-  fun analytics(): Analytics
+    fun analytics(): Analytics
 
-  @Named(Names.FOR_LOGIN)
-  fun loginCompletedSubject(): PublishSubject<TwitterSession>
+    @Named(Names.FOR_LOGIN)
+    fun loginCompletedSubject(): PublishSubject<TwitterSession>
 }

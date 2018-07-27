@@ -1,91 +1,91 @@
 <resources>
-  <string name="title_splash">Splash</string>
-  <string name="title_login">Login</string>
-  <string name="title_setting">Settings</string>
-  <string name="title_compose_status">Compose Tweet</string>
-  <string name="title_license">Open Source License</string>
-  <string name="title_changelog">Changelog</string>
-  <string name="title_shortcut_editor">New Tweet</string>
+    <string name="title_splash">Splash</string>
+    <string name="title_login">Login</string>
+    <string name="title_setting">Settings</string>
+    <string name="title_compose_status">Compose Tweet</string>
+    <string name="title_license">Open Source License</string>
+    <string name="title_changelog">Changelog</string>
+    <string name="title_shortcut_editor">New Tweet</string>
 
-  <string name="label_notificatoin_state">Notification: %s</string>
-  <string name="label_on" translatable="false">ON</string>
-  <string name="label_off" translatable="false">OFF</string>
+    <string name="label_notificatoin_state">Notification: %s</string>
+    <string name="label_on" translatable="false">ON</string>
+    <string name="label_off" translatable="false">OFF</string>
 
-  <string name="label_tweet_now">tweet</string>
-  <string name="label_open_settings">settings</string>
-  <string name="label_close_notification">close</string>
-  <string name="label_open_timeline">timeline</string>
-  <string name="label_notification_content">Tap to open tweet dialog:)</string>
-  <string name="label_whats_happening">What\'s happening?</string>
-  <string name="label_keep">Keep dialog/notification open</string>
-  <string name="sub_label_keep">so that you can keep tweeting</string>
-  <string name="label_enable_thread">Tweet as a thread</string>
+    <string name="label_tweet_now">tweet</string>
+    <string name="label_open_settings">settings</string>
+    <string name="label_close_notification">close</string>
+    <string name="label_open_timeline">timeline</string>
+    <string name="label_notification_content">Tap to open tweet dialog:)</string>
+    <string name="label_whats_happening">What\'s happening?</string>
+    <string name="label_keep">Keep dialog/notification open</string>
+    <string name="sub_label_keep">so that you can keep tweeting</string>
+    <string name="label_enable_thread">Tweet as a thread</string>
 
-  <string name="label_account">Account</string>
-  <string name="label_open_profile">Open Profile</string>
-  <string name="label_logout">Logout</string>
-  <string name="label_setting">Setting</string>
-  <string name="label_others">Others</string>
-  <string name="label_license">Open Source License</string>
-  <string name="label_app_version">App Version: %1$s(%2$d)</string>
-  <string name="sub_label_app_version">View changelog</string>
-  <string name="label_support_developer">Support Developer</string>
-  <string name="label_developer">Follow Developer</string>
-  <string name="sub_label_developer" translatable="false">\@yslibnet (yslibrary.net)</string>
-  <string name="label_share">Share Monotweety</string>
-  <string name="sub_label_share">Help spread Monotweety!</string>
-  <string name="label_googleplay">Rate in Google Play Store</string>
-  <string name="label_github">Star on GitHub</string>
+    <string name="label_account">Account</string>
+    <string name="label_open_profile">Open Profile</string>
+    <string name="label_logout">Logout</string>
+    <string name="label_setting">Setting</string>
+    <string name="label_others">Others</string>
+    <string name="label_license">Open Source License</string>
+    <string name="label_app_version">App Version: %1$s(%2$d)</string>
+    <string name="sub_label_app_version">View changelog</string>
+    <string name="label_support_developer">Support Developer</string>
+    <string name="label_developer">Follow Developer</string>
+    <string name="sub_label_developer" translatable="false">\@yslibnet (yslibrary.net)</string>
+    <string name="label_share">Share Monotweety</string>
+    <string name="sub_label_share">Help spread Monotweety!</string>
+    <string name="label_googleplay">Rate in Google Play Store</string>
+    <string name="label_github">Star on GitHub</string>
 
-  <string name="label_footer">Footer</string>
-  <string name="sub_label_footer_on" translatable="false">ON: %s</string>
-  <string name="sub_label_footer_off" translatable="false">OFF</string>
-  <string name="title_edit_footer">Edit Footer</string>
-  <string name="label_enable_footer">Enable Footer</string>
-  <string name="hint_footer_editor">Footer text</string>
-  <string name="label_notification_footer_on"><b>Footer</b> - ON: %s</string>
-  <string name="label_notification_footer_off"><b>Footer</b> - OFF</string>
+    <string name="label_footer">Footer</string>
+    <string name="sub_label_footer_on" translatable="false">ON: %s</string>
+    <string name="sub_label_footer_off" translatable="false">OFF</string>
+    <string name="title_edit_footer">Edit Footer</string>
+    <string name="label_enable_footer">Enable Footer</string>
+    <string name="hint_footer_editor">Footer text</string>
+    <string name="label_notification_footer_on"><b>Footer</b> - ON: %s</string>
+    <string name="label_notification_footer_off"><b>Footer</b> - OFF</string>
 
-  <string name="label_timelineapp">Select app to view timeline</string>
-  <string name="sub_label_timelineapp_on" translatable="false">ON: %s</string>
-  <string name="sub_label_timelineapp_off" translatable="false">OFF</string>
-  <string name="label_timelineapp_description">Add shortcut to the notification</string>
-  <string name="label_timelineapp_initial_value">None(disable)</string>
+    <string name="label_timelineapp">Select app to view timeline</string>
+    <string name="sub_label_timelineapp_on" translatable="false">ON: %s</string>
+    <string name="sub_label_timelineapp_off" translatable="false">OFF</string>
+    <string name="label_timelineapp_description">Add shortcut to the notification</string>
+    <string name="label_timelineapp_initial_value">None(disable)</string>
 
-  <string name="label_confirm">Confirm</string>
-  <string name="label_cancel_confirm">Quit without tweeting?</string>
-  <string name="label_quit">Quit</string>
-  <string name="label_no">No</string>
+    <string name="label_confirm">Confirm</string>
+    <string name="label_cancel_confirm">Quit without tweeting?</string>
+    <string name="label_quit">Quit</string>
+    <string name="label_no">No</string>
 
-  <string name="label_logout_confirm">Do you want to logout?</string>
+    <string name="label_logout_confirm">Do you want to logout?</string>
 
-  <string name="action_send_tweet">tweet</string>
+    <string name="action_send_tweet">tweet</string>
 
-  <string name="label_tile_new_tweet">New Tweet</string>
+    <string name="label_tile_new_tweet">New Tweet</string>
 
-  <!-- App Shortcuts -->
-  <string name="label_shortcut_editor_shortlabel">New Tweet</string>
-  <string name="label_shortcut_editor_longlabel">New Tweet</string>
-  <string name="label_shortcut_editor_disabled">Disabled</string>
+    <!-- App Shortcuts -->
+    <string name="label_shortcut_editor_shortlabel">New Tweet</string>
+    <string name="label_shortcut_editor_longlabel">New Tweet</string>
+    <string name="label_shortcut_editor_disabled">Disabled</string>
 
-  <string name="message_tweet_succeeded">Status successfully updated!</string>
-  <string name="message_login_succeeded">Successfully logged in as \@%s</string>
+    <string name="message_tweet_succeeded">Status successfully updated!</string>
+    <string name="message_login_succeeded">Successfully logged in as \@%s</string>
 
-  <string name="error_login_failed">Failed to login. Please try again later.</string>
-  <string name="error_tweet_failed">Tweet failed.</string>
-  <string name="error_tweet_failed_because_of_length">Content is too long. \nPlease edit on the following dialog</string>
-  <string name="error_not_authorized">Please login first to use this feature.</string>
+    <string name="error_login_failed">Failed to login. Please try again later.</string>
+    <string name="error_tweet_failed">Tweet failed.</string>
+    <string name="error_tweet_failed_because_of_length">Content is too long. \nPlease edit on the following dialog</string>
+    <string name="error_not_authorized">Please login first to use this feature.</string>
 
-  <string name="label_loading" translatable="false">Loading…</string>
-  <string name="label_loading_placeholder" translatable="false">-</string>
+    <string name="label_loading" translatable="false">Loading…</string>
+    <string name="label_loading_placeholder" translatable="false">-</string>
 
-  <string name="label_status_counter" translatable="false">%1$d/%2$d</string>
+    <string name="label_status_counter" translatable="false">%1$d/%2$d</string>
 
-  <string name="message_share">Check out #Monotweety! %s #Android</string>
+    <string name="message_share">Check out #Monotweety! %s #Android</string>
 
-  <string name="transition_name_logo" translatable="false">transition.logo</string>
+    <string name="transition_name_logo" translatable="false">transition.logo</string>
 
-  <!-- Notification -->
-  <string name="notification_channel_editor_name">Editor</string>
-  <string name="notification_channel_editor_description">Notification to create new tweet</string>
+    <!-- Notification -->
+    <string name="notification_channel_editor_name">Editor</string>
+    <string name="notification_channel_editor_description">Notification to create new tweet</string>
 </resources>

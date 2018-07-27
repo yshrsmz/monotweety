@@ -17,45 +17,45 @@ import net.yslibrary.monotweety.status.ComposeStatusController
 
 class ComposeActivity : BaseActivity(), ActionBarProvider, HasComponent<ComposeActivityComponent> {
 
-  companion object {
-    const val KEY_STATUS = "key_status"
+    companion object {
+        const val KEY_STATUS = "key_status"
 
-    fun callingIntent(context: Context, status: String? = null): Intent {
-      val intent = Intent(context, ComposeActivity::class.java)
+        fun callingIntent(context: Context, status: String? = null): Intent {
+            val intent = Intent(context, ComposeActivity::class.java)
 
-      if (!status.isNullOrBlank()) {
-        intent.putExtra(KEY_STATUS, status)
-      }
+            if (!status.isNullOrBlank()) {
+                intent.putExtra(KEY_STATUS, status)
+            }
 
-      intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
-          or Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
+                or Intent.FLAG_ACTIVITY_NEW_TASK)
 
-      return intent
+            return intent
+        }
     }
-  }
 
-  override val container: ChangeHandlerFrameLayout
-    get() = findById(R.id.controller_container)
+    override val container: ChangeHandlerFrameLayout
+        get() = findById(R.id.controller_container)
 
-  override val layoutResId: Int
-    get() = R.layout.activity_compose
+    override val layoutResId: Int
+        get() = R.layout.activity_compose
 
-  override val rootController: Controller
-    get() = ComposeStatusController(intent.getStringExtra(KEY_STATUS))
+    override val rootController: Controller
+        get() = ComposeStatusController(intent.getStringExtra(KEY_STATUS))
 
-  override val component: ComposeActivityComponent by lazy {
-    DaggerComposeActivityComponent.builder()
-        .activityModule(ActivityModule(this))
-        .userComponent(App.userComponent(this))
-        .build()
-  }
+    override val component: ComposeActivityComponent by lazy {
+        DaggerComposeActivityComponent.builder()
+            .activityModule(ActivityModule(this))
+            .userComponent(App.userComponent(this))
+            .build()
+    }
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    val toolbar = findById<Toolbar>(R.id.toolbar)
-    setSupportActionBar(toolbar)
+        val toolbar = findById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
-    component.inject(this)
-  }
+        component.inject(this)
+    }
 }

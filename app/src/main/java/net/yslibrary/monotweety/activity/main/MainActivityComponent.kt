@@ -16,10 +16,10 @@ import net.yslibrary.monotweety.splash.SplashComponent
     modules = arrayOf(ActivityModule::class)
 )
 interface MainActivityComponent : ActivityModule.Provider,
-                                  SplashComponent.ComponentProvider,
-                                  LoginComponent.ComponentProvider,
-                                  SettingViewModule.DependencyProvider,
-                                  LicenseViewModule.DependencyProvider,
-                                  ChangelogViewModule.DependencyProvider {
-  fun inject(activity: MainActivity)
+    SplashComponent.ComponentProvider,
+    LoginComponent.ComponentProvider,
+    SettingViewModule.DependencyProvider,
+    LicenseViewModule.DependencyProvider,
+    ChangelogViewModule.DependencyProvider {
+    fun inject(activity: MainActivity)
 }

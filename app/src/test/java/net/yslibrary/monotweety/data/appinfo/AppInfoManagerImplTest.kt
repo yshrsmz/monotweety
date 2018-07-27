@@ -17,93 +17,93 @@ import org.robolectric.shadows.ShadowResolveInfo
 @RunWith(ConfiguredRobolectricTestRunner::class)
 class AppInfoManagerImplTest {
 
-  lateinit var application: Application
-  lateinit var packageManager: ShadowPackageManager
+    lateinit var application: Application
+    lateinit var packageManager: ShadowPackageManager
 
-  lateinit var appInfoManager: AppInfoManagerImpl
+    lateinit var appInfoManager: AppInfoManagerImpl
 
-  @Before
-  fun setup() {
-    application = RuntimeEnvironment.application
-    packageManager = Shadows.shadowOf(application.packageManager)
+    @Before
+    fun setup() {
+        application = RuntimeEnvironment.application
+        packageManager = Shadows.shadowOf(application.packageManager)
 
-    appInfoManager = AppInfoManagerImpl(application.packageManager)
-  }
+        appInfoManager = AppInfoManagerImpl(application.packageManager)
+    }
 
-  @Test
-  fun isInstalled() {
-    packageManager.addPackage(newPackageInfo("Fenix", TwitterApp.FENIX.packageName))
+    @Test
+    fun isInstalled() {
+        packageManager.addPackage(newPackageInfo("Fenix", TwitterApp.FENIX.packageName))
 
-    appInfoManager.isInstalled(TwitterApp.FENIX.packageName).test()
-        .apply {
-          awaitTerminalEvent()
-          assertValue(true)
-          assertComplete()
-        }
-  }
+        appInfoManager.isInstalled(TwitterApp.FENIX.packageName).test()
+            .apply {
+                awaitTerminalEvent()
+                assertValue(true)
+                assertComplete()
+            }
+    }
 
-  @Test
-  fun isInstalled_false() {
-    packageManager.addPackage(newPackageInfo("Fenix", TwitterApp.FENIX.packageName))
+    @Test
+    fun isInstalled_false() {
+        packageManager.addPackage(newPackageInfo("Fenix", TwitterApp.FENIX.packageName))
 
-    appInfoManager.isInstalled(TwitterApp.BEETER.packageName).test()
-        .apply {
-          awaitTerminalEvent()
-          assertValue(false)
-          assertComplete()
-        }
-  }
+        appInfoManager.isInstalled(TwitterApp.BEETER.packageName).test()
+            .apply {
+                awaitTerminalEvent()
+                assertValue(false)
+                assertComplete()
+            }
+    }
 
-  @Test
-  fun installedApps() {
-    val infoList = listOf<ResolveInfo>(
-        ShadowResolveInfo.newResolveInfo("Fenix", TwitterApp.FENIX.packageName),
-        ShadowResolveInfo.newResolveInfo("beeter", TwitterApp.BEETER.packageName)
-    )
+    @Test
+    fun installedApps() {
+        val infoList = listOf<ResolveInfo>(
+            ShadowResolveInfo.newResolveInfo("Fenix", TwitterApp.FENIX.packageName),
+            ShadowResolveInfo.newResolveInfo("beeter", TwitterApp.BEETER.packageName)
+        )
 
-    packageManager.addResolveInfoForIntent(appInfoManager.launcherIntent(), infoList)
+        packageManager.addResolveInfoForIntent(appInfoManager.launcherIntent(), infoList)
 
-    appInfoManager.installedApps().test()
-        .apply {
-          assertValueCount(1)
-          assertComplete()
+        appInfoManager.installedApps().test()
+            .apply {
+                assertValueCount(1)
+                assertComplete()
 
-          val result = values().first()
-          assertThat(result).hasSize(2)
-          assertThat(result[0].packageName).isEqualTo(TwitterApp.FENIX.packageName)
-          assertThat(result[1].packageName).isEqualTo(TwitterApp.BEETER.packageName)
-        }
-  }
+                val result = values().first()
+                assertThat(result).hasSize(2)
+                assertThat(result[0].packageName).isEqualTo(TwitterApp.FENIX.packageName)
+                assertThat(result[1].packageName).isEqualTo(TwitterApp.BEETER.packageName)
+            }
+    }
 
-  @Test
-  fun appInfo_installed() {
-    packageManager.addPackage(newPackageInfo("Fenix", TwitterApp.FENIX.packageName))
+    @Test
+    fun appInfo_installed() {
+        packageManager.addPackage(newPackageInfo("Fenix", TwitterApp.FENIX.packageName))
 
-    appInfoManager.appInfo(TwitterApp.FENIX.packageName).test()
-        .apply {
-          assertValueCount(1)
-          assertComplete()
+        appInfoManager.appInfo(TwitterApp.FENIX.packageName).test()
+            .apply {
+                assertValueCount(1)
+                assertComplete()
 
-          val result = values().first()
+                val result = values().first()
 
-          assertThat(result.installed).isTrue()
-          assertThat(result.packageName).isEqualTo(TwitterApp.FENIX.packageName)
-        }
-  }
+                assertThat(result.installed).isTrue()
+                assertThat(result.packageName).isEqualTo(TwitterApp.FENIX.packageName)
+            }
+    }
 
-  @Test
-  fun appInfo_notinstalled() {
-    packageManager.addPackage(newPackageInfo("Fenix", TwitterApp.FENIX.packageName))
+    @Test
+    fun appInfo_notinstalled() {
+        packageManager.addPackage(newPackageInfo("Fenix", TwitterApp.FENIX.packageName))
 
-    appInfoManager.appInfo(TwitterApp.BEETER.packageName).test()
-        .apply {
-          assertValueCount(1)
-          assertComplete()
+        appInfoManager.appInfo(TwitterApp.BEETER.packageName).test()
+            .apply {
+                assertValueCount(1)
+                assertComplete()
 
-          val result = values().first()
+                val result = values().first()
 
-          assertThat(result.installed).isFalse()
-          assertThat(result.packageName).isEqualTo(TwitterApp.BEETER.packageName)
-        }
-  }
+                assertThat(result.installed).isFalse()
+                assertThat(result.packageName).isEqualTo(TwitterApp.BEETER.packageName)
+            }
+    }
 }

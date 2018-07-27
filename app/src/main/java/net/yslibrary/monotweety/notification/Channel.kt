@@ -20,30 +20,30 @@ enum class Channel(
     val lockScreenVisibility: Int,
     val showBadge: Boolean
 ) {
-  EDITOR(
-            id = "editor",
-            nameResId = R.string.notification_channel_editor_name,
-            descriptionResId = R.string.notification_channel_editor_description,
-            importance = NotificationManager.IMPORTANCE_LOW,
-            lockScreenVisibility = Notification.VISIBILITY_PUBLIC,
-            showBadge = false
-        )
+    EDITOR(
+        id = "editor",
+        nameResId = R.string.notification_channel_editor_name,
+        descriptionResId = R.string.notification_channel_editor_description,
+        importance = NotificationManager.IMPORTANCE_LOW,
+        lockScreenVisibility = Notification.VISIBILITY_PUBLIC,
+        showBadge = false
+    )
 }
 
 fun createNotificationChannel(context: Context, notificationManager: NotificationManager) {
-  if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-    return
-  }
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+        return
+    }
 
-  val channels = Channel.values().map { channelInfo ->
-    NotificationChannel(channelInfo.id, context.getString(channelInfo.nameResId), channelInfo.importance)
-        .apply {
-          description = context.getString(channelInfo.descriptionResId)
-          enableLights(false)
-          enableVibration(false)
-          setShowBadge(channelInfo.showBadge)
-          lockscreenVisibility = channelInfo.lockScreenVisibility
-        }
-  }
-  notificationManager.createNotificationChannels(channels)
+    val channels = Channel.values().map { channelInfo ->
+        NotificationChannel(channelInfo.id, context.getString(channelInfo.nameResId), channelInfo.importance)
+            .apply {
+                description = context.getString(channelInfo.descriptionResId)
+                enableLights(false)
+                enableVibration(false)
+                setShowBadge(channelInfo.showBadge)
+                lockscreenVisibility = channelInfo.lockScreenVisibility
+            }
+    }
+    notificationManager.createNotificationChannels(channels)
 }

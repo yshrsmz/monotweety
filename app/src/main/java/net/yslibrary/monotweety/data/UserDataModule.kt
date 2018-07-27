@@ -23,35 +23,35 @@ import java.util.concurrent.ConcurrentHashMap
 )
 class UserDataModule {
 
-  val apiClients = ConcurrentHashMap<TwitterSession, TwitterApiClient>()
+    val apiClients = ConcurrentHashMap<TwitterSession, TwitterApiClient>()
 
-  private fun getApiClient(session: TwitterSession): TwitterApiClient {
-    if (!apiClients.containsKey(session)) {
-      apiClients.putIfAbsent(session, TwitterApiClient(session))
+    private fun getApiClient(session: TwitterSession): TwitterApiClient {
+        if (!apiClients.containsKey(session)) {
+            apiClients.putIfAbsent(session, TwitterApiClient(session))
+        }
+        return apiClients[session]!!
     }
-    return apiClients[session]!!
-  }
 
-  @Provides
-  fun provideTwitterStatusService(sessionManager: SessionManager<TwitterSession>): UpdateStatusService {
-    return getApiClient(sessionManager.activeSession).updateStatusService
-  }
+    @Provides
+    fun provideTwitterStatusService(sessionManager: SessionManager<TwitterSession>): UpdateStatusService {
+        return getApiClient(sessionManager.activeSession).updateStatusService
+    }
 
-  @Provides
-  fun provideTwitterConfigurationService(sessionManager: SessionManager<TwitterSession>): ConfigurationService {
-    return getApiClient(sessionManager.activeSession).configurationService
-  }
+    @Provides
+    fun provideTwitterConfigurationService(sessionManager: SessionManager<TwitterSession>): ConfigurationService {
+        return getApiClient(sessionManager.activeSession).configurationService
+    }
 
-  @Provides
-  fun provideTwitterAccountService(sessionManager: SessionManager<TwitterSession>): AccountService {
-    return getApiClient(sessionManager.activeSession).accountService
-  }
+    @Provides
+    fun provideTwitterAccountService(sessionManager: SessionManager<TwitterSession>): AccountService {
+        return getApiClient(sessionManager.activeSession).accountService
+    }
 
-  @UserScope
-  @Provides
-  fun provideExtractor(): Extractor {
-    val extractor = Extractor()
-    extractor.isExtractURLWithoutProtocol = true
-    return extractor
-  }
+    @UserScope
+    @Provides
+    fun provideExtractor(): Extractor {
+        val extractor = Extractor()
+        extractor.isExtractURLWithoutProtocol = true
+        return extractor
+    }
 }

@@ -7,16 +7,16 @@ import net.yslibrary.monotweety.data.user.local.UserTable
 
 class DbOpenHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
 
-  override fun onCreate(db: SQLiteDatabase) {
-    db.execSQL(UserTable.CREATE_TABLE)
-  }
+    override fun onCreate(db: SQLiteDatabase) {
+        db.execSQL(UserTable.CREATE_TABLE)
+    }
 
-  override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
 
-  }
+    }
 
-  companion object {
-    const val DB_NAME = "monotweety_db"
-    const val DB_VERSION = 1
-  }
+    companion object {
+        const val DB_NAME = "monotweety_db"
+        const val DB_VERSION = 1
+    }
 }

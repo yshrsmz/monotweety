@@ -10,5 +10,5 @@ import net.yslibrary.monotweety.base.di.ControllerScope
     modules = arrayOf(SettingViewModule::class)
 )
 interface SettingComponent {
-  fun inject(controller: SettingController)
+    fun inject(controller: SettingController)
 }

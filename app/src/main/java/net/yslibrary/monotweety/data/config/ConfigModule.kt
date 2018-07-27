@@ -17,32 +17,32 @@ import javax.inject.Named
 @Module
 class ConfigModule {
 
-  @Named(Names.FOR_CONFIG)
-  @UserScope
-  @Provides
-  fun provideConfigPreferences(@Named(Names.FOR_APP) context: Context): RxSharedPreferences {
-    val prefs = context.getSharedPreferences("net.yslibrary.monotweety.prefs.config", Context.MODE_PRIVATE)
-    return RxSharedPreferences.create(prefs)
-  }
+    @Named(Names.FOR_CONFIG)
+    @UserScope
+    @Provides
+    fun provideConfigPreferences(@Named(Names.FOR_APP) context: Context): RxSharedPreferences {
+        val prefs = context.getSharedPreferences("net.yslibrary.monotweety.prefs.config", Context.MODE_PRIVATE)
+        return RxSharedPreferences.create(prefs)
+    }
 
-  @UserScope
-  @Provides
-  fun provideConfigLocalDataManager(@Named(Names.FOR_CONFIG) prefs: RxSharedPreferences,
-                                    clock: Clock): ConfigLocalDataManager {
-    return ConfigLocalDataManagerImpl(prefs, clock)
-  }
+    @UserScope
+    @Provides
+    fun provideConfigLocalDataManager(@Named(Names.FOR_CONFIG) prefs: RxSharedPreferences,
+                                      clock: Clock): ConfigLocalDataManager {
+        return ConfigLocalDataManagerImpl(prefs, clock)
+    }
 
-  @UserScope
-  @Provides
-  fun provideConfigRemoteDataManager(configurationService: ConfigurationService): ConfigRemoteDataManager {
-    return ConfigRemoteDataManagerImpl(configurationService)
-  }
+    @UserScope
+    @Provides
+    fun provideConfigRemoteDataManager(configurationService: ConfigurationService): ConfigRemoteDataManager {
+        return ConfigRemoteDataManagerImpl(configurationService)
+    }
 
-  @UserScope
-  @Provides
-  fun provideConfigDataManager(configRemoteDataManager: ConfigRemoteDataManager,
-                               configLocalDataManager: ConfigLocalDataManager,
-                               clock: Clock): ConfigDataManager {
-    return ConfigDataManagerImpl(configRemoteDataManager, configLocalDataManager, clock)
-  }
+    @UserScope
+    @Provides
+    fun provideConfigDataManager(configRemoteDataManager: ConfigRemoteDataManager,
+                                 configLocalDataManager: ConfigLocalDataManager,
+                                 clock: Clock): ConfigDataManager {
+        return ConfigDataManagerImpl(configRemoteDataManager, configLocalDataManager, clock)
+    }
 }

@@ -8,7 +8,7 @@ import javax.inject.Inject
 @AppScope
 class KeepOpenManager @Inject constructor(private val settingDataManager: SettingDataManager) {
 
-  fun get(): Observable<Boolean> = settingDataManager.keepOpen()
+    fun get(): Observable<Boolean> = settingDataManager.keepOpen()
 
-  fun set(enabled: Boolean) = settingDataManager.keepOpen(enabled)
+    fun set(enabled: Boolean) = settingDataManager.keepOpen(enabled)
 }

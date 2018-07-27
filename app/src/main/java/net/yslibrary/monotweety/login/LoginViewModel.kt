@@ -6,19 +6,19 @@ import io.reactivex.subjects.PublishSubject
 
 class LoginViewModel(private val loginCompletedSubject: PublishSubject<TwitterSession>) {
 
-  private val loginFailedSubject = PublishSubject.create<Exception>()
+    private val loginFailedSubject = PublishSubject.create<Exception>()
 
-  val loginCompleted: Observable<TwitterSession>
-    get() = loginCompletedSubject
+    val loginCompleted: Observable<TwitterSession>
+        get() = loginCompletedSubject
 
-  val loginFailed: Observable<Exception>
-    get() = loginFailedSubject
+    val loginFailed: Observable<Exception>
+        get() = loginFailedSubject
 
-  fun onLoginCompleted(activeSession: TwitterSession) {
-    loginCompletedSubject.onNext(activeSession)
-  }
+    fun onLoginCompleted(activeSession: TwitterSession) {
+        loginCompletedSubject.onNext(activeSession)
+    }
 
-  fun onLoginFailed(exception: Exception) {
-    loginFailedSubject.onNext(exception)
-  }
+    fun onLoginFailed(exception: Exception) {
+        loginFailedSubject.onNext(exception)
+    }
 }

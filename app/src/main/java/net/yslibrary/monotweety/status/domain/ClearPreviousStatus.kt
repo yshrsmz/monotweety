@@ -8,7 +8,7 @@ import javax.inject.Inject
 @UserScope
 class ClearPreviousStatus @Inject constructor(private val statusRepository: StatusRepository) {
 
-  fun execute(): Completable {
-    return statusRepository.clear()
-  }
+    fun execute(): Completable {
+        return statusRepository.clear()
+    }
 }

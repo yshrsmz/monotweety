@@ -9,19 +9,19 @@ import kotlin.properties.Delegates
 @RunWith(ConfiguredRobolectricTestRunner::class)
 class LicenseRepositoryImplTest {
 
-  var repository: LicenseRepositoryImpl by Delegates.notNull<LicenseRepositoryImpl>()
+    var repository: LicenseRepositoryImpl by Delegates.notNull<LicenseRepositoryImpl>()
 
-  @Before
-  fun setup() {
-    repository = LicenseRepositoryImpl()
-  }
+    @Before
+    fun setup() {
+        repository = LicenseRepositoryImpl()
+    }
 
-  @Test
-  fun get() {
-    repository.get().test()
-        .apply {
-          assertValueCount(1)
-          assertComplete()
-        }
-  }
+    @Test
+    fun get() {
+        repository.get().test()
+            .apply {
+                assertValueCount(1)
+                assertComplete()
+            }
+    }
 }

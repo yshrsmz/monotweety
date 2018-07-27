@@ -8,14 +8,14 @@ import net.yslibrary.monotweety.login.domain.IsLoggedIn
 
 class SplashViewModel(private val isLoggedIn: IsLoggedIn) {
 
-  private val loggedInSubject = BehaviorSubject.create<Boolean>()
+    private val loggedInSubject = BehaviorSubject.create<Boolean>()
 
-  val loggedIn: Observable<Boolean>
-    get() = loggedInSubject
+    val loggedIn: Observable<Boolean>
+        get() = loggedInSubject
 
-  init {
-    isLoggedIn.execute()
-        .subscribeOn(Schedulers.io())
-        .subscribeBy { loggedInSubject.onNext(it) }
-  }
+    init {
+        isLoggedIn.execute()
+            .subscribeOn(Schedulers.io())
+            .subscribeBy { loggedInSubject.onNext(it) }
+    }
 }

@@ -12,6 +12,6 @@ import net.yslibrary.monotweety.status.ComposeStatusComponent
     modules = arrayOf(ActivityModule::class)
 )
 interface ComposeActivityComponent : ActivityModule.Provider,
-                                     ComposeStatusComponent.ComponentProvider {
-  fun inject(activity: ComposeActivity)
+    ComposeStatusComponent.ComponentProvider {
+    fun inject(activity: ComposeActivity)
 }

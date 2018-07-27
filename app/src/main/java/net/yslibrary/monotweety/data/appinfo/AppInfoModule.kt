@@ -7,7 +7,7 @@ import net.yslibrary.monotweety.base.di.AppScope
 @Module
 abstract class AppInfoModule {
 
-  @AppScope
-  @Binds
-  abstract fun provideAppInfoManager(appInfoManagerImpl: AppInfoManagerImpl): AppInfoManager
+    @AppScope
+    @Binds
+    abstract fun provideAppInfoManager(appInfoManagerImpl: AppInfoManagerImpl): AppInfoManager
 }

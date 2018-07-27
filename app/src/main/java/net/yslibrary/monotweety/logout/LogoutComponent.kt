@@ -9,5 +9,5 @@ import net.yslibrary.monotweety.base.di.ServiceScope
     dependencies = arrayOf(UserComponent::class)
 )
 interface LogoutComponent {
-  fun inject(service: LogoutService)
+    fun inject(service: LogoutService)
 }

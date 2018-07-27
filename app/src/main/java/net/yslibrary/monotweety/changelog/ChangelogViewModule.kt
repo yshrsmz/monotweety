@@ -10,13 +10,13 @@ import javax.inject.Named
 @Module
 class ChangelogViewModule(private val activityBus: EventBus) {
 
-  @ControllerScope
-  @Provides
-  @Named(Names.FOR_ACTIVITY)
-  fun provideActivityBus(): EventBus = activityBus
-
-  interface DependencyProvider {
+    @ControllerScope
+    @Provides
     @Named(Names.FOR_ACTIVITY)
-    fun activityBus(): EventBus
-  }
+    fun provideActivityBus(): EventBus = activityBus
+
+    interface DependencyProvider {
+        @Named(Names.FOR_ACTIVITY)
+        fun activityBus(): EventBus
+    }
 }

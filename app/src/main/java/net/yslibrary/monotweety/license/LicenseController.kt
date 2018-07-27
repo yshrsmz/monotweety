@@ -23,67 +23,67 @@ import kotlin.properties.Delegates
 
 class LicenseController : ActionBarController() {
 
-  override val hasBackButton: Boolean = true
+    override val hasBackButton: Boolean = true
 
-  lateinit var bindings: Bindings
+    lateinit var bindings: Bindings
 
-  @set:[Inject]
-  var viewModel by Delegates.notNull<LicenseViewModel>()
+    @set:[Inject]
+    var viewModel by Delegates.notNull<LicenseViewModel>()
 
-  @set:[Inject]
-  var refWatcherDelegate by Delegates.notNull<RefWatcherDelegate>()
+    @set:[Inject]
+    var refWatcherDelegate by Delegates.notNull<RefWatcherDelegate>()
 
-  override val title: String?
-    get() = getString(R.string.title_license)
+    override val title: String?
+        get() = getString(R.string.title_license)
 
-  val component: LicenseComponent by lazy {
-    val activityBus = getComponentProvider<LicenseViewModule.DependencyProvider>(activity!!).activityBus()
-    DaggerLicenseComponent.builder()
-        .userComponent(App.userComponent(applicationContext!!))
-        .licenseViewModule(LicenseViewModule(activityBus))
-        .build()
-  }
+    val component: LicenseComponent by lazy {
+        val activityBus = getComponentProvider<LicenseViewModule.DependencyProvider>(activity!!).activityBus()
+        DaggerLicenseComponent.builder()
+            .userComponent(App.userComponent(applicationContext!!))
+            .licenseViewModule(LicenseViewModule(activityBus))
+            .build()
+    }
 
-  override fun onContextAvailable(context: Context) {
-    super.onContextAvailable(context)
-    component.inject(this)
-    analytics.viewEvent(Analytics.VIEW_LICENSE)
-  }
+    override fun onContextAvailable(context: Context) {
+        super.onContextAvailable(context)
+        component.inject(this)
+        analytics.viewEvent(Analytics.VIEW_LICENSE)
+    }
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-    val view = inflater.inflate(R.layout.controller_license, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
+        val view = inflater.inflate(R.layout.controller_license, container, false)
 
-    bindings = Bindings(view)
+        bindings = Bindings(view)
 
-    setEvents()
+        setEvents()
 
-    return view
-  }
+        return view
+    }
 
-  override fun onChangeEnded(changeHandler: ControllerChangeHandler, changeType: ControllerChangeType) {
-    super.onChangeEnded(changeHandler, changeType)
-    refWatcherDelegate.handleOnChangeEnded(isDestroyed, changeType)
-  }
+    override fun onChangeEnded(changeHandler: ControllerChangeHandler, changeType: ControllerChangeType) {
+        super.onChangeEnded(changeHandler, changeType)
+        refWatcherDelegate.handleOnChangeEnded(isDestroyed, changeType)
+    }
 
-  override fun onDestroy() {
-    super.onDestroy()
-    refWatcherDelegate.handleOnDestroy()
-  }
+    override fun onDestroy() {
+        super.onDestroy()
+        refWatcherDelegate.handleOnDestroy()
+    }
 
-  fun setEvents() {
-    viewModel.licenses
-        .bindToLifecycle()
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribeBy { initAdapter(it) }
+    fun setEvents() {
+        viewModel.licenses
+            .bindToLifecycle()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy { initAdapter(it) }
 
-  }
+    }
 
-  fun initAdapter(dataSet: List<Library>) {
-    bindings.list.layoutManager = LinearLayoutManager(activity)
-    bindings.list.adapter = LicenseAdapter(dataSet)
-  }
+    fun initAdapter(dataSet: List<Library>) {
+        bindings.list.layoutManager = LinearLayoutManager(activity)
+        bindings.list.adapter = LicenseAdapter(dataSet)
+    }
 
-  class Bindings(view: View) {
-    val list = view.findById<RecyclerView>(R.id.list)
-  }
+    class Bindings(view: View) {
+        val list = view.findById<RecyclerView>(R.id.list)
+    }
 }

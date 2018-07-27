@@ -17,30 +17,30 @@ open class ConfigDataManagerImpl(private val remoteDataManager: ConfigRemoteData
                                  private val localDataManager: ConfigLocalDataManager,
                                  private val clock: Clock) : ConfigDataManager {
 
-  private var disposable = Disposables.disposed()
+    private var disposable = Disposables.disposed()
 
-  override fun shortUrlLengthHttps(): Observable<Int> {
-    return localDataManager.shortUrlLengthHttps()
-        .doOnNext {
-          if (disposable.isDisposed && localDataManager.outdated()) {
-            Timber.d("fetch new config from api")
-            disposable = remoteDataManager.get()
-                .subscribeOn(Schedulers.io())
-                .subscribe({
-                  updateConfig(it)
-                  disposable.dispose()
-                }, {
-                  Timber.e(it, it.message)
-                  disposable.dispose()
-                })
-          }
-        }
-  }
+    override fun shortUrlLengthHttps(): Observable<Int> {
+        return localDataManager.shortUrlLengthHttps()
+            .doOnNext {
+                if (disposable.isDisposed && localDataManager.outdated()) {
+                    Timber.d("fetch new config from api")
+                    disposable = remoteDataManager.get()
+                        .subscribeOn(Schedulers.io())
+                        .subscribe({
+                            updateConfig(it)
+                            disposable.dispose()
+                        }, {
+                            Timber.e(it, it.message)
+                            disposable.dispose()
+                        })
+                }
+            }
+    }
 
-  @VisibleForTesting
-  open fun updateConfig(configuration: Configuration) {
-    Timber.d("update local config: $configuration")
-    localDataManager.shortUrlLengthHttps(configuration.shortUrlLengthHttps)
-    localDataManager.updatedAt(clock.currentTimeMillis())
-  }
+    @VisibleForTesting
+    open fun updateConfig(configuration: Configuration) {
+        Timber.d("update local config: $configuration")
+        localDataManager.shortUrlLengthHttps(configuration.shortUrlLengthHttps)
+        localDataManager.updatedAt(clock.currentTimeMillis())
+    }
 }

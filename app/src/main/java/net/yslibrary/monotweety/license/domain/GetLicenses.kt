@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 @UserScope
 class GetLicenses @Inject constructor(private val licenseRepository: LicenseRepository) {
-  fun execute(): Single<List<Library>> {
-    return licenseRepository.get()
-  }
+    fun execute(): Single<List<Library>> {
+        return licenseRepository.get()
+    }
 }

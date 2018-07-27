@@ -7,7 +7,7 @@ import net.yslibrary.monotweety.base.di.UserScope
 @Module
 abstract class LicenseModule {
 
-  @UserScope
-  @Binds
-  abstract fun provideLicenseRepository(repository: LicenseRepositoryImpl): LicenseRepository
+    @UserScope
+    @Binds
+    abstract fun provideLicenseRepository(repository: LicenseRepositoryImpl): LicenseRepository
 }

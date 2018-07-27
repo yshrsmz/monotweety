@@ -12,54 +12,54 @@ import com.twitter.sdk.android.core.models.Tweet as TwitterTweet
 
 class StatusLocalRepositoryImplTest {
 
-  lateinit var repository: StatusLocalRepositoryImpl
+    lateinit var repository: StatusLocalRepositoryImpl
 
-  val gson = Gson()
-  val tweet = Tweet.from(gson.fromJson(readJsonFromAssets("tweet.json"), TwitterTweet::class.java))
-  val tweet2 = Tweet.from(gson.fromJson(readJsonFromAssets("tweet_2.json"), TwitterTweet::class.java))
+    val gson = Gson()
+    val tweet = Tweet.from(gson.fromJson(readJsonFromAssets("tweet.json"), TwitterTweet::class.java))
+    val tweet2 = Tweet.from(gson.fromJson(readJsonFromAssets("tweet_2.json"), TwitterTweet::class.java))
 
-  @Before
-  fun setup() {
-    repository = StatusLocalRepositoryImpl()
-  }
+    @Before
+    fun setup() {
+        repository = StatusLocalRepositoryImpl()
+    }
 
-  @Test
-  fun clear() {
-    repository.previousTweetSubject.onNext(tweet.toOptional())
+    @Test
+    fun clear() {
+        repository.previousTweetSubject.onNext(tweet.toOptional())
 
-    repository.clear().test()
-        .apply {
-          assertNoValues()
-          assertComplete()
+        repository.clear().test()
+            .apply {
+                assertNoValues()
+                assertComplete()
 
-          assertThat(repository.previousTweetSubject.hasValue()).isTrue()
-          assertThat(repository.previousTweetSubject.value).isEqualTo(None)
-        }
-  }
+                assertThat(repository.previousTweetSubject.hasValue()).isTrue()
+                assertThat(repository.previousTweetSubject.value).isEqualTo(None)
+            }
+    }
 
-  @Test
-  fun getPrevious() {
-    repository.previousTweetSubject.onNext(tweet.toOptional())
+    @Test
+    fun getPrevious() {
+        repository.previousTweetSubject.onNext(tweet.toOptional())
 
-    repository.getPrevious().test()
-        .apply {
-          assertValue(tweet.toOptional())
-          assertNotComplete()
+        repository.getPrevious().test()
+            .apply {
+                assertValue(tweet.toOptional())
+                assertNotComplete()
 
-          assertThat(repository.previousTweetSubject.value).isEqualTo(tweet.toOptional())
-        }
-  }
+                assertThat(repository.previousTweetSubject.value).isEqualTo(tweet.toOptional())
+            }
+    }
 
-  @Test
-  fun update() {
-    repository.previousTweetSubject.onNext(tweet.toOptional())
+    @Test
+    fun update() {
+        repository.previousTweetSubject.onNext(tweet.toOptional())
 
-    repository.update(tweet2).test()
-        .apply {
-          assertNoValues()
-          assertComplete()
+        repository.update(tweet2).test()
+            .apply {
+                assertNoValues()
+                assertComplete()
 
-          assertThat(repository.previousTweetSubject.value).isEqualTo(tweet2.toOptional())
-        }
-  }
+                assertThat(repository.previousTweetSubject.value).isEqualTo(tweet2.toOptional())
+            }
+    }
 }

@@ -17,46 +17,46 @@ open class AppLifecycleCallbacks(
     val notificationManager: NotificationManager
 ) : App.LifecycleCallbacks {
 
-  override fun onCreate() {
-    initTimber()
-    initNotificationChannel()
-    initThreeTenABP()
-    initTwitterKit()
-    initFabric()
-  }
+    override fun onCreate() {
+        initTimber()
+        initNotificationChannel()
+        initThreeTenABP()
+        initTwitterKit()
+        initFabric()
+    }
 
-  override fun onTerminate() {
+    override fun onTerminate() {
 
-  }
+    }
 
-  fun initNotificationChannel() {
-    createNotificationChannel(context, notificationManager)
-  }
+    fun initNotificationChannel() {
+        createNotificationChannel(context, notificationManager)
+    }
 
-  fun initThreeTenABP() {
-    AndroidThreeTen.init(context)
-  }
+    fun initThreeTenABP() {
+        AndroidThreeTen.init(context)
+    }
 
-  open fun initTimber() {
-    Timber.plant(CrashReportingTree())
-  }
+    open fun initTimber() {
+        Timber.plant(CrashReportingTree())
+    }
 
-  fun initTwitterKit() {
-    val authConfig = TwitterAuthConfig(BuildConfig.TWITTER_API_KEY, BuildConfig.TWITTER_API_SECRET)
-    val twitterConfig = TwitterConfig.Builder(context)
-        .twitterAuthConfig(authConfig)
-        //.debug(true)
-        .build()
-    Twitter.initialize(twitterConfig)
-  }
+    fun initTwitterKit() {
+        val authConfig = TwitterAuthConfig(BuildConfig.TWITTER_API_KEY, BuildConfig.TWITTER_API_SECRET)
+        val twitterConfig = TwitterConfig.Builder(context)
+            .twitterAuthConfig(authConfig)
+            //.debug(true)
+            .build()
+        Twitter.initialize(twitterConfig)
+    }
 
-  fun initFabric() {
+    fun initFabric() {
 
-    val fabric = Fabric.Builder(context)
-        .kits(Crashlytics())
+        val fabric = Fabric.Builder(context)
+            .kits(Crashlytics())
 //        .debuggable(true)
-        .build()
+            .build()
 
-    Fabric.with(fabric)
-  }
+        Fabric.with(fabric)
+    }
 }

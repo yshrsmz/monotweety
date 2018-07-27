@@ -12,19 +12,19 @@ import timber.log.Timber
 
 class PackageReplacedReceiver : BroadcastReceiver() {
 
-  override fun onReceive(context: Context, intent: Intent) {
-    Timber.d("package replaced")
+    override fun onReceive(context: Context, intent: Intent) {
+        Timber.d("package replaced")
 
-    Observable.zip(
-        App.appComponent(context).notificationEnabledManager().get(),
-        App.appComponent(context).isLoggedIn().execute().toObservable(),
-        BiFunction { enabled: Boolean, loggedIn: Boolean -> enabled && loggedIn })
-        .firstOrError()
-        .subscribeBy {
-          Timber.d("is logged in and notification enabled: $it")
-          if (it) {
-            ContextCompat.startForegroundService(context, NotificationService.callingIntent(context))
-          }
-        }
-  }
+        Observable.zip(
+            App.appComponent(context).notificationEnabledManager().get(),
+            App.appComponent(context).isLoggedIn().execute().toObservable(),
+            BiFunction { enabled: Boolean, loggedIn: Boolean -> enabled && loggedIn })
+            .firstOrError()
+            .subscribeBy {
+                Timber.d("is logged in and notification enabled: $it")
+                if (it) {
+                    ContextCompat.startForegroundService(context, NotificationService.callingIntent(context))
+                }
+            }
+    }
 }

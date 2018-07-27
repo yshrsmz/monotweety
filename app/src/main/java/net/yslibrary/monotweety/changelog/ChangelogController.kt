@@ -16,39 +16,39 @@ import kotlin.properties.Delegates
 
 class ChangelogController : ActionBarController() {
 
-  @set:[Inject]
-  var refWatcherDelegate by Delegates.notNull<RefWatcherDelegate>()
+    @set:[Inject]
+    var refWatcherDelegate by Delegates.notNull<RefWatcherDelegate>()
 
-  override val hasBackButton: Boolean = true
+    override val hasBackButton: Boolean = true
 
-  override val title: String?
-    get() = applicationContext?.getString(R.string.title_changelog)
+    override val title: String?
+        get() = applicationContext?.getString(R.string.title_changelog)
 
-  val component: ChangelogComponent by lazy {
-    val activityBus = getComponentProvider<ChangelogViewModule.DependencyProvider>(activity!!).activityBus()
-    DaggerChangelogComponent.builder()
-        .userComponent(App.userComponent(applicationContext!!))
-        .changelogViewModule(ChangelogViewModule(activityBus))
-        .build()
-  }
+    val component: ChangelogComponent by lazy {
+        val activityBus = getComponentProvider<ChangelogViewModule.DependencyProvider>(activity!!).activityBus()
+        DaggerChangelogComponent.builder()
+            .userComponent(App.userComponent(applicationContext!!))
+            .changelogViewModule(ChangelogViewModule(activityBus))
+            .build()
+    }
 
-  override fun onContextAvailable(context: Context) {
-    super.onContextAvailable(context)
-    component.inject(this)
-    analytics.viewEvent(Analytics.VIEW_CHANGELOG)
-  }
+    override fun onContextAvailable(context: Context) {
+        super.onContextAvailable(context)
+        component.inject(this)
+        analytics.viewEvent(Analytics.VIEW_CHANGELOG)
+    }
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-    return inflater.inflate(R.layout.controller_changelog, container, false)
-  }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
+        return inflater.inflate(R.layout.controller_changelog, container, false)
+    }
 
-  override fun onChangeEnded(changeHandler: ControllerChangeHandler, changeType: ControllerChangeType) {
-    super.onChangeEnded(changeHandler, changeType)
-    refWatcherDelegate.handleOnChangeEnded(isDestroyed, changeType)
-  }
+    override fun onChangeEnded(changeHandler: ControllerChangeHandler, changeType: ControllerChangeType) {
+        super.onChangeEnded(changeHandler, changeType)
+        refWatcherDelegate.handleOnChangeEnded(isDestroyed, changeType)
+    }
 
-  override fun onDestroy() {
-    super.onDestroy()
-    refWatcherDelegate.handleOnDestroy()
-  }
+    override fun onDestroy() {
+        super.onDestroy()
+        refWatcherDelegate.handleOnDestroy()
+    }
 }

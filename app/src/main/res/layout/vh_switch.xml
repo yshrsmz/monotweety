@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             style="@style/AppTheme.Setting.ListItem">
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/AppTheme.Setting.ListItem"
+    >
 
-  <android.support.v7.widget.SwitchCompat
-      android:id="@+id/switch_button"
-      style="@style/AppTheme.Setting.Switch"
-      tools:text="Switch setting"/>
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/switch_button"
+        style="@style/AppTheme.Setting.Switch"
+        tools:text="Switch setting"
+        />
 
 </FrameLayout>

@@ -20,8 +20,8 @@ import net.yslibrary.monotweety.data.setting.SettingModule
         SettingModule::class))
 class DataModule {
 
-  @Provides
-  fun provideSessionManager(): SessionManager<TwitterSession> {
-    return TwitterCore.getInstance().sessionManager
-  }
+    @Provides
+    fun provideSessionManager(): SessionManager<TwitterSession> {
+        return TwitterCore.getInstance().sessionManager
+    }
 }

@@ -11,24 +11,24 @@ import net.yslibrary.monotweety.activity.compose.ComposeActivity
 
 class ShortcutActivity : Activity() {
 
-  companion object {
-    fun callingIntent(context: Context): Intent {
-      return Intent(context, ShortcutActivity::class.java)
-    }
-  }
-
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-
-    val loggedIn = App.appComponent(this).isLoggedIn().execute().blockingGet()
-
-    if (!loggedIn) {
-      Toast.makeText(this, R.string.error_not_authorized, Toast.LENGTH_SHORT).show()
-      finish()
-      return
+    companion object {
+        fun callingIntent(context: Context): Intent {
+            return Intent(context, ShortcutActivity::class.java)
+        }
     }
 
-    startActivity(ComposeActivity.callingIntent(this))
-    finish()
-  }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val loggedIn = App.appComponent(this).isLoggedIn().execute().blockingGet()
+
+        if (!loggedIn) {
+            Toast.makeText(this, R.string.error_not_authorized, Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
+
+        startActivity(ComposeActivity.callingIntent(this))
+        finish()
+    }
 }

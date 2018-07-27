@@ -10,16 +10,16 @@ class DebugAppLifecycleCallbacks(
     notificationManager: NotificationManager
 ) : AppLifecycleCallbacks(context, notificationManager) {
 
-  override fun onCreate() {
-    super.onCreate()
-    initStetho()
-  }
+    override fun onCreate() {
+        super.onCreate()
+        initStetho()
+    }
 
-  override fun initTimber() {
-    Timber.plant(Timber.DebugTree())
-  }
+    override fun initTimber() {
+        Timber.plant(Timber.DebugTree())
+    }
 
-  fun initStetho() {
-    Stetho.initializeWithDefaults(context)
-  }
+    fun initStetho() {
+        Stetho.initializeWithDefaults(context)
+    }
 }

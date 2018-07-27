@@ -15,18 +15,18 @@ import javax.inject.Named
 @Module
 class LocalModule {
 
-  @AppScope
-  @Provides
-  fun provideDbOpenHelper(@Named(Names.FOR_APP) context: Context): SQLiteOpenHelper {
-    return DbOpenHelper(context)
-  }
+    @AppScope
+    @Provides
+    fun provideDbOpenHelper(@Named(Names.FOR_APP) context: Context): SQLiteOpenHelper {
+        return DbOpenHelper(context)
+    }
 
-  @AppScope
-  @Provides
-  fun provideStorIOSQLite(sqLiteOpenHelper: SQLiteOpenHelper): StorIOSQLite {
-    return DefaultStorIOSQLite.builder()
-        .sqliteOpenHelper(sqLiteOpenHelper)
-        .addTypeMapping(User::class.java, UserSQLiteTypeMapping())
-        .build()
-  }
+    @AppScope
+    @Provides
+    fun provideStorIOSQLite(sqLiteOpenHelper: SQLiteOpenHelper): StorIOSQLite {
+        return DefaultStorIOSQLite.builder()
+            .sqliteOpenHelper(sqLiteOpenHelper)
+            .addTypeMapping(User::class.java, UserSQLiteTypeMapping())
+            .build()
+    }
 }

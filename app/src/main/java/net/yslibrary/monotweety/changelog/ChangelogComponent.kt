@@ -10,5 +10,5 @@ import net.yslibrary.monotweety.base.di.ControllerScope
     modules = arrayOf(ChangelogViewModule::class)
 )
 interface ChangelogComponent {
-  fun inject(controller: ChangelogController)
+    fun inject(controller: ChangelogController)
 }

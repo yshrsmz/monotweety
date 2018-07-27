@@ -9,9 +9,9 @@ import net.yslibrary.monotweety.base.di.AppScope
 @Module
 class SessionModule {
 
-  @AppScope
-  @Provides
-  fun provideSessionRepository(sessionManager: SessionManager<TwitterSession>): SessionRepository {
-    return SessionRepositoryImpl(sessionManager)
-  }
+    @AppScope
+    @Provides
+    fun provideSessionRepository(sessionManager: SessionManager<TwitterSession>): SessionRepository {
+        return SessionRepositoryImpl(sessionManager)
+    }
 }

@@ -1,124 +1,126 @@
-<resources
-    xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-  <!-- Base application theme. -->
-  <style name="AppThemeBase" parent="Theme.AppCompat.Light.NoActionBar">
-    <!-- Customize your theme here. -->
-    <item name="colorPrimary">@color/colorPrimary</item>
-    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="colorAccent">@color/colorAccent</item>
+    <!-- Base application theme. -->
+    <style name="AppThemeBase" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
 
-    <item name="android:textColorPrimary">@color/colorTextPrimary</item>
-    <item name="android:textColorSecondary">@color/colorTextSecondary</item>
+        <item name="android:textColorPrimary">@color/colorTextPrimary</item>
+        <item name="android:textColorSecondary">@color/colorTextSecondary</item>
 
-    <item name="android:windowContentTransitions" tools:targetApi="lollipop">true</item>
-    <item name="android:windowAllowEnterTransitionOverlap" tools:targetApi="lollipop">true</item>
-    <item name="android:windowAllowReturnTransitionOverlap" tools:targetApi="lollipop">true</item>
-    <item name="android:windowSharedElementEnterTransition" tools:targetApi="lollipop">
-      @android:transition/move
-    </item>
-    <item name="android:windowSharedElementExitTransition" tools:targetApi="lollipop">
-      @android:transition/move
-    </item>
-  </style>
+        <item name="android:windowContentTransitions" tools:targetApi="lollipop">true</item>
+        <item name="android:windowAllowEnterTransitionOverlap" tools:targetApi="lollipop">true
+        </item>
+        <item name="android:windowAllowReturnTransitionOverlap" tools:targetApi="lollipop">true
+        </item>
+        <item name="android:windowSharedElementEnterTransition" tools:targetApi="lollipop">
+            @android:transition/move
+        </item>
+        <item name="android:windowSharedElementExitTransition" tools:targetApi="lollipop">
+            @android:transition/move
+        </item>
+    </style>
 
-  <style name="AppTheme" parent="AppThemeBase"/>
+    <style name="AppTheme" parent="AppThemeBase" />
 
-  <style name="AppTheme.FullScreen" parent="AppTheme">
-    <item name="windowNoTitle">true</item>
-    <item name="windowActionBar">false</item>
-    <item name="android:windowFullscreen">true</item>
-    <item name="android:windowContentOverlay">@null</item>
-  </style>
+    <style name="AppTheme.FullScreen" parent="AppTheme">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
 
-  <style name="AppTheme.Dialog" parent="AppTheme">
-    <item name="android:windowIsTranslucent">true</item>
-    <item name="android:windowBackground">@color/transparentGray</item>
-    <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent</item>
-  </style>
+    <style name="AppTheme.Dialog" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/transparentGray</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent
+        </item>
+    </style>
 
-  <style name="AppTheme.Setting"/>
+    <style name="AppTheme.Setting" />
 
-  <style name="AppTheme.Setting.ListItem" parent="AppTheme">
-    <item name="android:layout_width">match_parent</item>
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:minHeight">@dimen/tile_height_1line</item>
-    <item name="android:paddingLeft">@dimen/tile_horizontal_padding</item>
-    <item name="android:paddingTop">@dimen/tile_vertical_padding</item>
-    <item name="android:paddingRight">@dimen/tile_horizontal_padding</item>
-    <item name="android:paddingBottom">@dimen/tile_vertical_padding</item>
-    <item name="android:background">?attr/selectableItemBackground</item>
-  </style>
+    <style name="AppTheme.Setting.ListItem" parent="AppTheme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">@dimen/tile_height_1line</item>
+        <item name="android:paddingLeft">@dimen/tile_horizontal_padding</item>
+        <item name="android:paddingTop">@dimen/tile_vertical_padding</item>
+        <item name="android:paddingRight">@dimen/tile_horizontal_padding</item>
+        <item name="android:paddingBottom">@dimen/tile_vertical_padding</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+    </style>
 
-  <style name="AppTheme.Setting.ListItem2" parent="AppTheme.Setting.ListItem">
-    <item name="android:minHeight">@dimen/tile_height_2line</item>
-  </style>
+    <style name="AppTheme.Setting.ListItem2" parent="AppTheme.Setting.ListItem">
+        <item name="android:minHeight">@dimen/tile_height_2line</item>
+    </style>
 
-  <style name="AppTheme.Setting.Switch" parent="AppTheme">
-    <item name="android:layout_width">match_parent</item>
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_gravity">center_vertical</item>
-    <item name="android:textAppearance">@style/TextAppearance.AppCompat.Subhead</item>
-  </style>
+    <style name="AppTheme.Setting.Switch" parent="AppTheme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Subhead</item>
+    </style>
 
-  <style name="AppTheme.Setting.OneLineTitle" parent="AppTheme">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">wrap_content</item>
-    <item name="android:maxLines">1</item>
-    <item name="android:layout_gravity">center_vertical</item>
-    <item name="android:textAppearance">@style/TextAppearance.AppCompat.Subhead</item>
-  </style>
+    <style name="AppTheme.Setting.OneLineTitle" parent="AppTheme">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Subhead</item>
+    </style>
 
-  <style name="AppTheme.Setting.TwoLineTitle" parent="AppTheme">
-    <item name="android:layout_width">wrap_content</item>
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:maxLines">1</item>
-    <item name="android:textAppearance">@style/TextAppearance.AppCompat.Subhead</item>
-  </style>
+    <style name="AppTheme.Setting.TwoLineTitle" parent="AppTheme">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Subhead</item>
+    </style>
 
-  <style name="AppTheme.Setting.TwoLineSubTitle" parent="AppTheme">
-    <item name="android:layout_width">wrap_content</item>
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:maxLines">1</item>
-    <item name="android:textAppearance">@style/TextAppearance.AppCompat.Caption</item>
-  </style>
+    <style name="AppTheme.Setting.TwoLineSubTitle" parent="AppTheme">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Caption</item>
+    </style>
 
-  <style name="AppTheme.Setting.SubHeaderItem" parent="AppTheme.Setting.ListItem">
-    <item name="android:background">@null</item>
-  </style>
+    <style name="AppTheme.Setting.SubHeaderItem" parent="AppTheme.Setting.ListItem">
+        <item name="android:background">@null</item>
+    </style>
 
-  <style name="AppTheme.Setting.SubHeaderTitle" parent="AppTheme.Setting.OneLineTitle">
-    <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body2</item>
-  </style>
+    <style name="AppTheme.Setting.SubHeaderTitle" parent="AppTheme.Setting.OneLineTitle">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body2</item>
+    </style>
 
 
-  <style name="AppTheme.RaisedButton">
-    <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Colored</item>
-  </style>
+    <style name="AppTheme.RaisedButton">
+        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Colored</item>
+    </style>
 
-  <style name="AppTheme.RaisedButton.Primary" parent="AppTheme.RaisedButton">
-    <item name="colorAccent">@color/colorPrimary</item>
-  </style>
+    <style name="AppTheme.RaisedButton.Primary" parent="AppTheme.RaisedButton">
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
 
-  <style name="AppTheme.RaisedButton.Secondary" parent="AppTheme.RaisedButton">
+    <style name="AppTheme.RaisedButton.Secondary" parent="AppTheme.RaisedButton">
 
-  </style>
+    </style>
 
-  <style name="AppTheme.RaisedButton.White" parent="AppTheme.RaisedButton">
-    <item name="colorAccent">@color/white</item>
-    <item name="android:textColor">@color/colorAccent</item>
-  </style>
+    <style name="AppTheme.RaisedButton.White" parent="AppTheme.RaisedButton">
+        <item name="colorAccent">@color/white</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
 
-  <style name="AppTheme.FlatButton">
-    <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless.Colored</item>
-    <!--<item name="colorControlHighlight">@color/highlight_light</item>-->
-  </style>
+    <style name="AppTheme.FlatButton">
+        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless.Colored</item>
+        <!--<item name="colorControlHighlight">@color/highlight_light</item>-->
+    </style>
 
-  <style name="AppTheme.FlatButton.Primary">
-    <item name="colorAccent">@color/colorPrimary</item>
-  </style>
+    <style name="AppTheme.FlatButton.Primary">
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
 
-  <style name="AppTheme.FlatButton.Accent">
+    <style name="AppTheme.FlatButton.Accent">
 
-  </style>
+    </style>
 </resources>

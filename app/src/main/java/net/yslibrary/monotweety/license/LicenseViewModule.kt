@@ -11,19 +11,19 @@ import javax.inject.Named
 @Module
 class LicenseViewModule(private val activityBus: EventBus) {
 
-  @ControllerScope
-  @Provides
-  @Named(Names.FOR_ACTIVITY)
-  fun provideActivityBus(): EventBus = activityBus
-
-  @ControllerScope
-  @Provides
-  fun provideLicenseViewModel(getLicenses: GetLicenses): LicenseViewModel {
-    return LicenseViewModel(getLicenses)
-  }
-
-  interface DependencyProvider {
+    @ControllerScope
+    @Provides
     @Named(Names.FOR_ACTIVITY)
-    fun activityBus(): EventBus
-  }
+    fun provideActivityBus(): EventBus = activityBus
+
+    @ControllerScope
+    @Provides
+    fun provideLicenseViewModel(getLicenses: GetLicenses): LicenseViewModel {
+        return LicenseViewModel(getLicenses)
+    }
+
+    interface DependencyProvider {
+        @Named(Names.FOR_ACTIVITY)
+        fun activityBus(): EventBus
+    }
 }

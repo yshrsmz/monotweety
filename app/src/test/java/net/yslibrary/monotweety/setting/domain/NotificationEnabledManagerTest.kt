@@ -14,29 +14,29 @@ import org.robolectric.RuntimeEnvironment
 @RunWith(ConfiguredRobolectricTestRunner::class)
 class NotificationEnabledManagerTest {
 
-  lateinit var settingDataManager: SettingDataManager
-  lateinit var notificationEnabledManager: NotificationEnabledManager
+    lateinit var settingDataManager: SettingDataManager
+    lateinit var notificationEnabledManager: NotificationEnabledManager
 
-  @Before
-  fun setup() {
-    val module = SettingModule()
-    settingDataManager = spy(module.provideSettingDataManager(module.provideSettingPreferences(RuntimeEnvironment.application)))
-    notificationEnabledManager = NotificationEnabledManager(settingDataManager)
-  }
+    @Before
+    fun setup() {
+        val module = SettingModule()
+        settingDataManager = spy(module.provideSettingDataManager(module.provideSettingPreferences(RuntimeEnvironment.application)))
+        notificationEnabledManager = NotificationEnabledManager(settingDataManager)
+    }
 
-  @Test
-  fun getAndSet() {
-    notificationEnabledManager.get().test()
-        .apply {
-          notificationEnabledManager.set(true)
+    @Test
+    fun getAndSet() {
+        notificationEnabledManager.get().test()
+            .apply {
+                notificationEnabledManager.set(true)
 
-          verify(settingDataManager).notificationEnabled()
-          verify(settingDataManager).notificationEnabled(true)
-          verifyNoMoreInteractions(settingDataManager)
+                verify(settingDataManager).notificationEnabled()
+                verify(settingDataManager).notificationEnabled(true)
+                verifyNoMoreInteractions(settingDataManager)
 
-          assertValues(false, true)
-          assertNoErrors()
-          assertNotComplete()
-        }
-  }
+                assertValues(false, true)
+                assertNoErrors()
+                assertNotComplete()
+            }
+    }
 }

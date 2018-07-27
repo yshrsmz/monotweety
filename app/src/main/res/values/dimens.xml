@@ -1,21 +1,21 @@
 <resources>
-  <!-- Default screen margins, per the Android Design guidelines. -->
-  <dimen name="activity_horizontal_margin">16dp</dimen>
-  <dimen name="activity_vertical_margin">16dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
 
-  <dimen name="match_parent">-1px</dimen>
-  <dimen name="wrap_content">-3px</dimen>
+    <dimen name="match_parent">-1px</dimen>
+    <dimen name="wrap_content">-3px</dimen>
 
-  <dimen name="tile_height_1line">48dp</dimen>
-  <dimen name="tile_height_2line">72dp</dimen>
-  <dimen name="tile_height_3line">88dp</dimen>
-  <dimen name="tile_vertical_padding">16dp</dimen>
-  <dimen name="tile_horizontal_padding">16dp</dimen>
-  <dimen name="tile_padding_bottom_single">20dp</dimen>
+    <dimen name="tile_height_1line">48dp</dimen>
+    <dimen name="tile_height_2line">72dp</dimen>
+    <dimen name="tile_height_3line">88dp</dimen>
+    <dimen name="tile_vertical_padding">16dp</dimen>
+    <dimen name="tile_horizontal_padding">16dp</dimen>
+    <dimen name="tile_padding_bottom_single">20dp</dimen>
 
-  <dimen name="thumb_size">40dp</dimen>
+    <dimen name="thumb_size">40dp</dimen>
 
-  <dimen name="list_vertical_padding">8dp</dimen>
+    <dimen name="list_vertical_padding">8dp</dimen>
 
-  <dimen name="compose_dialog_width">@dimen/match_parent</dimen>
+    <dimen name="compose_dialog_width">@dimen/match_parent</dimen>
 </resources>

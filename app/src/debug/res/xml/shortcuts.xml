@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android"
-           xmlns:tools="http://schemas.android.com/tools">
-  <shortcut
-      android:enabled="true"
-      android:icon="@drawable/ic_shortcut_editor"
-      android:shortcutDisabledMessage="@string/label_shortcut_editor_disabled"
-      android:shortcutId="newtweet"
-      android:shortcutLongLabel="@string/label_shortcut_editor_longlabel"
-      android:shortcutShortLabel="@string/label_shortcut_editor_shortlabel"
-      tools:targetApi="25">
-    <intent
-        android:action="android.intent.action.VIEW"
-        android:targetClass="net.yslibrary.monotweety.activity.shortcut.ShortcutActivity"
-        android:targetPackage="net.yslibrary.monotweety.debug"/>
-    <categories android:name="android.shortcut.conversation"/>
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_editor"
+        android:shortcutDisabledMessage="@string/label_shortcut_editor_disabled"
+        android:shortcutId="newtweet"
+        android:shortcutLongLabel="@string/label_shortcut_editor_longlabel"
+        android:shortcutShortLabel="@string/label_shortcut_editor_shortlabel"
+        tools:targetApi="25"
+        >
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="net.yslibrary.monotweety.activity.shortcut.ShortcutActivity"
+            android:targetPackage="net.yslibrary.monotweety.debug"
+            />
+        <categories android:name="android.shortcut.conversation" />
 
-  </shortcut>
+    </shortcut>
 </shortcuts>

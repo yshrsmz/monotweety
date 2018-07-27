@@ -10,5 +10,5 @@ import net.yslibrary.monotweety.base.di.ServiceScope
     modules = arrayOf(NotificationServiceModule::class)
 )
 interface NotificationComponent {
-  fun inject(service: NotificationService)
+    fun inject(service: NotificationService)
 }

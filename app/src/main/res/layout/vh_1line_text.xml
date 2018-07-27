@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             style="@style/AppTheme.Setting.ListItem">
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/AppTheme.Setting.ListItem"
+    >
 
-  <TextView
-      android:id="@+id/title"
-      style="@style/AppTheme.Setting.OneLineTitle"
-      tools:text="License"/>
+    <TextView
+        android:id="@+id/title"
+        style="@style/AppTheme.Setting.OneLineTitle"
+        tools:text="License"
+        />
 
 </FrameLayout>

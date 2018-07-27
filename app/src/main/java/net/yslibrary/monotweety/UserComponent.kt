@@ -19,33 +19,33 @@ import net.yslibrary.monotweety.user.domain.GetUser
 )
 interface UserComponent : AppModule.Provider {
 
-  fun notificationEnabledManager(): NotificationEnabledManager
+    fun notificationEnabledManager(): NotificationEnabledManager
 
-  fun keepOpenManager(): KeepOpenManager
+    fun keepOpenManager(): KeepOpenManager
 
-  fun footerStateManager(): FooterStateManager
+    fun footerStateManager(): FooterStateManager
 
-  fun checkStatusLength(): CheckStatusLength
+    fun checkStatusLength(): CheckStatusLength
 
-  fun updateStatus(): UpdateStatus
+    fun updateStatus(): UpdateStatus
 
-  fun getPreviousStatus(): GetPreviousStatus
+    fun getPreviousStatus(): GetPreviousStatus
 
-  fun clearPreviousStatus(): ClearPreviousStatus
+    fun clearPreviousStatus(): ClearPreviousStatus
 
-  fun getUser(): GetUser
+    fun getUser(): GetUser
 
-  fun doLogout(): DoLogout
+    fun doLogout(): DoLogout
 
-  fun getLicenses(): GetLicenses
+    fun getLicenses(): GetLicenses
 
-  fun getInstalledSupportedApps(): GetInstalledSupportedApps
+    fun getInstalledSupportedApps(): GetInstalledSupportedApps
 
-  fun selectedTimelineAppInfoManager(): SelectedTimelineAppInfoManager
+    fun selectedTimelineAppInfoManager(): SelectedTimelineAppInfoManager
 
-  fun analytics(): Analytics
+    fun analytics(): Analytics
 
-  interface ComponentProvider {
-    fun userComponent(): UserComponent
-  }
+    interface ComponentProvider {
+        fun userComponent(): UserComponent
+    }
 }

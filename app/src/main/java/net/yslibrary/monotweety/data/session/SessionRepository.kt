@@ -5,5 +5,5 @@ import com.twitter.sdk.android.core.TwitterSession
 import io.reactivex.Single
 
 interface SessionRepository {
-  fun getActiveSession(): Single<Optional<TwitterSession>>
+    fun getActiveSession(): Single<Optional<TwitterSession>>
 }

@@ -14,30 +14,30 @@ import org.robolectric.RuntimeEnvironment
 @RunWith(ConfiguredRobolectricTestRunner::class)
 class KeepOpenManagerTest {
 
-  lateinit var settingDataManager: SettingDataManager
+    lateinit var settingDataManager: SettingDataManager
 
-  lateinit var keepOpenManager: KeepOpenManager
+    lateinit var keepOpenManager: KeepOpenManager
 
-  @Before
-  fun setup() {
-    val module = SettingModule()
-    settingDataManager = spy(module.provideSettingDataManager(module.provideSettingPreferences(RuntimeEnvironment.application)))
-    keepOpenManager = KeepOpenManager(settingDataManager)
-  }
+    @Before
+    fun setup() {
+        val module = SettingModule()
+        settingDataManager = spy(module.provideSettingDataManager(module.provideSettingPreferences(RuntimeEnvironment.application)))
+        keepOpenManager = KeepOpenManager(settingDataManager)
+    }
 
-  @Test
-  fun getAndSet() {
-    keepOpenManager.get().test()
-        .apply {
-          keepOpenManager.set(true)
+    @Test
+    fun getAndSet() {
+        keepOpenManager.get().test()
+            .apply {
+                keepOpenManager.set(true)
 
-          verify(settingDataManager).keepOpen()
-          verify(settingDataManager).keepOpen(true)
-          verifyNoMoreInteractions(settingDataManager)
+                verify(settingDataManager).keepOpen()
+                verify(settingDataManager).keepOpen(true)
+                verifyNoMoreInteractions(settingDataManager)
 
-          assertValues(false, true)
-          assertNoErrors()
-          assertNotComplete()
-        }
-  }
+                assertValues(false, true)
+                assertNoErrors()
+                assertNotComplete()
+            }
+    }
 }

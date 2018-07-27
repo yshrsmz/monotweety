@@ -8,9 +8,9 @@ import net.yslibrary.monotweety.login.domain.IsLoggedIn
 @Module
 class SplashViewModule {
 
-  @ControllerScope
-  @Provides
-  fun provideSplashViewModel(isLoggedIn: IsLoggedIn): SplashViewModel {
-    return SplashViewModel(isLoggedIn)
-  }
+    @ControllerScope
+    @Provides
+    fun provideSplashViewModel(isLoggedIn: IsLoggedIn): SplashViewModel {
+        return SplashViewModel(isLoggedIn)
+    }
 }

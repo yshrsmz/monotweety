@@ -15,37 +15,37 @@ import javax.inject.Named
 class SettingViewModule(private val activityBus: EventBus,
                         private val navigator: Navigator) {
 
-  @ControllerScope
-  @Provides
-  @Named(Names.FOR_ACTIVITY)
-  fun provideActivityBus(): EventBus = activityBus
-
-  @ControllerScope
-  @Provides
-  fun provideNavigator(): Navigator = navigator
-
-  @ControllerScope
-  @Provides
-  fun provideSettingViewModel(config: Config,
-                              notificationEnabledManager: NotificationEnabledManager,
-                              getUser: GetUser,
-                              keepOpenManager: KeepOpenManager,
-                              footerStateManager: FooterStateManager,
-                              getInstalledSupportedApps: GetInstalledSupportedApps,
-                              selectedTimelineAppInfoManager: SelectedTimelineAppInfoManager): SettingViewModel {
-    return SettingViewModel(config,
-        notificationEnabledManager,
-        getUser,
-        keepOpenManager,
-        footerStateManager,
-        getInstalledSupportedApps,
-        selectedTimelineAppInfoManager)
-  }
-
-  interface DependencyProvider {
+    @ControllerScope
+    @Provides
     @Named(Names.FOR_ACTIVITY)
-    fun activityBus(): EventBus
+    fun provideActivityBus(): EventBus = activityBus
 
-    fun navigator(): Navigator
-  }
+    @ControllerScope
+    @Provides
+    fun provideNavigator(): Navigator = navigator
+
+    @ControllerScope
+    @Provides
+    fun provideSettingViewModel(config: Config,
+                                notificationEnabledManager: NotificationEnabledManager,
+                                getUser: GetUser,
+                                keepOpenManager: KeepOpenManager,
+                                footerStateManager: FooterStateManager,
+                                getInstalledSupportedApps: GetInstalledSupportedApps,
+                                selectedTimelineAppInfoManager: SelectedTimelineAppInfoManager): SettingViewModel {
+        return SettingViewModel(config,
+            notificationEnabledManager,
+            getUser,
+            keepOpenManager,
+            footerStateManager,
+            getInstalledSupportedApps,
+            selectedTimelineAppInfoManager)
+    }
+
+    interface DependencyProvider {
+        @Named(Names.FOR_ACTIVITY)
+        fun activityBus(): EventBus
+
+        fun navigator(): Navigator
+    }
 }

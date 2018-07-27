@@ -30,163 +30,163 @@ class ComposeStatusViewModel(status: String,
                              private val keepOpenManager: KeepOpenManager,
                              private val footerStateManager: FooterStateManager) {
 
-  private val isSendableStatusSubject = BehaviorSubject.createDefault(false)
+    private val isSendableStatusSubject = BehaviorSubject.createDefault(false)
 
-  private val statusInfoSubject = BehaviorSubject.create<StatusInfo>()
+    private val statusInfoSubject = BehaviorSubject.create<StatusInfo>()
 
-  private val statusUpdatedSubject = PublishSubject.create<Unit>()
+    private val statusUpdatedSubject = PublishSubject.create<Unit>()
 
-  private val keepOpenSubject = BehaviorSubject.create<Boolean>()
+    private val keepOpenSubject = BehaviorSubject.create<Boolean>()
 
-  private val tweetAsThreadSubject = BehaviorSubject.createDefault(false)
+    private val tweetAsThreadSubject = BehaviorSubject.createDefault(false)
 
-  private val progressEventsSubject = BehaviorSubject.createDefault(ProgressEvent.FINISHED)
+    private val progressEventsSubject = BehaviorSubject.createDefault(ProgressEvent.FINISHED)
 
-  private val messagesSubject = PublishSubject.create<String>()
+    private val messagesSubject = PublishSubject.create<String>()
 
-  private val allowCloseViewSubject = BehaviorSubject.createDefault(false)
+    private val allowCloseViewSubject = BehaviorSubject.createDefault(false)
 
-  private val previousStatusSubject = BehaviorSubject.createDefault<Optional<Tweet>>(None)
+    private val previousStatusSubject = BehaviorSubject.createDefault<Optional<Tweet>>(None)
 
-  val isSendableStatus: Observable<Boolean>
-    get() = isSendableStatusSubject
+    val isSendableStatus: Observable<Boolean>
+        get() = isSendableStatusSubject
 
-  val statusInfo: Observable<StatusInfo>
-    get() = statusInfoSubject
+    val statusInfo: Observable<StatusInfo>
+        get() = statusInfoSubject
 
-  val statusUpdated: Observable<Unit>
-    get() = statusUpdatedSubject
+    val statusUpdated: Observable<Unit>
+        get() = statusUpdatedSubject
 
-  val keepOpen: Observable<Boolean>
-    get() = keepOpenSubject
+    val keepOpen: Observable<Boolean>
+        get() = keepOpenSubject
 
-  val tweetAsThread: Observable<Boolean>
-    get() = tweetAsThreadSubject
+    val tweetAsThread: Observable<Boolean>
+        get() = tweetAsThreadSubject
 
-  val progressEvents: Observable<ProgressEvent>
-    get() = progressEventsSubject
+    val progressEvents: Observable<ProgressEvent>
+        get() = progressEventsSubject
 
-  val messages: Observable<String>
-    get() = messagesSubject
+    val messages: Observable<String>
+        get() = messagesSubject
 
-  val allowCloseView: Observable<Boolean>
-    get() = allowCloseViewSubject
+    val allowCloseView: Observable<Boolean>
+        get() = allowCloseViewSubject
 
-  val statusMaxLength: Single<Int>
-    get() = Single.just(config.statusMaxLength)
+    val statusMaxLength: Single<Int>
+        get() = Single.just(config.statusMaxLength)
 
-  val previousStatus: Observable<Optional<Tweet>>
-    get() = previousStatusSubject
+    val previousStatus: Observable<Optional<Tweet>>
+        get() = previousStatusSubject
 
-  val closeViewRequests: Observable<Unit>
-    get() {
-      return statusUpdatedSubject
-          .switchMapSingle { keepOpenSubject.firstOrError() }
-          .filter { !it }
-          .map { Unit }
-    }
-
-  val footerState: Observable<FooterStateManager.State>
-    get() = footerStateManager.get()
-
-  val canClose: Boolean
-    get() {
-      val isSending = progressEventsSubject.value == ProgressEvent.IN_PROGRESS
-      val hasContent = statusInfoSubject.value.length > 0
-      val allowCloseView = allowCloseViewSubject.value
-
-      return !isSending && (!hasContent || allowCloseView)
-    }
-
-  init {
-    getPreviousStatus.execute()
-        .filter { it.toNullable() != null }
-        .subscribe {
-          Timber.d("previous status: ${it.toNullable()?.text}")
-          previousStatusSubject.onNext(it)
+    val closeViewRequests: Observable<Unit>
+        get() {
+            return statusUpdatedSubject
+                .switchMapSingle { keepOpenSubject.firstOrError() }
+                .filter { !it }
+                .map { Unit }
         }
 
-    keepOpenManager.get().firstElement()
-        .subscribe { keepOpenSubject.onNext(it) }
+    val footerState: Observable<FooterStateManager.State>
+        get() = footerStateManager.get()
 
-    footerStateManager.get().firstElement()
-        .subscribe {
-          val statusText = if (it.enabled)
-            "$status ${it.text}"
-          else
-            status
-          onStatusChanged(statusText)
+    val canClose: Boolean
+        get() {
+            val isSending = progressEventsSubject.value == ProgressEvent.IN_PROGRESS
+            val hasContent = statusInfoSubject.value.length > 0
+            val allowCloseView = allowCloseViewSubject.value
+
+            return !isSending && (!hasContent || allowCloseView)
         }
-  }
 
-  fun onStatusChanged(status: String) {
-    checkStatusLength.execute(status)
-        .subscribeOn(Schedulers.io())
-        .subscribeBy {
-          statusInfoSubject.onNext(StatusInfo(status, it.valid, it.length, it.maxLength))
+    init {
+        getPreviousStatus.execute()
+            .filter { it.toNullable() != null }
+            .subscribe {
+                Timber.d("previous status: ${it.toNullable()?.text}")
+                previousStatusSubject.onNext(it)
+            }
 
-          isSendableStatusSubject.onNext(it.valid)
-        }
-  }
+        keepOpenManager.get().firstElement()
+            .subscribe { keepOpenSubject.onNext(it) }
 
-  fun onSendStatus() {
-    Singles.zip(
-        isSendableStatus.firstOrError(),
-        tweetAsThread.firstOrError(),
-        getPreviousStatus.execute().firstOrError(),
-        statusInfo.firstOrError()
-    ) { _, asThread, previousTweet, (status) ->
-      Pair(if (asThread) previousTweet.toNullable() else null, status)
+        footerStateManager.get().firstElement()
+            .subscribe {
+                val statusText = if (it.enabled)
+                    "$status ${it.text}"
+                else
+                    status
+                onStatusChanged(statusText)
+            }
     }
-        .doOnSuccess { progressEventsSubject.onNext(ProgressEvent.IN_PROGRESS) }
-        .flatMapCompletable { updateStatus.execute(it.second, it.first?.id) }
-        .andThen(tweetAsThread.firstOrError()
-            .flatMapCompletable { asThread ->
-              if (asThread) {
-                Completable.complete()
-              } else {
-                clearPreviousStatus.execute()
-              }
+
+    fun onStatusChanged(status: String) {
+        checkStatusLength.execute(status)
+            .subscribeOn(Schedulers.io())
+            .subscribeBy {
+                statusInfoSubject.onNext(StatusInfo(status, it.valid, it.length, it.maxLength))
+
+                isSendableStatusSubject.onNext(it.valid)
+            }
+    }
+
+    fun onSendStatus() {
+        Singles.zip(
+            isSendableStatus.firstOrError(),
+            tweetAsThread.firstOrError(),
+            getPreviousStatus.execute().firstOrError(),
+            statusInfo.firstOrError()
+        ) { _, asThread, previousTweet, (status) ->
+            Pair(if (asThread) previousTweet.toNullable() else null, status)
+        }
+            .doOnSuccess { progressEventsSubject.onNext(ProgressEvent.IN_PROGRESS) }
+            .flatMapCompletable { updateStatus.execute(it.second, it.first?.id) }
+            .andThen(tweetAsThread.firstOrError()
+                .flatMapCompletable { asThread ->
+                    if (asThread) {
+                        Completable.complete()
+                    } else {
+                        clearPreviousStatus.execute()
+                    }
+                })
+            .doOnComplete {
+                Timber.d("status updated - complete")
+                statusUpdatedSubject.onNext(Unit)
+            }
+            .doOnTerminate { progressEventsSubject.onNext(ProgressEvent.FINISHED) }
+            .subscribeBy(onError = { t ->
+                Timber.e(t, t.message)
+                if (t is TwitterApiException && t.errorMessage != null) {
+                    messagesSubject.onNext(t.errorMessage)
+                } else {
+                    messagesSubject.onNext("Something wrong happened")
+                }
             })
-        .doOnComplete {
-          Timber.d("status updated - complete")
-          statusUpdatedSubject.onNext(Unit)
-        }
-        .doOnTerminate { progressEventsSubject.onNext(ProgressEvent.FINISHED) }
-        .subscribeBy(onError = { t ->
-          Timber.e(t, t.message)
-          if (t is TwitterApiException && t.errorMessage != null) {
-            messagesSubject.onNext(t.errorMessage)
-          } else {
-            messagesSubject.onNext("Something wrong happened")
-          }
-        })
-  }
-
-  fun onKeepOpenChanged(keep: Boolean) {
-    keepOpenSubject.onNext(keep)
-  }
-
-  fun onEnableThreadChanged(enable: Boolean) {
-    tweetAsThreadSubject.onNext(enable)
-    if (enable) {
-      keepOpenSubject.onNext(true)
     }
-  }
 
-  fun onConfirmCloseView(allowCloseView: Boolean) {
-    allowCloseViewSubject.onNext(allowCloseView)
-  }
+    fun onKeepOpenChanged(keep: Boolean) {
+        keepOpenSubject.onNext(keep)
+    }
 
-  fun onDestroy() {
-    clearPreviousStatus.execute()
-        .subscribe({ Timber.d("previous status cleared") })
-  }
+    fun onEnableThreadChanged(enable: Boolean) {
+        tweetAsThreadSubject.onNext(enable)
+        if (enable) {
+            keepOpenSubject.onNext(true)
+        }
+    }
 
-  data class StatusInfo(val status: String, val valid: Boolean, val length: Int, val maxLength: Int)
+    fun onConfirmCloseView(allowCloseView: Boolean) {
+        allowCloseViewSubject.onNext(allowCloseView)
+    }
 
-  enum class ProgressEvent {
-    IN_PROGRESS,
-    FINISHED
-  }
+    fun onDestroy() {
+        clearPreviousStatus.execute()
+            .subscribe({ Timber.d("previous status cleared") })
+    }
+
+    data class StatusInfo(val status: String, val valid: Boolean, val length: Int, val maxLength: Int)
+
+    enum class ProgressEvent {
+        IN_PROGRESS,
+        FINISHED
+    }
 }

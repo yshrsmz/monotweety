@@ -6,7 +6,7 @@ import io.reactivex.Flowable
 import net.yslibrary.monotweety.data.user.User
 
 interface UserLocalRepository {
-  fun getById(id: Long): Flowable<Optional<User>>
-  fun set(entity: User): Completable
-  fun delete(id: Long): Completable
+    fun getById(id: Long): Flowable<Optional<User>>
+    fun set(entity: User): Completable
+    fun delete(id: Long): Completable
 }

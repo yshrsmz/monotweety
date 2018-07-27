@@ -10,22 +10,22 @@ import net.yslibrary.monotweety.R
 
 class CreateShortcutActivity : Activity() {
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    val shortcut = ShortcutActivity.callingIntent(applicationContext)
-    shortcut.action = Intent.ACTION_EDIT
+        val shortcut = ShortcutActivity.callingIntent(applicationContext)
+        shortcut.action = Intent.ACTION_EDIT
 
-    val shortcutInfo = ShortcutInfoCompat.Builder(applicationContext, "open_editor")
-        .setIcon(IconCompat.createWithResource(applicationContext, R.drawable.ic_app))
-        .setLongLabel(getString(R.string.title_shortcut_editor))
-        .setShortLabel(getString(R.string.title_shortcut_editor))
-        .setIntent(shortcut)
-        .build()
+        val shortcutInfo = ShortcutInfoCompat.Builder(applicationContext, "open_editor")
+            .setIcon(IconCompat.createWithResource(applicationContext, R.drawable.ic_app))
+            .setLongLabel(getString(R.string.title_shortcut_editor))
+            .setShortLabel(getString(R.string.title_shortcut_editor))
+            .setIntent(shortcut)
+            .build()
 
-    val resultIntent = ShortcutManagerCompat.createShortcutResultIntent(applicationContext, shortcutInfo)
+        val resultIntent = ShortcutManagerCompat.createShortcutResultIntent(applicationContext, shortcutInfo)
 
-    setResult(RESULT_OK, resultIntent)
-    finish()
-  }
+        setResult(RESULT_OK, resultIntent)
+        finish()
+    }
 }

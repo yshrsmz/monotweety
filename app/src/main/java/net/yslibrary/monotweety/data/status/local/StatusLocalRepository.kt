@@ -7,7 +7,7 @@ import io.reactivex.Observable
 import net.yslibrary.monotweety.data.status.Tweet
 
 interface StatusLocalRepository {
-  fun update(tweet: Tweet): Completable
-  fun clear(): Completable
-  fun getPrevious(): Observable<Optional<Tweet>>
+    fun update(tweet: Tweet): Completable
+    fun clear(): Completable
+    fun getPrevious(): Observable<Optional<Tweet>>
 }

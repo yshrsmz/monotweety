@@ -11,12 +11,12 @@ import javax.inject.Inject
 @AppScope
 class GetInstalledSupportedApps @Inject constructor(private val appInfoManager: AppInfoManager) {
 
-  private val twitterApps = TwitterApp.packages()
+    private val twitterApps = TwitterApp.packages()
 
-  fun execute(): Single<List<AppInfo>> {
-    return appInfoManager.installedApps()
-        .flatMapObservable { Observable.fromIterable(it) }
-        .filter { twitterApps.contains(it.packageName) }
-        .toList()
-  }
+    fun execute(): Single<List<AppInfo>> {
+        return appInfoManager.installedApps()
+            .flatMapObservable { Observable.fromIterable(it) }
+            .filter { twitterApps.contains(it.packageName) }
+            .toList()
+    }
 }

@@ -11,14 +11,14 @@ import javax.inject.Inject
  */
 @UserScope
 class TestStatusRemoteRepositoryImpl @Inject constructor() : StatusRemoteRepository {
-  override fun update(status: String, inReplyToStatusId: Long?): Single<Tweet> {
-    val tweet = Tweet(
-        id = 0,
-        inReplyToStatusId = inReplyToStatusId ?: 0,
-        text = status,
-        createdAt = System.currentTimeMillis().toString()
-    )
+    override fun update(status: String, inReplyToStatusId: Long?): Single<Tweet> {
+        val tweet = Tweet(
+            id = 0,
+            inReplyToStatusId = inReplyToStatusId ?: 0,
+            text = status,
+            createdAt = System.currentTimeMillis().toString()
+        )
 
-    return Single.just(tweet)
-  }
+        return Single.just(tweet)
+    }
 }

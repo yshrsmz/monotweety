@@ -12,27 +12,27 @@ import com.twitter.sdk.android.core.models.User as TwitterUser
 
 @UserScope
 class UserRemoteRepositoryImpl @Inject constructor(private val accountService: AccountService) : UserRemoteRepository {
-  override fun get(): Single<User> {
-    return Single.create<TwitterUser>({ emitter ->
-      val call = accountService.verifyCredentials(false, true, false)
-      call.enqueue(object : Callback<TwitterUser>() {
-        override fun failure(exception: TwitterException) {
-          emitter.onError(exception)
-        }
+    override fun get(): Single<User> {
+        return Single.create<TwitterUser>({ emitter ->
+            val call = accountService.verifyCredentials(false, true, false)
+            call.enqueue(object : Callback<TwitterUser>() {
+                override fun failure(exception: TwitterException) {
+                    emitter.onError(exception)
+                }
 
-        override fun success(result: Result<TwitterUser>) {
-          emitter.onSuccess(result.data)
+                override fun success(result: Result<TwitterUser>) {
+                    emitter.onSuccess(result.data)
+                }
+            })
+            emitter.setCancellable { call.cancel() }
+        }).map { user ->
+            User(
+                id = user.id,
+                name = user.name,
+                screenName = user.screenName,
+                profileImageUrl = user.profileImageUrl,
+                _updatedAt = -1 // updated in UserRepository
+            )
         }
-      })
-      emitter.setCancellable { call.cancel() }
-    }).map { user ->
-      User(
-          id = user.id,
-          name = user.name,
-          screenName = user.screenName,
-          profileImageUrl = user.profileImageUrl,
-          _updatedAt = -1 // updated in UserRepository
-      )
     }
-  }
 }

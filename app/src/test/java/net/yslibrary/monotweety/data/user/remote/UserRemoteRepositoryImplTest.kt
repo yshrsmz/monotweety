@@ -18,44 +18,44 @@ import com.twitter.sdk.android.core.models.User as TwitterUser
 
 class UserRemoteRepositoryImplTest {
 
-  lateinit var repository: UserRemoteRepositoryImpl
-  lateinit var mockAccountService: AccountService
-  lateinit var mockCall: Call<TwitterUser>
-  lateinit var callbackCaptor: ArgumentCaptor<Callback<TwitterUser>>
+    lateinit var repository: UserRemoteRepositoryImpl
+    lateinit var mockAccountService: AccountService
+    lateinit var mockCall: Call<TwitterUser>
+    lateinit var callbackCaptor: ArgumentCaptor<Callback<TwitterUser>>
 
-  val gson = Gson()
+    val gson = Gson()
 
 
-  @Suppress("UNCHECKED_CAST")
-  @Before
-  fun setup() {
-    mockAccountService = mock<AccountService>()
-    mockCall = mock<Call<TwitterUser>>()
-    callbackCaptor = ArgumentCaptor.forClass(Callback::class.java) as ArgumentCaptor<Callback<TwitterUser>>
+    @Suppress("UNCHECKED_CAST")
+    @Before
+    fun setup() {
+        mockAccountService = mock<AccountService>()
+        mockCall = mock<Call<TwitterUser>>()
+        callbackCaptor = ArgumentCaptor.forClass(Callback::class.java) as ArgumentCaptor<Callback<TwitterUser>>
 
-    repository = UserRemoteRepositoryImpl(mockAccountService)
-  }
+        repository = UserRemoteRepositoryImpl(mockAccountService)
+    }
 
-  @Test
-  fun get() {
-    val user = gson.fromJson(readJsonFromAssets("user.json"), TwitterUser::class.java)
-    val result = User(
-        id = user.id,
-        name = user.name,
-        screenName = user.screenName,
-        profileImageUrl = user.profileImageUrl,
-        _updatedAt = -1)
+    @Test
+    fun get() {
+        val user = gson.fromJson(readJsonFromAssets("user.json"), TwitterUser::class.java)
+        val result = User(
+            id = user.id,
+            name = user.name,
+            screenName = user.screenName,
+            profileImageUrl = user.profileImageUrl,
+            _updatedAt = -1)
 
-    whenever(mockAccountService.verifyCredentials(any(), any(), any()))
-        .thenReturn(mockCall)
+        whenever(mockAccountService.verifyCredentials(any(), any(), any()))
+            .thenReturn(mockCall)
 
-    repository.get().test()
-        .apply {
-          verify(mockCall).enqueue(callbackCaptor.capture())
-          callbackCaptor.value.success(Result(user, null))
+        repository.get().test()
+            .apply {
+                verify(mockCall).enqueue(callbackCaptor.capture())
+                callbackCaptor.value.success(Result(user, null))
 
-          assertValue(result)
-          assertComplete()
-        }
-  }
+                assertValue(result)
+                assertComplete()
+            }
+    }
 }

@@ -10,7 +10,7 @@ import javax.inject.Inject
 @UserScope
 class GetPreviousStatus @Inject constructor(private val statusRepository: StatusRepository) {
 
-  fun execute(): Observable<Optional<Tweet>> {
-    return statusRepository.previousStatus()
-  }
+    fun execute(): Observable<Optional<Tweet>> {
+        return statusRepository.previousStatus()
+    }
 }

@@ -11,19 +11,19 @@ import net.yslibrary.monotweety.data.user.remote.UserRemoteRepositoryImpl
 @Module
 abstract class UserModule {
 
-  @UserScope
-  @Binds
-  abstract fun bindUserRemoteRepository(repository: UserRemoteRepositoryImpl): UserRemoteRepository
+    @UserScope
+    @Binds
+    abstract fun bindUserRemoteRepository(repository: UserRemoteRepositoryImpl): UserRemoteRepository
 
-  @UserScope
-  @Binds
-  abstract fun bindUserLocalRepository(repository: UserLocalRepositoryImpl): UserLocalRepository
+    @UserScope
+    @Binds
+    abstract fun bindUserLocalRepository(repository: UserLocalRepositoryImpl): UserLocalRepository
 
-  @UserScope
-  @Binds
-  abstract fun bindUserRepository(repository: UserRepositoryImpl): UserRepository
+    @UserScope
+    @Binds
+    abstract fun bindUserRepository(repository: UserRepositoryImpl): UserRepository
 
-  interface Provider {
-    fun userRepository(): UserRepository
-  }
+    interface Provider {
+        fun userRepository(): UserRepository
+    }
 }

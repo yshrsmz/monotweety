@@ -18,35 +18,35 @@ import net.yslibrary.monotweety.base.closeNotificationDrawer
 @TargetApi(Build.VERSION_CODES.N)
 class EditorTileService : TileService() {
 
-  companion object {
-    fun callingIntent(context: Context): Intent {
-      return Intent(context, EditorTileService::class.java)
-    }
-  }
-
-  override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-    return Service.START_STICKY
-  }
-
-  override fun onClick() {
-    super.onClick()
-    App.appComponent(this).isLoggedIn().execute()
-        .subscribeBy {
-          closeNotificationDrawer()
-          if (it) {
-            startActivity(ComposeActivity.callingIntent(this))
-          } else {
-            startActivity(MainActivity.callingIntent(this))
-            Toast.makeText(this, R.string.error_not_authorized, Toast.LENGTH_SHORT).show()
-          }
+    companion object {
+        fun callingIntent(context: Context): Intent {
+            return Intent(context, EditorTileService::class.java)
         }
-  }
-
-  override fun onStartListening() {
-    super.onStartListening()
-    qsTile?.apply {
-      state = Tile.STATE_ACTIVE
-      updateTile()
     }
-  }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        return Service.START_STICKY
+    }
+
+    override fun onClick() {
+        super.onClick()
+        App.appComponent(this).isLoggedIn().execute()
+            .subscribeBy {
+                closeNotificationDrawer()
+                if (it) {
+                    startActivity(ComposeActivity.callingIntent(this))
+                } else {
+                    startActivity(MainActivity.callingIntent(this))
+                    Toast.makeText(this, R.string.error_not_authorized, Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
+    override fun onStartListening() {
+        super.onStartListening()
+        qsTile?.apply {
+            state = Tile.STATE_ACTIVE
+            updateTile()
+        }
+    }
 }

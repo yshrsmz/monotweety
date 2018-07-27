@@ -13,19 +13,19 @@ import javax.inject.Inject
 class StatusRepositoryImpl @Inject constructor(private val remoteRepository: StatusRemoteRepository,
                                                private val localRepository: StatusLocalRepository) : StatusRepository {
 
-  override fun updateStatus(status: String, inReplyToStatusId: Long?): Completable {
-    return remoteRepository.update(status, inReplyToStatusId)
-        .doOnSuccess {
-          Timber.d("status updated: ${it.text}")
-        }
-        .flatMapCompletable { localRepository.update(it) }
-  }
+    override fun updateStatus(status: String, inReplyToStatusId: Long?): Completable {
+        return remoteRepository.update(status, inReplyToStatusId)
+            .doOnSuccess {
+                Timber.d("status updated: ${it.text}")
+            }
+            .flatMapCompletable { localRepository.update(it) }
+    }
 
-  override fun previousStatus(): Observable<Optional<Tweet>> {
-    return localRepository.getPrevious()
-  }
+    override fun previousStatus(): Observable<Optional<Tweet>> {
+        return localRepository.getPrevious()
+    }
 
-  override fun clear(): Completable {
-    return localRepository.clear()
-  }
+    override fun clear(): Completable {
+        return localRepository.clear()
+    }
 }

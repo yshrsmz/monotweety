@@ -1,96 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
-  <changelogversion
-      changeDate="Feb, 25th, 2018"
-      versionName="1.6.1">
-    <changelogtext>Stability improvement</changelogtext>
-  </changelogversion>
-  <changelogversion
-      changeDate="Dec, 19th, 2017"
-      versionName="1.6.0">
-    <changelogtext>Merry Christmas and a Happy New Year to all of you!</changelogtext>
-    <changelogtext>Support 280 characters</changelogtext>
-  </changelogversion>
-  <changelogversion
-      changeDate="Sep 14th, 2017"
-      versionName="1.5.3">
-    <changelogtext>Android Oreo</changelogtext>
-    <changelogtext>Stability improvement</changelogtext>
-  </changelogversion>
-  <changelogversion
-      changeDate="Jul 6th, 2017"
-      versionName="1.5.2">
-    <changelogtext>Stability improvement</changelogtext>
-  </changelogversion>
-  <changelogversion
-      changeDate="Feb 15th, 2017"
-      versionName="1.5.1">
-    <changelogtext>Happy Valentine's Day!</changelogtext>
-    <changelogtext>Stability improvement</changelogtext>
-  </changelogversion>
-  <changelogversion
-      changeDate="Jan 13th, 2017"
-      versionName="1.5.0">
-    <changelogtext>Happy New Year!</changelogtext>
-    <changelogtext>Hello to Android 4.4(KitKat) users!</changelogtext>
-    <changelogtext>Fix a crash in the Quick Tile</changelogtext>
-  </changelogversion>
-  <changelogversion
-      changeDate="Dec 17th, 2016"
-      versionName="1.4.2">
-    <changelogtext>Stability improvement</changelogtext>
-  </changelogversion>
-  <changelogversion
-      changeDate="Dec 3rd, 2016"
-      versionName="1.4.1">
-    <changelogtext>
-      Add App Shortcuts(supported launchers are Pixel Launcher, Action Launcher 3, Nova
-      Launcher, etc)
-    </changelogtext>
-    <changelogtext>
-      Fix status not retained after orientation change in Editor Dialog
-    </changelogtext>
-  </changelogversion>
-  <changelogversion
-      changeDate="Nov 20th, 2016"
-      versionName="1.3.0">
-    <changelogtext>Add shortcut to other Twitter apps on the notification. If your favorite app is
-      not on the list, please contact me via @yslibnet.
-    </changelogtext>
-    <changelogtext>
-      Add a tile for Quick Settings(only available on devices running Android 7.0 or later)
-    </changelogtext>
-  </changelogversion>
-  <changelogversion
-      changeDate="Nov 15th, 2016"
-      versionName="1.2.0">
-    <changelogtext>Add shortcut for the Editor dialog. Now you can assign open editor action to
-      gesture of launcher apps.
-    </changelogtext>
-  </changelogversion>
-  <changelogversion
-      changeDate="Nov 9th, 2016"
-      versionName="1.1.0">
-    <changelogtext>Add Footer. When tweeting from notification, footer will be automatically added
-      before sending
-    </changelogtext>
-    <changelogtext>Fix first tweet after enabling "tweet as a thread" mistakenly tweeted as a reply
-      to the previous tweet
-    </changelogtext>
-    <changelogtext>
-      Tweak previous status behavior in editor dialog. Now only visible when "tweet as a thread" is
-      enabled
-    </changelogtext>
-  </changelogversion>
-  <changelogversion
-      changeDate="Nov 5th, 2016"
-      versionName="1.0.1">
-    <changelogtext>Add "Share Monotweety"</changelogtext>
-    <changelogtext>Fix crash on login</changelogtext>
-  </changelogversion>
-  <changelogversion
-      changeDate="Nov 1st, 2016"
-      versionName="1.0.0">
-    <changelogtext>Initial Release!</changelogtext>
-  </changelogversion>
+    <changelogversion
+        changeDate="Feb, 25th, 2018"
+        versionName="1.6.1"
+        >
+        <changelogtext>Stability improvement</changelogtext>
+    </changelogversion>
+    <changelogversion
+        changeDate="Dec, 19th, 2017"
+        versionName="1.6.0"
+        >
+        <changelogtext>Merry Christmas and a Happy New Year to all of you!</changelogtext>
+        <changelogtext>Support 280 characters</changelogtext>
+    </changelogversion>
+    <changelogversion
+        changeDate="Sep 14th, 2017"
+        versionName="1.5.3"
+        >
+        <changelogtext>Android Oreo</changelogtext>
+        <changelogtext>Stability improvement</changelogtext>
+    </changelogversion>
+    <changelogversion
+        changeDate="Jul 6th, 2017"
+        versionName="1.5.2"
+        >
+        <changelogtext>Stability improvement</changelogtext>
+    </changelogversion>
+    <changelogversion
+        changeDate="Feb 15th, 2017"
+        versionName="1.5.1"
+        >
+        <changelogtext>Happy Valentine's Day!</changelogtext>
+        <changelogtext>Stability improvement</changelogtext>
+    </changelogversion>
+    <changelogversion
+        changeDate="Jan 13th, 2017"
+        versionName="1.5.0"
+        >
+        <changelogtext>Happy New Year!</changelogtext>
+        <changelogtext>Hello to Android 4.4(KitKat) users!</changelogtext>
+        <changelogtext>Fix a crash in the Quick Tile</changelogtext>
+    </changelogversion>
+    <changelogversion
+        changeDate="Dec 17th, 2016"
+        versionName="1.4.2"
+        >
+        <changelogtext>Stability improvement</changelogtext>
+    </changelogversion>
+    <changelogversion
+        changeDate="Dec 3rd, 2016"
+        versionName="1.4.1"
+        >
+        <changelogtext>
+            Add App Shortcuts(supported launchers are Pixel Launcher, Action Launcher 3, Nova
+            Launcher, etc)
+        </changelogtext>
+        <changelogtext>
+            Fix status not retained after orientation change in Editor Dialog
+        </changelogtext>
+    </changelogversion>
+    <changelogversion
+        changeDate="Nov 20th, 2016"
+        versionName="1.3.0"
+        >
+        <changelogtext>Add shortcut to other Twitter apps on the notification. If your favorite app
+            is
+            not on the list, please contact me via @yslibnet.
+        </changelogtext>
+        <changelogtext>
+            Add a tile for Quick Settings(only available on devices running Android 7.0 or later)
+        </changelogtext>
+    </changelogversion>
+    <changelogversion
+        changeDate="Nov 15th, 2016"
+        versionName="1.2.0"
+        >
+        <changelogtext>Add shortcut for the Editor dialog. Now you can assign open editor action to
+            gesture of launcher apps.
+        </changelogtext>
+    </changelogversion>
+    <changelogversion
+        changeDate="Nov 9th, 2016"
+        versionName="1.1.0"
+        >
+        <changelogtext>Add Footer. When tweeting from notification, footer will be automatically
+            added
+            before sending
+        </changelogtext>
+        <changelogtext>Fix first tweet after enabling "tweet as a thread" mistakenly tweeted as a
+            reply
+            to the previous tweet
+        </changelogtext>
+        <changelogtext>
+            Tweak previous status behavior in editor dialog. Now only visible when "tweet as a
+            thread" is
+            enabled
+        </changelogtext>
+    </changelogversion>
+    <changelogversion
+        changeDate="Nov 5th, 2016"
+        versionName="1.0.1"
+        >
+        <changelogtext>Add "Share Monotweety"</changelogtext>
+        <changelogtext>Fix crash on login</changelogtext>
+    </changelogversion>
+    <changelogversion
+        changeDate="Nov 1st, 2016"
+        versionName="1.0.0"
+        >
+        <changelogtext>Initial Release!</changelogtext>
+    </changelogversion>
 </changelog>

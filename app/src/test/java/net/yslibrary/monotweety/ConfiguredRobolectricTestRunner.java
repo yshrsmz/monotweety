@@ -15,22 +15,22 @@ import java.lang.reflect.Method;
  */
 public class ConfiguredRobolectricTestRunner extends RobolectricTestRunner {
 
-  private static final int[] SDK = new int[]{23};
+    private static final int[] SDK = new int[]{23};
 
-  public ConfiguredRobolectricTestRunner(Class<?> klass) throws InitializationError {
-    super(klass);
-  }
+    public ConfiguredRobolectricTestRunner(Class<?> klass) throws InitializationError {
+        super(klass);
+    }
 
-  @Override
-  public Config getConfig(Method method) {
-    Config c = super.getConfig(method);
+    @Override
+    public Config getConfig(Method method) {
+        Config c = super.getConfig(method);
 
-    int[] sdkLevel = c.sdk().length == 0 ? SDK : c.sdk();
-    Class<? extends Application> application = c.application() == Application.class ? TestApp.class : c.application();
+        int[] sdkLevel = c.sdk().length == 0 ? SDK : c.sdk();
+        Class<? extends Application> application = c.application() == Application.class ? TestApp.class : c.application();
 
-    return new Config.Builder(c)
-        .setSdk(sdkLevel)
-        .setApplication(application)
-        .build();
-  }
+        return new Config.Builder(c)
+                .setSdk(sdkLevel)
+                .setApplication(application)
+                .build();
+    }
 }

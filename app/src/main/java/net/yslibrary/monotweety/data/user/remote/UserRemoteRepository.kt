@@ -4,5 +4,5 @@ import io.reactivex.Single
 import net.yslibrary.monotweety.data.user.User
 
 interface UserRemoteRepository {
-  fun get(): Single<User>
+    fun get(): Single<User>
 }

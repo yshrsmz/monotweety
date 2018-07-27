@@ -11,15 +11,15 @@ import net.yslibrary.monotweety.data.status.remote.StatusRemoteRepositoryImpl
 @Module
 abstract class StatusModule {
 
-  @UserScope
-  @Binds
-  abstract fun provideStatusRemoteRepository(repository: StatusRemoteRepositoryImpl): StatusRemoteRepository
+    @UserScope
+    @Binds
+    abstract fun provideStatusRemoteRepository(repository: StatusRemoteRepositoryImpl): StatusRemoteRepository
 
-  @UserScope
-  @Binds
-  abstract fun provideStatusLocalRepository(repository: StatusLocalRepositoryImpl): StatusLocalRepository
+    @UserScope
+    @Binds
+    abstract fun provideStatusLocalRepository(repository: StatusLocalRepositoryImpl): StatusLocalRepository
 
-  @UserScope
-  @Binds
-  abstract fun provideStatusRepository(repository: StatusRepositoryImpl): StatusRepository
+    @UserScope
+    @Binds
+    abstract fun provideStatusRepository(repository: StatusRepositoryImpl): StatusRepository
 }

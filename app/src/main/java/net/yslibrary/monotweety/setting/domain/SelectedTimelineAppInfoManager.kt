@@ -11,12 +11,12 @@ import javax.inject.Inject
 class SelectedTimelineAppInfoManager @Inject constructor(private val appInfoManager: AppInfoManager,
                                                          private val settingDataManager: SettingDataManager) {
 
-  fun get(): Observable<AppInfo> {
-    return settingDataManager.timelineAppPackageName()
-        .flatMap { appInfoManager.appInfo(it).toObservable() }
-  }
+    fun get(): Observable<AppInfo> {
+        return settingDataManager.timelineAppPackageName()
+            .flatMap { appInfoManager.appInfo(it).toObservable() }
+    }
 
-  fun set(selectedApp: AppInfo) {
-    settingDataManager.timelineAppPackageName(selectedApp.packageName)
-  }
+    fun set(selectedApp: AppInfo) {
+        settingDataManager.timelineAppPackageName(selectedApp.packageName)
+    }
 }

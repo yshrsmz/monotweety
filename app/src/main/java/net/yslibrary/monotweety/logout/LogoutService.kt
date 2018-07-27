@@ -11,36 +11,36 @@ import kotlin.properties.Delegates
 
 class LogoutService : IntentService(NAME) {
 
-  @set:[Inject]
-  var doLogout by Delegates.notNull<DoLogout>()
+    @set:[Inject]
+    var doLogout by Delegates.notNull<DoLogout>()
 
-  val component: LogoutComponent by lazy {
-    DaggerLogoutComponent.builder()
-        .userComponent(App.userComponent(this))
-        .build()
-  }
-
-  override fun onCreate() {
-    super.onCreate()
-
-    component.inject(this)
-  }
-
-  override fun onHandleIntent(intent: Intent?) {
-    doLogout.execute().blockingAwait()
-    App.clearUserComponent(this)
-
-    val activityIntent = MainActivity.callingIntent(this)
-    activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-
-    startActivity(activityIntent)
-  }
-
-  companion object {
-    const val NAME = "LogoutService"
-
-    fun callingIntent(context: Context): Intent {
-      return Intent(context, LogoutService::class.java)
+    val component: LogoutComponent by lazy {
+        DaggerLogoutComponent.builder()
+            .userComponent(App.userComponent(this))
+            .build()
     }
-  }
+
+    override fun onCreate() {
+        super.onCreate()
+
+        component.inject(this)
+    }
+
+    override fun onHandleIntent(intent: Intent?) {
+        doLogout.execute().blockingAwait()
+        App.clearUserComponent(this)
+
+        val activityIntent = MainActivity.callingIntent(this)
+        activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+
+        startActivity(activityIntent)
+    }
+
+    companion object {
+        const val NAME = "LogoutService"
+
+        fun callingIntent(context: Context): Intent {
+            return Intent(context, LogoutService::class.java)
+        }
+    }
 }

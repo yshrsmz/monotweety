@@ -5,7 +5,7 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 
 interface StatusRepository {
-  fun updateStatus(status: String, inReplyToStatusId: Long? = null): Completable
-  fun previousStatus(): Observable<Optional<Tweet>>
-  fun clear(): Completable
+    fun updateStatus(status: String, inReplyToStatusId: Long? = null): Completable
+    fun previousStatus(): Observable<Optional<Tweet>>
+    fun clear(): Completable
 }

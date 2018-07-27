@@ -4,11 +4,11 @@ import io.reactivex.Observable
 
 interface ConfigLocalDataManager {
 
-  fun shortUrlLengthHttps(): Observable<Int>
-  fun shortUrlLengthHttps(length: Int)
+    fun shortUrlLengthHttps(): Observable<Int>
+    fun shortUrlLengthHttps(length: Int)
 
-  fun updatedAt(): Long
-  fun updatedAt(timestamp: Long)
+    fun updatedAt(): Long
+    fun updatedAt(timestamp: Long)
 
-  fun outdated(): Boolean
+    fun outdated(): Boolean
 }

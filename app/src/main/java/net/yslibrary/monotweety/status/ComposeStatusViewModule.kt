@@ -14,23 +14,23 @@ import net.yslibrary.monotweety.status.domain.UpdateStatus
 @Module
 class ComposeStatusViewModule(private val status: String?) {
 
-  @ControllerScope
-  @Provides
-  fun provideComposeStatusViewModel(config: Config,
-                                    checkStatusLength: CheckStatusLength,
-                                    updateStatus: UpdateStatus,
-                                    getPreviousStatus: GetPreviousStatus,
-                                    clearPreviousStatus: ClearPreviousStatus,
-                                    keepOpenManager: KeepOpenManager,
-                                    footerStateManager: FooterStateManager): ComposeStatusViewModel {
-    val _status: String = if (status.isNullOrBlank()) "" else status!!
-    return ComposeStatusViewModel(_status,
-        config,
-        checkStatusLength,
-        updateStatus,
-        getPreviousStatus,
-        clearPreviousStatus,
-        keepOpenManager,
-        footerStateManager)
-  }
+    @ControllerScope
+    @Provides
+    fun provideComposeStatusViewModel(config: Config,
+                                      checkStatusLength: CheckStatusLength,
+                                      updateStatus: UpdateStatus,
+                                      getPreviousStatus: GetPreviousStatus,
+                                      clearPreviousStatus: ClearPreviousStatus,
+                                      keepOpenManager: KeepOpenManager,
+                                      footerStateManager: FooterStateManager): ComposeStatusViewModel {
+        val _status: String = if (status.isNullOrBlank()) "" else status!!
+        return ComposeStatusViewModel(_status,
+            config,
+            checkStatusLength,
+            updateStatus,
+            getPreviousStatus,
+            clearPreviousStatus,
+            keepOpenManager,
+            footerStateManager)
+    }
 }

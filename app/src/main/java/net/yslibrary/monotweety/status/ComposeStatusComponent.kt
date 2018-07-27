@@ -9,9 +9,9 @@ import net.yslibrary.monotweety.base.di.ControllerScope
 )
 interface ComposeStatusComponent {
 
-  fun inject(controller: ComposeStatusController)
+    fun inject(controller: ComposeStatusController)
 
-  interface ComponentProvider {
-    fun composeStatusComponent(module: ComposeStatusViewModule): ComposeStatusComponent
-  }
+    interface ComponentProvider {
+        fun composeStatusComponent(module: ComposeStatusViewModule): ComposeStatusComponent
+    }
 }

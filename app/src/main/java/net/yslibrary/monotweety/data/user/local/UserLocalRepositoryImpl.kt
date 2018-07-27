@@ -16,26 +16,26 @@ import javax.inject.Inject
 @UserScope
 class UserLocalRepositoryImpl @Inject constructor(private val storIOSQLite: StorIOSQLite) : UserLocalRepository {
 
-  override fun getById(id: Long): Flowable<Optional<User>> {
-    return storIOSQLite.get()
-        .singleObject(User::class.java)
-        .withQuery(UserTable.queryById(id))
-        .prepare()
-        .asRxFlowable(BackpressureStrategy.LATEST)
-        .map { it.orNull().toOptional() }
-  }
+    override fun getById(id: Long): Flowable<Optional<User>> {
+        return storIOSQLite.get()
+            .singleObject(User::class.java)
+            .withQuery(UserTable.queryById(id))
+            .prepare()
+            .asRxFlowable(BackpressureStrategy.LATEST)
+            .map { it.orNull().toOptional() }
+    }
 
-  override fun set(entity: User): Completable {
-    return storIOSQLite.put()
-        .withObject(entity)
-        .prepare()
-        .asRxCompletable()
-  }
+    override fun set(entity: User): Completable {
+        return storIOSQLite.put()
+            .withObject(entity)
+            .prepare()
+            .asRxCompletable()
+    }
 
-  override fun delete(id: Long): Completable {
-    return storIOSQLite.delete()
-        .byQuery(UserTable.deleteById(id))
-        .prepare()
-        .asRxCompletable()
-  }
+    override fun delete(id: Long): Completable {
+        return storIOSQLite.delete()
+            .byQuery(UserTable.deleteById(id))
+            .prepare()
+            .asRxCompletable()
+    }
 }

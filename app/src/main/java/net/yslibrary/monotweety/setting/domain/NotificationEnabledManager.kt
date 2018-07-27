@@ -8,7 +8,7 @@ import javax.inject.Inject
 @AppScope
 class NotificationEnabledManager @Inject constructor(private val settingDataManager: SettingDataManager) {
 
-  fun get(): Observable<Boolean> = settingDataManager.notificationEnabled()
+    fun get(): Observable<Boolean> = settingDataManager.notificationEnabled()
 
-  fun set(enabled: Boolean) = settingDataManager.notificationEnabled(enabled)
+    fun set(enabled: Boolean) = settingDataManager.notificationEnabled(enabled)
 }

@@ -10,5 +10,5 @@ import net.yslibrary.monotweety.base.di.ControllerScope
     modules = arrayOf(LicenseViewModule::class)
 )
 interface LicenseComponent {
-  fun inject(controller: LicenseController)
+    fun inject(controller: LicenseController)
 }

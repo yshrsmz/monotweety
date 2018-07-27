@@ -12,21 +12,21 @@ import javax.inject.Named
 @Module
 class ActivityModule(private val activity: BaseActivity) {
 
-  @Provides
-  @Named(Names.FOR_ACTIVITY)
-  @ActivityScope
-  fun provideActivityBus(): EventBus = EventBus()
-
-  @Provides
-  @ActivityScope
-  fun provideNavigator(): Navigator {
-    return Navigator(activity)
-  }
-
-  interface Provider {
+    @Provides
     @Named(Names.FOR_ACTIVITY)
-    fun activityBus(): EventBus
+    @ActivityScope
+    fun provideActivityBus(): EventBus = EventBus()
 
-    fun navigator(): Navigator
-  }
+    @Provides
+    @ActivityScope
+    fun provideNavigator(): Navigator {
+        return Navigator(activity)
+    }
+
+    interface Provider {
+        @Named(Names.FOR_ACTIVITY)
+        fun activityBus(): EventBus
+
+        fun navigator(): Navigator
+    }
 }

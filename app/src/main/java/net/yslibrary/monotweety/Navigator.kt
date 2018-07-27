@@ -9,45 +9,45 @@ import net.yslibrary.monotweety.notification.NotificationService
 
 class Navigator(private val activity: BaseActivity) {
 
-  fun toSplash() {
+    fun toSplash() {
 
-  }
+    }
 
-  fun toLogin() {
+    fun toLogin() {
 
-  }
+    }
 
-  fun toSetting() {
+    fun toSetting() {
 
-  }
+    }
 
-  fun startLogoutService() {
-    activity.startService(LogoutService.callingIntent(activity))
-  }
+    fun startLogoutService() {
+        activity.startService(LogoutService.callingIntent(activity))
+    }
 
-  fun startNotificationService() {
-    ContextCompat.startForegroundService(activity, NotificationService.callingIntent(activity))
-  }
+    fun startNotificationService() {
+        ContextCompat.startForegroundService(activity, NotificationService.callingIntent(activity))
+    }
 
-  fun stopNotificationService() {
-    activity.stopService(NotificationService.callingIntent(activity))
-  }
+    fun stopNotificationService() {
+        activity.stopService(NotificationService.callingIntent(activity))
+    }
 
-  fun openExternalAppWithUrl(url: String) {
-    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-    activity.startActivity(intent)
-  }
+    fun openExternalAppWithUrl(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        activity.startActivity(intent)
+    }
 
-  fun openProfileWithTwitterApp(name: String) {
-    openExternalAppWithUrl("https://twitter.com/$name")
-  }
+    fun openProfileWithTwitterApp(name: String) {
+        openExternalAppWithUrl("https://twitter.com/$name")
+    }
 
-  fun openExternalAppWithShareIntent(message: String) {
-    val intent = Intent(Intent.ACTION_SEND)
-        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        .putExtra(Intent.EXTRA_TEXT, message)
-        .setType("text/plain")
+    fun openExternalAppWithShareIntent(message: String) {
+        val intent = Intent(Intent.ACTION_SEND)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            .putExtra(Intent.EXTRA_TEXT, message)
+            .setType("text/plain")
 
-    activity.startActivity(intent)
-  }
+        activity.startActivity(intent)
+    }
 }

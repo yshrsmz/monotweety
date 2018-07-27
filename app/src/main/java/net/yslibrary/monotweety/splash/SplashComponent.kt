@@ -8,9 +8,9 @@ import net.yslibrary.monotweety.base.di.ControllerScope
     modules = arrayOf(SplashViewModule::class)
 )
 interface SplashComponent {
-  fun inject(controller: SplashController)
+    fun inject(controller: SplashController)
 
-  interface ComponentProvider {
-    fun splashComponent(module: SplashViewModule): SplashComponent
-  }
+    interface ComponentProvider {
+        fun splashComponent(module: SplashViewModule): SplashComponent
+    }
 }

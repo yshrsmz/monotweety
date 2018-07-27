@@ -8,7 +8,7 @@ import javax.inject.Inject
 @UserScope
 class UpdateStatus @Inject constructor(private val statusRepository: StatusRepository) {
 
-  fun execute(status: String, inReplyToStatusId: Long? = null): Completable {
-    return statusRepository.updateStatus(status, inReplyToStatusId)
-  }
+    fun execute(status: String, inReplyToStatusId: Long? = null): Completable {
+        return statusRepository.updateStatus(status, inReplyToStatusId)
+    }
 }

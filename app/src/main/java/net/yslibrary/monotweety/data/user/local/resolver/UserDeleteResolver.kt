@@ -6,7 +6,7 @@ import net.yslibrary.monotweety.data.user.User
 import net.yslibrary.monotweety.data.user.local.UserTable
 
 class UserDeleteResolver : DefaultDeleteResolver<User>() {
-  override fun mapToDeleteQuery(entity: User): DeleteQuery {
-    return UserTable.deleteById(entity.id)
-  }
+    override fun mapToDeleteQuery(entity: User): DeleteQuery {
+        return UserTable.deleteById(entity.id)
+    }
 }

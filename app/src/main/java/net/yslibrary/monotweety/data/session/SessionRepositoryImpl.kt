@@ -9,7 +9,7 @@ import io.reactivex.Single
 class SessionRepositoryImpl(private val sessionManager: SessionManager<TwitterSession>) :
     SessionRepository {
 
-  override fun getActiveSession(): Single<Optional<TwitterSession>> {
-    return Single.fromCallable { sessionManager.activeSession.toOptional() }
-  }
+    override fun getActiveSession(): Single<Optional<TwitterSession>> {
+        return Single.fromCallable { sessionManager.activeSession.toOptional() }
+    }
 }

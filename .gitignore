@@ -1,10 +1,13 @@
+*.iml
 .gradle
 /local.properties
-/.idea/*
+.idea/*
 .DS_Store
 /build
+/captures
+.externalNativeBuild
+yslibrary.jks
 
-*.iml
 crashlytics.properties
 com_crashlytics_export_strings.xml
 crashlytics-build.properties
@@ -16,4 +19,8 @@ google-services.json
 
 *.jks
 
+# not ignore
 !.idea/codeStyleSettings.xml
+!.idea/icon.png
+!.idea/icon_dark.png
+!.idea/codeStyles/

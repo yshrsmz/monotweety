@@ -28,15 +28,15 @@ fun <T : View> Activity.findById(@IdRes id: Int): T = findViewById<T>(id)
 fun <T : View> Controller.findById(@IdRes id: Int): T? = view?.findViewById<T>(id)
 
 fun ImageView.load(url: String) {
-  GlideApp.with(this)
-      .load(url)
-      .into(this)
+    GlideApp.with(this)
+        .load(url)
+        .into(this)
 }
 
 fun ViewGroup.inflate(@LayoutRes resource: Int, root: ViewGroup = this, attachToRoot: Boolean = false): View {
-  return LayoutInflater.from(this.context).inflate(resource, root, attachToRoot)
+    return LayoutInflater.from(this.context).inflate(resource, root, attachToRoot)
 }
 
 fun Context.inflate(@LayoutRes resource: Int, root: ViewGroup? = null, attachToRoot: Boolean = false): View {
-  return LayoutInflater.from(this).inflate(resource, root, attachToRoot)
+    return LayoutInflater.from(this).inflate(resource, root, attachToRoot)
 }

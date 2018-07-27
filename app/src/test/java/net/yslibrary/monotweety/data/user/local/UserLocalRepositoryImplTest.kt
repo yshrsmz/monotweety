@@ -20,91 +20,91 @@ import com.twitter.sdk.android.core.models.User as TwitterUser
 @RunWith(ConfiguredRobolectricTestRunner::class)
 class UserLocalRepositoryImplTest {
 
-  var storio by Delegates.notNull<StorIOSQLite>()
+    var storio by Delegates.notNull<StorIOSQLite>()
 
-  var repository by Delegates.notNull<UserLocalRepositoryImpl>()
+    var repository by Delegates.notNull<UserLocalRepositoryImpl>()
 
-  val gson = Gson()
+    val gson = Gson()
 
-  @Before
-  fun setup() {
-    val module = LocalModule()
+    @Before
+    fun setup() {
+        val module = LocalModule()
 
-    storio = module.provideStorIOSQLite(module.provideDbOpenHelper(RuntimeEnvironment.application))
+        storio = module.provideStorIOSQLite(module.provideDbOpenHelper(RuntimeEnvironment.application))
 
-    repository = UserLocalRepositoryImpl(storio)
-  }
+        repository = UserLocalRepositoryImpl(storio)
+    }
 
-  @Test
-  fun getById() {
-    val twitterUser = gson.fromJson(readJsonFromAssets("user.json"), TwitterUser::class.java)
-    val time = System.currentTimeMillis()
-    val user = User(id = twitterUser.id,
-        name = twitterUser.name,
-        screenName = twitterUser.screenName,
-        profileImageUrl = twitterUser.profileImageUrl,
-        _updatedAt = time)
+    @Test
+    fun getById() {
+        val twitterUser = gson.fromJson(readJsonFromAssets("user.json"), TwitterUser::class.java)
+        val time = System.currentTimeMillis()
+        val user = User(id = twitterUser.id,
+            name = twitterUser.name,
+            screenName = twitterUser.screenName,
+            profileImageUrl = twitterUser.profileImageUrl,
+            _updatedAt = time)
 
-    storio.put().withObject(user).prepare().executeAsBlocking()
+        storio.put().withObject(user).prepare().executeAsBlocking()
 
-    repository.getById(user.id).test()
-        .apply {
-          awaitCount(1)
+        repository.getById(user.id).test()
+            .apply {
+                awaitCount(1)
 
-          assertValue(user.toOptional())
-          assertNotComplete()
-        }
-  }
+                assertValue(user.toOptional())
+                assertNotComplete()
+            }
+    }
 
-  @Test
-  fun set() {
-    val twitterUser = gson.fromJson(readJsonFromAssets("user.json"), TwitterUser::class.java)
-    val time = System.currentTimeMillis()
-    val user = User(id = twitterUser.id,
-        name = twitterUser.name,
-        screenName = twitterUser.screenName,
-        profileImageUrl = twitterUser.profileImageUrl,
-        _updatedAt = time)
+    @Test
+    fun set() {
+        val twitterUser = gson.fromJson(readJsonFromAssets("user.json"), TwitterUser::class.java)
+        val time = System.currentTimeMillis()
+        val user = User(id = twitterUser.id,
+            name = twitterUser.name,
+            screenName = twitterUser.screenName,
+            profileImageUrl = twitterUser.profileImageUrl,
+            _updatedAt = time)
 
-    repository.set(user).test()
-        .apply {
-          awaitTerminalEvent()
-          assertNoValues()
-          assertComplete()
-        }
+        repository.set(user).test()
+            .apply {
+                awaitTerminalEvent()
+                assertNoValues()
+                assertComplete()
+            }
 
-    val result = storio.get()
-        .singleObject(User::class.java)
-        .withQuery(UserTable.queryById(user.id))
-        .prepare().executeAsBlocking()
+        val result = storio.get()
+            .singleObject(User::class.java)
+            .withQuery(UserTable.queryById(user.id))
+            .prepare().executeAsBlocking()
 
-    assertThat(result).isEqualTo(user)
-  }
+        assertThat(result).isEqualTo(user)
+    }
 
-  @Test
-  fun delete() {
-    val twitterUser = gson.fromJson(readJsonFromAssets("user.json"), TwitterUser::class.java)
-    val time = System.currentTimeMillis()
-    val user = User(id = twitterUser.id,
-        name = twitterUser.name,
-        screenName = twitterUser.screenName,
-        profileImageUrl = twitterUser.profileImageUrl,
-        _updatedAt = time)
+    @Test
+    fun delete() {
+        val twitterUser = gson.fromJson(readJsonFromAssets("user.json"), TwitterUser::class.java)
+        val time = System.currentTimeMillis()
+        val user = User(id = twitterUser.id,
+            name = twitterUser.name,
+            screenName = twitterUser.screenName,
+            profileImageUrl = twitterUser.profileImageUrl,
+            _updatedAt = time)
 
-    storio.put().withObject(user).prepare().executeAsBlocking()
+        storio.put().withObject(user).prepare().executeAsBlocking()
 
-    repository.delete(user.id).test()
-        .apply {
-          awaitTerminalEvent()
-          assertNoValues()
-          assertComplete()
-        }
+        repository.delete(user.id).test()
+            .apply {
+                awaitTerminalEvent()
+                assertNoValues()
+                assertComplete()
+            }
 
-    val result = storio.get().numberOfResults()
-        .withQuery(UserTable.queryById(user.id))
-        .prepare()
-        .executeAsBlocking()
+        val result = storio.get().numberOfResults()
+            .withQuery(UserTable.queryById(user.id))
+            .prepare()
+            .executeAsBlocking()
 
-    assertThat(result).isEqualTo(0)
-  }
+        assertThat(result).isEqualTo(0)
+    }
 }

@@ -12,31 +12,31 @@ import java.util.concurrent.TimeUnit
 open class ConfigLocalDataManagerImpl(private val prefs: RxSharedPreferences,
                                       private val clock: Clock) : ConfigLocalDataManager {
 
-  private val shortUrlLengthHttps = prefs.getInteger(SHORT_URL_LENGTH_HTTPS, 23)
-  private val updatedAt = prefs.getLong(UPDATED_AT, 0)
+    private val shortUrlLengthHttps = prefs.getInteger(SHORT_URL_LENGTH_HTTPS, 23)
+    private val updatedAt = prefs.getLong(UPDATED_AT, 0)
 
-  override fun shortUrlLengthHttps(): Observable<Int> {
-    return shortUrlLengthHttps.asObservable()
-  }
+    override fun shortUrlLengthHttps(): Observable<Int> {
+        return shortUrlLengthHttps.asObservable()
+    }
 
-  override fun shortUrlLengthHttps(length: Int) {
-    return shortUrlLengthHttps.set(length)
-  }
+    override fun shortUrlLengthHttps(length: Int) {
+        return shortUrlLengthHttps.set(length)
+    }
 
-  override fun updatedAt(): Long {
-    return updatedAt.get()
-  }
+    override fun updatedAt(): Long {
+        return updatedAt.get()
+    }
 
-  override fun updatedAt(timestamp: Long) {
-    updatedAt.set(timestamp)
-  }
+    override fun updatedAt(timestamp: Long) {
+        updatedAt.set(timestamp)
+    }
 
-  override fun outdated(): Boolean {
-    return (updatedAt() + TimeUnit.HOURS.toMillis(12)) <= clock.currentTimeMillis()
-  }
+    override fun outdated(): Boolean {
+        return (updatedAt() + TimeUnit.HOURS.toMillis(12)) <= clock.currentTimeMillis()
+    }
 
-  companion object {
-    const val SHORT_URL_LENGTH_HTTPS = "short_url_length_https"
-    const val UPDATED_AT = "updated_at"
-  }
+    companion object {
+        const val SHORT_URL_LENGTH_HTTPS = "short_url_length_https"
+        const val UPDATED_AT = "updated_at"
+    }
 }

@@ -14,21 +14,21 @@ import net.yslibrary.monotweety.status.domain.UpdateStatus
 @Module
 class NotificationServiceModule(private val service: NotificationService) {
 
-  @ServiceScope
-  @Provides
-  fun provideNotificationServiceViewModel(notificationEnabledManager: NotificationEnabledManager,
-                                          keepOpenManager: KeepOpenManager,
-                                          checkStatusLength: CheckStatusLength,
-                                          updateStatus: UpdateStatus,
-                                          clearPreviousStatus: ClearPreviousStatus,
-                                          footerStateManager: FooterStateManager,
-                                          selectedTimelineAppInfoManager: SelectedTimelineAppInfoManager): NotificationServiceViewModel {
-    return NotificationServiceViewModel(notificationEnabledManager,
-        keepOpenManager,
-        checkStatusLength,
-        updateStatus,
-        clearPreviousStatus,
-        footerStateManager,
-        selectedTimelineAppInfoManager)
-  }
+    @ServiceScope
+    @Provides
+    fun provideNotificationServiceViewModel(notificationEnabledManager: NotificationEnabledManager,
+                                            keepOpenManager: KeepOpenManager,
+                                            checkStatusLength: CheckStatusLength,
+                                            updateStatus: UpdateStatus,
+                                            clearPreviousStatus: ClearPreviousStatus,
+                                            footerStateManager: FooterStateManager,
+                                            selectedTimelineAppInfoManager: SelectedTimelineAppInfoManager): NotificationServiceViewModel {
+        return NotificationServiceViewModel(notificationEnabledManager,
+            keepOpenManager,
+            checkStatusLength,
+            updateStatus,
+            clearPreviousStatus,
+            footerStateManager,
+            selectedTimelineAppInfoManager)
+    }
 }

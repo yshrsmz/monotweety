@@ -2,7 +2,7 @@ package net.yslibrary.monotweety
 
 import android.content.Intent
 import android.net.Uri
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import net.yslibrary.monotweety.base.BaseActivity
 import net.yslibrary.monotweety.logout.LogoutService
 import net.yslibrary.monotweety.notification.NotificationService

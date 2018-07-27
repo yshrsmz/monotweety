@@ -1,12 +1,12 @@
 package net.yslibrary.monotweety.status.adapter
 
-import android.support.design.widget.TextInputEditText
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.SwitchCompat
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.SwitchCompat
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputEditText
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import com.jakewharton.rxbinding2.widget.checkedChanges
 import com.jakewharton.rxbinding2.widget.textChanges
@@ -34,7 +34,7 @@ class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
         if (holder is ViewHolder) {
             val item = items[position] as Item
 
-            val shouldUpdateStatus = item.clear || item.initialValue || holder.statusInput.text.isBlank()
+            val shouldUpdateStatus = item.clear || item.initialValue || holder.statusInput.text.isNullOrBlank()
 
             if (shouldUpdateStatus) {
                 holder.statusInput.setText(item.status, TextView.BufferType.EDITABLE)

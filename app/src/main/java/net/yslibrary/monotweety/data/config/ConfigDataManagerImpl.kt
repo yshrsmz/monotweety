@@ -1,6 +1,6 @@
 package net.yslibrary.monotweety.data.config
 
-import android.support.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposables
 import io.reactivex.schedulers.Schedulers

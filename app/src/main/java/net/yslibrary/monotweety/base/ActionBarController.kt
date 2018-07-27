@@ -1,6 +1,6 @@
 package net.yslibrary.monotweety.base
 
-import android.support.v7.app.ActionBar
+import androidx.appcompat.app.ActionBar
 import android.view.MenuItem
 import android.view.View
 import net.yslibrary.monotweety.activity.ActionBarProvider

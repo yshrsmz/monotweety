@@ -46,7 +46,7 @@ android {
 
     manifestPlaceholders = [fabricApiKey: FABRIC_API_KEY]
 
-    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
   }
 
   buildTypes {
@@ -133,9 +133,9 @@ ext.glide_version = '4.8.0-SNAPSHOT'
 dependencies {
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-  implementation "com.android.support:appcompat-v7:$support_lib_version"
-  implementation "com.android.support:recyclerview-v7:$support_lib_version"
-  implementation "com.android.support:design:$support_lib_version"
+  implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
+  implementation 'androidx.recyclerview:recyclerview:1.0.0-beta01'
+  implementation 'com.google.android.material:material:1.0.0-beta01'
 
   implementation 'com.google.firebase:firebase-core:16.0.1'
 

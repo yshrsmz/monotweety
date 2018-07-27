@@ -1,7 +1,7 @@
 package net.yslibrary.monotweety.analytics
 
 import android.os.Bundle
-import android.support.annotation.StringDef
+import androidx.annotation.StringDef
 import com.google.firebase.analytics.FirebaseAnalytics
 import timber.log.Timber
 import javax.inject.Inject

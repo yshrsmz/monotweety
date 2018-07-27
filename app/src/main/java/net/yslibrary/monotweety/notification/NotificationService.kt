@@ -10,11 +10,11 @@ import android.content.IntentFilter
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
-import android.support.annotation.StringDef
-import android.support.v4.app.NotificationCompat
-import android.support.v4.app.NotificationManagerCompat
-import android.support.v4.app.RemoteInput
-import android.support.v4.app.TaskStackBuilder
+import androidx.annotation.StringDef
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.app.RemoteInput
+import androidx.core.app.TaskStackBuilder
 import android.widget.Toast
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers

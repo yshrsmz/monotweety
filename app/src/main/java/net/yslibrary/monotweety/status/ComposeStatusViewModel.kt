@@ -6,6 +6,7 @@ import com.twitter.sdk.android.core.TwitterApiException
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.Singles
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
@@ -29,6 +30,8 @@ class ComposeStatusViewModel(status: String,
                              private val clearPreviousStatus: ClearPreviousStatus,
                              private val keepOpenManager: KeepOpenManager,
                              private val footerStateManager: FooterStateManager) {
+
+    private val disposables = CompositeDisposable()
 
     private val isSendableStatusSubject = BehaviorSubject.createDefault(false)
 
@@ -92,8 +95,8 @@ class ComposeStatusViewModel(status: String,
     val canClose: Boolean
         get() {
             val isSending = progressEventsSubject.value == ProgressEvent.IN_PROGRESS
-            val hasContent = statusInfoSubject.value.length > 0
-            val allowCloseView = allowCloseViewSubject.value
+            val hasContent = statusInfoSubject.value!!.length > 0
+            val allowCloseView = allowCloseViewSubject.value!!
 
             return !isSending && (!hasContent || allowCloseView)
         }
@@ -105,9 +108,11 @@ class ComposeStatusViewModel(status: String,
                 Timber.d("previous status: ${it.toNullable()?.text}")
                 previousStatusSubject.onNext(it)
             }
+            .let(disposables::add)
 
         keepOpenManager.get().firstElement()
             .subscribe { keepOpenSubject.onNext(it) }
+            .let(disposables::add)
 
         footerStateManager.get().firstElement()
             .subscribe {
@@ -117,6 +122,7 @@ class ComposeStatusViewModel(status: String,
                     status
                 onStatusChanged(statusText)
             }
+            .let(disposables::add)
     }
 
     fun onStatusChanged(status: String) {
@@ -154,7 +160,7 @@ class ComposeStatusViewModel(status: String,
             }
             .doOnTerminate { progressEventsSubject.onNext(ProgressEvent.FINISHED) }
             .subscribeBy(onError = { t ->
-                Timber.e(t, t.message)
+                Timber.e(t)
                 if (t is TwitterApiException && t.errorMessage != null) {
                     messagesSubject.onNext(t.errorMessage)
                 } else {
@@ -180,7 +186,9 @@ class ComposeStatusViewModel(status: String,
 
     fun onDestroy() {
         clearPreviousStatus.execute()
-            .subscribe({ Timber.d("previous status cleared") })
+            .subscribeBy(onComplete = { Timber.d("previous status cleared") })
+
+        disposables.dispose()
     }
 
     data class StatusInfo(val status: String, val valid: Boolean, val length: Int, val maxLength: Int)

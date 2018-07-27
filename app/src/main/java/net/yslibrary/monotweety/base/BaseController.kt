@@ -1,7 +1,7 @@
 package net.yslibrary.monotweety.base
 
 import android.os.Build
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
 import android.widget.Toast
 import com.bluelinelabs.conductor.rxlifecycle2.RxController
 import io.reactivex.Completable

@@ -4,7 +4,7 @@ apply plugin: "com.gradle.build-scan"
 apply plugin: 'com.github.ben-manes.versions'
 
 buildscript {
-  ext.kotlin_version = '1.2.21'
+  ext.kotlin_version = '1.2.51'
   repositories {
     jcenter()
     maven { url 'https://maven.fabric.io/public' }
@@ -13,18 +13,18 @@ buildscript {
     google()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:3.0.1'
+    classpath 'com.android.tools.build:gradle:3.2.0-beta04'
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    classpath 'io.fabric.tools:gradle:1.25.1'
-    classpath 'com.google.gms:google-services:3.2.0'
+    classpath 'io.fabric.tools:gradle:1.25.4'
+    classpath 'com.google.gms:google-services:4.0.2'
 
     // NOTE: Do not place your application dependencies here; they belong
     // in the individual module build.gradle files
 
-    classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
-    classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.8.2'
-    classpath 'com.gradle:build-scan-plugin:1.12.1'
-    classpath 'org.jacoco:org.jacoco.core:0.8.0'
+    classpath 'com.github.ben-manes:gradle-versions-plugin:0.20.0'
+    classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.8.3'
+    classpath 'com.gradle:build-scan-plugin:1.15.1'
+    classpath 'org.jacoco:org.jacoco.core:0.8.1'
   }
 }
 

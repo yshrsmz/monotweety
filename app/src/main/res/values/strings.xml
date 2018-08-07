@@ -25,6 +25,8 @@
     <string name="label_open_profile">Open Profile</string>
     <string name="label_logout">Logout</string>
     <string name="label_setting">Setting</string>
+    <string name="label_privacy">Privacy</string>
+    <string name="label_privacy_policy">Privacy Policy</string>
     <string name="label_others">Others</string>
     <string name="label_license">Open Source License</string>
     <string name="label_app_version">App Version: %1$s(%2$d)</string>

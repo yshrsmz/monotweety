@@ -25,6 +25,8 @@ class SettingViewModel(private val config: Config,
 
     private val logoutRequestsSubject = PublishSubject.create<Unit>()
 
+    private val privacyPolicyRequestsSubject = PublishSubject.create<String>()
+
     private val licenseRequestsSubject = PublishSubject.create<Unit>()
 
     private val developerRequestsSubject = PublishSubject.create<String>()
@@ -53,6 +55,9 @@ class SettingViewModel(private val config: Config,
 
     val logoutRequests: Observable<Unit>
         get() = logoutRequestsSubject
+
+    val privacyPolicyRequests: Observable<String>
+        get() = privacyPolicyRequestsSubject
 
     val licenseRequests: Observable<Unit>
         get() = licenseRequestsSubject
@@ -133,6 +138,10 @@ class SettingViewModel(private val config: Config,
 
     fun onGitHubRequested() {
         githubRequestsSubject.onNext(config.githubUrl)
+    }
+
+    fun onPrivacyPolicyRequested() {
+        privacyPolicyRequestsSubject.onNext(config.privacyPolicyUrl)
     }
 
     data class TimelineAppInfo(val enabled: Boolean,

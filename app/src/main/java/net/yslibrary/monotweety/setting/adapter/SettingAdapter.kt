@@ -37,6 +37,7 @@ class SettingAdapter(private val res: Resources, listener: Listener) : ListDeleg
         delegatesManager.addDelegate(OneLineTextAdapterDelegate(object : OneLineTextAdapterDelegate.Listener {
             override fun onClick(item: OneLineTextAdapterDelegate.Item) {
                 when (item.type) {
+                    ViewType.PRIVACY_POLICY -> listener.onPrivacyPolicyClick()
                     ViewType.LICENSE -> listener.onLicenseClick()
                     ViewType.GOOGLE_PLAY -> listener.onGooglePlayClick()
                     ViewType.GITHUB -> listener.onGitHubClick()
@@ -80,6 +81,8 @@ class SettingAdapter(private val res: Resources, listener: Listener) : ListDeleg
                 res.getString(R.string.sub_label_keep), false, false, ViewType.KEEP_OPEN),
             FooterEditorAdapterDelegate.Item(true, false, "", ViewType.FOOTER),
             TimelineAppAdapterDelegate.Item(true, emptyList(), AppInfo.empty()),
+            SubHeaderAdapterDelegate.Item(res.getString(R.string.label_privacy), ViewType.SUBHEADER_PRIVACY),
+            OneLineTextAdapterDelegate.Item(res.getString(R.string.label_privacy_policy), true, ViewType.PRIVACY_POLICY),
             SubHeaderAdapterDelegate.Item(res.getString(R.string.label_others), ViewType.SUBHEADER_OTHERS),
             TwoLineTextAdapterDelegate.Item(res.getString(R.string.label_app_version, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE),
                 res.getString(R.string.sub_label_app_version), true, ViewType.APP_VERSION),
@@ -126,6 +129,8 @@ class SettingAdapter(private val res: Resources, listener: Listener) : ListDeleg
         KEEP_OPEN,
         FOOTER,
         TIMELINE_APP,
+        SUBHEADER_PRIVACY,
+        PRIVACY_POLICY,
         SUBHEADER_OTHERS,
         APP_VERSION,
         LICENSE,
@@ -146,6 +151,7 @@ class SettingAdapter(private val res: Resources, listener: Listener) : ListDeleg
         fun onKeepOpenClick(enabled: Boolean)
         fun onFooterStateChanged(enabled: Boolean, text: String)
         fun onTimelineAppChanged(selectedApp: AppInfo)
+        fun onPrivacyPolicyClick()
         fun onAppVersionClick()
         fun onLicenseClick()
         fun onDeveloperClick()

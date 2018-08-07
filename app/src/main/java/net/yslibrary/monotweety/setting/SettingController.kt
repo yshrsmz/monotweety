@@ -1,14 +1,14 @@
 package net.yslibrary.monotweety.setting
 
 import android.content.Context
-import androidx.appcompat.app.AlertDialog
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SimpleItemAnimator
-import androidx.appcompat.widget.SwitchCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.SwitchCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.bluelinelabs.conductor.ControllerChangeHandler
 import com.bluelinelabs.conductor.ControllerChangeType
 import com.bluelinelabs.conductor.RouterTransaction
@@ -50,6 +50,9 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
     val settingAdapter by lazy { SettingAdapter(applicationContext!!.resources, adapterListener) }
 
     val adapterListener = object : SettingAdapter.Listener {
+        override fun onPrivacyPolicyClick() {
+            viewModel.onPrivacyPolicyRequested()
+        }
 
         override fun onAppVersionClick() {
             viewModel.onChangelogRequested()
@@ -94,15 +97,15 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
                     .setTitle(R.string.label_confirm)
                     .setMessage(R.string.label_logout_confirm)
                     .setCancelable(true)
-                    .setPositiveButton(R.string.label_logout,
-                        { dialog, _ ->
-                            viewModel.onLogoutRequested()
-                            dialog.dismiss()
-                        })
-                    .setNegativeButton(R.string.label_no,
-                        { dialog, _ ->
-                            dialog.cancel()
-                        })
+                    .setPositiveButton(R.string.label_logout
+                    ) { dialog, _ ->
+                        viewModel.onLogoutRequested()
+                        dialog.dismiss()
+                    }
+                    .setNegativeButton(R.string.label_no
+                    ) { dialog, _ ->
+                        dialog.cancel()
+                    }
                     .show()
             }
         }
@@ -201,6 +204,11 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
             .bindToLifecycle()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { logout() }
+
+        viewModel.privacyPolicyRequests
+            .bindToLifecycle()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { navigator.openExternalAppWithUrl(it) }
 
         viewModel.licenseRequests
             .bindToLifecycle()

@@ -54,7 +54,6 @@ open class App : Application() {
             // do nothing since this process is for LeakCanary
             return
         }
-        LeakCanary.install(this)
 
         appComponent(this).inject(this)
         lifecycleCallbacks.onCreate()

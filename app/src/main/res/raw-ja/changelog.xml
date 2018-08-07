@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
     <changelogversion
+        changeDate="Aug, XXth, 2018"
+        versionName="1.7.0"
+        >
+        <changelogtext>Android P</changelogtext>
+        <changelogtext>安定性の向上</changelogtext>
+    </changelogversion>
+    <changelogversion
         changeDate="Feb, 25th, 2018"
         versionName="1.6.1"
         >

@@ -11,7 +11,7 @@ class SubHeaderDividerDecoration(context: Context) : RecyclerView.ItemDecoration
 
     init {
         val a = context.obtainStyledAttributes(ATTRS)
-        divider = a.getDrawable(0)
+        divider = a.getDrawable(0)!!
         a.recycle()
     }
 

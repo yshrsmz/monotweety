@@ -23,6 +23,7 @@ class MainActivity : BaseActivity(), ActionBarProvider, HasComponent<MainActivit
     companion object {
         fun callingIntent(context: Context): Intent {
             val intent = Intent(context, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             return intent
         }
     }

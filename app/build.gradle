@@ -119,12 +119,19 @@ android {
     }
 }
 
+//kapt {
+//    javacOptions {
+//        // https://google.github.io/dagger/compiler-options
+//        option("-Adagger.fastInit", "enabled")
+//    }
+//}
+
 ext.retrofit_version = '2.4.0'
 ext.androidx_version = '1.0.0-rc01'
 ext.rxbinding_version = '2.1.1'
 ext.conductor_version = '2.1.5'
 ext.okhttp_version = '3.11.0'
-ext.dagger_version = '2.16'
+ext.dagger_version = '2.17'
 ext.storio_version = '3.0.0'
 ext.leakcanary_version = '1.6.1'
 ext.glide_version = '4.8.0-SNAPSHOT'

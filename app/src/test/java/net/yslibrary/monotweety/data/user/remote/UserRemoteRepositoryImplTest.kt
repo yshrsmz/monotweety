@@ -43,7 +43,7 @@ class UserRemoteRepositoryImplTest {
             id = user.id,
             name = user.name,
             screenName = user.screenName,
-            profileImageUrl = user.profileImageUrl,
+            profileImageUrl = user.profileImageUrlHttps,
             _updatedAt = -1)
 
         whenever(mockAccountService.verifyCredentials(any(), any(), any()))

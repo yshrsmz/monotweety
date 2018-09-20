@@ -4,7 +4,9 @@
         changeDate="Sep, XXth, 2018"
         versionName="1.8.0"
         >
-        <changelogtext>Remove</changelogtext>
+        <changelogtext>Remove "tweet as a thread". This is needed to comply with Twitter's guideline. Thanks for your
+            understanding.
+        </changelogtext>
         <changelogtext>Stability improvement</changelogtext>
     </changelogversion>
     <changelogversion

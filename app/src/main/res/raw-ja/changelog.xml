@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
     <changelogversion
+        changeDate="Sep, XXth, 2018"
+        versionName="1.8.0"
+        >
+        <changelogtext>連ツイ機能を削除。この機能はTwitterのガイドラインに抵触した可能性があるため削除することにしました。
+        </changelogtext>
+        <changelogtext>安定性の向上</changelogtext>
+    </changelogversion>
+    <changelogversion
         changeDate="Aug, 8th, 2018"
         versionName="1.7.0"
         >

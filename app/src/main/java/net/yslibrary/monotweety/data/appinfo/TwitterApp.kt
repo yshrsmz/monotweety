@@ -36,6 +36,7 @@ enum class TwitterApp(val packageName: String) {
     TWITPANE_PLUS("com.twitpane.premium"),
     TWITPANE_CLASSIC("com.twitpane.classic"),
     TWITTER("com.twitter.android"),
+    TWITTER_LITE("com.twitter.android.lite"),
     TWITTNUKER("de.vanita5.twittnuker"),
     TWITWICK("jp.takmurata.twitwick2"),
     TWLTRUS("net.yuzumone.twltrus"),

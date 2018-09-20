@@ -59,7 +59,7 @@ class UserRepositoryImplTest {
         val user = User(id = twitterUser.id,
             name = twitterUser.name,
             screenName = twitterUser.screenName,
-            profileImageUrl = twitterUser.profileImageUrl,
+            profileImageUrl = twitterUser.profileImageUrlHttps,
             _updatedAt = time)
         whenever(localRepository.set(user)).thenReturn(Completable.complete())
 
@@ -123,7 +123,7 @@ class UserRepositoryImplTest {
         val user = User(id = 1,
             name = "test_name",
             screenName = "test_screen_name",
-            profileImageUrl = "http://test.com/profile.jpg",
+            profileImageUrl = "https://test.com/profile.jpg",
             _updatedAt = before11hours)
 
         Assertions.assertThat(repository.isValid(user)).isTrue()
@@ -143,7 +143,7 @@ class UserRepositoryImplTest {
         val user = User(id = 1,
             name = "test_name",
             screenName = "test_screen_name",
-            profileImageUrl = "http://test.com/profile.jpg",
+            profileImageUrl = "https://test.com/profile.jpg",
             _updatedAt = before13hours)
 
         Assertions.assertThat(repository.isValid(user)).isFalse()

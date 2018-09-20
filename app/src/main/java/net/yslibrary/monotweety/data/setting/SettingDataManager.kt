@@ -7,9 +7,6 @@ interface SettingDataManager {
     fun notificationEnabled(): Observable<Boolean>
     fun notificationEnabled(enabled: Boolean)
 
-    fun keepOpen(): Observable<Boolean>
-    fun keepOpen(enabled: Boolean)
-
     fun footerEnabled(): Observable<Boolean>
     fun footerEnabled(enabled: Boolean)
 

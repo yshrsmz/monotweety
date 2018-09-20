@@ -7,7 +7,10 @@ import net.yslibrary.monotweety.Navigator
 import net.yslibrary.monotweety.base.EventBus
 import net.yslibrary.monotweety.base.di.ControllerScope
 import net.yslibrary.monotweety.base.di.Names
-import net.yslibrary.monotweety.setting.domain.*
+import net.yslibrary.monotweety.setting.domain.FooterStateManager
+import net.yslibrary.monotweety.setting.domain.GetInstalledSupportedApps
+import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
+import net.yslibrary.monotweety.setting.domain.SelectedTimelineAppInfoManager
 import net.yslibrary.monotweety.user.domain.GetUser
 import javax.inject.Named
 
@@ -29,14 +32,12 @@ class SettingViewModule(private val activityBus: EventBus,
     fun provideSettingViewModel(config: Config,
                                 notificationEnabledManager: NotificationEnabledManager,
                                 getUser: GetUser,
-                                keepOpenManager: KeepOpenManager,
                                 footerStateManager: FooterStateManager,
                                 getInstalledSupportedApps: GetInstalledSupportedApps,
                                 selectedTimelineAppInfoManager: SelectedTimelineAppInfoManager): SettingViewModel {
         return SettingViewModel(config,
             notificationEnabledManager,
             getUser,
-            keepOpenManager,
             footerStateManager,
             getInstalledSupportedApps,
             selectedTimelineAppInfoManager)

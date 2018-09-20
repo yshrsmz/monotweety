@@ -10,7 +10,6 @@ import net.yslibrary.monotweety.base.di.Names
 import net.yslibrary.monotweety.data.DataModule
 import net.yslibrary.monotweety.login.domain.IsLoggedIn
 import net.yslibrary.monotweety.setting.domain.FooterStateManager
-import net.yslibrary.monotweety.setting.domain.KeepOpenManager
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
 import javax.inject.Named
 
@@ -24,8 +23,6 @@ interface AppComponent : UserComponent.ComponentProvider {
     fun isLoggedIn(): IsLoggedIn
 
     fun notificationEnabledManager(): NotificationEnabledManager
-
-    fun keepOpenManager(): KeepOpenManager
 
     fun footerStateManager(): FooterStateManager
 

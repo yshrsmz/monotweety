@@ -9,14 +9,16 @@ import io.reactivex.subjects.PublishSubject
 import net.yslibrary.monotweety.Config
 import net.yslibrary.monotweety.data.appinfo.AppInfo
 import net.yslibrary.monotweety.data.user.User
-import net.yslibrary.monotweety.setting.domain.*
+import net.yslibrary.monotweety.setting.domain.FooterStateManager
+import net.yslibrary.monotweety.setting.domain.GetInstalledSupportedApps
+import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
+import net.yslibrary.monotweety.setting.domain.SelectedTimelineAppInfoManager
 import net.yslibrary.monotweety.user.domain.GetUser
 import timber.log.Timber
 
 class SettingViewModel(private val config: Config,
                        private val notificationEnabledManager: NotificationEnabledManager,
                        private val getUser: GetUser,
-                       private val keepOpenManager: KeepOpenManager,
                        private val footerStateManager: FooterStateManager,
                        private val getInstalledSupportedApps: GetInstalledSupportedApps,
                        private val selectedTimelineAppInfoManager: SelectedTimelineAppInfoManager) {
@@ -43,9 +45,6 @@ class SettingViewModel(private val config: Config,
 
     val notificationEnabledChanged: Observable<Boolean>
         get() = notificationEnabledManager.get()
-
-    val keepOpen: Observable<Boolean>
-        get() = keepOpenManager.get()
 
     val user: Observable<Optional<User>>
         get() = userSubject
@@ -88,16 +87,13 @@ class SettingViewModel(private val config: Config,
 
     init {
         getUser.execute()
-            .subscribe({ userSubject.onNext(it) },
+            .subscribe(
+                { userSubject.onNext(it) },
                 { Timber.e(it, it.message) })
     }
 
     fun onNotificationEnabledChanged(enabled: Boolean) {
         notificationEnabledManager.set(enabled)
-    }
-
-    fun onKeepOpenChanged(enabled: Boolean) {
-        keepOpenManager.set(enabled)
     }
 
     fun onFooterStateChanged(enabled: Boolean, footerText: String) {

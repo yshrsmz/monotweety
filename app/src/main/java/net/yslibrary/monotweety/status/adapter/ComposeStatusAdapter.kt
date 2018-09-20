@@ -6,8 +6,6 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
-import net.yslibrary.monotweety.data.status.Tweet
-import net.yslibrary.monotweety.setting.domain.FooterStateManager
 import timber.log.Timber
 
 class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapter<List<ComposeStatusAdapter.Item>>() {
@@ -15,19 +13,10 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
     var editorInitialized = false
 
     init {
-        delegatesManager.addDelegate(PreviousStatusAdapterDelegate())
 
         delegatesManager.addDelegate(EditorAdapterDelegate(object : EditorAdapterDelegate.Listener {
             override fun onStatusChanged(status: String) {
                 listener.onStatusChanged(status)
-            }
-
-            override fun onEnableThreadChanged(enabled: Boolean) {
-                listener.onEnableThreadChanged(enabled)
-            }
-
-            override fun onKeepOpenChanged(enabled: Boolean) {
-                listener.onKeepOpenChanged(enabled)
             }
         }))
 
@@ -36,24 +25,6 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
 
     private fun editorItem(): EditorAdapterDelegate.Item {
         return items.last() as EditorAdapterDelegate.Item
-    }
-
-    fun setPreviousStatus(tweets: List<Tweet>) {
-        val tweetItems = tweets.map {
-            PreviousStatusAdapterDelegate.Item(
-                id = it.id,
-                status = it.text,
-                createdAt = it.createdAt)
-        }
-
-        calculateDiff(items, tweetItems + items.last())
-            .subscribeBy {
-                synchronized(ComposeStatusAdapter@ this, {
-                    Timber.d("update previous status")
-                    items = it.second
-                    it.first.dispatchUpdatesTo(this)
-                })
-            }
     }
 
     fun updateEditorInternal(item: EditorAdapterDelegate.Item) {
@@ -66,7 +37,7 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
             change = calculateDiff(items, items.dropLast(1) + item)
         }
         change.subscribeBy {
-            synchronized(ComposeStatusAdapter@ this, {
+            synchronized(this, {
                 Timber.d("update editor")
                 items = it.second
                 it.first.dispatchUpdatesTo(this)
@@ -77,42 +48,6 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
 
     fun updateEditor(item: EditorAdapterDelegate.Item) {
         updateEditorInternal(item.copy(initialValue = !editorInitialized))
-    }
-
-    fun updatePreviousTweetAndClearEditor(tweets: List<Tweet>, footerState: FooterStateManager.State) {
-        val tweetItems = tweets.map {
-            PreviousStatusAdapterDelegate.Item(
-                id = it.id,
-                status = it.text,
-                createdAt = it.createdAt)
-        }
-        calculateDiff(items, tweetItems + editorItem()
-            .copy(status = if (footerState.enabled) " ${footerState.text}" else "",
-                statusLength = 0,
-                valid = false,
-                initialValue = false,
-                clear = true))
-            .subscribeBy {
-                Timber.d("update tweet & clear editor")
-                items = it.second
-                it.first.dispatchUpdatesTo(this)
-            }
-    }
-
-    fun clearEditor() {
-        updateEditorInternal(editorItem()
-            .copy(status = "",
-                statusLength = 0,
-                valid = false,
-                initialValue = false,
-                clear = true))
-    }
-
-    fun updateStatusCounter(valid: Boolean, length: Int, maxLength: Int) {
-        updateEditorInternal(editorItem()
-            .copy(valid = valid,
-                statusLength = length,
-                maxLength = maxLength))
     }
 
     fun calculateDiff(oldList: List<Item>, newList: List<Item>): Single<Pair<DiffUtil.DiffResult, List<Item>>> {
@@ -172,7 +107,5 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
 
     interface Listener {
         fun onStatusChanged(status: String)
-        fun onEnableThreadChanged(enabled: Boolean)
-        fun onKeepOpenChanged(enabled: Boolean)
     }
 }

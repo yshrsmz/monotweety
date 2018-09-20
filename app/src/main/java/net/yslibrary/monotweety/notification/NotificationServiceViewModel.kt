@@ -8,19 +8,15 @@ import io.reactivex.subjects.PublishSubject
 import net.yslibrary.monotweety.data.appinfo.AppInfo
 import net.yslibrary.monotweety.data.status.OverlongStatusException
 import net.yslibrary.monotweety.setting.domain.FooterStateManager
-import net.yslibrary.monotweety.setting.domain.KeepOpenManager
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
 import net.yslibrary.monotweety.setting.domain.SelectedTimelineAppInfoManager
 import net.yslibrary.monotweety.status.domain.CheckStatusLength
-import net.yslibrary.monotweety.status.domain.ClearPreviousStatus
 import net.yslibrary.monotweety.status.domain.UpdateStatus
 import timber.log.Timber
 
 class NotificationServiceViewModel(private val notificationEnabledManager: NotificationEnabledManager,
-                                   private val keepOpenManager: KeepOpenManager,
                                    private val checkStatusLength: CheckStatusLength,
                                    private val updateStatus: UpdateStatus,
-                                   private val clearPreviousStatus: ClearPreviousStatus,
                                    private val footerStateManager: FooterStateManager,
                                    private val selectedTimelineAppInfoManager: SelectedTimelineAppInfoManager) {
 
@@ -42,12 +38,6 @@ class NotificationServiceViewModel(private val notificationEnabledManager: Notif
 
     val stopNotificationService: Observable<Unit>
         get() = stopNotificationServiceSubject
-
-    val closeNotificationDrawer: Observable<Unit>
-        get() = updateCompletedSubject
-            .switchMapSingle { keepOpenManager.get().firstOrError() }
-            .filter { !it }
-            .map { Unit }
 
     val updateNotificationRequests: Observable<NotificationInfo>
         get() = Observable.combineLatest(
@@ -83,8 +73,6 @@ class NotificationServiceViewModel(private val notificationEnabledManager: Notif
                     Completable.error(OverlongStatusException(status = text.trim(), length = it.length))
                 }
             }
-            // clear previous status since tweet from notification does not support "chain tweet as a thread"
-            .andThen(clearPreviousStatus.execute())
             .subscribe({
                 Timber.d("tweet succeeded!")
                 updateCompletedSubject.onNext(Unit)

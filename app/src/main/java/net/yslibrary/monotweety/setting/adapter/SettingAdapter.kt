@@ -23,17 +23,6 @@ class SettingAdapter(private val res: Resources, listener: Listener) : ListDeleg
             }
         }))
 
-        delegatesManager.addDelegate(TwoLineSwitchAdapterDelegate(object : TwoLineSwitchAdapterDelegate.Listener {
-            override fun onClick(item: TwoLineSwitchAdapterDelegate.Item, checked: Boolean) {
-                when (item.type) {
-                    ViewType.KEEP_OPEN -> listener.onKeepOpenClick(checked)
-                    else -> {
-                        // no-op
-                    }
-                }
-            }
-        }))
-
         delegatesManager.addDelegate(OneLineTextAdapterDelegate(object : OneLineTextAdapterDelegate.Listener {
             override fun onClick(item: OneLineTextAdapterDelegate.Item) {
                 when (item.type) {
@@ -77,8 +66,6 @@ class SettingAdapter(private val res: Resources, listener: Listener) : ListDeleg
             SubHeaderAdapterDelegate.Item(res.getString(R.string.label_account), ViewType.SUBHEADER_ACCOUNT),
             ProfileAdapterDelegate.Item.empty(),
             SubHeaderAdapterDelegate.Item(res.getString(R.string.label_setting), ViewType.SUBHEADER_SETTING),
-            TwoLineSwitchAdapterDelegate.Item(res.getString(R.string.label_keep),
-                res.getString(R.string.sub_label_keep), false, false, ViewType.KEEP_OPEN),
             FooterEditorAdapterDelegate.Item(true, false, "", ViewType.FOOTER),
             TimelineAppAdapterDelegate.Item(true, emptyList(), AppInfo.empty()),
             SubHeaderAdapterDelegate.Item(res.getString(R.string.label_privacy), ViewType.SUBHEADER_PRIVACY),
@@ -101,15 +88,6 @@ class SettingAdapter(private val res: Resources, listener: Listener) : ListDeleg
         notifyItemChanged(ViewType.PROFILE.ordinal)
     }
 
-    fun updateKeepOpen(enabled: Boolean) {
-        val item = items[ViewType.KEEP_OPEN.ordinal] as TwoLineSwitchAdapterDelegate.Item
-        if (item.checked == enabled && item.enabled) {
-            return
-        }
-        (items as MutableList)[ViewType.KEEP_OPEN.ordinal] = item.copy(checked = enabled, enabled = true)
-        notifyItemChanged(ViewType.KEEP_OPEN.ordinal)
-    }
-
     fun updateFooterState(enabled: Boolean, footerText: String) {
         val item = items[ViewType.FOOTER.ordinal] as FooterEditorAdapterDelegate.Item
         (items as MutableList)[ViewType.FOOTER.ordinal] = item.copy(enabled = true, checked = enabled, footerText = footerText)
@@ -126,7 +104,6 @@ class SettingAdapter(private val res: Resources, listener: Listener) : ListDeleg
         SUBHEADER_ACCOUNT,
         PROFILE,
         SUBHEADER_SETTING,
-        KEEP_OPEN,
         FOOTER,
         TIMELINE_APP,
         SUBHEADER_PRIVACY,
@@ -148,7 +125,6 @@ class SettingAdapter(private val res: Resources, listener: Listener) : ListDeleg
     interface Listener {
         fun onOpenProfileClick()
         fun onLogoutClick()
-        fun onKeepOpenClick(enabled: Boolean)
         fun onFooterStateChanged(enabled: Boolean, text: String)
         fun onTimelineAppChanged(selectedApp: AppInfo)
         fun onPrivacyPolicyClick()

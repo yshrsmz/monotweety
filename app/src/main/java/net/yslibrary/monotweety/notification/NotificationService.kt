@@ -10,12 +10,12 @@ import android.content.IntentFilter
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
+import android.widget.Toast
 import androidx.annotation.StringDef
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.RemoteInput
 import androidx.core.app.TaskStackBuilder
-import android.widget.Toast
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -167,13 +167,10 @@ class NotificationService : Service(), HasComponent<NotificationComponent> {
             }
             .addTo(disposables)
 
-        viewModel.closeNotificationDrawer
-            .subscribe { closeNotificationDrawer() }
-            .addTo(disposables)
-
         viewModel.updateCompleted
             .subscribe {
                 viewModel.onUpdateNotificationRequested()
+                closeNotificationDrawer()
                 showTweetSucceeded()
                 analytics.tweetFromNotification()
             }.addTo(disposables)

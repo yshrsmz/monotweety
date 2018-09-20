@@ -12,8 +12,6 @@ open class SettingDataManagerImpl(private val prefs: RxSharedPreferences) : Sett
 
     private val notificationEnabled = prefs.getBoolean(NOTIFICATION_ENABLED, false)
 
-    private val keepOpen = prefs.getBoolean(KEEP_OPEN, false)
-
     private val footerEnabled = prefs.getBoolean(FOOTER_ENABLED, false)
     private val footerText = prefs.getString(FOOTER_TEXT, "")
 
@@ -26,14 +24,6 @@ open class SettingDataManagerImpl(private val prefs: RxSharedPreferences) : Sett
 
     override fun notificationEnabled(enabled: Boolean) {
         notificationEnabled.set(enabled)
-    }
-
-    override fun keepOpen(): Observable<Boolean> {
-        return keepOpen.asObservable()
-    }
-
-    override fun keepOpen(enabled: Boolean) {
-        keepOpen.set(enabled)
     }
 
     override fun footerEnabled(): Observable<Boolean> {
@@ -71,7 +61,6 @@ open class SettingDataManagerImpl(private val prefs: RxSharedPreferences) : Sett
     override fun clear(): Completable {
         return Completable.fromAction {
             notificationEnabled.delete()
-            keepOpen.delete()
             footerEnabled.delete()
             footerText.delete()
             timelineAppPackageName.delete()
@@ -80,7 +69,6 @@ open class SettingDataManagerImpl(private val prefs: RxSharedPreferences) : Sett
 
     companion object {
         const val NOTIFICATION_ENABLED = "notification_enabled"
-        const val KEEP_OPEN = "keep_open"
 
         const val FOOTER_ENABLED = "footer_enabled"
         const val FOOTER_TEXT = "footer_text"

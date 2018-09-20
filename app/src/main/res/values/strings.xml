@@ -17,9 +17,6 @@
     <string name="label_open_timeline">timeline</string>
     <string name="label_notification_content">Tap to open tweet dialog:)</string>
     <string name="label_whats_happening">What\'s happening?</string>
-    <string name="label_keep">Keep dialog/notification open</string>
-    <string name="sub_label_keep">so that you can keep tweeting</string>
-    <string name="label_enable_thread">Tweet as a thread</string>
 
     <string name="label_account">Account</string>
     <string name="label_open_profile">Open Profile</string>

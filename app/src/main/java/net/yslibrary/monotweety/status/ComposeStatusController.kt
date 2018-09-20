@@ -4,12 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.ShortcutManager
 import android.os.Build
+import android.view.*
+import android.widget.FrameLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
-import android.view.*
-import android.widget.FrameLayout
 import com.bluelinelabs.conductor.ControllerChangeHandler
 import com.bluelinelabs.conductor.ControllerChangeType
 import com.bluelinelabs.conductor.RouterTransaction
@@ -21,7 +21,6 @@ import io.reactivex.subjects.PublishSubject
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.base.*
-import net.yslibrary.monotweety.data.status.Tweet
 import net.yslibrary.monotweety.status.adapter.ComposeStatusAdapter
 import net.yslibrary.monotweety.status.adapter.EditorAdapterDelegate
 import timber.log.Timber
@@ -41,14 +40,6 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
     }
 
     val adapterListener = object : ComposeStatusAdapter.Listener {
-        override fun onEnableThreadChanged(enabled: Boolean) {
-            viewModel.onEnableThreadChanged(enabled)
-        }
-
-        override fun onKeepOpenChanged(enabled: Boolean) {
-            viewModel.onKeepOpenChanged(enabled)
-        }
-
         override fun onStatusChanged(status: String) {
             viewModel.onStatusChanged(status)
         }
@@ -103,21 +94,16 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
         }
 
         // FIXME: this should be handled in ViewModel
-        Observables.combineLatest(
-            viewModel.statusInfo.distinctUntilChanged(),
-            viewModel.keepOpen,
-            viewModel.tweetAsThread
-        ) { (status1, valid, length, maxLength), keepOpen, tweetAsThread ->
-            EditorAdapterDelegate.Item(
-                status = status1,
-                keepOpen = keepOpen,
-                enableThread = tweetAsThread,
-                statusLength = length,
-                maxLength = maxLength,
-                valid = valid,
-                clear = false
-            )
-        }
+        viewModel.statusInfo.distinctUntilChanged()
+            .map { (status1, valid, length, maxLength) ->
+                EditorAdapterDelegate.Item(
+                    status = status1,
+                    statusLength = length,
+                    maxLength = maxLength,
+                    valid = valid,
+                    clear = false
+                )
+            }
             .distinctUntilChanged()
             .bindToLifecycle()
             .subscribeBy {
@@ -147,18 +133,12 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
             }
 
         viewModel.statusUpdated
-            .switchMapSingle { viewModel.previousStatus.firstOrError() }
-            .switchMapSingle { tweet ->
-                viewModel.footerState.firstOrError()
-                    .map { Pair(tweet.toNullable(), it) }
-            }
             .bindToLifecycle()
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { (tweet, second) ->
-                Timber.d("status updated, and previous status loaded: ${tweet?.text}")
+            .subscribe {
+                Timber.d("status updated")
                 toast(getString(R.string.message_tweet_succeeded))?.show()
                 analytics.tweetFromEditor()
-                statusAdapter.updatePreviousTweetAndClearEditor(if (tweet == null) emptyList<Tweet>() else listOf(tweet), second)
             }
 
         viewModel.messages.bindToLifecycle()

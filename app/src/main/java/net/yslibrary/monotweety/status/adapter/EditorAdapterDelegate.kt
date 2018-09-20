@@ -3,12 +3,10 @@ package net.yslibrary.monotweety.status.adapter
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
-import com.jakewharton.rxbinding2.widget.checkedChanges
 import com.jakewharton.rxbinding2.widget.textChanges
 import io.reactivex.disposables.SerialDisposable
 import net.yslibrary.monotweety.R
@@ -19,8 +17,6 @@ import net.yslibrary.monotweety.base.setTo
 class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<List<ComposeStatusAdapter.Item>>() {
 
     val statusInputDisposable = SerialDisposable()
-    val enableThreadSwitchDisposable = SerialDisposable()
-    val keepOpenDisposable = SerialDisposable()
 
     override fun isForViewType(items: List<ComposeStatusAdapter.Item>, position: Int): Boolean {
         return items[position].viewType == ComposeStatusAdapter.ViewType.EDITOR
@@ -42,15 +38,6 @@ class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
             val counterColor = if (item.valid) R.color.colorTextSecondary else R.color.red
             holder.statusCounter.setTextColor(ContextCompat.getColor(holder.itemView.context, counterColor))
             holder.statusCounter.text = holder.itemView.context.getString(R.string.label_status_counter, item.statusLength, item.maxLength)
-
-            // update only if value is updated at somewhere
-            if (item.keepOpen != holder.keepOpenSwitch.isChecked) {
-                holder.keepOpenSwitch.isChecked = item.keepOpen
-            }
-
-            if (item.enableThread != holder.enableThreadSwitch.isChecked) {
-                holder.enableThreadSwitch.isChecked = item.enableThread
-            }
         }
     }
 
@@ -62,14 +49,6 @@ class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
             .subscribe { listener.onStatusChanged(it.toString()) }
             .setTo(statusInputDisposable)
 
-        holder.enableThreadSwitch.checkedChanges()
-            .subscribe { listener.onEnableThreadChanged(it) }
-            .setTo(enableThreadSwitchDisposable)
-
-        holder.keepOpenSwitch.checkedChanges()
-            .subscribe { listener.onKeepOpenChanged(it) }
-            .setTo(keepOpenDisposable)
-
         return holder
     }
 
@@ -77,8 +56,6 @@ class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
                     val statusLength: Int,
                     val maxLength: Int,
                     val valid: Boolean,
-                    val keepOpen: Boolean,
-                    val enableThread: Boolean,
                     val clear: Boolean,
                     val initialValue: Boolean = false,
                     override val viewType: ComposeStatusAdapter.ViewType = ComposeStatusAdapter.ViewType.EDITOR) : ComposeStatusAdapter.Item
@@ -87,8 +64,6 @@ class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
 
         val statusInput = view.findById<TextInputEditText>(R.id.status_input)
         val statusCounter = view.findById<TextView>(R.id.status_counter)
-        val keepOpenSwitch = view.findById<SwitchCompat>(R.id.keep_open)
-        val enableThreadSwitch = view.findById<SwitchCompat>(R.id.enable_thread)
 
         companion object {
             fun create(parent: ViewGroup): ViewHolder {
@@ -100,7 +75,5 @@ class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
 
     interface Listener {
         fun onStatusChanged(status: String)
-        fun onEnableThreadChanged(enabled: Boolean)
-        fun onKeepOpenChanged(enabled: Boolean)
     }
 }

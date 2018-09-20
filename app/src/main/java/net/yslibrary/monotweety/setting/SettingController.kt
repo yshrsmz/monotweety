@@ -78,10 +78,6 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
             viewModel.onLicenseRequested()
         }
 
-        override fun onKeepOpenClick(enabled: Boolean) {
-            viewModel.onKeepOpenChanged(enabled)
-        }
-
         override fun onFooterStateChanged(enabled: Boolean, text: String) {
             viewModel.onFooterStateChanged(enabled, text)
         }
@@ -143,7 +139,7 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
             if (itemAnimator is SimpleItemAnimator) {
                 (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
             }
-            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+            layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
             setHasFixedSize(true)
             addItemDecoration(SubHeaderDividerDecoration(activity!!))
             adapter = settingAdapter
@@ -167,11 +163,6 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
                 Timber.d("notification enabled: $it")
                 if (it) startNotificationService() else stopNotificationService()
             }
-
-        viewModel.keepOpen
-            .bindToLifecycle()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { settingAdapter.updateKeepOpen(it) }
 
         viewModel.footerState
             .bindToLifecycle()

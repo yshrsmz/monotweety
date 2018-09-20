@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
     <changelogversion
-        changeDate="Sep, XXth, 2018"
+        changeDate="Sep, 20th, 2018"
         versionName="1.8.0"
         >
         <changelogtext>Remove "tweet as a thread". This is needed to comply with Twitter's guideline. Thanks for your
-            understanding.
+            understanding
         </changelogtext>
+        <changelogtext>Twitter Lite can now be selected as a timeline app</changelogtext>
         <changelogtext>Stability improvement</changelogtext>
     </changelogversion>
     <changelogversion

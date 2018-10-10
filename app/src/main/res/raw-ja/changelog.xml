@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
     <changelogversion
+        changeDate="Oct, 11th, 2018"
+        versionName="1.8.1"
+        >
+        <changelogtext>安定性の向上</changelogtext>
+        <changelogtext>一部環境で編集ダイアログ表示時にキーボードが表示されない問題を修正</changelogtext>
+    </changelogversion>
+    <changelogversion
         changeDate="Sep, 20th, 2018"
         versionName="1.8.0"
         >

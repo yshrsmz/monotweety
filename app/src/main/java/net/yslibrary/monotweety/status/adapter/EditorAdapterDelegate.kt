@@ -1,7 +1,9 @@
 package net.yslibrary.monotweety.status.adapter
 
+import android.content.Context
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -48,6 +50,12 @@ class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
             .skip(1)
             .subscribe { listener.onStatusChanged(it.toString()) }
             .setTo(statusInputDisposable)
+
+        holder.statusInput.post {
+            holder.statusInput.requestFocus()
+            val imm = holder.statusInput.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(holder.statusInput, InputMethodManager.SHOW_FORCED)
+        }
 
         return holder
     }

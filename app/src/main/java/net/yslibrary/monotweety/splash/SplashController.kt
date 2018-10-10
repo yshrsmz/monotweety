@@ -64,7 +64,7 @@ class SplashController : ActionBarController(), HasComponent<SplashComponent> {
 
     fun setEvents() {
         viewModel.loggedIn
-            .zipWith(Single.timer(1500, TimeUnit.MILLISECONDS).toObservable(), BiFunction { t1: Boolean, _: Long -> t1 })
+            .zipWith(Single.timer(500, TimeUnit.MILLISECONDS).toObservable(), BiFunction { t1: Boolean, _: Long -> t1 })
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {

@@ -113,7 +113,10 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
 
         viewModel.closeViewRequests
             .bindToLifecycle()
-            .subscribe { activity?.finish() }
+            .subscribe {
+                view?.hideKeyboard()
+                activity?.finish()
+            }
 
         viewModel.isSendableStatus
             .bindToLifecycle()
@@ -191,6 +194,7 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
     override fun handleBack(): Boolean {
         Timber.d("handleBack")
         if (viewModel.canClose) {
+            view?.hideKeyboard()
             return super.handleBack()
         }
 
@@ -217,18 +221,15 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
                 .setTitle(R.string.label_confirm)
                 .setMessage(R.string.label_cancel_confirm)
                 .setCancelable(true)
-                .setNegativeButton(
-                    R.string.label_no,
-                    { dialog, _ ->
-                        viewModel.onConfirmCloseView(allowCloseView = false)
-                        dialog.dismiss()
-                    })
-                .setPositiveButton(
-                    R.string.label_quit,
-                    { _, _ ->
-                        viewModel.onConfirmCloseView(allowCloseView = true)
-                        activity?.onBackPressed()
-                    }).show()
+                .setNegativeButton(R.string.label_no) { dialog, _ ->
+                    viewModel.onConfirmCloseView(allowCloseView = false)
+                    dialog.dismiss()
+                }
+                .setPositiveButton(R.string.label_quit) { _, _ ->
+                    viewModel.onConfirmCloseView(allowCloseView = true)
+                    view?.hideKeyboard()
+                    activity?.onBackPressed()
+                }.show()
         }
     }
 

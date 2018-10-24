@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
     <changelogversion
+        changeDate="Oct, 25th, 2018"
+        versionName="1.8.2"
+        >
+        <changelogtext>安定性の向上</changelogtext>
+        <changelogtext>UXの調整</changelogtext>
+    </changelogversion>
+    <changelogversion
         changeDate="Oct, 11th, 2018"
         versionName="1.8.1"
         >

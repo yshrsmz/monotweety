@@ -47,6 +47,10 @@
 }
 -keepnames class com.fasterxml.jackson.** { *; }
 -dontwarn com.fasterxml.jackson.databind.**
+-keepclassmembers class * {
+     @com.fasterxml.jackson.annotation.* *;
+}
+-keep class com.twitter.twittertext.TwitterTextConfiguration { *; }
 
 # OkHttp3
 -dontwarn okhttp3.**

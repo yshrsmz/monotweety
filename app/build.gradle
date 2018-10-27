@@ -119,12 +119,13 @@ android {
     }
 }
 
-//kapt {
-//    javacOptions {
-//        // https://google.github.io/dagger/compiler-options
-//        option("-Adagger.fastInit", "enabled")
-//    }
-//}
+kapt {
+    correctErrorTypes = true
+    useBuildCache = true
+    javacOptions {
+        option("-Adagger.fastInit=enabled")
+    }
+}
 
 ext.retrofit_version = '2.4.0'
 ext.androidx_version = '1.0.0'

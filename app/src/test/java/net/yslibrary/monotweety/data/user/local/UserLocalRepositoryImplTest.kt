@@ -10,10 +10,10 @@ import net.yslibrary.monotweety.data.local.singleObject
 import net.yslibrary.monotweety.data.local.withObject
 import net.yslibrary.monotweety.data.user.User
 import net.yslibrary.monotweety.readJsonFromAssets
+import net.yslibrary.monotweety.targetApplication
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.RuntimeEnvironment
 import kotlin.properties.Delegates
 import com.twitter.sdk.android.core.models.User as TwitterUser
 
@@ -30,7 +30,7 @@ class UserLocalRepositoryImplTest {
     fun setup() {
         val module = LocalModule()
 
-        storio = module.provideStorIOSQLite(module.provideDbOpenHelper(RuntimeEnvironment.application))
+        storio = module.provideStorIOSQLite(module.provideDbOpenHelper(targetApplication))
 
         repository = UserLocalRepositoryImpl(storio)
     }

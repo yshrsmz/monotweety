@@ -205,12 +205,13 @@ dependencies {
     debugImplementation 'com.facebook.stetho:stetho:1.5.0'
 
 
+    testImplementation 'androidx.test:core:1.0.0'
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.23.0'
     testImplementation "com.nhaarman:mockito-kotlin:1.6.0"
     testImplementation 'org.assertj:assertj-core:3.11.1'
     testImplementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
-    testImplementation 'org.robolectric:robolectric:4.0-alpha-3'
+    testImplementation 'org.robolectric:robolectric:4.0'
 }
 repositories {
     mavenCentral()

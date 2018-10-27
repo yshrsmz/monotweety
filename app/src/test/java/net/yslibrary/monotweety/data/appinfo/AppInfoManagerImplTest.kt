@@ -5,10 +5,10 @@ import android.content.pm.ResolveInfo
 import net.yslibrary.monotweety.ConfiguredRobolectricTestRunner
 import net.yslibrary.monotweety.assertThat
 import net.yslibrary.monotweety.newPackageInfo
+import net.yslibrary.monotweety.targetApplication
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.RuntimeEnvironment
 import org.robolectric.Shadows
 import org.robolectric.shadows.ShadowPackageManager
 import org.robolectric.shadows.ShadowResolveInfo
@@ -24,7 +24,7 @@ class AppInfoManagerImplTest {
 
     @Before
     fun setup() {
-        application = RuntimeEnvironment.application
+        application = targetApplication
         packageManager = Shadows.shadowOf(application.packageManager)
 
         appInfoManager = AppInfoManagerImpl(application.packageManager)
@@ -61,7 +61,7 @@ class AppInfoManagerImplTest {
             ShadowResolveInfo.newResolveInfo("beeter", TwitterApp.BEETER.packageName)
         )
 
-        packageManager.addResolveInfoForIntent(appInfoManager.launcherIntent(), infoList)
+        packageManager.setResolveInfosForIntent(appInfoManager.launcherIntent(), infoList)
 
         appInfoManager.installedApps().test()
             .apply {

@@ -11,8 +11,10 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @UserScope
-class GetUser @Inject constructor(private val userRepository: UserRepository,
-                                  private val sessionManager: SessionManager<TwitterSession>) {
+class GetUser @Inject constructor(
+    private val userRepository: UserRepository,
+    private val sessionManager: SessionManager<TwitterSession>
+) {
 
     private var progress: Progress = Progress.IDLE
 

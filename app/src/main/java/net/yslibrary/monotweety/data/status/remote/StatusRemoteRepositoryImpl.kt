@@ -12,11 +12,22 @@ import javax.inject.Inject
 import com.twitter.sdk.android.core.models.Tweet as TwitterTweet
 
 @UserScope
-class StatusRemoteRepositoryImpl @Inject constructor(private val statusesService: UpdateStatusService) : StatusRemoteRepository {
+class StatusRemoteRepositoryImpl @Inject constructor(private val statusesService: UpdateStatusService) :
+    StatusRemoteRepository {
 
     override fun update(status: String, inReplyToStatusId: Long?): Single<Tweet> {
         return Single.create<TwitterTweet>({ emitter ->
-            val call = statusesService.update(encodeStatus(status), inReplyToStatusId, null, null, null, null, null, null, null)
+            val call = statusesService.update(
+                encodeStatus(status),
+                inReplyToStatusId,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            )
             call.enqueue(object : Callback<TwitterTweet>() {
                 override fun success(result: Result<TwitterTweet>) {
                     emitter.onSuccess(result.data)

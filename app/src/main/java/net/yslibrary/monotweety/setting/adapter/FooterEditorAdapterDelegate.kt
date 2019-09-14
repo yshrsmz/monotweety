@@ -1,30 +1,34 @@
 package net.yslibrary.monotweety.setting.adapter
 
 import android.content.Context
-import androidx.appcompat.app.AlertDialog
-import androidx.recyclerview.widget.RecyclerView
-import androidx.appcompat.widget.SwitchCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.SwitchCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.base.inflate
 import timber.log.Timber
 
-class FooterEditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<List<SettingAdapter.Item>>() {
+class FooterEditorAdapterDelegate(
+    private val listener: Listener
+) : AdapterDelegate<List<SettingAdapter.Item>>() {
 
     override fun isForViewType(items: List<SettingAdapter.Item>, position: Int): Boolean {
         return items[position] is Item
     }
 
-    override fun onBindViewHolder(items: List<SettingAdapter.Item>,
-                                  position: Int,
-                                  holder: RecyclerView.ViewHolder,
-                                  payloads: MutableList<Any>) {
+    override fun onBindViewHolder(
+        items: List<SettingAdapter.Item>,
+        position: Int,
+        holder: RecyclerView.ViewHolder,
+        payloads: MutableList<Any>
+    ) {
         val item = items[position] as Item
 
         if (holder is ViewHolder) {
@@ -78,16 +82,19 @@ class FooterEditorAdapterDelegate(private val listener: Listener) : AdapterDeleg
 
         companion object {
             fun create(parent: ViewGroup): ViewHolder {
-                val view = LayoutInflater.from(parent.context).inflate(R.layout.vh_2line_text, parent, false)
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.vh_2line_text, parent, false)
                 return ViewHolder(view)
             }
         }
     }
 
-    data class Item(val enabled: Boolean,
-                    val checked: Boolean,
-                    val footerText: String,
-                    override val type: SettingAdapter.ViewType) : SettingAdapter.Item
+    data class Item(
+        val enabled: Boolean,
+        val checked: Boolean,
+        val footerText: String,
+        override val type: SettingAdapter.ViewType
+    ) : SettingAdapter.Item
 
     interface Listener {
         fun onFooterUpdated(enabled: Boolean, footerText: String)

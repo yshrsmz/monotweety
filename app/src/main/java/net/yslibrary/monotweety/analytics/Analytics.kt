@@ -13,7 +13,8 @@ class Analytics @Inject constructor(private val analytics: FirebaseAnalytics) {
 
         private const val EVENT_TWEET_FROM_EDITOR = "tweet_from_editor"
         private const val EVENT_TWEET_FROM_NOTIFICATION = "tweet_from_notification"
-        private const val EVENT_TWEET_FROM_NOTIFICATION_BUT_TOO_LONG = "tweet_from_notification_but_too_long"
+        private const val EVENT_TWEET_FROM_NOTIFICATION_BUT_TOO_LONG =
+            "tweet_from_notification_but_too_long"
 
         const val VIEW_SPLASH = "splash"
         const val VIEW_LOGIN = "login"
@@ -36,7 +37,10 @@ class Analytics @Inject constructor(private val analytics: FirebaseAnalytics) {
     fun tweetFromNotificationButTooLong() {
         Bundle().apply {
             putString(FirebaseAnalytics.Param.ITEM_NAME, NAME_TWEET)
-            putString(FirebaseAnalytics.Param.CONTENT_TYPE, EVENT_TWEET_FROM_NOTIFICATION_BUT_TOO_LONG)
+            putString(
+                FirebaseAnalytics.Param.CONTENT_TYPE,
+                EVENT_TWEET_FROM_NOTIFICATION_BUT_TOO_LONG
+            )
         }.let {
             Timber.i("analytics event: %s", EVENT_TWEET_FROM_NOTIFICATION_BUT_TOO_LONG)
             analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, it)
@@ -67,6 +71,13 @@ class Analytics @Inject constructor(private val analytics: FirebaseAnalytics) {
     }
 
     @Retention(AnnotationRetention.SOURCE)
-    @StringDef(VIEW_SPLASH, VIEW_LOGIN, VIEW_SETTING, VIEW_LICENSE, VIEW_CHANGELOG, VIEW_COMPOSE_STATUS)
+    @StringDef(
+        VIEW_SPLASH,
+        VIEW_LOGIN,
+        VIEW_SETTING,
+        VIEW_LICENSE,
+        VIEW_CHANGELOG,
+        VIEW_COMPOSE_STATUS
+    )
     annotation class ViewEventType
 }

@@ -8,8 +8,10 @@ import net.yslibrary.monotweety.data.setting.SettingDataManager
 import javax.inject.Inject
 
 @AppScope
-class SelectedTimelineAppInfoManager @Inject constructor(private val appInfoManager: AppInfoManager,
-                                                         private val settingDataManager: SettingDataManager) {
+class SelectedTimelineAppInfoManager @Inject constructor(
+    private val appInfoManager: AppInfoManager,
+    private val settingDataManager: SettingDataManager
+) {
 
     fun get(): Observable<AppInfo> {
         return settingDataManager.timelineAppPackageName()

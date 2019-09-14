@@ -8,7 +8,9 @@ import net.yslibrary.monotweety.data.setting.SettingDataManager
 import javax.inject.Inject
 
 @AppScope
-class FooterStateManager @Inject constructor(private val settingDataManager: SettingDataManager) {
+class FooterStateManager @Inject constructor(
+    private val settingDataManager: SettingDataManager
+) {
 
     private val subject: PublishSubject<Unit> = PublishSubject.create()
 
@@ -30,6 +32,8 @@ class FooterStateManager @Inject constructor(private val settingDataManager: Set
         subject.onNext(Unit)
     }
 
-    data class State(val enabled: Boolean,
-                     val text: String)
+    data class State(
+        val enabled: Boolean,
+        val text: String
+    )
 }

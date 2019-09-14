@@ -1,28 +1,40 @@
 package net.yslibrary.monotweety.setting.adapter
 
-import androidx.recyclerview.widget.RecyclerView
-import androidx.appcompat.widget.SwitchCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SwitchCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.findById
 
-class SwitchAdapterDelegate(private val listener: Listener) : AdapterDelegate<List<SettingAdapter.Item>>() {
+class SwitchAdapterDelegate(
+    private val listener: Listener
+) : AdapterDelegate<List<SettingAdapter.Item>>() {
 
     override fun isForViewType(items: List<SettingAdapter.Item>, position: Int): Boolean {
         return items[position] is Item
     }
 
-    override fun onBindViewHolder(items: List<SettingAdapter.Item>, position: Int, holder: RecyclerView.ViewHolder, payloads: MutableList<Any?>) {
+    override fun onBindViewHolder(
+        items: List<SettingAdapter.Item>,
+        position: Int,
+        holder: RecyclerView.ViewHolder,
+        payloads: MutableList<Any?>
+    ) {
         val item = items[position] as Item
         if (holder is SwitchViewHolder) {
             holder.switchButton.text = item.title
             holder.switchButton.isChecked = item.checked
             holder.switchButton.isEnabled = item.enabled
 
-            holder.switchButton.setOnCheckedChangeListener { _, checked -> listener.onClick(item, checked) }
+            holder.switchButton.setOnCheckedChangeListener { _, checked ->
+                listener.onClick(
+                    item,
+                    checked
+                )
+            }
         }
     }
 
@@ -30,10 +42,12 @@ class SwitchAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
         return SwitchViewHolder.create(parent)
     }
 
-    data class Item(val title: String,
-                    val checked: Boolean,
-                    val enabled: Boolean,
-                    override val type: SettingAdapter.ViewType) : SettingAdapter.Item
+    data class Item(
+        val title: String,
+        val checked: Boolean,
+        val enabled: Boolean,
+        override val type: SettingAdapter.ViewType
+    ) : SettingAdapter.Item
 
     class SwitchViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -41,7 +55,8 @@ class SwitchAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
 
         companion object {
             fun create(parent: ViewGroup): SwitchViewHolder {
-                val view = LayoutInflater.from(parent.context).inflate(R.layout.vh_switch, parent, false)
+                val view =
+                    LayoutInflater.from(parent.context).inflate(R.layout.vh_switch, parent, false)
                 return SwitchViewHolder(view)
             }
         }

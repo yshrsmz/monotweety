@@ -11,9 +11,11 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @UserScope
-class UserRepositoryImpl @Inject constructor(private val remoteRepository: UserRemoteRepository,
-                                             private val localRepository: UserLocalRepository,
-                                             private val clock: Clock) : UserRepository {
+class UserRepositoryImpl @Inject constructor(
+    private val remoteRepository: UserRemoteRepository,
+    private val localRepository: UserLocalRepository,
+    private val clock: Clock
+) : UserRepository {
 
     override fun get(id: Long): Flowable<Optional<User>> {
         return localRepository.getById(id)

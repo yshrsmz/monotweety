@@ -30,7 +30,10 @@ open class AppModule(private val context: Context) {
 
     @AppScope
     @Provides
-    open fun provideAppLifecycleCallbacks(@Named(Names.FOR_APP) context: Context, notificationManager: NotificationManager): App.LifecycleCallbacks {
+    open fun provideAppLifecycleCallbacks(
+        @Named(Names.FOR_APP) context: Context,
+        notificationManager: NotificationManager
+    ): App.LifecycleCallbacks {
         return AppLifecycleCallbacks(context, notificationManager)
     }
 

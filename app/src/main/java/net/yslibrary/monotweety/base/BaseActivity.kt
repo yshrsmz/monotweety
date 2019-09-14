@@ -2,10 +2,14 @@ package net.yslibrary.monotweety.base
 
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
 import android.view.ViewGroup
-import com.bluelinelabs.conductor.*
+import androidx.appcompat.app.AppCompatActivity
+import com.bluelinelabs.conductor.ChangeHandlerFrameLayout
+import com.bluelinelabs.conductor.Conductor
+import com.bluelinelabs.conductor.Controller
+import com.bluelinelabs.conductor.Router
+import com.bluelinelabs.conductor.RouterTransaction
+import com.google.android.material.snackbar.Snackbar
 import net.yslibrary.monotweety.base.di.Names
 import timber.log.Timber
 import javax.inject.Inject
@@ -48,5 +52,6 @@ abstract class BaseActivity : AppCompatActivity() {
         router.onActivityResult(requestCode, resultCode, data)
     }
 
-    fun showSnackBar(message: String) = Snackbar.make(container.parent as ViewGroup, message, Snackbar.LENGTH_SHORT).show()
+    fun showSnackBar(message: String) =
+        Snackbar.make(container.parent as ViewGroup, message, Snackbar.LENGTH_SHORT).show()
 }

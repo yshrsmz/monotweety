@@ -77,9 +77,11 @@ class LoginController : ActionBarController(), HasComponent<LoginComponent> {
             .doOnNext { toast(getString(R.string.message_login_succeeded, it.userName))?.show() }
             .subscribe {
                 analytics.loginCompleted()
-                router.setRoot(RouterTransaction.with(SettingController())
-                    .popChangeHandler(SimpleSwapChangeHandler())
-                    .pushChangeHandler(SimpleSwapChangeHandler()))
+                router.setRoot(
+                    RouterTransaction.with(SettingController())
+                        .popChangeHandler(SimpleSwapChangeHandler())
+                        .pushChangeHandler(SimpleSwapChangeHandler())
+                )
             }
 
         viewModel.loginFailed
@@ -100,7 +102,10 @@ class LoginController : ActionBarController(), HasComponent<LoginComponent> {
         }
     }
 
-    override fun onChangeEnded(changeHandler: ControllerChangeHandler, changeType: ControllerChangeType) {
+    override fun onChangeEnded(
+        changeHandler: ControllerChangeHandler,
+        changeType: ControllerChangeType
+    ) {
         super.onChangeEnded(changeHandler, changeType)
         refWatcherDelegate.handleOnChangeEnded(isDestroyed, changeType)
     }

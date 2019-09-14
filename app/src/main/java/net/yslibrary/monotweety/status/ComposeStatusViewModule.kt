@@ -13,15 +13,18 @@ class ComposeStatusViewModule(private val status: String?) {
 
     @ControllerScope
     @Provides
-    fun provideComposeStatusViewModel(config: Config,
-                                      checkStatusLength: CheckStatusLength,
-                                      updateStatus: UpdateStatus,
-                                      footerStateManager: FooterStateManager): ComposeStatusViewModel {
-        val _status: String = if (status.isNullOrBlank()) "" else status!!
-        return ComposeStatusViewModel(_status,
+    fun provideComposeStatusViewModel(
+        config: Config,
+        checkStatusLength: CheckStatusLength,
+        updateStatus: UpdateStatus,
+        footerStateManager: FooterStateManager
+    ): ComposeStatusViewModel {
+        return ComposeStatusViewModel(
+            if (status.isNullOrBlank()) "" else status,
             config,
             checkStatusLength,
             updateStatus,
-            footerStateManager)
+            footerStateManager
+        )
     }
 }

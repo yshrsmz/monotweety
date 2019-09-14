@@ -1,10 +1,12 @@
 package net.yslibrary.monotweety
 
-data class Config(val developerUrl: String,
-                  val googlePlayUrl: String,
-                  val githubUrl: String,
-                  val privacyPolicyUrl: String,
-                  val statusMaxLength: Int = 140) {
+data class Config(
+    val developerUrl: String,
+    val googlePlayUrl: String,
+    val githubUrl: String,
+    val privacyPolicyUrl: String,
+    val statusMaxLength: Int = 140
+) {
     companion object {
         fun init(): Config {
             return Config(

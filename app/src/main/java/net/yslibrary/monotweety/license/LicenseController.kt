@@ -1,11 +1,11 @@
 package net.yslibrary.monotweety.license
 
 import android.content.Context
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bluelinelabs.conductor.ControllerChangeHandler
 import com.bluelinelabs.conductor.ControllerChangeType
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -37,7 +37,8 @@ class LicenseController : ActionBarController() {
         get() = getString(R.string.title_license)
 
     val component: LicenseComponent by lazy {
-        val activityBus = getComponentProvider<LicenseViewModule.DependencyProvider>(activity!!).activityBus()
+        val activityBus =
+            getComponentProvider<LicenseViewModule.DependencyProvider>(activity!!).activityBus()
         DaggerLicenseComponent.builder()
             .userComponent(App.userComponent(applicationContext!!))
             .licenseViewModule(LicenseViewModule(activityBus))
@@ -60,7 +61,10 @@ class LicenseController : ActionBarController() {
         return view
     }
 
-    override fun onChangeEnded(changeHandler: ControllerChangeHandler, changeType: ControllerChangeType) {
+    override fun onChangeEnded(
+        changeHandler: ControllerChangeHandler,
+        changeType: ControllerChangeType
+    ) {
         super.onChangeEnded(changeHandler, changeType)
         refWatcherDelegate.handleOnChangeEnded(isDestroyed, changeType)
     }

@@ -15,7 +15,9 @@ import net.yslibrary.monotweety.base.inflate
 import net.yslibrary.monotweety.base.setTo
 import net.yslibrary.monotweety.base.showKeyboard
 
-class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<List<ComposeStatusAdapter.Item>>() {
+class EditorAdapterDelegate(
+    private val listener: Listener
+) : AdapterDelegate<List<ComposeStatusAdapter.Item>>() {
 
     val statusInputDisposable = SerialDisposable()
 
@@ -23,22 +25,34 @@ class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
         return items[position].viewType == ComposeStatusAdapter.ViewType.EDITOR
     }
 
-    override fun onBindViewHolder(items: List<ComposeStatusAdapter.Item>,
-                                  position: Int,
-                                  holder: RecyclerView.ViewHolder,
-                                  payloads: MutableList<Any>) {
+    override fun onBindViewHolder(
+        items: List<ComposeStatusAdapter.Item>,
+        position: Int,
+        holder: RecyclerView.ViewHolder,
+        payloads: MutableList<Any>
+    ) {
 
         if (holder is ViewHolder) {
             val item = items[position] as Item
 
-            val shouldUpdateStatus = item.clear || item.initialValue || holder.statusInput.text.isNullOrBlank()
+            val shouldUpdateStatus =
+                item.clear || item.initialValue || holder.statusInput.text.isNullOrBlank()
 
             if (shouldUpdateStatus) {
                 holder.statusInput.setText(item.status, TextView.BufferType.EDITABLE)
             }
             val counterColor = if (item.valid) R.color.colorTextSecondary else R.color.red
-            holder.statusCounter.setTextColor(ContextCompat.getColor(holder.itemView.context, counterColor))
-            holder.statusCounter.text = holder.itemView.context.getString(R.string.label_status_counter, item.statusLength, item.maxLength)
+            holder.statusCounter.setTextColor(
+                ContextCompat.getColor(
+                    holder.itemView.context,
+                    counterColor
+                )
+            )
+            holder.statusCounter.text = holder.itemView.context.getString(
+                R.string.label_status_counter,
+                item.statusLength,
+                item.maxLength
+            )
         }
     }
 
@@ -57,13 +71,15 @@ class EditorAdapterDelegate(private val listener: Listener) : AdapterDelegate<Li
         return holder
     }
 
-    data class Item(val status: String,
-                    val statusLength: Int,
-                    val maxLength: Int,
-                    val valid: Boolean,
-                    val clear: Boolean,
-                    val initialValue: Boolean = false,
-                    override val viewType: ComposeStatusAdapter.ViewType = ComposeStatusAdapter.ViewType.EDITOR) : ComposeStatusAdapter.Item
+    data class Item(
+        val status: String,
+        val statusLength: Int,
+        val maxLength: Int,
+        val valid: Boolean,
+        val clear: Boolean,
+        val initialValue: Boolean = false,
+        override val viewType: ComposeStatusAdapter.ViewType = ComposeStatusAdapter.ViewType.EDITOR
+    ) : ComposeStatusAdapter.Item
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 

@@ -36,7 +36,11 @@ fun createNotificationChannel(context: Context, notificationManager: Notificatio
     }
 
     val channels = Channel.values().map { channelInfo ->
-        NotificationChannel(channelInfo.id, context.getString(channelInfo.nameResId), channelInfo.importance)
+        NotificationChannel(
+            channelInfo.id,
+            context.getString(channelInfo.nameResId),
+            channelInfo.importance
+        )
             .apply {
                 description = context.getString(channelInfo.descriptionResId)
                 enableLights(false)

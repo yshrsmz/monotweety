@@ -6,4 +6,5 @@ import net.yslibrary.monotweety.data.user.User
 class UserSQLiteTypeMapping : SQLiteTypeMapping<User>(
     UserPutResolver(),
     UserGetResolver(),
-    UserDeleteResolver())
+    UserDeleteResolver()
+)

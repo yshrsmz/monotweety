@@ -1,24 +1,28 @@
 package net.yslibrary.monotweety.setting.adapter
 
-import androidx.recyclerview.widget.RecyclerView
-import androidx.appcompat.widget.SwitchCompat
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.SwitchCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.base.inflate
 
-class TwoLineSwitchAdapterDelegate(private val listener: Listener) : AdapterDelegate<List<SettingAdapter.Item>>() {
+class TwoLineSwitchAdapterDelegate(
+    private val listener: Listener
+) : AdapterDelegate<List<SettingAdapter.Item>>() {
     override fun isForViewType(items: List<SettingAdapter.Item>, position: Int): Boolean {
         return items[position] is Item
     }
 
-    override fun onBindViewHolder(items: List<SettingAdapter.Item>,
-                                  position: Int,
-                                  holder: RecyclerView.ViewHolder,
-                                  payloads: MutableList<Any>) {
+    override fun onBindViewHolder(
+        items: List<SettingAdapter.Item>,
+        position: Int,
+        holder: RecyclerView.ViewHolder,
+        payloads: MutableList<Any>
+    ) {
         val item = items[position] as Item
         if (holder is ViewHolder) {
             holder.title.text = item.title
@@ -37,11 +41,13 @@ class TwoLineSwitchAdapterDelegate(private val listener: Listener) : AdapterDele
         return ViewHolder.create(parent)
     }
 
-    data class Item(val title: String,
-                    val subTitle: String,
-                    val checked: Boolean,
-                    val enabled: Boolean,
-                    override val type: SettingAdapter.ViewType) : SettingAdapter.Item
+    data class Item(
+        val title: String,
+        val subTitle: String,
+        val checked: Boolean,
+        val enabled: Boolean,
+        override val type: SettingAdapter.ViewType
+    ) : SettingAdapter.Item
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 

@@ -38,8 +38,8 @@ android {
         applicationId "net.yslibrary.monotweety"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 56
-        versionName "1.8.3"
+        versionCode 58
+        versionName "1.9.0"
 
         buildConfigField 'String', 'TWITTER_API_KEY', TWITTER_API_KEY
         buildConfigField 'String', 'TWITTER_API_SECRET', TWITTER_API_SECRET

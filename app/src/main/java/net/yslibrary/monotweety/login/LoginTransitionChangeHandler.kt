@@ -2,7 +2,11 @@ package net.yslibrary.monotweety.login
 
 import android.annotation.TargetApi
 import android.os.Build
-import android.transition.*
+import android.transition.ArcMotion
+import android.transition.Fade
+import android.transition.Transition
+import android.transition.TransitionInflater
+import android.transition.TransitionSet
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
@@ -11,7 +15,12 @@ import net.yslibrary.monotweety.R
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 class LoginTransitionChangeHandler : TransitionChangeHandler() {
-    override fun getTransition(container: ViewGroup, from: View?, to: View?, isPush: Boolean): Transition {
+    override fun getTransition(
+        container: ViewGroup,
+        from: View?,
+        to: View?,
+        isPush: Boolean
+    ): Transition {
         val context = container.context
 
         val move = TransitionInflater.from(context)

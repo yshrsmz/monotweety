@@ -64,15 +64,19 @@ class SplashController : ActionBarController(), HasComponent<SplashComponent> {
 
     fun setEvents() {
         viewModel.loggedIn
-            .zipWith(Single.timer(500, TimeUnit.MILLISECONDS).toObservable(), BiFunction { t1: Boolean, _: Long -> t1 })
+            .zipWith(
+                Single.timer(500, TimeUnit.MILLISECONDS).toObservable(),
+                BiFunction { t1: Boolean, _: Long -> t1 })
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 val next: Controller = if (it) SettingController() else LoginController()
 
-                router.setRoot(RouterTransaction.with(next)
-                    .pushChangeHandler(if (it) SimpleSwapChangeHandler() else LoginTransitionChangeHandlerCompat())
-                    .popChangeHandler(if (it) SimpleSwapChangeHandler() else LoginTransitionChangeHandlerCompat()))
+                router.setRoot(
+                    RouterTransaction.with(next)
+                        .pushChangeHandler(if (it) SimpleSwapChangeHandler() else LoginTransitionChangeHandlerCompat())
+                        .popChangeHandler(if (it) SimpleSwapChangeHandler() else LoginTransitionChangeHandlerCompat())
+                )
             }.addTo(disposables)
     }
 
@@ -81,7 +85,10 @@ class SplashController : ActionBarController(), HasComponent<SplashComponent> {
         disposables.dispose()
     }
 
-    override fun onChangeEnded(changeHandler: ControllerChangeHandler, changeType: ControllerChangeType) {
+    override fun onChangeEnded(
+        changeHandler: ControllerChangeHandler,
+        changeType: ControllerChangeType
+    ) {
         super.onChangeEnded(changeHandler, changeType)
         refWatcherDelegate.handleOnChangeEnded(isDestroyed, changeType)
     }

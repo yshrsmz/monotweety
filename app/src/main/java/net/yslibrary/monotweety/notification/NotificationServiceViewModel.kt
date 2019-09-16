@@ -14,11 +14,13 @@ import net.yslibrary.monotweety.status.domain.CheckStatusLength
 import net.yslibrary.monotweety.status.domain.UpdateStatus
 import timber.log.Timber
 
-class NotificationServiceViewModel(private val notificationEnabledManager: NotificationEnabledManager,
-                                   private val checkStatusLength: CheckStatusLength,
-                                   private val updateStatus: UpdateStatus,
-                                   private val footerStateManager: FooterStateManager,
-                                   private val selectedTimelineAppInfoManager: SelectedTimelineAppInfoManager) {
+class NotificationServiceViewModel(
+    private val notificationEnabledManager: NotificationEnabledManager,
+    private val checkStatusLength: CheckStatusLength,
+    private val updateStatus: UpdateStatus,
+    private val footerStateManager: FooterStateManager,
+    private val selectedTimelineAppInfoManager: SelectedTimelineAppInfoManager
+) {
 
     private val overlongStatusSubject = PublishSubject.create<OverlongStatus>()
 
@@ -44,7 +46,12 @@ class NotificationServiceViewModel(private val notificationEnabledManager: Notif
             updateNotificatoinRequestsSubject.startWith(Unit),
             footerStateManager.get(),
             selectedTimelineAppInfoManager.get(),
-            Function3 { _: Unit, footerState: FooterStateManager.State, appInfo: AppInfo -> NotificationInfo(footerState, appInfo) })
+            Function3 { _: Unit, footerState: FooterStateManager.State, appInfo: AppInfo ->
+                NotificationInfo(
+                    footerState,
+                    appInfo
+                )
+            })
 
     val footerState: Observable<FooterStateManager.State>
         get() = footerStateManager.get()
@@ -70,7 +77,12 @@ class NotificationServiceViewModel(private val notificationEnabledManager: Notif
                 if (it.valid) {
                     updateStatus.execute(it.status)
                 } else {
-                    Completable.error(OverlongStatusException(status = text.trim(), length = it.length))
+                    Completable.error(
+                        OverlongStatusException(
+                            status = text.trim(),
+                            length = it.length
+                        )
+                    )
                 }
             }
             .subscribe({
@@ -97,6 +109,8 @@ class NotificationServiceViewModel(private val notificationEnabledManager: Notif
 
     data class OverlongStatus(val status: String, val length: Int)
 
-    data class NotificationInfo(val footerState: FooterStateManager.State,
-                                val timelineApp: AppInfo)
+    data class NotificationInfo(
+        val footerState: FooterStateManager.State,
+        val timelineApp: AppInfo
+    )
 }

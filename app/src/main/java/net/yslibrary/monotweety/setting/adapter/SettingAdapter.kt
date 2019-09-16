@@ -7,13 +7,17 @@ import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.data.appinfo.AppInfo
 import net.yslibrary.monotweety.data.user.User
 
-class SettingAdapter(private val res: Resources, listener: Listener) : ListDelegationAdapter<List<SettingAdapter.Item>>() {
+class SettingAdapter(
+    private val res: Resources,
+    listener: Listener
+) : ListDelegationAdapter<List<SettingAdapter.Item>>() {
 
     init {
 
         delegatesManager.addDelegate(SubHeaderAdapterDelegate())
 
-        delegatesManager.addDelegate(ProfileAdapterDelegate(object : ProfileAdapterDelegate.Listener {
+        delegatesManager.addDelegate(ProfileAdapterDelegate(object :
+            ProfileAdapterDelegate.Listener {
             override fun onLogoutClick() {
                 listener.onLogoutClick()
             }
@@ -23,7 +27,8 @@ class SettingAdapter(private val res: Resources, listener: Listener) : ListDeleg
             }
         }))
 
-        delegatesManager.addDelegate(OneLineTextAdapterDelegate(object : OneLineTextAdapterDelegate.Listener {
+        delegatesManager.addDelegate(OneLineTextAdapterDelegate(object :
+            OneLineTextAdapterDelegate.Listener {
             override fun onClick(item: OneLineTextAdapterDelegate.Item) {
                 when (item.type) {
                     ViewType.PRIVACY_POLICY -> listener.onPrivacyPolicyClick()
@@ -37,7 +42,8 @@ class SettingAdapter(private val res: Resources, listener: Listener) : ListDeleg
             }
         }))
 
-        delegatesManager.addDelegate(TwoLineTextAdapterDelegate(object : TwoLineTextAdapterDelegate.Listener {
+        delegatesManager.addDelegate(TwoLineTextAdapterDelegate(object :
+            TwoLineTextAdapterDelegate.Listener {
             override fun onClick(item: TwoLineTextAdapterDelegate.Item) {
                 when (item.type) {
                     ViewType.APP_VERSION -> listener.onAppVersionClick()
@@ -50,36 +56,82 @@ class SettingAdapter(private val res: Resources, listener: Listener) : ListDeleg
             }
         }))
 
-        delegatesManager.addDelegate(FooterEditorAdapterDelegate(object : FooterEditorAdapterDelegate.Listener {
+        delegatesManager.addDelegate(FooterEditorAdapterDelegate(object :
+            FooterEditorAdapterDelegate.Listener {
             override fun onFooterUpdated(enabled: Boolean, footerText: String) {
                 listener.onFooterStateChanged(enabled, footerText)
             }
         }))
 
-        delegatesManager.addDelegate(TimelineAppAdapterDelegate(object : TimelineAppAdapterDelegate.Listener {
+        delegatesManager.addDelegate(TimelineAppAdapterDelegate(object :
+            TimelineAppAdapterDelegate.Listener {
             override fun onTimelineAppChanged(selectedApp: AppInfo) {
                 listener.onTimelineAppChanged(selectedApp)
             }
         }))
 
         items = mutableListOf(
-            SubHeaderAdapterDelegate.Item(res.getString(R.string.label_account), ViewType.SUBHEADER_ACCOUNT),
+            SubHeaderAdapterDelegate.Item(
+                res.getString(R.string.label_account),
+                ViewType.SUBHEADER_ACCOUNT
+            ),
             ProfileAdapterDelegate.Item.empty(),
-            SubHeaderAdapterDelegate.Item(res.getString(R.string.label_setting), ViewType.SUBHEADER_SETTING),
+            SubHeaderAdapterDelegate.Item(
+                res.getString(R.string.label_setting),
+                ViewType.SUBHEADER_SETTING
+            ),
             FooterEditorAdapterDelegate.Item(true, false, "", ViewType.FOOTER),
             TimelineAppAdapterDelegate.Item(true, emptyList(), AppInfo.empty()),
-            SubHeaderAdapterDelegate.Item(res.getString(R.string.label_privacy), ViewType.SUBHEADER_PRIVACY),
-            OneLineTextAdapterDelegate.Item(res.getString(R.string.label_privacy_policy), true, ViewType.PRIVACY_POLICY),
-            SubHeaderAdapterDelegate.Item(res.getString(R.string.label_others), ViewType.SUBHEADER_OTHERS),
-            TwoLineTextAdapterDelegate.Item(res.getString(R.string.label_app_version, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE),
-                res.getString(R.string.sub_label_app_version), true, ViewType.APP_VERSION),
-            OneLineTextAdapterDelegate.Item(res.getString(R.string.label_license), true, ViewType.LICENSE),
-            SubHeaderAdapterDelegate.Item(res.getString(R.string.label_support_developer), ViewType.SUBHEADER_DEVELOPER),
-            TwoLineTextAdapterDelegate.Item(res.getString(R.string.label_developer),
-                res.getString(R.string.sub_label_developer), true, ViewType.DEVELOPER),
-            TwoLineTextAdapterDelegate.Item(res.getString(R.string.label_share), res.getString(R.string.sub_label_share), true, ViewType.SHARE),
-            OneLineTextAdapterDelegate.Item(res.getString(R.string.label_googleplay), true, ViewType.GOOGLE_PLAY),
-            OneLineTextAdapterDelegate.Item(res.getString(R.string.label_github), true, ViewType.GITHUB)
+            SubHeaderAdapterDelegate.Item(
+                res.getString(R.string.label_privacy),
+                ViewType.SUBHEADER_PRIVACY
+            ),
+            OneLineTextAdapterDelegate.Item(
+                res.getString(R.string.label_privacy_policy),
+                true,
+                ViewType.PRIVACY_POLICY
+            ),
+            SubHeaderAdapterDelegate.Item(
+                res.getString(R.string.label_others),
+                ViewType.SUBHEADER_OTHERS
+            ),
+            TwoLineTextAdapterDelegate.Item(
+                res.getString(
+                    R.string.label_app_version,
+                    BuildConfig.VERSION_NAME,
+                    BuildConfig.VERSION_CODE
+                ),
+                res.getString(R.string.sub_label_app_version), true, ViewType.APP_VERSION
+            ),
+            OneLineTextAdapterDelegate.Item(
+                res.getString(R.string.label_license),
+                true,
+                ViewType.LICENSE
+            ),
+            SubHeaderAdapterDelegate.Item(
+                res.getString(R.string.label_support_developer),
+                ViewType.SUBHEADER_DEVELOPER
+            ),
+            TwoLineTextAdapterDelegate.Item(
+                res.getString(R.string.label_developer),
+                res.getString(R.string.sub_label_developer), true, ViewType.DEVELOPER
+            ),
+            TwoLineTextAdapterDelegate.Item(
+                res.getString(R.string.label_share),
+                res.getString(R.string.sub_label_share),
+                true,
+                ViewType.SHARE
+            ),
+            OneLineTextAdapterDelegate.Item(
+                res.getString(R.string.label_googleplay),
+                true,
+                ViewType.GOOGLE_PLAY
+            ),
+            OneLineTextAdapterDelegate.Item(
+                res.getString(R.string.label_github),
+                true,
+                ViewType.GITHUB
+            )
         )
     }
 
@@ -90,13 +142,15 @@ class SettingAdapter(private val res: Resources, listener: Listener) : ListDeleg
 
     fun updateFooterState(enabled: Boolean, footerText: String) {
         val item = items[ViewType.FOOTER.ordinal] as FooterEditorAdapterDelegate.Item
-        (items as MutableList)[ViewType.FOOTER.ordinal] = item.copy(enabled = true, checked = enabled, footerText = footerText)
+        (items as MutableList)[ViewType.FOOTER.ordinal] =
+            item.copy(enabled = true, checked = enabled, footerText = footerText)
         notifyItemChanged(ViewType.FOOTER.ordinal)
     }
 
     fun updateTimelineApp(selectedApp: AppInfo, apps: List<AppInfo>) {
         val item = items[ViewType.TIMELINE_APP.ordinal] as TimelineAppAdapterDelegate.Item
-        (items as MutableList)[ViewType.TIMELINE_APP.ordinal] = item.copy(enabled = true, selectedApp = selectedApp, apps = apps)
+        (items as MutableList)[ViewType.TIMELINE_APP.ordinal] =
+            item.copy(enabled = true, selectedApp = selectedApp, apps = apps)
         notifyItemChanged(ViewType.TIMELINE_APP.ordinal)
     }
 

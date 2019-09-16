@@ -12,7 +12,8 @@ class EventBus {
 
     fun <R : Event> on(kClass: KClass<R>): Observable<R> = bus.ofType(kClass.java)
 
-    fun <R : Event> on(kClass: KClass<R>, initialValue: R): Observable<R> = bus.ofType(kClass.java).startWith(initialValue)
+    fun <R : Event> on(kClass: KClass<R>, initialValue: R): Observable<R> =
+        bus.ofType(kClass.java).startWith(initialValue)
 
     fun hasObservers() = bus.hasObservers()
 

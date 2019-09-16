@@ -15,8 +15,10 @@ import net.yslibrary.monotweety.user.domain.GetUser
 import javax.inject.Named
 
 @Module
-class SettingViewModule(private val activityBus: EventBus,
-                        private val navigator: Navigator) {
+class SettingViewModule(
+    private val activityBus: EventBus,
+    private val navigator: Navigator
+) {
 
     @ControllerScope
     @Provides
@@ -29,18 +31,22 @@ class SettingViewModule(private val activityBus: EventBus,
 
     @ControllerScope
     @Provides
-    fun provideSettingViewModel(config: Config,
-                                notificationEnabledManager: NotificationEnabledManager,
-                                getUser: GetUser,
-                                footerStateManager: FooterStateManager,
-                                getInstalledSupportedApps: GetInstalledSupportedApps,
-                                selectedTimelineAppInfoManager: SelectedTimelineAppInfoManager): SettingViewModel {
-        return SettingViewModel(config,
+    fun provideSettingViewModel(
+        config: Config,
+        notificationEnabledManager: NotificationEnabledManager,
+        getUser: GetUser,
+        footerStateManager: FooterStateManager,
+        getInstalledSupportedApps: GetInstalledSupportedApps,
+        selectedTimelineAppInfoManager: SelectedTimelineAppInfoManager
+    ): SettingViewModel {
+        return SettingViewModel(
+            config,
             notificationEnabledManager,
             getUser,
             footerStateManager,
             getInstalledSupportedApps,
-            selectedTimelineAppInfoManager)
+            selectedTimelineAppInfoManager
+        )
     }
 
     interface DependencyProvider {

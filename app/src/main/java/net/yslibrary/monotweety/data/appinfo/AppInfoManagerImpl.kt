@@ -8,7 +8,8 @@ import net.yslibrary.monotweety.base.toSingle
 import javax.inject.Inject
 
 @AppScope
-class AppInfoManagerImpl @Inject constructor(private val packageManager: PackageManager) : AppInfoManager {
+class AppInfoManagerImpl @Inject constructor(private val packageManager: PackageManager) :
+    AppInfoManager {
 
     override fun isInstalled(packageName: String): Single<Boolean> {
         return Single.fromCallable {
@@ -24,9 +25,11 @@ class AppInfoManagerImpl @Inject constructor(private val packageManager: Package
     override fun installedApps(): Single<List<AppInfo>> {
         return packageManager.queryIntentActivities(launcherIntent(), 0)
             .map {
-                AppInfo(name = it.activityInfo.applicationInfo.loadLabel(packageManager).toString(),
+                AppInfo(
+                    name = it.activityInfo.applicationInfo.loadLabel(packageManager).toString(),
                     packageName = it.activityInfo.packageName,
-                    installed = true)
+                    installed = true
+                )
             }
             .toSingle()
     }
@@ -35,10 +38,20 @@ class AppInfoManagerImpl @Inject constructor(private val packageManager: Package
         return Single.fromCallable {
             packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA)
         }.map {
-            AppInfo(name = it.loadLabel(packageManager).toString(),
+            AppInfo(
+                name = it.loadLabel(packageManager).toString(),
                 packageName = it.packageName,
-                installed = true)
-        }.onErrorResumeNext { Single.just(AppInfo(name = "", packageName = packageName, installed = false)) }
+                installed = true
+            )
+        }.onErrorResumeNext {
+            Single.just(
+                AppInfo(
+                    name = "",
+                    packageName = packageName,
+                    installed = false
+                )
+            )
+        }
     }
 
     fun launcherIntent(): Intent {

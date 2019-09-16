@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
     <changelogversion
+        changeDate="Sep 17th, 2019"
+        versionName="1.9.0"
+        >
+        <changelogtext>Android 10 support</changelogtext>
+        <changelogtext>Drop support for Android 4.4</changelogtext>
+        <changelogtext>Stability improvement</changelogtext>
+    </changelogversion>
+    <changelogversion
         changeDate="Jan 15th, 2019"
         versionName="1.8.3"
         >
@@ -19,7 +27,8 @@
         versionName="1.8.1"
         >
         <changelogtext>Stability improvement</changelogtext>
-        <changelogtext>Fix an issue on some devices that the keyboard does not show up when Editor Dialog is
+        <changelogtext>Fix an issue on some devices that the keyboard does not show up when Editor
+            Dialog is
             displayed
         </changelogtext>
     </changelogversion>
@@ -27,7 +36,8 @@
         changeDate="Sep, 20th, 2018"
         versionName="1.8.0"
         >
-        <changelogtext>Remove "tweet as a thread". This is needed to comply with Twitter's guideline. Thanks for your
+        <changelogtext>Remove "tweet as a thread". This is needed to comply with Twitter's
+            guideline. Thanks for your
             understanding
         </changelogtext>
         <changelogtext>Twitter Lite can now be selected as a timeline app</changelogtext>

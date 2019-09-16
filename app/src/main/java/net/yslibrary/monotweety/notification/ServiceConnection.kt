@@ -13,7 +13,9 @@ import io.reactivex.subjects.BehaviorSubject
 import timber.log.Timber
 
 
-class ServiceConnection(context: Context, private val intent: Intent) : android.content.ServiceConnection {
+class ServiceConnection(
+    context: Context, private val intent: Intent
+) : android.content.ServiceConnection {
 
     private val context: Context = context.applicationContext
     private val subject = BehaviorSubject.create<Optional<NotificationService>>()

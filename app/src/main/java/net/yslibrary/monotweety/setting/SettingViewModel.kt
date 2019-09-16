@@ -16,12 +16,14 @@ import net.yslibrary.monotweety.setting.domain.SelectedTimelineAppInfoManager
 import net.yslibrary.monotweety.user.domain.GetUser
 import timber.log.Timber
 
-class SettingViewModel(private val config: Config,
-                       private val notificationEnabledManager: NotificationEnabledManager,
-                       private val getUser: GetUser,
-                       private val footerStateManager: FooterStateManager,
-                       private val getInstalledSupportedApps: GetInstalledSupportedApps,
-                       private val selectedTimelineAppInfoManager: SelectedTimelineAppInfoManager) {
+class SettingViewModel(
+    private val config: Config,
+    private val notificationEnabledManager: NotificationEnabledManager,
+    private val getUser: GetUser,
+    private val footerStateManager: FooterStateManager,
+    private val getInstalledSupportedApps: GetInstalledSupportedApps,
+    private val selectedTimelineAppInfoManager: SelectedTimelineAppInfoManager
+) {
 
     private val userSubject = BehaviorSubject.createDefault<Optional<User>>(None)
 
@@ -140,7 +142,9 @@ class SettingViewModel(private val config: Config,
         privacyPolicyRequestsSubject.onNext(config.privacyPolicyUrl)
     }
 
-    data class TimelineAppInfo(val enabled: Boolean,
-                               val supportedApps: List<AppInfo>,
-                               val selectedApp: AppInfo)
+    data class TimelineAppInfo(
+        val enabled: Boolean,
+        val supportedApps: List<AppInfo>,
+        val selectedApp: AppInfo
+    )
 }

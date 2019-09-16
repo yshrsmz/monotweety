@@ -25,7 +25,8 @@ class ChangelogController : ActionBarController() {
         get() = applicationContext?.getString(R.string.title_changelog)
 
     val component: ChangelogComponent by lazy {
-        val activityBus = getComponentProvider<ChangelogViewModule.DependencyProvider>(activity!!).activityBus()
+        val activityBus =
+            getComponentProvider<ChangelogViewModule.DependencyProvider>(activity!!).activityBus()
         DaggerChangelogComponent.builder()
             .userComponent(App.userComponent(applicationContext!!))
             .changelogViewModule(ChangelogViewModule(activityBus))
@@ -42,7 +43,10 @@ class ChangelogController : ActionBarController() {
         return inflater.inflate(R.layout.controller_changelog, container, false)
     }
 
-    override fun onChangeEnded(changeHandler: ControllerChangeHandler, changeType: ControllerChangeType) {
+    override fun onChangeEnded(
+        changeHandler: ControllerChangeHandler,
+        changeType: ControllerChangeType
+    ) {
         super.onChangeEnded(changeHandler, changeType)
         refWatcherDelegate.handleOnChangeEnded(isDestroyed, changeType)
     }

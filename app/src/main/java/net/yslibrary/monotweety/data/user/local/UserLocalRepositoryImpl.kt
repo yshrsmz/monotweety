@@ -6,7 +6,6 @@ import com.pushtorefresh.storio3.sqlite.StorIOSQLite
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Completable
 import io.reactivex.Flowable
-import io.reactivex.Observable
 import net.yslibrary.monotweety.base.di.UserScope
 import net.yslibrary.monotweety.data.local.singleObject
 import net.yslibrary.monotweety.data.local.withObject
@@ -14,7 +13,9 @@ import net.yslibrary.monotweety.data.user.User
 import javax.inject.Inject
 
 @UserScope
-class UserLocalRepositoryImpl @Inject constructor(private val storIOSQLite: StorIOSQLite) : UserLocalRepository {
+class UserLocalRepositoryImpl @Inject constructor(
+    private val storIOSQLite: StorIOSQLite
+) : UserLocalRepository {
 
     override fun getById(id: Long): Flowable<Optional<User>> {
         return storIOSQLite.get()

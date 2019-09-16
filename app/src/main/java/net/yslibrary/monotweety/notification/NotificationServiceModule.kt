@@ -14,15 +14,19 @@ class NotificationServiceModule(private val service: NotificationService) {
 
     @ServiceScope
     @Provides
-    fun provideNotificationServiceViewModel(notificationEnabledManager: NotificationEnabledManager,
-                                            checkStatusLength: CheckStatusLength,
-                                            updateStatus: UpdateStatus,
-                                            footerStateManager: FooterStateManager,
-                                            selectedTimelineAppInfoManager: SelectedTimelineAppInfoManager): NotificationServiceViewModel {
-        return NotificationServiceViewModel(notificationEnabledManager,
+    fun provideNotificationServiceViewModel(
+        notificationEnabledManager: NotificationEnabledManager,
+        checkStatusLength: CheckStatusLength,
+        updateStatus: UpdateStatus,
+        footerStateManager: FooterStateManager,
+        selectedTimelineAppInfoManager: SelectedTimelineAppInfoManager
+    ): NotificationServiceViewModel {
+        return NotificationServiceViewModel(
+            notificationEnabledManager,
             checkStatusLength,
             updateStatus,
             footerStateManager,
-            selectedTimelineAppInfoManager)
+            selectedTimelineAppInfoManager
+        )
     }
 }

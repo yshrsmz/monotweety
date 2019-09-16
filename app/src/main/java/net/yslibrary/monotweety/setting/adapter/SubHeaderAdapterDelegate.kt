@@ -1,10 +1,10 @@
 package net.yslibrary.monotweety.setting.adapter
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.findById
@@ -15,10 +15,12 @@ class SubHeaderAdapterDelegate : AdapterDelegate<List<SettingAdapter.Item>>() {
         return items[position] is Item
     }
 
-    override fun onBindViewHolder(items: List<SettingAdapter.Item>,
-                                  position: Int,
-                                  holder: RecyclerView.ViewHolder,
-                                  payloads: MutableList<Any?>) {
+    override fun onBindViewHolder(
+        items: List<SettingAdapter.Item>,
+        position: Int,
+        holder: RecyclerView.ViewHolder,
+        payloads: MutableList<Any?>
+    ) {
         val item = items[position] as Item
         if (holder is ViewHolder) {
             holder.title.text = item.title
@@ -29,8 +31,10 @@ class SubHeaderAdapterDelegate : AdapterDelegate<List<SettingAdapter.Item>>() {
         return ViewHolder.create(parent)
     }
 
-    data class Item(val title: String,
-                    override val type: SettingAdapter.ViewType) : SettingAdapter.Item
+    data class Item(
+        val title: String,
+        override val type: SettingAdapter.ViewType
+    ) : SettingAdapter.Item
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -38,7 +42,8 @@ class SubHeaderAdapterDelegate : AdapterDelegate<List<SettingAdapter.Item>>() {
 
         companion object {
             fun create(parent: ViewGroup): ViewHolder {
-                val view = LayoutInflater.from(parent.context).inflate(R.layout.vh_subheader, parent, false)
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.vh_subheader, parent, false)
                 return ViewHolder(view)
             }
         }

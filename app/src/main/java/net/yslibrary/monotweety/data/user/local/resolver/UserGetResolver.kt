@@ -15,6 +15,7 @@ class UserGetResolver : DefaultGetResolver<User>() {
             name = cursor.getStringByName(UserTable.COLUMN_NAME)!!,
             screenName = cursor.getStringByName(UserTable.COLUMN_SCREEN_NAME)!!,
             profileImageUrl = cursor.getStringByName(UserTable.COLUMN_PROFILE_IMAGE_URL)!!,
-            _updatedAt = cursor.getLongByName(UserTable.COLUMN__UPDATED_AT))
+            _updatedAt = cursor.getLongByName(UserTable.COLUMN__UPDATED_AT)
+        )
     }
 }

@@ -8,7 +8,9 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
-class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapter<List<ComposeStatusAdapter.Item>>() {
+class ComposeStatusAdapter(
+    private val listener: Listener
+) : ListDelegationAdapter<List<ComposeStatusAdapter.Item>>() {
 
     var editorInitialized = false
 
@@ -50,7 +52,10 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
         updateEditorInternal(item.copy(initialValue = !editorInitialized))
     }
 
-    fun calculateDiff(oldList: List<Item>, newList: List<Item>): Single<Pair<DiffUtil.DiffResult, List<Item>>> {
+    fun calculateDiff(
+        oldList: List<Item>,
+        newList: List<Item>
+    ): Single<Pair<DiffUtil.DiffResult, List<Item>>> {
         return Single.fromCallable {
             DiffUtil.calculateDiff(object : DiffUtil.Callback() {
                 override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
@@ -58,7 +63,7 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
                     val newItem = newList[newItemPosition]
 
                     if (oldItem.viewType == newItem.viewType) {
-                        if (newItem.viewType == ComposeStatusAdapter.ViewType.EDITOR) {
+                        if (newItem.viewType == ViewType.EDITOR) {
                             return true
                         } else if (oldItem is PreviousStatusAdapterDelegate.Item && newItem is PreviousStatusAdapterDelegate.Item) {
                             return oldItem.id == newItem.id
@@ -76,7 +81,10 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
                     return newList.size
                 }
 
-                override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                override fun areContentsTheSame(
+                    oldItemPosition: Int,
+                    newItemPosition: Int
+                ): Boolean {
                     val oldItem = oldList[oldItemPosition]
                     val newItem = newList[newItemPosition]
 
@@ -91,7 +99,7 @@ class ComposeStatusAdapter(private val listener: Listener) : ListDelegationAdapt
                 }
             })
         }
-            .map { Pair<DiffUtil.DiffResult, List<Item>>(it, newList) }
+            .map { Pair(it, newList) }
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
     }

@@ -17,7 +17,8 @@ import java.util.concurrent.ConcurrentHashMap
 @Module(
     includes = arrayOf(
         StatusModule::class,
-        UserModule::class)
+        UserModule::class
+    )
 )
 class UserDataModule {
 

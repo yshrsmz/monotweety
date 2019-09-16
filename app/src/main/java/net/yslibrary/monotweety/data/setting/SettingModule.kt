@@ -15,7 +15,10 @@ class SettingModule {
     @AppScope
     @Provides
     fun provideSettingPreferences(@Named(Names.FOR_APP) context: Context): RxSharedPreferences {
-        val prefs = context.getSharedPreferences("net.yslibrary.monotweety.prefs.settings", Context.MODE_PRIVATE)
+        val prefs = context.getSharedPreferences(
+            "net.yslibrary.monotweety.prefs.settings",
+            Context.MODE_PRIVATE
+        )
         return RxSharedPreferences.create(prefs)
     }
 

@@ -23,7 +23,8 @@ class CreateShortcutActivity : Activity() {
             .setIntent(shortcut)
             .build()
 
-        val resultIntent = ShortcutManagerCompat.createShortcutResultIntent(applicationContext, shortcutInfo)
+        val resultIntent = ShortcutManagerCompat
+            .createShortcutResultIntent(applicationContext, shortcutInfo)
 
         setResult(RESULT_OK, resultIntent)
         finish()

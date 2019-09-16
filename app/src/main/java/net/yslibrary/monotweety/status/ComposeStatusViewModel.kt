@@ -15,11 +15,13 @@ import net.yslibrary.monotweety.status.domain.CheckStatusLength
 import net.yslibrary.monotweety.status.domain.UpdateStatus
 import timber.log.Timber
 
-class ComposeStatusViewModel(status: String,
-                             private val config: Config,
-                             private val checkStatusLength: CheckStatusLength,
-                             private val updateStatus: UpdateStatus,
-                             private val footerStateManager: FooterStateManager) {
+class ComposeStatusViewModel(
+    status: String,
+    private val config: Config,
+    private val checkStatusLength: CheckStatusLength,
+    private val updateStatus: UpdateStatus,
+    private val footerStateManager: FooterStateManager
+) {
 
     private val disposables = CompositeDisposable()
 
@@ -127,7 +129,12 @@ class ComposeStatusViewModel(status: String,
         disposables.dispose()
     }
 
-    data class StatusInfo(val status: String, val valid: Boolean, val length: Int, val maxLength: Int)
+    data class StatusInfo(
+        val status: String,
+        val valid: Boolean,
+        val length: Int,
+        val maxLength: Int
+    )
 
     enum class ProgressEvent {
         IN_PROGRESS,

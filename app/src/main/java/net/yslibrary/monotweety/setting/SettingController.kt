@@ -93,13 +93,11 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
                     .setTitle(R.string.label_confirm)
                     .setMessage(R.string.label_logout_confirm)
                     .setCancelable(true)
-                    .setPositiveButton(R.string.label_logout
-                    ) { dialog, _ ->
+                    .setPositiveButton(R.string.label_logout) { dialog, _ ->
                         viewModel.onLogoutRequested()
                         dialog.dismiss()
                     }
-                    .setNegativeButton(R.string.label_no
-                    ) { dialog, _ ->
+                    .setNegativeButton(R.string.label_no) { dialog, _ ->
                         dialog.cancel()
                     }
                     .show()
@@ -156,7 +154,8 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
             .bindToLifecycle()
             .doOnNext {
                 val res = if (it) R.string.label_on else R.string.label_off
-                bindings.notificationSwitch.text = getString(R.string.label_notificatoin_state, getString(res))
+                bindings.notificationSwitch.text =
+                    getString(R.string.label_notificatoin_state, getString(res))
                 bindings.notificationSwitch.isChecked = it
             }
             .subscribe {
@@ -214,7 +213,14 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
         viewModel.shareRequests
             .bindToLifecycle()
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { navigator.openExternalAppWithShareIntent(getString(R.string.message_share, it)) }
+            .subscribe {
+                navigator.openExternalAppWithShareIntent(
+                    getString(
+                        R.string.message_share,
+                        it
+                    )
+                )
+            }
 
         viewModel.googlePlayRequests
             .bindToLifecycle()
@@ -251,18 +257,25 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
     }
 
     fun showLicense() {
-        router.pushController(RouterTransaction.with(LicenseController())
-            .pushChangeHandler(HorizontalChangeHandler())
-            .popChangeHandler(HorizontalChangeHandler()))
+        router.pushController(
+            RouterTransaction.with(LicenseController())
+                .pushChangeHandler(HorizontalChangeHandler())
+                .popChangeHandler(HorizontalChangeHandler())
+        )
     }
 
     fun showChangelog() {
-        router.pushController(RouterTransaction.with(ChangelogController())
-            .pushChangeHandler(HorizontalChangeHandler())
-            .popChangeHandler(HorizontalChangeHandler()))
+        router.pushController(
+            RouterTransaction.with(ChangelogController())
+                .pushChangeHandler(HorizontalChangeHandler())
+                .popChangeHandler(HorizontalChangeHandler())
+        )
     }
 
-    override fun onChangeEnded(changeHandler: ControllerChangeHandler, changeType: ControllerChangeType) {
+    override fun onChangeEnded(
+        changeHandler: ControllerChangeHandler,
+        changeType: ControllerChangeType
+    ) {
         super.onChangeEnded(changeHandler, changeType)
         refWatcherDelegate.handleOnChangeEnded(isDestroyed, changeType)
     }

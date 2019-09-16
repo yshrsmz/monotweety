@@ -4,7 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.ShortcutManager
 import android.os.Build
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,7 +25,12 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.subjects.PublishSubject
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.analytics.Analytics
-import net.yslibrary.monotweety.base.*
+import net.yslibrary.monotweety.base.ActionBarController
+import net.yslibrary.monotweety.base.HasComponent
+import net.yslibrary.monotweety.base.ProgressController
+import net.yslibrary.monotweety.base.RefWatcherDelegate
+import net.yslibrary.monotweety.base.findById
+import net.yslibrary.monotweety.base.hideKeyboard
 import net.yslibrary.monotweety.status.adapter.ComposeStatusAdapter
 import net.yslibrary.monotweety.status.adapter.EditorAdapterDelegate
 import timber.log.Timber
@@ -173,7 +183,8 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
         ) { sendable, progress -> sendable to progress }
             .blockingFirst()
             .let {
-                menu.findItem(R.id.action_send_tweet)?.isEnabled = it.first && it.second == ComposeStatusViewModel.ProgressEvent.FINISHED
+                menu.findItem(R.id.action_send_tweet)?.isEnabled =
+                    it.first && it.second == ComposeStatusViewModel.ProgressEvent.FINISHED
             }
     }
 
@@ -203,7 +214,10 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
         return true
     }
 
-    override fun onChangeEnded(changeHandler: ControllerChangeHandler, changeType: ControllerChangeType) {
+    override fun onChangeEnded(
+        changeHandler: ControllerChangeHandler,
+        changeType: ControllerChangeType
+    ) {
         super.onChangeEnded(changeHandler, changeType)
         refWatcherDelegate.handleOnChangeEnded(isDestroyed, changeType)
     }
@@ -237,9 +251,11 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
         activity?.invalidateOptionsMenu()
         getChildRouter(bindings.overlayRoot, null)
             .setPopsLastView(true)
-            .setRoot(RouterTransaction.with(ProgressController())
-                .popChangeHandler(FadeChangeHandler())
-                .pushChangeHandler(FadeChangeHandler()))
+            .setRoot(
+                RouterTransaction.with(ProgressController())
+                    .popChangeHandler(FadeChangeHandler())
+                    .pushChangeHandler(FadeChangeHandler())
+            )
     }
 
     fun hideLoadingState() {
@@ -256,7 +272,8 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
     fun reportShortcutUsedIfNeeded(status: String?) {
         if (status.isNullOrEmpty()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-                applicationContext?.getSystemService(ShortcutManager::class.java)?.reportShortcutUsed("newtweet")
+                applicationContext?.getSystemService(ShortcutManager::class.java)
+                    ?.reportShortcutUsed("newtweet")
             }
         }
     }

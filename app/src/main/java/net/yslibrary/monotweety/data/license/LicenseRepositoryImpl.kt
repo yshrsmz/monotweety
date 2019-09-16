@@ -4,7 +4,6 @@ import io.reactivex.Single
 import net.yslibrary.licenseadapter.Library
 import net.yslibrary.licenseadapter.Licenses
 import net.yslibrary.monotweety.base.di.AppScope
-import net.yslibrary.monotweety.base.di.UserScope
 import java.util.*
 import javax.inject.Inject
 
@@ -23,21 +22,34 @@ class LicenseRepositoryImpl @Inject constructor() : LicenseRepository {
                 Licenses.fromGitHubApacheV2("JakeWharton/ThreeTenABP", Licenses.FILE_TXT),
                 Licenses.fromGitHubApacheV2("f2prateek/rx-preferences"),
                 Licenses.fromGitHubApacheV2("pushtorefresh/storio"),
-                Licenses.fromGitHubApacheV2("ReactiveX/RxJava", "1.x/${Licenses.FILE_NO_EXTENSION}"),
-                Licenses.fromGitHubApacheV2("ReactiveX/RxAndroid", "1.x/${Licenses.FILE_NO_EXTENSION}"),
+                Licenses.fromGitHubApacheV2(
+                    "ReactiveX/RxJava",
+                    "2.x/${Licenses.FILE_NO_EXTENSION}"
+                ),
+                Licenses.fromGitHubApacheV2(
+                    "ReactiveX/RxAndroid",
+                    "2.x/${Licenses.FILE_NO_EXTENSION}"
+                ),
                 Licenses.fromGitHubApacheV2("sockeqwe/AdapterDelegates"),
                 Licenses.fromGitHubApacheV2("twitter/twitter-text"),
                 Licenses.fromGitHubApacheV2("twitter/twitter-kit-android"),
-                Licenses.fromGitHubApacheV2("yshrsmz/LicenseAdapter"))
+                Licenses.fromGitHubApacheV2("yshrsmz/LicenseAdapter")
+            )
 
             // sort github hosted repos first
             list.sortedBy { it.getName().toLowerCase(Locale.ENGLISH) }
                 .let {
                     val mutable = it.toMutableList()
-                    mutable.addAll(0, listOf(
-                        Licenses.noContent("Android SDK", "Google Inc.", "https://developer.android.com/sdk/terms.html"),
-                        Licenses.noContent("Fabric", "Google Inc.", "https://fabric.io/terms")
-                    ))
+                    mutable.addAll(
+                        0, listOf(
+                            Licenses.noContent(
+                                "Android SDK",
+                                "Google Inc.",
+                                "https://developer.android.com/sdk/terms.html"
+                            ),
+                            Licenses.noContent("Fabric", "Google Inc.", "https://fabric.io/terms")
+                        )
+                    )
                     mutable.toList()
                 }
         }

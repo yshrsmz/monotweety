@@ -1,28 +1,32 @@
 package net.yslibrary.monotweety.setting.adapter
 
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.base.load
 import net.yslibrary.monotweety.data.user.User
 
-class ProfileAdapterDelegate(private val listener: Listener) : AdapterDelegate<List<SettingAdapter.Item>>() {
+class ProfileAdapterDelegate(
+    private val listener: Listener
+) : AdapterDelegate<List<SettingAdapter.Item>>() {
     override fun isForViewType(items: List<SettingAdapter.Item>, position: Int): Boolean {
         return items[position] is Item
     }
 
-    override fun onBindViewHolder(items: List<SettingAdapter.Item>,
-                                  position: Int,
-                                  holder: RecyclerView.ViewHolder,
-                                  payloads: MutableList<Any?>) {
+    override fun onBindViewHolder(
+        items: List<SettingAdapter.Item>,
+        position: Int,
+        holder: RecyclerView.ViewHolder,
+        payloads: MutableList<Any?>
+    ) {
         val item = items[position] as Item
         if (holder is ViewHolder) {
             val context = holder.itemView.context
@@ -57,18 +61,21 @@ class ProfileAdapterDelegate(private val listener: Listener) : AdapterDelegate<L
 
         companion object {
             fun create(parent: ViewGroup): ViewHolder {
-                val view = LayoutInflater.from(parent.context).inflate(R.layout.vh_profile, parent, false)
+                val view =
+                    LayoutInflater.from(parent.context).inflate(R.layout.vh_profile, parent, false)
                 return ViewHolder(view)
             }
         }
     }
 
-    data class Item(val name: String,
-                    val screenName: String,
-                    val imageUrl: String,
-                    val enabled: Boolean = true,
-                    val loading: Boolean = false,
-                    override val type: SettingAdapter.ViewType) : SettingAdapter.Item {
+    data class Item(
+        val name: String,
+        val screenName: String,
+        val imageUrl: String,
+        val enabled: Boolean = true,
+        val loading: Boolean = false,
+        override val type: SettingAdapter.ViewType
+    ) : SettingAdapter.Item {
         companion object {
             fun empty(): Item {
                 return Item("", "", "", false, true, SettingAdapter.ViewType.PROFILE)
@@ -81,7 +88,8 @@ class ProfileAdapterDelegate(private val listener: Listener) : AdapterDelegate<L
                     imageUrl = user.profileImageUrl,
                     enabled = true,
                     loading = false,
-                    type = SettingAdapter.ViewType.PROFILE)
+                    type = SettingAdapter.ViewType.PROFILE
+                )
             }
         }
     }

@@ -34,11 +34,17 @@ fun ImageView.load(url: String) {
         .into(this)
 }
 
-fun ViewGroup.inflate(@LayoutRes resource: Int, root: ViewGroup = this, attachToRoot: Boolean = false): View {
+fun ViewGroup.inflate(
+    @LayoutRes resource: Int, root: ViewGroup = this,
+    attachToRoot: Boolean = false
+): View {
     return LayoutInflater.from(this.context).inflate(resource, root, attachToRoot)
 }
 
-fun Context.inflate(@LayoutRes resource: Int, root: ViewGroup? = null, attachToRoot: Boolean = false): View {
+fun Context.inflate(
+    @LayoutRes resource: Int, root: ViewGroup? = null,
+    attachToRoot: Boolean = false
+): View {
     return LayoutInflater.from(this).inflate(resource, root, attachToRoot)
 }
 

@@ -11,7 +11,9 @@ import javax.inject.Inject
 import com.twitter.sdk.android.core.models.User as TwitterUser
 
 @UserScope
-class UserRemoteRepositoryImpl @Inject constructor(private val accountService: AccountService) : UserRemoteRepository {
+class UserRemoteRepositoryImpl @Inject constructor(
+    private val accountService: AccountService
+) : UserRemoteRepository {
     override fun get(): Single<User> {
         return Single.create<TwitterUser> { emitter ->
             val call = accountService.verifyCredentials(false, true, false)

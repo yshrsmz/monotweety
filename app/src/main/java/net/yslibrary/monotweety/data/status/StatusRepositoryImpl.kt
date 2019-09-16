@@ -7,7 +7,9 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @UserScope
-class StatusRepositoryImpl @Inject constructor(private val remoteRepository: StatusRemoteRepository) : StatusRepository {
+class StatusRepositoryImpl @Inject constructor(
+    private val remoteRepository: StatusRemoteRepository
+) : StatusRepository {
 
     override fun updateStatus(status: String, inReplyToStatusId: Long?): Completable {
         return remoteRepository.update(status, inReplyToStatusId)

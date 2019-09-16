@@ -22,7 +22,10 @@ class BootCompletedReceiver : BroadcastReceiver() {
             .subscribeBy {
                 Timber.d("is logged in and notification enabled: $it")
                 if (it) {
-                    ContextCompat.startForegroundService(context, NotificationService.callingIntent(context))
+                    ContextCompat.startForegroundService(
+                        context,
+                        NotificationService.callingIntent(context)
+                    )
                 }
             }
     }

@@ -42,7 +42,10 @@ open class AppLifecycleCallbacks(
     }
 
     fun initTwitterKit() {
-        val authConfig = TwitterAuthConfig(BuildConfig.TWITTER_API_KEY, BuildConfig.TWITTER_API_SECRET)
+        val authConfig = TwitterAuthConfig(
+            BuildConfig.TWITTER_API_KEY,
+            BuildConfig.TWITTER_API_SECRET
+        )
         val twitterConfig = TwitterConfig.Builder(context)
             .twitterAuthConfig(authConfig)
             //.debug(true)

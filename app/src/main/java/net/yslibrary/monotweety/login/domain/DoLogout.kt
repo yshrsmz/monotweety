@@ -19,9 +19,11 @@ import javax.inject.Inject
  * Created by yshrsmz on 2016/10/09.
  */
 @UserScope
-class DoLogout @Inject constructor(private val settingDataManager: SettingDataManager,
-                                   private val userRepository: UserRepository,
-                                   private val sessionManager: SessionManager<TwitterSession>) {
+class DoLogout @Inject constructor(
+    private val settingDataManager: SettingDataManager,
+    private val userRepository: UserRepository,
+    private val sessionManager: SessionManager<TwitterSession>
+) {
 
     fun execute(): Completable {
         return Single.fromCallable { sessionManager.activeSession?.id }

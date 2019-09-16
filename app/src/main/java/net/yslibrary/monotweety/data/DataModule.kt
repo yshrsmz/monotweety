@@ -17,7 +17,9 @@ import net.yslibrary.monotweety.data.setting.SettingModule
         LicenseModule::class,
         LocalModule::class,
         SessionModule::class,
-        SettingModule::class))
+        SettingModule::class
+    )
+)
 class DataModule {
 
     @Provides

@@ -63,13 +63,16 @@ interface UpdateStatusService {
      */
     @FormUrlEncoded
     @POST("/1.1/statuses/update.json?tweet_mode=extended&include_cards=true&cards_platform=TwitterKit-13")
-    fun update(@Field("status", encoded = true) status: String, // need to encode manually due to this issue: https://github.com/twitter/twitter-kit-android/issues/68
-               @Field("in_reply_to_status_id") inReplyToStatusId: Long?,
-               @Field("possibly_sensitive") possiblySensitive: Boolean?,
-               @Field("lat") latitude: Double?,
-               @Field("long") longitude: Double?,
-               @Field("place_id") placeId: String?,
-               @Field("display_cooridnates") displayCoordinates: Boolean?,
-               @Field("trim_user") trimUser: Boolean?,
-               @Field("media_ids") mediaIds: String?): Call<Tweet>
+    fun update(
+        // need to encode manually due to this issue: https://github.com/twitter/twitter-kit-android/issues/68
+        @Field("status", encoded = true) status: String,
+        @Field("in_reply_to_status_id") inReplyToStatusId: Long?,
+        @Field("possibly_sensitive") possiblySensitive: Boolean?,
+        @Field("lat") latitude: Double?,
+        @Field("long") longitude: Double?,
+        @Field("place_id") placeId: String?,
+        @Field("display_cooridnates") displayCoordinates: Boolean?,
+        @Field("trim_user") trimUser: Boolean?,
+        @Field("media_ids") mediaIds: String?
+    ): Call<Tweet>
 }

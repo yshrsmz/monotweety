@@ -130,7 +130,7 @@ kapt {
 ext.retrofit_version = '2.6.1'
 ext.androidx_version = '1.0.0'
 ext.rxbinding_version = '2.2.0'
-ext.conductor_version = '2.1.5'
+ext.conductor_version = '3.0.0-rc2'
 ext.okhttp_version = '4.2.0'
 ext.dagger_version = '2.24'
 ext.storio_version = '3.0.0'

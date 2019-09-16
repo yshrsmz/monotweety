@@ -3,15 +3,15 @@ package net.yslibrary.monotweety.setting.domain
 import com.nhaarman.mockito_kotlin.spy
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
-import net.yslibrary.monotweety.ConfiguredRobolectricTestRunner
 import net.yslibrary.monotweety.data.setting.SettingDataManager
 import net.yslibrary.monotweety.data.setting.SettingModule
 import net.yslibrary.monotweety.targetApplication
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 
-@RunWith(ConfiguredRobolectricTestRunner::class)
+@RunWith(RobolectricTestRunner::class)
 class NotificationEnabledManagerTest {
 
     lateinit var settingDataManager: SettingDataManager
@@ -20,7 +20,8 @@ class NotificationEnabledManagerTest {
     @Before
     fun setup() {
         val module = SettingModule()
-        settingDataManager = spy(module.provideSettingDataManager(module.provideSettingPreferences(targetApplication)))
+        settingDataManager =
+            spy(module.provideSettingDataManager(module.provideSettingPreferences(targetApplication)))
         notificationEnabledManager = NotificationEnabledManager(settingDataManager)
     }
 

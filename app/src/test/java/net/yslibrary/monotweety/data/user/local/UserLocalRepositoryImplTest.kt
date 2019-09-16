@@ -3,7 +3,6 @@ package net.yslibrary.monotweety.data.user.local
 import com.gojuno.koptional.toOptional
 import com.google.gson.Gson
 import com.pushtorefresh.storio3.sqlite.StorIOSQLite
-import net.yslibrary.monotweety.ConfiguredRobolectricTestRunner
 import net.yslibrary.monotweety.assertThat
 import net.yslibrary.monotweety.data.local.LocalModule
 import net.yslibrary.monotweety.data.local.singleObject
@@ -14,10 +13,11 @@ import net.yslibrary.monotweety.targetApplication
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 import kotlin.properties.Delegates
 import com.twitter.sdk.android.core.models.User as TwitterUser
 
-@RunWith(ConfiguredRobolectricTestRunner::class)
+@RunWith(RobolectricTestRunner::class)
 class UserLocalRepositoryImplTest {
 
     var storio by Delegates.notNull<StorIOSQLite>()
@@ -39,11 +39,13 @@ class UserLocalRepositoryImplTest {
     fun getById() {
         val twitterUser = gson.fromJson(readJsonFromAssets("user.json"), TwitterUser::class.java)
         val time = System.currentTimeMillis()
-        val user = User(id = twitterUser.id,
+        val user = User(
+            id = twitterUser.id,
             name = twitterUser.name,
             screenName = twitterUser.screenName,
             profileImageUrl = twitterUser.profileImageUrl,
-            _updatedAt = time)
+            _updatedAt = time
+        )
 
         storio.put().withObject(user).prepare().executeAsBlocking()
 
@@ -60,11 +62,13 @@ class UserLocalRepositoryImplTest {
     fun set() {
         val twitterUser = gson.fromJson(readJsonFromAssets("user.json"), TwitterUser::class.java)
         val time = System.currentTimeMillis()
-        val user = User(id = twitterUser.id,
+        val user = User(
+            id = twitterUser.id,
             name = twitterUser.name,
             screenName = twitterUser.screenName,
             profileImageUrl = twitterUser.profileImageUrl,
-            _updatedAt = time)
+            _updatedAt = time
+        )
 
         repository.set(user).test()
             .apply {
@@ -85,11 +89,13 @@ class UserLocalRepositoryImplTest {
     fun delete() {
         val twitterUser = gson.fromJson(readJsonFromAssets("user.json"), TwitterUser::class.java)
         val time = System.currentTimeMillis()
-        val user = User(id = twitterUser.id,
+        val user = User(
+            id = twitterUser.id,
             name = twitterUser.name,
             screenName = twitterUser.screenName,
             profileImageUrl = twitterUser.profileImageUrl,
-            _updatedAt = time)
+            _updatedAt = time
+        )
 
         storio.put().withObject(user).prepare().executeAsBlocking()
 

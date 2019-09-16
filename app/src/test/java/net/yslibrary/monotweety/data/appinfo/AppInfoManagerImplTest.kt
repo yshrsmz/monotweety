@@ -2,19 +2,19 @@ package net.yslibrary.monotweety.data.appinfo
 
 import android.app.Application
 import android.content.pm.ResolveInfo
-import net.yslibrary.monotweety.ConfiguredRobolectricTestRunner
 import net.yslibrary.monotweety.assertThat
 import net.yslibrary.monotweety.newPackageInfo
 import net.yslibrary.monotweety.targetApplication
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
 import org.robolectric.shadows.ShadowPackageManager
 import org.robolectric.shadows.ShadowResolveInfo
 
 
-@RunWith(ConfiguredRobolectricTestRunner::class)
+@RunWith(RobolectricTestRunner::class)
 class AppInfoManagerImplTest {
 
     lateinit var application: Application

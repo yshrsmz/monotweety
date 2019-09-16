@@ -1,12 +1,12 @@
 package net.yslibrary.monotweety.data.license
 
-import net.yslibrary.monotweety.ConfiguredRobolectricTestRunner
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 import kotlin.properties.Delegates
 
-@RunWith(ConfiguredRobolectricTestRunner::class)
+@RunWith(RobolectricTestRunner::class)
 class LicenseRepositoryImplTest {
 
     var repository: LicenseRepositoryImpl by Delegates.notNull<LicenseRepositoryImpl>()

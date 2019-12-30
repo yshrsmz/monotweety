@@ -1,7 +1,9 @@
 package net.yslibrary.monotweety.data.appinfo
 
 import android.app.Application
-import android.content.pm.ResolveInfo
+import android.content.ComponentName
+import android.content.Intent
+import android.content.IntentFilter
 import net.yslibrary.monotweety.assertThat
 import net.yslibrary.monotweety.newPackageInfo
 import net.yslibrary.monotweety.targetApplication
@@ -11,7 +13,6 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
 import org.robolectric.shadows.ShadowPackageManager
-import org.robolectric.shadows.ShadowResolveInfo
 
 
 @RunWith(RobolectricTestRunner::class)
@@ -32,7 +33,7 @@ class AppInfoManagerImplTest {
 
     @Test
     fun isInstalled() {
-        packageManager.addPackage(newPackageInfo("Fenix", TwitterApp.FENIX.packageName))
+        packageManager.installPackage(newPackageInfo("Fenix", TwitterApp.FENIX.packageName))
 
         appInfoManager.isInstalled(TwitterApp.FENIX.packageName).test()
             .apply {
@@ -44,7 +45,7 @@ class AppInfoManagerImplTest {
 
     @Test
     fun isInstalled_false() {
-        packageManager.addPackage(newPackageInfo("Fenix", TwitterApp.FENIX.packageName))
+        packageManager.installPackage(newPackageInfo("Fenix", TwitterApp.FENIX.packageName))
 
         appInfoManager.isInstalled(TwitterApp.BEETER.packageName).test()
             .apply {
@@ -56,12 +57,15 @@ class AppInfoManagerImplTest {
 
     @Test
     fun installedApps() {
-        val infoList = listOf<ResolveInfo>(
-            ShadowResolveInfo.newResolveInfo("Fenix", TwitterApp.FENIX.packageName),
-            ShadowResolveInfo.newResolveInfo("beeter", TwitterApp.BEETER.packageName)
-        )
-
-        packageManager.setResolveInfosForIntent(appInfoManager.launcherIntent(), infoList)
+        listOf(
+            ComponentName(TwitterApp.FENIX.packageName, "Test"),
+            ComponentName(TwitterApp.BEETER.packageName, "Test")
+        ).forEach { cn ->
+            packageManager.addActivityIfNotPresent(cn)
+            packageManager.addIntentFilterForActivity(
+                cn,
+                IntentFilter(Intent.ACTION_MAIN).apply { addCategory(Intent.CATEGORY_LAUNCHER) })
+        }
 
         appInfoManager.installedApps().test()
             .apply {
@@ -78,7 +82,7 @@ class AppInfoManagerImplTest {
 
     @Test
     fun appInfo_installed() {
-        packageManager.addPackage(newPackageInfo("Fenix", TwitterApp.FENIX.packageName))
+        packageManager.installPackage(newPackageInfo("Fenix", TwitterApp.FENIX.packageName))
 
         appInfoManager.appInfo(TwitterApp.FENIX.packageName).test()
             .apply {
@@ -94,7 +98,7 @@ class AppInfoManagerImplTest {
 
     @Test
     fun appInfo_notinstalled() {
-        packageManager.addPackage(newPackageInfo("Fenix", TwitterApp.FENIX.packageName))
+        packageManager.installPackage(newPackageInfo("Fenix", TwitterApp.FENIX.packageName))
 
         appInfoManager.appInfo(TwitterApp.BEETER.packageName).test()
             .apply {

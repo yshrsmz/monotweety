@@ -18,7 +18,7 @@ import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.HasComponent
-import net.yslibrary.monotweety.base.RefWatcherDelegate
+import net.yslibrary.monotweety.base.ObjectWatcherDelegate
 import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.event.ActivityResult
 import net.yslibrary.monotweety.setting.SettingController
@@ -36,7 +36,7 @@ class LoginController : ActionBarController(), HasComponent<LoginComponent> {
     var viewModel by Delegates.notNull<LoginViewModel>()
 
     @set:[Inject]
-    var refWatcherDelegate by Delegates.notNull<RefWatcherDelegate>()
+    var objectWatcherDelegate by Delegates.notNull<ObjectWatcherDelegate>()
 
     override val component: LoginComponent by lazy {
         Timber.i("create LoginComponent")
@@ -107,12 +107,12 @@ class LoginController : ActionBarController(), HasComponent<LoginComponent> {
         changeType: ControllerChangeType
     ) {
         super.onChangeEnded(changeHandler, changeType)
-        refWatcherDelegate.handleOnChangeEnded(isDestroyed, changeType)
+        objectWatcherDelegate.handleOnChangeEnded(isDestroyed, changeType)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        refWatcherDelegate.handleOnDestroy()
+        objectWatcherDelegate.handleOnDestroy()
     }
 
     inner class Bindings(view: View) {

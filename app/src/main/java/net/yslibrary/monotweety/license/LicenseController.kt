@@ -16,7 +16,7 @@ import net.yslibrary.monotweety.App
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.base.ActionBarController
-import net.yslibrary.monotweety.base.RefWatcherDelegate
+import net.yslibrary.monotweety.base.ObjectWatcherDelegate
 import net.yslibrary.monotweety.base.findById
 import javax.inject.Inject
 import kotlin.properties.Delegates
@@ -31,7 +31,7 @@ class LicenseController : ActionBarController() {
     var viewModel by Delegates.notNull<LicenseViewModel>()
 
     @set:[Inject]
-    var refWatcherDelegate by Delegates.notNull<RefWatcherDelegate>()
+    var objectWatcherDelegate by Delegates.notNull<ObjectWatcherDelegate>()
 
     override val title: String?
         get() = getString(R.string.title_license)
@@ -66,12 +66,12 @@ class LicenseController : ActionBarController() {
         changeType: ControllerChangeType
     ) {
         super.onChangeEnded(changeHandler, changeType)
-        refWatcherDelegate.handleOnChangeEnded(isDestroyed, changeType)
+        objectWatcherDelegate.handleOnChangeEnded(isDestroyed, changeType)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        refWatcherDelegate.handleOnDestroy()
+        objectWatcherDelegate.handleOnDestroy()
     }
 
     fun setEvents() {

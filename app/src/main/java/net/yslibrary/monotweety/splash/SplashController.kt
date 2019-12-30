@@ -19,7 +19,7 @@ import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.HasComponent
-import net.yslibrary.monotweety.base.RefWatcherDelegate
+import net.yslibrary.monotweety.base.ObjectWatcherDelegate
 import net.yslibrary.monotweety.login.LoginController
 import net.yslibrary.monotweety.login.LoginTransitionChangeHandlerCompat
 import net.yslibrary.monotweety.setting.SettingController
@@ -34,7 +34,7 @@ class SplashController : ActionBarController(), HasComponent<SplashComponent> {
     var viewModel by Delegates.notNull<SplashViewModel>()
 
     @set:[Inject]
-    var refWatcherDelegate by Delegates.notNull<RefWatcherDelegate>()
+    var objectWatcherDelegate by Delegates.notNull<ObjectWatcherDelegate>()
 
     var disposables: CompositeDisposable = CompositeDisposable()
 
@@ -90,11 +90,11 @@ class SplashController : ActionBarController(), HasComponent<SplashComponent> {
         changeType: ControllerChangeType
     ) {
         super.onChangeEnded(changeHandler, changeType)
-        refWatcherDelegate.handleOnChangeEnded(isDestroyed, changeType)
+        objectWatcherDelegate.handleOnChangeEnded(isDestroyed, changeType)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        refWatcherDelegate.handleOnDestroy()
+        objectWatcherDelegate.handleOnDestroy()
     }
 }

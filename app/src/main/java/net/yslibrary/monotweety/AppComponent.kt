@@ -4,7 +4,7 @@ import com.twitter.sdk.android.core.TwitterSession
 import dagger.Component
 import io.reactivex.subjects.PublishSubject
 import net.yslibrary.monotweety.analytics.Analytics
-import net.yslibrary.monotweety.base.RefWatcherDelegate
+import net.yslibrary.monotweety.base.ObjectWatcherDelegate
 import net.yslibrary.monotweety.base.di.AppScope
 import net.yslibrary.monotweety.base.di.Names
 import net.yslibrary.monotweety.data.DataModule
@@ -26,7 +26,7 @@ interface AppComponent : UserComponent.ComponentProvider {
 
     fun footerStateManager(): FooterStateManager
 
-    fun refWatcherDelegate(): RefWatcherDelegate
+    fun objectWatcherDelegate(): ObjectWatcherDelegate
 
     fun analytics(): Analytics
 

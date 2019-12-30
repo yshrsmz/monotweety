@@ -2,8 +2,7 @@ package net.yslibrary.monotweety
 
 import android.app.Application
 import android.content.Context
-import com.squareup.leakcanary.LeakCanary
-import com.squareup.leakcanary.RefWatcher
+import leakcanary.ObjectWatcher
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.properties.Delegates
@@ -45,15 +44,10 @@ open class App : Application() {
 
     // inject here just to make sure that LeakCanary is initialized
     @set:[Inject]
-    var refWatcher by Delegates.notNull<RefWatcher>()
+    var refWatcher by Delegates.notNull<ObjectWatcher>()
 
     override fun onCreate() {
         super.onCreate()
-
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            // do nothing since this process is for LeakCanary
-            return
-        }
 
         appComponent(this).inject(this)
         lifecycleCallbacks.onCreate()

@@ -23,7 +23,7 @@ import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.HasComponent
-import net.yslibrary.monotweety.base.RefWatcherDelegate
+import net.yslibrary.monotweety.base.ObjectWatcherDelegate
 import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.changelog.ChangelogController
 import net.yslibrary.monotweety.data.appinfo.AppInfo
@@ -43,7 +43,7 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
     var viewModel by Delegates.notNull<SettingViewModel>()
 
     @set:[Inject]
-    var refWatcherDelegate by Delegates.notNull<RefWatcherDelegate>()
+    var refWatcherDelegate by Delegates.notNull<ObjectWatcherDelegate>()
 
     lateinit var bindings: Bindings
 

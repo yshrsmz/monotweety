@@ -27,8 +27,8 @@ import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.HasComponent
+import net.yslibrary.monotweety.base.ObjectWatcherDelegate
 import net.yslibrary.monotweety.base.ProgressController
-import net.yslibrary.monotweety.base.RefWatcherDelegate
 import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.base.hideKeyboard
 import net.yslibrary.monotweety.status.adapter.ComposeStatusAdapter
@@ -63,7 +63,7 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
     var viewModel by Delegates.notNull<ComposeStatusViewModel>()
 
     @set:[Inject]
-    var refWatcherDelegate by Delegates.notNull<RefWatcherDelegate>()
+    var objectWatcherDelegate by Delegates.notNull<ObjectWatcherDelegate>()
 
     val sendButtonClicks: PublishSubject<Unit> = PublishSubject.create<Unit>()
 
@@ -219,13 +219,13 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
         changeType: ControllerChangeType
     ) {
         super.onChangeEnded(changeHandler, changeType)
-        refWatcherDelegate.handleOnChangeEnded(isDestroyed, changeType)
+        objectWatcherDelegate.handleOnChangeEnded(isDestroyed, changeType)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         viewModel.onDestroy()
-        refWatcherDelegate.handleOnDestroy()
+        objectWatcherDelegate.handleOnDestroy()
     }
 
     fun showConfirmCloseDialog() {

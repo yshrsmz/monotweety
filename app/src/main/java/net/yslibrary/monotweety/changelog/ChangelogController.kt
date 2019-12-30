@@ -10,14 +10,14 @@ import net.yslibrary.monotweety.App
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.base.ActionBarController
-import net.yslibrary.monotweety.base.RefWatcherDelegate
+import net.yslibrary.monotweety.base.ObjectWatcherDelegate
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
 class ChangelogController : ActionBarController() {
 
     @set:[Inject]
-    var refWatcherDelegate by Delegates.notNull<RefWatcherDelegate>()
+    var objectWatcherDelegate by Delegates.notNull<ObjectWatcherDelegate>()
 
     override val hasBackButton: Boolean = true
 
@@ -48,11 +48,11 @@ class ChangelogController : ActionBarController() {
         changeType: ControllerChangeType
     ) {
         super.onChangeEnded(changeHandler, changeType)
-        refWatcherDelegate.handleOnChangeEnded(isDestroyed, changeType)
+        objectWatcherDelegate.handleOnChangeEnded(isDestroyed, changeType)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        refWatcherDelegate.handleOnDestroy()
+        objectWatcherDelegate.handleOnDestroy()
     }
 }

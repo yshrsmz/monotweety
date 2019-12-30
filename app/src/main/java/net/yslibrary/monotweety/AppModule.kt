@@ -1,21 +1,20 @@
 package net.yslibrary.monotweety
 
-import android.app.Application
 import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.squareup.leakcanary.LeakCanary
-import com.squareup.leakcanary.RefWatcher
 import com.twitter.sdk.android.core.TwitterSession
 import dagger.Module
 import dagger.Provides
 import io.reactivex.subjects.PublishSubject
+import leakcanary.AppWatcher
+import leakcanary.ObjectWatcher
 import net.yslibrary.monotweety.base.Clock
 import net.yslibrary.monotweety.base.ClockImpl
-import net.yslibrary.monotweety.base.RefWatcherDelegate
-import net.yslibrary.monotweety.base.RefWatcherDelegateImpl
+import net.yslibrary.monotweety.base.ObjectWatcherDelegate
+import net.yslibrary.monotweety.base.ObjectWatcherDelegateImpl
 import net.yslibrary.monotweety.base.di.AppScope
 import net.yslibrary.monotweety.base.di.Names
 import javax.inject.Named
@@ -69,8 +68,8 @@ open class AppModule(private val context: Context) {
 
     @AppScope
     @Provides
-    open fun provideRefWatcher(): RefWatcher {
-        return LeakCanary.install(context.applicationContext as Application)
+    open fun provideObjectWatcher(): ObjectWatcher {
+        return AppWatcher.objectWatcher
     }
 
     @Provides
@@ -86,7 +85,7 @@ open class AppModule(private val context: Context) {
     }
 
     @Provides
-    fun provideRefWatcherDelegate(refWatcherDelegateImpl: RefWatcherDelegateImpl): RefWatcherDelegate {
+    fun provideRefWatcherDelegate(refWatcherDelegateImpl: ObjectWatcherDelegateImpl): ObjectWatcherDelegate {
         return refWatcherDelegateImpl
     }
 
@@ -94,7 +93,7 @@ open class AppModule(private val context: Context) {
         fun notificationManager(): NotificationManagerCompat
         fun clock(): Clock
         fun config(): Config
-        fun refWatcherDelegate(): RefWatcherDelegate
+        fun refWatcherDelegate(): ObjectWatcherDelegate
         @Named(Names.FOR_LOGIN)
         fun loginCompletedSubject(): PublishSubject<TwitterSession>
     }

@@ -1,7 +1,8 @@
 package net.yslibrary.monotweety.setting.domain
 
-import com.nhaarman.mockito_kotlin.spy
-import com.nhaarman.mockito_kotlin.verify
+import io.mockk.confirmVerified
+import io.mockk.spyk
+import io.mockk.verify
 import net.yslibrary.monotweety.data.setting.SettingDataManager
 import net.yslibrary.monotweety.data.setting.SettingModule
 import net.yslibrary.monotweety.targetApplication
@@ -21,7 +22,7 @@ class FooterStateManagerTest {
     fun setup() {
         val module = SettingModule()
         settingDataManager =
-            spy(module.provideSettingDataManager(module.provideSettingPreferences(targetApplication)))
+            spyk(module.provideSettingDataManager(module.provideSettingPreferences(targetApplication)))
 
         footerStateManager = FooterStateManager(settingDataManager)
     }
@@ -30,16 +31,19 @@ class FooterStateManagerTest {
     fun getAndSet() {
         footerStateManager.get().test()
             .apply {
-                verify(settingDataManager).footerEnabled()
-                verify(settingDataManager).footerText()
 
                 assertNotComplete()
                 assertValue(FooterStateManager.State(false, ""))
 
                 footerStateManager.set(FooterStateManager.State(true, "this_is_footer"))
 
-                verify(settingDataManager).footerEnabled(true)
-                verify(settingDataManager).footerText("this_is_footer")
+                verify {
+                    settingDataManager.footerEnabled()
+                    settingDataManager.footerText()
+                    settingDataManager.footerEnabled(true)
+                    settingDataManager.footerText("this_is_footer")
+                }
+                confirmVerified(settingDataManager)
 
                 assertValues(
                     FooterStateManager.State(false, ""),

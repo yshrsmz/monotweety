@@ -1,8 +1,8 @@
 package net.yslibrary.monotweety.setting.domain
 
-import com.nhaarman.mockito_kotlin.spy
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
+import io.mockk.confirmVerified
+import io.mockk.spyk
+import io.mockk.verify
 import net.yslibrary.monotweety.data.setting.SettingDataManager
 import net.yslibrary.monotweety.data.setting.SettingModule
 import net.yslibrary.monotweety.targetApplication
@@ -21,7 +21,7 @@ class NotificationEnabledManagerTest {
     fun setup() {
         val module = SettingModule()
         settingDataManager =
-            spy(module.provideSettingDataManager(module.provideSettingPreferences(targetApplication)))
+            spyk(module.provideSettingDataManager(module.provideSettingPreferences(targetApplication)))
         notificationEnabledManager = NotificationEnabledManager(settingDataManager)
     }
 
@@ -31,9 +31,12 @@ class NotificationEnabledManagerTest {
             .apply {
                 notificationEnabledManager.set(true)
 
-                verify(settingDataManager).notificationEnabled()
-                verify(settingDataManager).notificationEnabled(true)
-                verifyNoMoreInteractions(settingDataManager)
+
+                verify {
+                    settingDataManager.notificationEnabled()
+                    settingDataManager.notificationEnabled(true)
+                }
+                confirmVerified(settingDataManager)
 
                 assertValues(false, true)
                 assertNoErrors()

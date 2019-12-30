@@ -16,7 +16,7 @@ class StatusRemoteRepositoryImpl @Inject constructor(private val statusesService
     StatusRemoteRepository {
 
     override fun update(status: String, inReplyToStatusId: Long?): Single<Tweet> {
-        return Single.create<TwitterTweet>({ emitter ->
+        return Single.create<TwitterTweet> { emitter ->
             val call = statusesService.update(
                 encodeStatus(status),
                 inReplyToStatusId,
@@ -38,7 +38,7 @@ class StatusRemoteRepositoryImpl @Inject constructor(private val statusesService
                 }
             })
             emitter.setCancellable { call.cancel() }
-        })
+        }
             .map {
                 Tweet(
                     id = it.id,

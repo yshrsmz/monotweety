@@ -1,27 +1,32 @@
 package net.yslibrary.monotweety.data.user.remote
 
 import com.google.gson.Gson
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
 import com.twitter.sdk.android.core.Callback
 import com.twitter.sdk.android.core.Result
 import com.twitter.sdk.android.core.services.AccountService
+import io.mockk.CapturingSlot
+import io.mockk.MockKAnnotations
+import io.mockk.confirmVerified
+import io.mockk.every
+import io.mockk.impl.annotations.MockK
+import io.mockk.slot
+import io.mockk.verify
 import net.yslibrary.monotweety.data.user.User
 import net.yslibrary.monotweety.readJsonFromAssets
 import org.junit.Before
 import org.junit.Test
-import org.mockito.ArgumentCaptor
 import retrofit2.Call
 import com.twitter.sdk.android.core.models.User as TwitterUser
 
 class UserRemoteRepositoryImplTest {
 
     lateinit var repository: UserRemoteRepositoryImpl
+
+    @MockK
     lateinit var mockAccountService: AccountService
+    @MockK
     lateinit var mockCall: Call<TwitterUser>
-    lateinit var callbackCaptor: ArgumentCaptor<Callback<TwitterUser>>
+    lateinit var callbackCaptor: CapturingSlot<Callback<TwitterUser>>
 
     val gson = Gson()
 
@@ -29,9 +34,8 @@ class UserRemoteRepositoryImplTest {
     @Suppress("UNCHECKED_CAST")
     @Before
     fun setup() {
-        mockAccountService = mock<AccountService>()
-        mockCall = mock<Call<TwitterUser>>()
-        callbackCaptor = ArgumentCaptor.forClass(Callback::class.java) as ArgumentCaptor<Callback<TwitterUser>>
+        MockKAnnotations.init(this, relaxUnitFun = true)
+        callbackCaptor = slot()
 
         repository = UserRemoteRepositoryImpl(mockAccountService)
     }
@@ -44,15 +48,22 @@ class UserRemoteRepositoryImplTest {
             name = user.name,
             screenName = user.screenName,
             profileImageUrl = user.profileImageUrlHttps,
-            _updatedAt = -1)
+            _updatedAt = -1
+        )
 
-        whenever(mockAccountService.verifyCredentials(any(), any(), any()))
-            .thenReturn(mockCall)
+        every { mockAccountService.verifyCredentials(any(), any(), any()) } returns mockCall
+        every { mockCall.enqueue(capture(callbackCaptor)) } returns Unit
 
         repository.get().test()
             .apply {
-                verify(mockCall).enqueue(callbackCaptor.capture())
-                callbackCaptor.value.success(Result(user, null))
+
+                verify {
+                    mockAccountService.verifyCredentials(false, true, false)
+                    mockCall.enqueue(callbackCaptor.captured)
+                }
+                confirmVerified(mockAccountService, mockCall)
+
+                callbackCaptor.captured.success(Result(user, null))
 
                 assertValue(result)
                 assertComplete()

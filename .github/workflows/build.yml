@@ -24,7 +24,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/build.gradle') }}-v1
 
       - name: Validate Gradle Wrapper
-          uses: gradle/wrapper-validation-action@v1
+        uses: gradle/wrapper-validation-action@v1
 
         #      - name: Setup JDK 1.8
         #        uses: actions/setup-java@v1

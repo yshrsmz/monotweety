@@ -1,6 +1,7 @@
 package net.yslibrary.monotweety.splash
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +22,7 @@ import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.HasComponent
 import net.yslibrary.monotweety.base.ObjectWatcherDelegate
 import net.yslibrary.monotweety.login.LoginController
-import net.yslibrary.monotweety.login.LoginTransitionChangeHandlerCompat
+import net.yslibrary.monotweety.login.LoginTransitionChangeHandler
 import net.yslibrary.monotweety.setting.SettingController
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
@@ -53,7 +54,11 @@ class SplashController : ActionBarController(), HasComponent<SplashComponent> {
         analytics.viewEvent(Analytics.VIEW_SPLASH)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup,
+        savedViewState: Bundle?
+    ): View {
         val view = inflater.inflate(R.layout.controller_splash, container, false)
 
         disposables = CompositeDisposable()
@@ -74,8 +79,8 @@ class SplashController : ActionBarController(), HasComponent<SplashComponent> {
 
                 router.setRoot(
                     RouterTransaction.with(next)
-                        .pushChangeHandler(if (it) SimpleSwapChangeHandler() else LoginTransitionChangeHandlerCompat())
-                        .popChangeHandler(if (it) SimpleSwapChangeHandler() else LoginTransitionChangeHandlerCompat())
+                        .pushChangeHandler(if (it) SimpleSwapChangeHandler() else LoginTransitionChangeHandler())
+                        .popChangeHandler(if (it) SimpleSwapChangeHandler() else LoginTransitionChangeHandler())
                 )
             }.addTo(disposables)
     }

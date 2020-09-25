@@ -2,15 +2,15 @@ package net.yslibrary.monotweety.login
 
 import android.annotation.TargetApi
 import android.os.Build
-import android.transition.ArcMotion
-import android.transition.Fade
-import android.transition.Transition
-import android.transition.TransitionInflater
-import android.transition.TransitionSet
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
-import com.bluelinelabs.conductor.changehandler.TransitionChangeHandler
+import androidx.transition.ArcMotion
+import androidx.transition.Fade
+import androidx.transition.Transition
+import androidx.transition.TransitionInflater
+import androidx.transition.TransitionSet
+import com.bluelinelabs.conductor.changehandler.androidxtransition.TransitionChangeHandler
 import net.yslibrary.monotweety.R
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -36,7 +36,7 @@ class LoginTransitionChangeHandler : TransitionChangeHandler() {
             .addTransition(move)
             .addTransition(fade)
 
-        transitionSet.pathMotion = ArcMotion()
+        transitionSet.setPathMotion(ArcMotion())
         transitionSet.interpolator = DecelerateInterpolator()
 
         return transitionSet

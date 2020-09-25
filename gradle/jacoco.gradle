@@ -72,13 +72,13 @@ project.afterEvaluate {
         def kotlinClassTree = fileTree(dir: "${project.buildDir}/tmp/kotlin-classes/${sourcePath}", excludes: fileFilter)
 
         //Directory where the compiled class files are
-        classDirectories = files([classTree], [kotlinClassTree])
+        getClassDirectories().from += files([classTree], [kotlinClassTree])
 
-        sourceDirectories = files(["src/main/java",
+        getSourceDirectories().from += files(["src/main/java",
                                    "src/$productFlavorName/java",
                                    "src/$buildTypeName/java"])
 
-        executionData = files("${project.buildDir}/jacoco/${testTaskName}.exec")
+        getExecutionData().from = files("${project.buildDir}/jacoco/${testTaskName}.exec")
 
       }
     }

@@ -17,7 +17,7 @@ class ObjectWatcherDelegateImpl @Inject constructor(
 
     override fun handleOnDestroy() {
         if (hasExisted) {
-            objectWatcher.watch(this)
+            objectWatcher.watch(this, "check Controller leak")
         }
     }
 
@@ -25,7 +25,7 @@ class ObjectWatcherDelegateImpl @Inject constructor(
 
         hasExisted = !changeType.isEnter
         if (isDestroyed) {
-            objectWatcher.watch(this)
+            objectWatcher.watch(this, "check Controller leak")
         }
     }
 }

@@ -1,6 +1,7 @@
 package net.yslibrary.monotweety.data.user
 
 import com.gojuno.koptional.None
+import com.google.common.truth.Truth.assertThat
 import com.google.gson.Gson
 import io.mockk.MockKAnnotations
 import io.mockk.confirmVerified
@@ -14,7 +15,6 @@ import net.yslibrary.monotweety.base.Clock
 import net.yslibrary.monotweety.data.user.local.UserLocalRepository
 import net.yslibrary.monotweety.data.user.remote.UserRemoteRepository
 import net.yslibrary.monotweety.readJsonFromAssets
-import org.assertj.core.api.Assertions
 import org.junit.Before
 import org.junit.Test
 import java.util.concurrent.TimeUnit
@@ -24,8 +24,10 @@ class UserRepositoryImplTest {
 
     @MockK
     lateinit var clock: Clock
+
     @MockK
     lateinit var localRepository: UserLocalRepository
+
     @MockK
     lateinit var remoteRepository: UserRemoteRepository
     lateinit var repository: UserRepositoryImpl
@@ -147,12 +149,12 @@ class UserRepositoryImplTest {
             _updatedAt = before11hours
         )
 
-        Assertions.assertThat(repository.isValid(user)).isTrue()
+        assertThat(repository.isValid(user)).isTrue()
     }
 
     @Test
     fun isValid_null_user() {
-        Assertions.assertThat(repository.isValid(null)).isFalse()
+        assertThat(repository.isValid(null)).isFalse()
     }
 
     @Test
@@ -170,6 +172,6 @@ class UserRepositoryImplTest {
             _updatedAt = before13hours
         )
 
-        Assertions.assertThat(repository.isValid(user)).isFalse()
+        assertThat(repository.isValid(user)).isFalse()
     }
 }

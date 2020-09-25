@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.ComponentName
 import android.content.Intent
 import android.content.IntentFilter
-import net.yslibrary.monotweety.assertThat
+import com.google.common.truth.Truth.assertThat
 import net.yslibrary.monotweety.newPackageInfo
 import net.yslibrary.monotweety.targetApplication
 import org.junit.Before
@@ -74,7 +74,8 @@ class AppInfoManagerImplTest {
 
                 val result = values().first()
 //                assertThat(result).hasSize(2)
-                assertThat(result).isNotEmpty
+                assertThat(result).isNotEmpty()
+                assertThat(result).isNotEmpty()
                 assertThat(result[0].packageName).isEqualTo(TwitterApp.FENIX.packageName)
                 assertThat(result[1].packageName).isEqualTo(TwitterApp.BEETER.packageName)
             }

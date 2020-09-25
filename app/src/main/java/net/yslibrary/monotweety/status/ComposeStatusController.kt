@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.ShortcutManager
 import android.os.Build
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -76,7 +77,11 @@ class ComposeStatusController(private var status: String? = null) : ActionBarCon
         analytics.viewEvent(Analytics.VIEW_COMPOSE_STATUS)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup,
+        savedViewState: Bundle?
+    ): View {
         val view = inflater.inflate(R.layout.controller_compose_status, container, false)
 
         bindings = Bindings(view)

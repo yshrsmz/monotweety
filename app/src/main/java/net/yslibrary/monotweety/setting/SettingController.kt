@@ -1,6 +1,7 @@
 package net.yslibrary.monotweety.setting
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -128,7 +129,11 @@ class SettingController : ActionBarController(), HasComponent<SettingComponent> 
         analytics.viewEvent(Analytics.VIEW_SETTING)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup,
+        savedViewState: Bundle?
+    ): View {
         val view = inflater.inflate(R.layout.controller_setting, container, false)
 
         bindings = Bindings(view)

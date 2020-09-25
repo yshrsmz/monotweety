@@ -12,13 +12,13 @@ class CheckStatusLength @Inject constructor() {
         return Single.fromCallable {
             val result = TwitterTextParser.parseTweet(
                 status,
-                TwitterTextParser.TWITTER_TEXT_EMOJI_CHAR_COUNT_CONFIG
+                TwitterTextParser.TWITTER_TEXT_DEFAULT_CONFIG
             )
             Result(
                 status = status,
                 length = result.weightedLength,
                 valid = result.isValid,
-                maxLength = TwitterTextParser.TWITTER_TEXT_EMOJI_CHAR_COUNT_CONFIG.maxWeightedTweetLength
+                maxLength = TwitterTextParser.TWITTER_TEXT_DEFAULT_CONFIG.maxWeightedTweetLength
             )
         }
     }

@@ -1,6 +1,7 @@
 package net.yslibrary.monotweety.changelog
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,7 +40,11 @@ class ChangelogController : ActionBarController() {
         analytics.viewEvent(Analytics.VIEW_CHANGELOG)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup,
+        savedViewState: Bundle?
+    ): View {
         return inflater.inflate(R.layout.controller_changelog, container, false)
     }
 

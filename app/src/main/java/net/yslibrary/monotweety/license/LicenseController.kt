@@ -1,6 +1,7 @@
 package net.yslibrary.monotweety.license
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,7 +52,11 @@ class LicenseController : ActionBarController() {
         analytics.viewEvent(Analytics.VIEW_LICENSE)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup,
+        savedViewState: Bundle?
+    ): View {
         val view = inflater.inflate(R.layout.controller_license, container, false)
 
         bindings = Bindings(view)

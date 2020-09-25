@@ -1,9 +1,9 @@
 package net.yslibrary.monotweety.data.user.local
 
 import com.gojuno.koptional.toOptional
+import com.google.common.truth.Truth.assertThat
 import com.google.gson.Gson
 import com.pushtorefresh.storio3.sqlite.StorIOSQLite
-import net.yslibrary.monotweety.assertThat
 import net.yslibrary.monotweety.data.local.LocalModule
 import net.yslibrary.monotweety.data.local.singleObject
 import net.yslibrary.monotweety.data.local.withObject

@@ -4,7 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
+import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.base.inflate

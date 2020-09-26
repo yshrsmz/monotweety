@@ -6,8 +6,8 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
-import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
-import com.jakewharton.rxbinding2.widget.textChanges
+import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
+import com.jakewharton.rxbinding3.widget.textChanges
 import io.reactivex.disposables.SerialDisposable
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.findById

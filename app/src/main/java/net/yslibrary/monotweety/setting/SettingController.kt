@@ -15,7 +15,7 @@ import com.bluelinelabs.conductor.ControllerChangeType
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.HorizontalChangeHandler
 import com.gojuno.koptional.rxjava2.filterSome
-import com.jakewharton.rxbinding2.widget.checkedChanges
+import com.jakewharton.rxbinding3.widget.checkedChanges
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import net.yslibrary.monotweety.App

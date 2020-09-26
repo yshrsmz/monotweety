@@ -22,7 +22,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.gradle
-          key: ${{ runner.os }}-${{ hashFiles('**/build.gradle') }}-v1
+          key: ${{ runner.os }}-${{ hashFiles('**/build.gradle.kts') }}-v1
 
       - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@v1

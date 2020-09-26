@@ -1,7 +1,7 @@
 package net.yslibrary.monotweety.status.adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.hannesdorfmann.adapterdelegates3.ListDelegationAdapter
+import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy

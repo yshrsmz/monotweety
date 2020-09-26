@@ -1,7 +1,7 @@
 package net.yslibrary.monotweety.setting.adapter
 
 import android.content.res.Resources
-import com.hannesdorfmann.adapterdelegates3.ListDelegationAdapter
+import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import net.yslibrary.monotweety.BuildConfig
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.data.appinfo.AppInfo

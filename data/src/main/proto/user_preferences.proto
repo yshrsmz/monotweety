@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+option java_package = "net.yslibrary.monotweety.data.user";
+option java_multiple_files = true;
+
+message UserPreferences {
+  string id = 1;
+  string name = 2;
+  string screenName = 3;
+  string profileImageUrl = 4;
+  int64 _updatedAt = 5;
+}

@@ -19,4 +19,4 @@ pluginManagement {
     }
 }
 
-include(":app")
+include(":data", ":app")

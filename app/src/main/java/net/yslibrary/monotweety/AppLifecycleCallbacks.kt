@@ -2,19 +2,18 @@ package net.yslibrary.monotweety
 
 import android.app.NotificationManager
 import android.content.Context
-import com.crashlytics.android.Crashlytics
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.twitter.sdk.android.core.Twitter
 import com.twitter.sdk.android.core.TwitterAuthConfig
 import com.twitter.sdk.android.core.TwitterConfig
-import io.fabric.sdk.android.Fabric
 import net.yslibrary.monotweety.analytics.CrashReportingTree
 import net.yslibrary.monotweety.notification.createNotificationChannel
+import net.yslibrary.monotweety.util.concatAlternately
 import timber.log.Timber
 
 open class AppLifecycleCallbacks(
     val context: Context,
-    val notificationManager: NotificationManager
+    private val notificationManager: NotificationManager
 ) : App.LifecycleCallbacks {
 
     override fun onCreate() {
@@ -22,7 +21,6 @@ open class AppLifecycleCallbacks(
         initNotificationChannel()
         initThreeTenABP()
         initTwitterKit()
-        initFabric()
     }
 
     override fun onTerminate() {
@@ -43,8 +41,8 @@ open class AppLifecycleCallbacks(
 
     fun initTwitterKit() {
         val authConfig = TwitterAuthConfig(
-            BuildConfig.TWITTER_API_KEY,
-            BuildConfig.TWITTER_API_SECRET
+            concatAlternately(BuildConfig.TWITTER_API_KEY_1, BuildConfig.TWITTER_API_KEY_2),
+            concatAlternately(BuildConfig.TWITTER_API_SECRET_1, BuildConfig.TWITTER_API_SECRET_2)
         )
         val twitterConfig = TwitterConfig.Builder(context)
             .twitterAuthConfig(authConfig)

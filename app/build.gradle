@@ -14,9 +14,23 @@ def getSecretProperty(name) {
     return properties.getProperty(name.toString())
 }
 
-def FABRIC_API_KEY = getSecretProperty('fabric.api.key')
-def TWITTER_API_KEY = "\"${getSecretProperty('twitter.api.key')}\""
-def TWITTER_API_SECRET = "\"${getSecretProperty('twitter.api.secret')}\""
+static def splitAlternately(String source) {
+    String result1 = ""
+    String result2 = ""
+
+    int i = 0
+    int len = source.length()
+    while (i < len) {
+        if (i % 2 == 0) {
+            // even
+            result1 += source[i]
+        } else {
+            result2 += source[i]
+        }
+        i++
+    }
+    return [result1, result2]
+}
 
 android {
     compileSdkVersion 29
@@ -35,6 +49,8 @@ android {
         }
     }
 
+    def twitterApiKeys = splitAlternately(getSecretProperty('twitter.api.key'))
+    def twitterApiSecrets = splitAlternately(getSecretProperty('twitter.api.secret'))
     defaultConfig {
         applicationId "net.yslibrary.monotweety"
         minSdkVersion 21
@@ -42,10 +58,10 @@ android {
         versionCode 58
         versionName "1.9.0"
 
-        buildConfigField 'String', 'TWITTER_API_KEY', TWITTER_API_KEY
-        buildConfigField 'String', 'TWITTER_API_SECRET', TWITTER_API_SECRET
-
-        manifestPlaceholders = [fabricApiKey: FABRIC_API_KEY]
+        buildConfigField 'String', 'TWITTER_API_KEY_1', "\"${twitterApiKeys[0]}\""
+        buildConfigField 'String', 'TWITTER_API_KEY_2', "\"${twitterApiKeys[1]}\""
+        buildConfigField 'String', 'TWITTER_API_SECRET_1', "\"${twitterApiSecrets[0]}\""
+        buildConfigField 'String', 'TWITTER_API_SECRET_2', "\"${twitterApiSecrets[1]}\""
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

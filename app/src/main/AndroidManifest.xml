@@ -73,11 +73,6 @@
             </intent-filter>
         </activity>
 
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="${fabricApiKey}"
-            />
-
         <service
             android:name=".notification.NotificationService"
             android:enabled="true"

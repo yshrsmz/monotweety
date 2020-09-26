@@ -52,14 +52,4 @@ open class AppLifecycleCallbacks(
             .build()
         Twitter.initialize(twitterConfig)
     }
-
-    fun initFabric() {
-
-        val fabric = Fabric.Builder(context)
-            .kits(Crashlytics())
-//        .debuggable(true)
-            .build()
-
-        Fabric.with(fabric)
-    }
 }

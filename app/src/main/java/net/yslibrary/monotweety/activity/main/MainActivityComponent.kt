@@ -12,8 +12,8 @@ import net.yslibrary.monotweety.splash.SplashComponent
 
 @ActivityScope
 @Component(
-    dependencies = arrayOf(AppComponent::class),
-    modules = arrayOf(ActivityModule::class)
+    dependencies = [AppComponent::class],
+    modules = [ActivityModule::class]
 )
 interface MainActivityComponent : ActivityModule.Provider,
     SplashComponent.ComponentProvider,

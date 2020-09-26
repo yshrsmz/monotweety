@@ -12,13 +12,7 @@ import net.yslibrary.monotweety.data.session.SessionModule
 import net.yslibrary.monotweety.data.setting.SettingModule
 
 @Module(
-    includes = arrayOf(
-        AppInfoModule::class,
-        LicenseModule::class,
-        LocalModule::class,
-        SessionModule::class,
-        SettingModule::class
-    )
+    includes = [AppInfoModule::class, LicenseModule::class, LocalModule::class, SessionModule::class, SettingModule::class]
 )
 class DataModule {
 

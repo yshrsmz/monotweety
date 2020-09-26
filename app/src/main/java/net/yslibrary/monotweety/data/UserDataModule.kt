@@ -15,10 +15,7 @@ import net.yslibrary.monotweety.data.user.UserModule
 import java.util.concurrent.ConcurrentHashMap
 
 @Module(
-    includes = arrayOf(
-        StatusModule::class,
-        UserModule::class
-    )
+    includes = [StatusModule::class, UserModule::class]
 )
 class UserDataModule {
 

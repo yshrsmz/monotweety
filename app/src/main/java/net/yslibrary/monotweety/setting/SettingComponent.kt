@@ -6,8 +6,8 @@ import net.yslibrary.monotweety.base.di.ControllerScope
 
 @ControllerScope
 @Component(
-    dependencies = arrayOf(UserComponent::class),
-    modules = arrayOf(SettingViewModule::class)
+    dependencies = [UserComponent::class],
+    modules = [SettingViewModule::class]
 )
 interface SettingComponent {
     fun inject(controller: SettingController)

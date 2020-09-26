@@ -6,8 +6,8 @@ import net.yslibrary.monotweety.base.di.ControllerScope
 
 @ControllerScope
 @Component(
-    dependencies = arrayOf(UserComponent::class),
-    modules = arrayOf(LicenseViewModule::class)
+    dependencies = [UserComponent::class],
+    modules = [LicenseViewModule::class]
 )
 interface LicenseComponent {
     fun inject(controller: LicenseController)

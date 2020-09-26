@@ -5,7 +5,7 @@ import net.yslibrary.monotweety.base.di.ControllerScope
 
 @ControllerScope
 @Subcomponent(
-    modules = arrayOf(LoginViewModule::class)
+    modules = [LoginViewModule::class]
 )
 interface LoginComponent {
     fun inject(controller: LoginController)

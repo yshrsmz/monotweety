@@ -15,7 +15,7 @@ import javax.inject.Named
 
 @AppScope
 @Component(
-    modules = arrayOf(AppModule::class, DataModule::class)
+    modules = [AppModule::class, DataModule::class]
 )
 interface AppComponent : UserComponent.ComponentProvider {
     fun inject(app: App)

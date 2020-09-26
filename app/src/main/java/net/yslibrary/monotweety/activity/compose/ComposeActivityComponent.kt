@@ -8,8 +8,8 @@ import net.yslibrary.monotweety.status.ComposeStatusComponent
 
 @ActivityScope
 @Component(
-    dependencies = arrayOf(UserComponent::class),
-    modules = arrayOf(ActivityModule::class)
+    dependencies = [UserComponent::class],
+    modules = [ActivityModule::class]
 )
 interface ComposeActivityComponent : ActivityModule.Provider,
     ComposeStatusComponent.ComponentProvider {

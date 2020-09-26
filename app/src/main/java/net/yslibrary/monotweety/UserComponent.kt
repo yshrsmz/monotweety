@@ -16,7 +16,7 @@ import net.yslibrary.monotweety.user.domain.GetUser
 
 @UserScope
 @Subcomponent(
-    modules = arrayOf(UserDataModule::class)
+    modules = [UserDataModule::class]
 )
 interface UserComponent : AppModule.Provider {
 

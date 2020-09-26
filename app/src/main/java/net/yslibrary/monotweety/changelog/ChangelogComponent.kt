@@ -6,8 +6,8 @@ import net.yslibrary.monotweety.base.di.ControllerScope
 
 @ControllerScope
 @Component(
-    dependencies = arrayOf(UserComponent::class),
-    modules = arrayOf(ChangelogViewModule::class)
+    dependencies = [UserComponent::class],
+    modules = [ChangelogViewModule::class]
 )
 interface ChangelogComponent {
     fun inject(controller: ChangelogController)

@@ -5,7 +5,7 @@ import net.yslibrary.monotweety.base.di.ControllerScope
 
 @ControllerScope
 @Subcomponent(
-    modules = arrayOf(SplashViewModule::class)
+    modules = [SplashViewModule::class]
 )
 interface SplashComponent {
     fun inject(controller: SplashController)

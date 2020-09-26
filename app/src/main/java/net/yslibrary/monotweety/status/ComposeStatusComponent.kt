@@ -5,7 +5,7 @@ import net.yslibrary.monotweety.base.di.ControllerScope
 
 @ControllerScope
 @Subcomponent(
-    modules = arrayOf(ComposeStatusViewModule::class)
+    modules = [ComposeStatusViewModule::class]
 )
 interface ComposeStatusComponent {
 

@@ -25,9 +25,9 @@ import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.activity.compose.ComposeActivity
 import net.yslibrary.monotweety.activity.main.MainActivity
 import net.yslibrary.monotweety.analytics.Analytics
+import net.yslibrary.monotweety.appdata.appinfo.AppInfo
 import net.yslibrary.monotweety.base.HasComponent
 import net.yslibrary.monotweety.base.closeNotificationDrawer
-import net.yslibrary.monotweety.data.appinfo.AppInfo
 import net.yslibrary.monotweety.setting.domain.FooterStateManager
 import timber.log.Timber
 import javax.inject.Inject

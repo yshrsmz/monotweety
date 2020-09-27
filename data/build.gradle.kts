@@ -6,6 +6,7 @@ import com.google.protobuf.gradle.protoc
 plugins {
     id("com.android.library")
     kotlin("android")
+    kotlin("kapt")
     id("com.google.protobuf") version "0.8.13"
 }
 
@@ -37,15 +38,30 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+        languageVersion = "1.4"
+    }
+}
+
+kapt {
+    correctErrorTypes = true
+    useBuildCache = true
+    javacOptions {
+        option("-Adagger.fastInit=enabled")
     }
 }
 
 dependencies {
     implementation(Deps.Kotlin.Stdlib.jdk8)
+    api(Deps.Kotlin.Coroutines.core)
+    implementation(Deps.Kotlin.Coroutines.android)
+
     implementation(Deps.Androidx.ktx)
     implementation(Deps.Androidx.appcompat)
     implementation(Deps.Androidx.DataStore.core)
     implementation(Deps.Protobuf.core)
+
+    implementation(Deps.Dagger.core)
+    kapt(Deps.Dagger.compiler)
 
     implementation(Deps.timber)
 

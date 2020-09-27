@@ -4,10 +4,10 @@ import com.twitter.sdk.android.core.TwitterSession
 import dagger.Component
 import io.reactivex.subjects.PublishSubject
 import net.yslibrary.monotweety.analytics.Analytics
+import net.yslibrary.monotweety.appdata.DataModule
 import net.yslibrary.monotweety.base.ObjectWatcherDelegate
 import net.yslibrary.monotweety.base.di.AppScope
 import net.yslibrary.monotweety.base.di.Names
-import net.yslibrary.monotweety.data.DataModule
 import net.yslibrary.monotweety.login.domain.IsLoggedIn
 import net.yslibrary.monotweety.setting.domain.FooterStateManager
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager

@@ -3,8 +3,8 @@ package net.yslibrary.monotweety.setting.domain
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 import io.reactivex.subjects.PublishSubject
+import net.yslibrary.monotweety.appdata.setting.SettingDataManager
 import net.yslibrary.monotweety.base.di.AppScope
-import net.yslibrary.monotweety.data.setting.SettingDataManager
 import javax.inject.Inject
 
 @AppScope

@@ -4,8 +4,8 @@ import android.content.res.Resources
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import net.yslibrary.monotweety.BuildConfig
 import net.yslibrary.monotweety.R
-import net.yslibrary.monotweety.data.appinfo.AppInfo
-import net.yslibrary.monotweety.data.user.User
+import net.yslibrary.monotweety.appdata.appinfo.AppInfo
+import net.yslibrary.monotweety.appdata.user.User
 
 class SettingAdapter(
     private val res: Resources,

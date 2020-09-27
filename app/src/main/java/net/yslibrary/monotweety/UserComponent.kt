@@ -2,8 +2,8 @@ package net.yslibrary.monotweety
 
 import dagger.Subcomponent
 import net.yslibrary.monotweety.analytics.Analytics
+import net.yslibrary.monotweety.appdata.UserDataModule
 import net.yslibrary.monotweety.base.di.UserScope
-import net.yslibrary.monotweety.data.UserDataModule
 import net.yslibrary.monotweety.license.domain.GetLicenses
 import net.yslibrary.monotweety.login.domain.DoLogout
 import net.yslibrary.monotweety.setting.domain.FooterStateManager

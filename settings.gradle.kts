@@ -1,3 +1,4 @@
+include(":app2")
 include(":data")
 pluginManagement {
     resolutionStrategy {
@@ -19,4 +20,4 @@ pluginManagement {
     }
 }
 
-include(":data", ":app")
+include(":data", ":app", ":app2")

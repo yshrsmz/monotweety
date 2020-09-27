@@ -39,6 +39,11 @@ object Deps {
         const val jacoco = "org.jacoco:org.jacoco.core:0.8.6"
     }
 
+    object Modules {
+        const val app = ":app"
+        const val data = ":data"
+    }
+
     object Kotlin {
         object Stdlib {
             const val jdk7 = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
@@ -46,7 +51,7 @@ object Deps {
         }
 
         object Coroutines {
-            const val jdk = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
+            const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
             const val android =
                 "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
             const val rx2 = "org.jetbrains.kotlinx:kotlinx-coroutines-rx2:${Versions.coroutines}"

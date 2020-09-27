@@ -10,9 +10,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 import net.yslibrary.monotweety.R
+import net.yslibrary.monotweety.appdata.user.User
 import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.base.load
-import net.yslibrary.monotweety.data.user.User
 
 class ProfileAdapterDelegate(
     private val listener: Listener

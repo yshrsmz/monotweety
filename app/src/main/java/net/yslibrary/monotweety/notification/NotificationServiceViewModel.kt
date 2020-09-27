@@ -5,8 +5,8 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.functions.Function3
 import io.reactivex.subjects.PublishSubject
-import net.yslibrary.monotweety.data.appinfo.AppInfo
-import net.yslibrary.monotweety.data.status.OverlongStatusException
+import net.yslibrary.monotweety.appdata.appinfo.AppInfo
+import net.yslibrary.monotweety.appdata.status.OverlongStatusException
 import net.yslibrary.monotweety.setting.domain.FooterStateManager
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager
 import net.yslibrary.monotweety.setting.domain.SelectedTimelineAppInfoManager

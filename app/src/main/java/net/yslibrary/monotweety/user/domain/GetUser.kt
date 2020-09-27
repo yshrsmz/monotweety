@@ -4,9 +4,9 @@ import com.gojuno.koptional.Optional
 import com.twitter.sdk.android.core.SessionManager
 import com.twitter.sdk.android.core.TwitterSession
 import io.reactivex.Flowable
+import net.yslibrary.monotweety.appdata.user.User
+import net.yslibrary.monotweety.appdata.user.UserRepository
 import net.yslibrary.monotweety.base.di.UserScope
-import net.yslibrary.monotweety.data.user.User
-import net.yslibrary.monotweety.data.user.UserRepository
 import timber.log.Timber
 import javax.inject.Inject
 

@@ -4,9 +4,9 @@ import com.twitter.sdk.android.core.SessionManager
 import com.twitter.sdk.android.core.TwitterSession
 import io.reactivex.Completable
 import io.reactivex.Single
+import net.yslibrary.monotweety.appdata.setting.SettingDataManager
+import net.yslibrary.monotweety.appdata.user.UserRepository
 import net.yslibrary.monotweety.base.di.UserScope
-import net.yslibrary.monotweety.data.setting.SettingDataManager
-import net.yslibrary.monotweety.data.user.UserRepository
 import javax.inject.Inject
 
 

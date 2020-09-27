@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+option java_package = "net.yslibrary.monotweety.data.session";
+option java_multiple_files = true;
+
+message SessionPreferences {
+  string authToken = 1;
+  string authTokenSecret = 2;
+}

@@ -3,8 +3,8 @@ package net.yslibrary.monotweety.setting.domain
 import io.mockk.confirmVerified
 import io.mockk.spyk
 import io.mockk.verify
-import net.yslibrary.monotweety.data.setting.SettingDataManager
-import net.yslibrary.monotweety.data.setting.SettingModule
+import net.yslibrary.monotweety.appdata.setting.SettingDataManager
+import net.yslibrary.monotweety.appdata.setting.SettingModule
 import net.yslibrary.monotweety.targetApplication
 import org.junit.Before
 import org.junit.Test

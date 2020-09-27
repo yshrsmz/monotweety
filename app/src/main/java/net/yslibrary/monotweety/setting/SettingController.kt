@@ -22,12 +22,12 @@ import net.yslibrary.monotweety.App
 import net.yslibrary.monotweety.Navigator
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.analytics.Analytics
+import net.yslibrary.monotweety.appdata.appinfo.AppInfo
 import net.yslibrary.monotweety.base.ActionBarController
 import net.yslibrary.monotweety.base.HasComponent
 import net.yslibrary.monotweety.base.ObjectWatcherDelegate
 import net.yslibrary.monotweety.base.findById
 import net.yslibrary.monotweety.changelog.ChangelogController
-import net.yslibrary.monotweety.data.appinfo.AppInfo
 import net.yslibrary.monotweety.license.LicenseController
 import net.yslibrary.monotweety.setting.adapter.SettingAdapter
 import net.yslibrary.monotweety.setting.adapter.SubHeaderDividerDecoration

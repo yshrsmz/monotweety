@@ -7,8 +7,8 @@ import io.reactivex.Single
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import net.yslibrary.monotweety.Config
-import net.yslibrary.monotweety.data.appinfo.AppInfo
-import net.yslibrary.monotweety.data.user.User
+import net.yslibrary.monotweety.appdata.appinfo.AppInfo
+import net.yslibrary.monotweety.appdata.user.User
 import net.yslibrary.monotweety.setting.domain.FooterStateManager
 import net.yslibrary.monotweety.setting.domain.GetInstalledSupportedApps
 import net.yslibrary.monotweety.setting.domain.NotificationEnabledManager

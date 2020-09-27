@@ -1,4 +1,4 @@
-package net.yslibrary.monotweety.data.local
+package net.yslibrary.monotweety.appdata.local
 
 import android.database.Cursor
 

@@ -1,4 +1,4 @@
-package net.yslibrary.monotweety.data.status
+package net.yslibrary.monotweety.appdata.status
 
 import io.reactivex.Completable
 

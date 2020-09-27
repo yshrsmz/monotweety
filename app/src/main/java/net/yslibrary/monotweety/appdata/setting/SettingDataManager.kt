@@ -1,4 +1,4 @@
-package net.yslibrary.monotweety.data.setting
+package net.yslibrary.monotweety.appdata.setting
 
 import io.reactivex.Completable
 import io.reactivex.Observable

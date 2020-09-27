@@ -1,4 +1,4 @@
-package net.yslibrary.monotweety.data.setting
+package net.yslibrary.monotweety.appdata.setting
 
 import android.content.Context
 import com.f2prateek.rx.preferences2.RxSharedPreferences

@@ -1,4 +1,4 @@
-package net.yslibrary.monotweety.data.user.local
+package net.yslibrary.monotweety.appdata.user.local
 
 import com.gojuno.koptional.Optional
 import com.gojuno.koptional.toOptional
@@ -6,10 +6,10 @@ import com.pushtorefresh.storio3.sqlite.StorIOSQLite
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import net.yslibrary.monotweety.appdata.local.singleObject
+import net.yslibrary.monotweety.appdata.local.withObject
+import net.yslibrary.monotweety.appdata.user.User
 import net.yslibrary.monotweety.base.di.UserScope
-import net.yslibrary.monotweety.data.local.singleObject
-import net.yslibrary.monotweety.data.local.withObject
-import net.yslibrary.monotweety.data.user.User
 import javax.inject.Inject
 
 @UserScope

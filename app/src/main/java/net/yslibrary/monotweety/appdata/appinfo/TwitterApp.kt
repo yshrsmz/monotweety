@@ -1,4 +1,4 @@
-package net.yslibrary.monotweety.data.appinfo
+package net.yslibrary.monotweety.appdata.appinfo
 
 enum class TwitterApp(val packageName: String) {
     BEETER("me.b0ne.android.apps.beeter"),

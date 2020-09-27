@@ -1,11 +1,11 @@
-package net.yslibrary.monotweety.data.status.remote
+package net.yslibrary.monotweety.appdata.status.remote
 
 import com.twitter.sdk.android.core.Callback
 import com.twitter.sdk.android.core.Result
 import com.twitter.sdk.android.core.TwitterException
 import io.reactivex.Single
+import net.yslibrary.monotweety.appdata.status.Tweet
 import net.yslibrary.monotweety.base.di.UserScope
-import net.yslibrary.monotweety.data.status.Tweet
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
 import javax.inject.Inject

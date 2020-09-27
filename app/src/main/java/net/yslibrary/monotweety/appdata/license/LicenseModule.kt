@@ -1,4 +1,4 @@
-package net.yslibrary.monotweety.data.license
+package net.yslibrary.monotweety.appdata.license
 
 import dagger.Binds
 import dagger.Module

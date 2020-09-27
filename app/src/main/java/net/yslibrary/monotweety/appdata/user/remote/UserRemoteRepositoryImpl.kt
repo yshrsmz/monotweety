@@ -1,12 +1,12 @@
-package net.yslibrary.monotweety.data.user.remote
+package net.yslibrary.monotweety.appdata.user.remote
 
 import com.twitter.sdk.android.core.Callback
 import com.twitter.sdk.android.core.Result
 import com.twitter.sdk.android.core.TwitterException
 import com.twitter.sdk.android.core.services.AccountService
 import io.reactivex.Single
+import net.yslibrary.monotweety.appdata.user.User
 import net.yslibrary.monotweety.base.di.UserScope
-import net.yslibrary.monotweety.data.user.User
 import javax.inject.Inject
 import com.twitter.sdk.android.core.models.User as TwitterUser
 

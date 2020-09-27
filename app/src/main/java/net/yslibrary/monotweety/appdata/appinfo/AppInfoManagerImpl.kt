@@ -1,4 +1,4 @@
-package net.yslibrary.monotweety.data.appinfo
+package net.yslibrary.monotweety.appdata.appinfo
 
 import android.content.Intent
 import android.content.pm.PackageManager

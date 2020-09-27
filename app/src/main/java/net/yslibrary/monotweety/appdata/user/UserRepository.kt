@@ -1,4 +1,4 @@
-package net.yslibrary.monotweety.data.user
+package net.yslibrary.monotweety.appdata.user
 
 
 import com.gojuno.koptional.Optional

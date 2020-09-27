@@ -1,4 +1,4 @@
-package net.yslibrary.monotweety.data.status.remote
+package net.yslibrary.monotweety.appdata.status.remote
 
 import com.twitter.sdk.android.core.models.Tweet
 import retrofit2.Call

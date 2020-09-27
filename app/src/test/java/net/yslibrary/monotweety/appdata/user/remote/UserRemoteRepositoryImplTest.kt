@@ -1,4 +1,4 @@
-package net.yslibrary.monotweety.data.user.remote
+package net.yslibrary.monotweety.appdata.user.remote
 
 import com.google.gson.Gson
 import com.twitter.sdk.android.core.Callback
@@ -11,7 +11,7 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.slot
 import io.mockk.verify
-import net.yslibrary.monotweety.data.user.User
+import net.yslibrary.monotweety.appdata.user.User
 import net.yslibrary.monotweety.readJsonFromAssets
 import org.junit.Before
 import org.junit.Test
@@ -24,6 +24,7 @@ class UserRemoteRepositoryImplTest {
 
     @MockK
     lateinit var mockAccountService: AccountService
+
     @MockK
     lateinit var mockCall: Call<TwitterUser>
     lateinit var callbackCaptor: CapturingSlot<Callback<TwitterUser>>

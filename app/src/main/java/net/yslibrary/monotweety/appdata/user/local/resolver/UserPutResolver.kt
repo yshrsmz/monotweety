@@ -1,11 +1,11 @@
-package net.yslibrary.monotweety.data.user.local.resolver
+package net.yslibrary.monotweety.appdata.user.local.resolver
 
 import android.content.ContentValues
 import com.pushtorefresh.storio3.sqlite.operations.put.DefaultPutResolver
 import com.pushtorefresh.storio3.sqlite.queries.InsertQuery
 import com.pushtorefresh.storio3.sqlite.queries.UpdateQuery
-import net.yslibrary.monotweety.data.user.User
-import net.yslibrary.monotweety.data.user.local.UserTable
+import net.yslibrary.monotweety.appdata.user.User
+import net.yslibrary.monotweety.appdata.user.local.UserTable
 
 class UserPutResolver : DefaultPutResolver<User>() {
     override fun mapToContentValues(entity: User): ContentValues {

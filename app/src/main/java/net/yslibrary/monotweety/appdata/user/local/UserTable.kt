@@ -1,4 +1,4 @@
-package net.yslibrary.monotweety.data.user.local
+package net.yslibrary.monotweety.appdata.user.local
 
 import com.pushtorefresh.storio3.sqlite.queries.DeleteQuery
 import com.pushtorefresh.storio3.sqlite.queries.InsertQuery

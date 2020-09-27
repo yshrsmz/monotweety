@@ -1,12 +1,12 @@
-package net.yslibrary.monotweety.data.user
+package net.yslibrary.monotweety.appdata.user
 
 import com.gojuno.koptional.Optional
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import net.yslibrary.monotweety.appdata.user.local.UserLocalRepository
+import net.yslibrary.monotweety.appdata.user.remote.UserRemoteRepository
 import net.yslibrary.monotweety.base.Clock
 import net.yslibrary.monotweety.base.di.UserScope
-import net.yslibrary.monotweety.data.user.local.UserLocalRepository
-import net.yslibrary.monotweety.data.user.remote.UserRemoteRepository
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 

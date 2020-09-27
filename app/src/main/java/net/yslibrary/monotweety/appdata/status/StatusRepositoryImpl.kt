@@ -1,8 +1,8 @@
-package net.yslibrary.monotweety.data.status
+package net.yslibrary.monotweety.appdata.status
 
 import io.reactivex.Completable
+import net.yslibrary.monotweety.appdata.status.remote.StatusRemoteRepository
 import net.yslibrary.monotweety.base.di.UserScope
-import net.yslibrary.monotweety.data.status.remote.StatusRemoteRepository
 import timber.log.Timber
 import javax.inject.Inject
 

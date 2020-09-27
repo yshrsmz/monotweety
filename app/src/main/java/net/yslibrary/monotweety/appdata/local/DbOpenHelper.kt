@@ -1,9 +1,9 @@
-package net.yslibrary.monotweety.data.local
+package net.yslibrary.monotweety.appdata.local
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import net.yslibrary.monotweety.data.user.local.UserTable
+import net.yslibrary.monotweety.appdata.user.local.UserTable
 
 class DbOpenHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
 

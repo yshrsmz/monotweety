@@ -1,4 +1,4 @@
-package net.yslibrary.monotweety.data.local
+package net.yslibrary.monotweety.appdata.local
 
 import com.pushtorefresh.storio3.sqlite.operations.delete.PreparedDelete
 import com.pushtorefresh.storio3.sqlite.operations.get.PreparedGet

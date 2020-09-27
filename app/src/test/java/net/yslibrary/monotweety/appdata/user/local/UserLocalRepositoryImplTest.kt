@@ -1,13 +1,13 @@
-package net.yslibrary.monotweety.data.user.local
+package net.yslibrary.monotweety.appdata.user.local
 
 import com.gojuno.koptional.toOptional
 import com.google.common.truth.Truth.assertThat
 import com.google.gson.Gson
 import com.pushtorefresh.storio3.sqlite.StorIOSQLite
-import net.yslibrary.monotweety.data.local.LocalModule
-import net.yslibrary.monotweety.data.local.singleObject
-import net.yslibrary.monotweety.data.local.withObject
-import net.yslibrary.monotweety.data.user.User
+import net.yslibrary.monotweety.appdata.local.LocalModule
+import net.yslibrary.monotweety.appdata.local.singleObject
+import net.yslibrary.monotweety.appdata.local.withObject
+import net.yslibrary.monotweety.appdata.user.User
 import net.yslibrary.monotweety.readJsonFromAssets
 import net.yslibrary.monotweety.targetApplication
 import org.junit.Before

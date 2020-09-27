@@ -1,12 +1,12 @@
-package net.yslibrary.monotweety.data.user
+package net.yslibrary.monotweety.appdata.user
 
 import dagger.Binds
 import dagger.Module
+import net.yslibrary.monotweety.appdata.user.local.UserLocalRepository
+import net.yslibrary.monotweety.appdata.user.local.UserLocalRepositoryImpl
+import net.yslibrary.monotweety.appdata.user.remote.UserRemoteRepository
+import net.yslibrary.monotweety.appdata.user.remote.UserRemoteRepositoryImpl
 import net.yslibrary.monotweety.base.di.UserScope
-import net.yslibrary.monotweety.data.user.local.UserLocalRepository
-import net.yslibrary.monotweety.data.user.local.UserLocalRepositoryImpl
-import net.yslibrary.monotweety.data.user.remote.UserRemoteRepository
-import net.yslibrary.monotweety.data.user.remote.UserRemoteRepositoryImpl
 
 @Module
 abstract class UserModule {

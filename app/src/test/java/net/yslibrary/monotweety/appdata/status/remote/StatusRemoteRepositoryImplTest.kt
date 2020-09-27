@@ -1,4 +1,4 @@
-package net.yslibrary.monotweety.data.status.remote
+package net.yslibrary.monotweety.appdata.status.remote
 
 import com.google.gson.Gson
 import com.twitter.sdk.android.core.Callback
@@ -10,7 +10,7 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.slot
 import io.mockk.verify
-import net.yslibrary.monotweety.data.status.Tweet
+import net.yslibrary.monotweety.appdata.status.Tweet
 import net.yslibrary.monotweety.readJsonFromAssets
 import org.junit.Before
 import org.junit.Test
@@ -22,6 +22,7 @@ class StatusRemoteRepositoryImplTest {
 
     @MockK
     lateinit var mockService: UpdateStatusService
+
     @MockK
     lateinit var mockCall: Call<TwitterTweet>
 

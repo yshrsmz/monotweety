@@ -34,7 +34,9 @@ jobs:
         run: echo $RELEASE_JKS | base64 -d > ./monotweety.jks
 
       - name: Prepare google-services.json
-        run: echo $GOOGLE_SERVICES_JSON | base64 -d > ./app/google-services.json
+        run: |
+          echo $GOOGLE_SERVICES_JSON | base64 -d > ./app/google-services.json
+          echo $GOOGLE_SERVICES_JSON | base64 -d > ./app2/google-services.json
 
       - name: Run build & test
         run: ./gradlew testDebugUnitTest assembleDebug

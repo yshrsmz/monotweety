@@ -4,10 +4,11 @@
 plugins {
     id("com.github.ben-manes.versions") version "0.33.0"
     id("com.android.application") version "4.0.1" apply false
-    kotlin("android") version "1.4.10" apply false
+    kotlin("android") version Versions.kotlin apply false
     id("com.google.firebase.crashlytics") version "2.3.0" apply false
     id("com.google.gms.google-services") version "4.3.3" apply false
     id("androidx.navigation.safeargs.kotlin") version Versions.navigation apply false
+    id("dagger.hilt.android.plugin") version Versions.daggerHilt apply false
 }
 
 allprojects {

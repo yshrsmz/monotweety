@@ -165,7 +165,7 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
     implementation("com.squareup.retrofit2:converter-gson:$retrofit_version")
 
-    implementation("com.twitter.twittertext:twitter-text:3.1.0")
+    implementation(Deps.twitterText)
     implementation("com.twitter.sdk.android:twitter-core:3.3.0")
 
     implementation(Deps.OkHttp3.core)

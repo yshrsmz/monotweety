@@ -14,6 +14,7 @@ plugins {
     id("com.google.firebase.crashlytics")
     id("com.google.gms.google-services")
     id("androidx.navigation.safeargs.kotlin")
+    id("dagger.hilt.android.plugin")
     id("scabbard.gradle") version "0.4.0"
 }
 
@@ -137,7 +138,7 @@ dependencies {
     val conductor_version = "3.0.0-rc6"
     val storio_version = "3.0.0"
 
-//    implementation(project(Deps.Modules.data))
+    implementation(project(Deps.Modules.data))
 
     implementation(Deps.Kotlin.Stdlib.jdk8)
     implementation(Deps.Kotlin.Coroutines.core)
@@ -155,6 +156,8 @@ dependencies {
     implementation(Deps.Androidx.Navigation.fragment)
     implementation(Deps.Androidx.Navigation.ui)
     implementation(Deps.Androidx.viewmodel)
+    implementation(Deps.Androidx.Navigation.fragment)
+    implementation(Deps.Androidx.Navigation.ui)
 
     implementation(Deps.material)
 
@@ -162,18 +165,13 @@ dependencies {
     implementation(Deps.Firebase.analytics)
     implementation(Deps.Firebase.crashlytics)
 
-    implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
-    implementation("com.squareup.retrofit2:converter-gson:$retrofit_version")
-
-    implementation("com.twitter.twittertext:twitter-text:3.1.0")
-    implementation("com.twitter.sdk.android:twitter-core:3.3.0")
+    implementation(Deps.twitterText)
 
     implementation(Deps.OkHttp3.core)
 
-    implementation(Deps.Dagger.core)
-    kapt(Deps.Dagger.compiler)
+    implementation(Deps.Dagger.hilt)
+    kapt(Deps.Dagger.hiltCompiler)
 
-    implementation("com.pushtorefresh.storio3:sqlite:$storio_version")
     implementation(Deps.RxJava2.core)
     implementation(Deps.RxJava2.android)
     implementation(Deps.RxJava2.kotlin)
@@ -190,10 +188,6 @@ dependencies {
     implementation("com.jakewharton.rxrelay2:rxrelay:2.1.1")
 
     implementation("com.f2prateek.rx.preferences2:rx-preferences:2.0.1")
-
-    implementation("com.bluelinelabs:conductor:${conductor_version}")
-    implementation("com.bluelinelabs:conductor-androidx-transition:${conductor_version}")
-    implementation("com.bluelinelabs:conductor-rxlifecycle2:${conductor_version}")
 
     implementation(Deps.adapterDelegates)
 
@@ -224,4 +218,8 @@ dependencies {
 
 scabbard {
     enabled = true
+}
+
+hilt {
+    enableTransformForLocalTests = true
 }

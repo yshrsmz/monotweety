@@ -12,6 +12,7 @@ object Versions {
     const val navigation = "2.3.0"
     const val okhttp3 = "4.9.0"
     const val dagger = "2.29.1"
+    const val daggerHilt = "2.29-alpha"
     const val glide = "4.11.0"
     const val groupie = "2.8.1"
     const val flowBinding = "0.12.0"
@@ -119,7 +120,9 @@ object Deps {
     object Dagger {
         const val core = "com.google.dagger:dagger:${Versions.dagger}"
         const val compiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
-
+        const val hilt = "com.google.dagger:hilt-android:${Versions.daggerHilt}"
+        const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${Versions.daggerHilt}"
+        const val hiltTesting = "com.google.dagger:hilt-android-testing:${Versions.daggerHilt}"
     }
 
     object Glide {
@@ -169,6 +172,8 @@ object Deps {
     const val timber = "com.jakewharton.timber:timber:4.7.1"
 
     const val licenseAdapter = "net.yslibrary.licenseadapter:licenseadapter:3.1.0"
+
+    const val twitterText = "com.twitter.twittertext:twitter-text:3.1.0"
 
 
     // test

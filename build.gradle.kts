@@ -3,7 +3,7 @@
 
 plugins {
     id("com.github.ben-manes.versions") version "0.33.0"
-    id("com.android.application") version "4.1.0-rc03" apply false
+    id("com.android.application") version "4.0.2" apply false
     kotlin("android") version Versions.kotlin apply false
     id("com.google.firebase.crashlytics") version "2.3.0" apply false
     id("com.google.gms.google-services") version "4.3.4" apply false

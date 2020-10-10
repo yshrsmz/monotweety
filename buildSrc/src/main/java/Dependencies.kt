@@ -28,7 +28,7 @@ object Versions {
 object Deps {
 
     object Plugins {
-        const val android = "com.android.tools.build:gradle:4.1.0-rc03"
+        const val android = "com.android.tools.build:gradle:4.0.2"
         const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
         const val dokka = "org.jetbrains.dokka:dokka-gradle-plugin:${Versions.dokka}"
         const val versions = "com.github.ben-manes:gradle-versions-plugin:0.33.0"

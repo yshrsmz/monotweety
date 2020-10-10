@@ -1,4 +1,4 @@
-package net.yslibrary.monotweety.activity.main
+package net.yslibrary.monotweety.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 

@@ -1,5 +1,3 @@
-include(":app2")
-include(":data")
 pluginManagement {
     resolutionStrategy {
         eachPlugin {
@@ -26,4 +24,4 @@ pluginManagement {
     }
 }
 
-include(":data", ":app", ":app2")
+include(":di-common", ":data", ":app", ":app2")

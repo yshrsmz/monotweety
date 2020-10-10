@@ -51,9 +51,11 @@ kapt {
 }
 
 dependencies {
+    implementation(project(Deps.Modules.diCommon))
     implementation(Deps.Kotlin.Stdlib.jdk8)
     api(Deps.Kotlin.Coroutines.core)
     implementation(Deps.Kotlin.Coroutines.android)
+    implementation(Deps.Kotlin.datetime)
 
     implementation(Deps.Twitter4kt.core)
     implementation(Deps.Twitter4kt.v1)

@@ -4,7 +4,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
     val userFlow: Flow<User?>
-    suspend fun update(user: User)
     suspend fun delete()
     suspend fun fetch()
 }

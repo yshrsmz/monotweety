@@ -6,7 +6,7 @@ import com.twitter.sdk.android.core.TwitterException
 import com.twitter.sdk.android.core.services.AccountService
 import io.reactivex.Single
 import net.yslibrary.monotweety.appdata.user.User
-import net.yslibrary.monotweety.base.di.UserScope
+import net.yslibrary.monotweety.di.UserScope
 import javax.inject.Inject
 import com.twitter.sdk.android.core.models.User as TwitterUser
 

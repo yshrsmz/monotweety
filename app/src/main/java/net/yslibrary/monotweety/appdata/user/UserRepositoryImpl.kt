@@ -6,7 +6,7 @@ import io.reactivex.Flowable
 import net.yslibrary.monotweety.appdata.user.local.UserLocalRepository
 import net.yslibrary.monotweety.appdata.user.remote.UserRemoteRepository
 import net.yslibrary.monotweety.base.Clock
-import net.yslibrary.monotweety.base.di.UserScope
+import net.yslibrary.monotweety.di.UserScope
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 

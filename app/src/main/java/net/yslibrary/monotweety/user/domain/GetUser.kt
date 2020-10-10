@@ -6,7 +6,7 @@ import com.twitter.sdk.android.core.TwitterSession
 import io.reactivex.Flowable
 import net.yslibrary.monotweety.appdata.user.User
 import net.yslibrary.monotweety.appdata.user.UserRepository
-import net.yslibrary.monotweety.base.di.UserScope
+import net.yslibrary.monotweety.di.UserScope
 import timber.log.Timber
 import javax.inject.Inject
 

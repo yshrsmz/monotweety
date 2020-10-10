@@ -42,8 +42,9 @@ object Deps {
     }
 
     object Modules {
-        const val app = ":app"
+        const val diCommon = ":di-common"
         const val data = ":data"
+        const val app = ":app"
     }
 
     object Kotlin {

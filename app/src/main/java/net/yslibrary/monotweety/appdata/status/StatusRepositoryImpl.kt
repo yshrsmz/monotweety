@@ -2,7 +2,7 @@ package net.yslibrary.monotweety.appdata.status
 
 import io.reactivex.Completable
 import net.yslibrary.monotweety.appdata.status.remote.StatusRemoteRepository
-import net.yslibrary.monotweety.base.di.UserScope
+import net.yslibrary.monotweety.di.UserScope
 import timber.log.Timber
 import javax.inject.Inject
 

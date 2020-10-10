@@ -3,7 +3,7 @@ package net.yslibrary.monotweety.license.domain
 import io.reactivex.Single
 import net.yslibrary.licenseadapter.Library
 import net.yslibrary.monotweety.appdata.license.LicenseRepository
-import net.yslibrary.monotweety.base.di.UserScope
+import net.yslibrary.monotweety.di.UserScope
 import javax.inject.Inject
 
 @UserScope

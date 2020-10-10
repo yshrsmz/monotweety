@@ -9,7 +9,7 @@ import io.reactivex.Flowable
 import net.yslibrary.monotweety.appdata.local.singleObject
 import net.yslibrary.monotweety.appdata.local.withObject
 import net.yslibrary.monotweety.appdata.user.User
-import net.yslibrary.monotweety.base.di.UserScope
+import net.yslibrary.monotweety.di.UserScope
 import javax.inject.Inject
 
 @UserScope

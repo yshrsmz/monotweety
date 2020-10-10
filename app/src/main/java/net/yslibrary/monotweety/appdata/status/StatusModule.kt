@@ -4,7 +4,7 @@ import dagger.Binds
 import dagger.Module
 import net.yslibrary.monotweety.appdata.status.remote.StatusRemoteRepository
 import net.yslibrary.monotweety.appdata.status.remote.StatusRemoteRepositoryImpl
-import net.yslibrary.monotweety.base.di.UserScope
+import net.yslibrary.monotweety.di.UserScope
 
 @Module
 abstract class StatusModule {

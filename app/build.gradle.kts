@@ -137,6 +137,7 @@ dependencies {
     val conductor_version = "3.0.0-rc6"
     val storio_version = "3.0.0"
 
+    implementation(project(Deps.Modules.diCommon))
 //    implementation(project(Deps.Modules.data))
 
     implementation(Deps.Kotlin.Stdlib.jdk8)

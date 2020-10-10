@@ -2,7 +2,7 @@ package net.yslibrary.monotweety.status.domain
 
 import com.twitter.twittertext.TwitterTextParser
 import io.reactivex.Single
-import net.yslibrary.monotweety.base.di.UserScope
+import net.yslibrary.monotweety.di.UserScope
 import javax.inject.Inject
 
 @UserScope

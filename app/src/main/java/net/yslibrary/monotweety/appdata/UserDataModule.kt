@@ -11,7 +11,7 @@ import net.yslibrary.monotweety.appdata.status.StatusModule
 import net.yslibrary.monotweety.appdata.status.remote.TwitterApiClient
 import net.yslibrary.monotweety.appdata.status.remote.UpdateStatusService
 import net.yslibrary.monotweety.appdata.user.UserModule
-import net.yslibrary.monotweety.base.di.UserScope
+import net.yslibrary.monotweety.di.UserScope
 import java.util.concurrent.ConcurrentHashMap
 
 @Module(

@@ -55,6 +55,9 @@ dependencies {
     api(Deps.Kotlin.Coroutines.core)
     implementation(Deps.Kotlin.Coroutines.android)
 
+    implementation(Deps.Twitter4kt.core)
+    implementation(Deps.Twitter4kt.v1)
+
     implementation(Deps.Androidx.ktx)
     implementation(Deps.Androidx.appcompat)
     implementation(Deps.Androidx.DataStore.core)

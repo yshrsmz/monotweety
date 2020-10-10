@@ -3,22 +3,23 @@ object Versions {
     const val minSdk = 21
     const val targetSdk = 29
     const val kotlin = "1.4.10"
-    const val coroutines = "1.3.8"
+    const val coroutines = "1.3.9"
     const val dokka = "0.10.1"
-    const val androidXLifecycle = "2.3.0-alpha07"
-    const val androidXFragment = "1.3.0-alpha08"
+    const val androidXLifecycle = "2.3.0-beta01"
+    const val androidXFragment = "1.3.0-beta01"
     const val androidXDataStore = "1.0.0-alpha01"
     const val androidXTest = "1.3.0"
     const val navigation = "2.3.0"
     const val okhttp3 = "4.9.0"
     const val dagger = "2.29.1"
-    const val daggerHilt = "2.29-alpha"
+    const val daggerHilt = "2.29.1-alpha"
     const val glide = "4.11.0"
     const val groupie = "2.8.1"
     const val flowBinding = "0.12.0"
     const val rxBinding = "3.1.0"
     const val protobuf = "3.13.0"
-    const val leakcanary = "2.4"
+    const val twitter4kt = "0.1.2"
+    const val leakcanary = "2.5"
     const val hyperion = "0.9.29"
     const val robolectric = "4.4"
     const val espresso = "3.3.0"
@@ -27,12 +28,12 @@ object Versions {
 object Deps {
 
     object Plugins {
-        const val android = "com.android.tools.build:gradle:4.0.1"
+        const val android = "com.android.tools.build:gradle:4.1.0-rc03"
         const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
         const val dokka = "org.jetbrains.dokka:dokka-gradle-plugin:${Versions.dokka}"
         const val versions = "com.github.ben-manes:gradle-versions-plugin:0.33.0"
         const val kotlinxcodesync = "co.touchlab:kotlinxcodesync:0.2"
-        const val googleservices = "com.google.gms:google-services:4.3.3"
+        const val googleservices = "com.google.gms:google-services:4.3.4"
         const val navSafeArgs =
             "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
         const val crashlytics = "com.google.firebase:firebase-crashlytics-gradle:2.3.0"
@@ -65,11 +66,11 @@ object Deps {
         const val sqlite = "androidx.sqlite:sqlite:2.0.1"
         const val browser = "androidx.browser:browser:1.3.0-alpha05"
         const val viewpager = "androidx.viewpager2:viewpager2:1.1.0-alpha01"
-        const val recyclerview = "androidx.recyclerview:recyclerview:1.2.0-alpha05"
+        const val recyclerview = "androidx.recyclerview:recyclerview:1.2.0-alpha06"
         const val swiperefreshlayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
         const val preference = "androidx.preference:preference:1.1.1"
 
-        const val ktx = "androidx.core:core-ktx:1.3.1"
+        const val ktx = "androidx.core:core-ktx:1.3.2"
         const val fragment = "androidx.fragment:fragment:${Versions.androidXFragment}"
         const val fragmentKtx = "androidx.fragment:fragment-ktx:${Versions.androidXFragment}"
 
@@ -111,7 +112,7 @@ object Deps {
     const val material = "com.google.android.material:material:1.0.0"
 
     object Firebase {
-        const val bom = "com.google.firebase:firebase-bom:25.10.0"
+        const val bom = "com.google.firebase:firebase-bom:25.11.0"
         const val messaging = "com.google.firebase:firebase-messaging"
         const val crashlytics = "com.google.firebase:firebase-crashlytics"
         const val analytics = "com.google.firebase:firebase-analytics"
@@ -165,6 +166,11 @@ object Deps {
         const val protoc = "com.google.protobuf:protoc:${Versions.protobuf}"
     }
 
+    object Twitter4kt {
+        const val core = "com.codingfeline.twitter4kt:core-api:${Versions.twitter4kt}"
+        const val v1 = "com.codingfeline.twitter4kt:v1-api:${Versions.twitter4kt}"
+    }
+
     const val adapterDelegates = "com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.3.0"
 
     const val threetenabp = "com.jakewharton.threetenabp:threetenabp:1.2.4"
@@ -179,6 +185,6 @@ object Deps {
     // test
     const val junit = "junit:junit:4.13"
     const val robolectric = "org.robolectric:robolectric:4.4"
-    const val mockk = "io.mockk:mockk:1.10.0"
+    const val mockk = "io.mockk:mockk:1.10.2"
     const val truth = "com.google.truth:truth:1.0.1"
 }

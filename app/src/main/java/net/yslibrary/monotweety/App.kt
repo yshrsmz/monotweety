@@ -32,9 +32,7 @@ open class App : Application() {
     }
 
     val appComponent: AppComponent by lazy {
-        DaggerAppComponent.builder()
-            .appModule(Modules.appModule(this))
-            .build()
+        DaggerAppComponent.factory().create(Modules.appModule(), this)
     }
 
     var userComponent: UserComponent? = null

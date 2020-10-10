@@ -3,9 +3,12 @@ package net.yslibrary.monotweety
 import android.app.NotificationManager
 import android.content.Context
 
-class DebugAppModule(context: Context) : AppModule(context) {
+class DebugAppModule : AppModule() {
 
-    override fun provideAppLifecycleCallbacks(context: Context, notificationManager: NotificationManager): App.LifecycleCallbacks {
+    override fun provideAppLifecycleCallbacks(
+        context: Context,
+        notificationManager: NotificationManager
+    ): App.LifecycleCallbacks {
         return DebugAppLifecycleCallbacks(context, notificationManager)
     }
 }

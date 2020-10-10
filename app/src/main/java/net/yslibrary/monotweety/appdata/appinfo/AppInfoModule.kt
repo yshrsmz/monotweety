@@ -2,12 +2,12 @@ package net.yslibrary.monotweety.appdata.appinfo
 
 import dagger.Binds
 import dagger.Module
-import net.yslibrary.monotweety.base.di.AppScope
+import javax.inject.Singleton
 
 @Module
 abstract class AppInfoModule {
 
-    @AppScope
+    @Singleton
     @Binds
     abstract fun provideAppInfoManager(appInfoManagerImpl: AppInfoManagerImpl): AppInfoManager
 }

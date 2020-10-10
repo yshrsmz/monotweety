@@ -4,12 +4,12 @@ import com.twitter.sdk.android.core.SessionManager
 import com.twitter.sdk.android.core.TwitterSession
 import dagger.Module
 import dagger.Provides
-import net.yslibrary.monotweety.base.di.AppScope
+import javax.inject.Singleton
 
 @Module
 class SessionModule {
 
-    @AppScope
+    @Singleton
     @Provides
     fun provideSessionRepository(sessionManager: SessionManager<TwitterSession>): SessionRepository {
         return SessionRepositoryImpl(sessionManager)

@@ -2,12 +2,12 @@ package net.yslibrary.monotweety.appdata.license
 
 import dagger.Binds
 import dagger.Module
-import net.yslibrary.monotweety.base.di.AppScope
+import javax.inject.Singleton
 
 @Module
 abstract class LicenseModule {
 
-    @AppScope
+    @Singleton
     @Binds
     abstract fun provideLicenseRepository(repository: LicenseRepositoryImpl): LicenseRepository
 }

@@ -4,10 +4,10 @@ import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 import io.reactivex.subjects.PublishSubject
 import net.yslibrary.monotweety.appdata.setting.SettingDataManager
-import net.yslibrary.monotweety.base.di.AppScope
 import javax.inject.Inject
+import javax.inject.Singleton
 
-@AppScope
+@Singleton
 class FooterStateManager @Inject constructor(
     private val settingDataManager: SettingDataManager
 ) {

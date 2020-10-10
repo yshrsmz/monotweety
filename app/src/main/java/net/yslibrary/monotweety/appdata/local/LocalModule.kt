@@ -8,20 +8,18 @@ import dagger.Module
 import dagger.Provides
 import net.yslibrary.monotweety.appdata.user.User
 import net.yslibrary.monotweety.appdata.user.local.resolver.UserSQLiteTypeMapping
-import net.yslibrary.monotweety.base.di.AppScope
-import net.yslibrary.monotweety.base.di.Names
-import javax.inject.Named
+import javax.inject.Singleton
 
 @Module
 class LocalModule {
 
-    @AppScope
+    @Singleton
     @Provides
-    fun provideDbOpenHelper(@Named(Names.FOR_APP) context: Context): SQLiteOpenHelper {
+    fun provideDbOpenHelper(context: Context): SQLiteOpenHelper {
         return DbOpenHelper(context)
     }
 
-    @AppScope
+    @Singleton
     @Provides
     fun provideStorIOSQLite(sqLiteOpenHelper: SQLiteOpenHelper): StorIOSQLite {
         return DefaultStorIOSQLite.builder()

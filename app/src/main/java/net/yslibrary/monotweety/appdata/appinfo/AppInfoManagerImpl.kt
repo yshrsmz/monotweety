@@ -3,11 +3,11 @@ package net.yslibrary.monotweety.appdata.appinfo
 import android.content.Intent
 import android.content.pm.PackageManager
 import io.reactivex.Single
-import net.yslibrary.monotweety.base.di.AppScope
 import net.yslibrary.monotweety.base.toSingle
 import javax.inject.Inject
+import javax.inject.Singleton
 
-@AppScope
+@Singleton
 class AppInfoManagerImpl @Inject constructor(private val packageManager: PackageManager) :
     AppInfoManager {
 

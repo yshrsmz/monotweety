@@ -15,70 +15,65 @@ import net.yslibrary.monotweety.base.Clock
 import net.yslibrary.monotweety.base.ClockImpl
 import net.yslibrary.monotweety.base.ObjectWatcherDelegate
 import net.yslibrary.monotweety.base.ObjectWatcherDelegateImpl
-import net.yslibrary.monotweety.base.di.AppScope
 import net.yslibrary.monotweety.base.di.Names
 import javax.inject.Named
+import javax.inject.Singleton
 
 @Module
-open class AppModule(private val context: Context) {
+open class AppModule {
 
-    @Named(Names.FOR_APP)
-    @AppScope
-    @Provides
-    fun provideAppContext(): Context = context
-
-    @AppScope
+    @Singleton
     @Provides
     open fun provideAppLifecycleCallbacks(
-        @Named(Names.FOR_APP) context: Context,
+        context: Context,
         notificationManager: NotificationManager
     ): App.LifecycleCallbacks {
         return AppLifecycleCallbacks(context, notificationManager)
     }
 
-    @AppScope
+    @Singleton
     @Provides
-    fun provideNotificationManager(@Named(Names.FOR_APP) context: Context): NotificationManager {
+    fun provideNotificationManager(context: Context): NotificationManager {
         return context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     }
 
-    @AppScope
+    @Singleton
     @Provides
-    fun provideNotificationManagerCompat(@Named(Names.FOR_APP) context: Context): NotificationManagerCompat {
+    fun provideNotificationManagerCompat(context: Context): NotificationManagerCompat {
         return NotificationManagerCompat.from(context)
     }
 
-    @AppScope
+    @Singleton
     @Provides
-    fun providePackageManager(@Named(Names.FOR_APP) context: Context): PackageManager {
+    fun providePackageManager(context: Context): PackageManager {
         return context.packageManager
     }
 
-    @AppScope
+    @Singleton
     @Provides
     fun provideClock(): Clock {
         return ClockImpl()
     }
 
-    @AppScope
+    @Singleton
     @Provides
     fun provideConfig(): Config {
         return Config.init()
     }
 
-    @AppScope
+    @Singleton
     @Provides
     open fun provideObjectWatcher(): ObjectWatcher {
         return AppWatcher.objectWatcher
     }
 
     @Provides
-    fun provideAnalytics(@Named(Names.FOR_APP) context: Context): FirebaseAnalytics {
+    fun provideAnalytics(context: Context): FirebaseAnalytics {
         return FirebaseAnalytics.getInstance(context)
     }
 
     @Named(Names.FOR_LOGIN)
-    @AppScope
+    @Singleton
     @Provides
     fun provideLoginCompletedSubject(): PublishSubject<TwitterSession> {
         return PublishSubject.create()
@@ -94,6 +89,7 @@ open class AppModule(private val context: Context) {
         fun clock(): Clock
         fun config(): Config
         fun refWatcherDelegate(): ObjectWatcherDelegate
+
         @Named(Names.FOR_LOGIN)
         fun loginCompletedSubject(): PublishSubject<TwitterSession>
     }

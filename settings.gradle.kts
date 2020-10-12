@@ -1,3 +1,6 @@
+includeBuild("includedBuild/dependencies")
+includeBuild("includedBuild/build-helper")
+
 pluginManagement {
     resolutionStrategy {
         eachPlugin {

@@ -2,9 +2,17 @@ object Versions {
     const val compileSdk = 29
     const val minSdk = 21
     const val targetSdk = 29
+
+    const val gradle = "6.7-rc-4"
+
+    const val agp = "4.0.2"
     const val kotlin = "1.4.10"
     const val coroutines = "1.3.9"
     const val dokka = "0.10.1"
+    const val versions = "0.33.0"
+    const val crashlytics = "2.3.0"
+    const val googleservices = "4.3.4"
+
     const val androidXLifecycle = "2.3.0-beta01"
     const val androidXFragment = "1.3.0-beta01"
     const val androidXDataStore = "1.0.0-alpha01"
@@ -25,13 +33,28 @@ object Versions {
     const val espresso = "3.3.0"
 }
 
+object Plugins {
+    object Ids {
+        const val androidApp = "com.android.application"
+        const val androidLib = "com.android.library"
+        const val versions = "com.github.ben-manes.versions"
+        const val crashlytics = "com.google.firebase.crashlytics"
+        const val googleservices = "com.google.gms.google-services"
+        const val navSafeArgs = "androidx.navigation.safeargs.kotlin"
+        const val daggerHilt = "dagger.hilt.android.plugin"
+    }
+
+    const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
+    const val android = "com.android.tools.build:gradle:${Versions.agp}"
+}
+
 object Deps {
 
     object Plugins {
         const val android = "com.android.tools.build:gradle:4.0.2"
         const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
         const val dokka = "org.jetbrains.dokka:dokka-gradle-plugin:${Versions.dokka}"
-        const val versions = "com.github.ben-manes:gradle-versions-plugin:0.33.0"
+        const val versions = "com.github.ben-manes:gradle-versions-plugin:"
         const val kotlinxcodesync = "co.touchlab:kotlinxcodesync:0.2"
         const val googleservices = "com.google.gms:google-services:4.3.4"
         const val navSafeArgs =
@@ -40,6 +63,7 @@ object Deps {
         const val dexcount = "com.getkeepsafe.dexcount:dexcount-gradle-plugin:2.0.0-RC1"
         const val jacoco = "org.jacoco:org.jacoco.core:0.8.6"
     }
+
 
     object Modules {
         const val diCommon = ":di-common"
@@ -65,7 +89,7 @@ object Deps {
 
     object Androidx {
         const val appcompat = "androidx.appcompat:appcompat:1.2.0"
-        const val constraintlayout = "androidx.constraintlayout:constraintlayout:2.0.1"
+        const val constraintlayout = "androidx.constraintlayout:constraintlayout:2.0.2"
         const val sqlite = "androidx.sqlite:sqlite:2.0.1"
         const val browser = "androidx.browser:browser:1.3.0-alpha05"
         const val viewpager = "androidx.viewpager2:viewpager2:1.1.0-alpha01"
@@ -112,10 +136,11 @@ object Deps {
         }
     }
 
+    const val desugarJdk = "com.android.tools:desugar_jdk_libs:1.0.10"
     const val material = "com.google.android.material:material:1.0.0"
 
     object Firebase {
-        const val bom = "com.google.firebase:firebase-bom:25.11.0"
+        const val bom = "com.google.firebase:firebase-bom:25.12.0"
         const val messaging = "com.google.firebase:firebase-messaging"
         const val crashlytics = "com.google.firebase:firebase-crashlytics"
         const val analytics = "com.google.firebase:firebase-analytics"
@@ -139,7 +164,7 @@ object Deps {
 
     object RxJava2 {
         const val core = "io.reactivex.rxjava2:rxandroid:2.1.1"
-        const val android = "io.reactivex.rxjava2:rxjava:2.2.19"
+        const val android = "io.reactivex.rxjava2:rxjava:2.2.20"
         const val kotlin = "io.reactivex.rxjava2:rxkotlin:2.4.0"
         const val proguard = "com.artemzin.rxjava:proguard-rules:1.3.3.0"
     }

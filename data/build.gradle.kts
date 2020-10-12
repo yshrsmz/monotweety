@@ -11,42 +11,9 @@ plugins {
 }
 
 android {
-    compileSdkVersion(29)
-
-    defaultConfig {
-        minSdkVersion(Versions.minSdk)
-        targetSdkVersion(Versions.targetSdk)
-        versionCode = 1
-        versionName = "1.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
     kotlinOptions {
         jvmTarget = "1.8"
         languageVersion = "1.4"
-    }
-}
-
-kapt {
-    correctErrorTypes = true
-    useBuildCache = true
-    javacOptions {
-        option("-Adagger.fastInit=enabled")
     }
 }
 
@@ -55,14 +22,14 @@ dependencies {
     implementation(Deps.Kotlin.Stdlib.jdk8)
     api(Deps.Kotlin.Coroutines.core)
     implementation(Deps.Kotlin.Coroutines.android)
-    implementation(Deps.Kotlin.datetime)
+    api(Deps.Kotlin.datetime)
 
-    implementation(Deps.Twitter4kt.core)
+    api(Deps.Twitter4kt.core)
     implementation(Deps.Twitter4kt.v1)
 
     implementation(Deps.Androidx.ktx)
     implementation(Deps.Androidx.appcompat)
-    implementation(Deps.Androidx.DataStore.core)
+    api(Deps.Androidx.DataStore.core)
     implementation(Deps.Protobuf.core)
 
     implementation(Deps.Dagger.core)

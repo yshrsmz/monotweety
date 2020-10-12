@@ -2,24 +2,14 @@
 // `./gradlew build -Dscan` to check & upload result
 
 plugins {
-    id("com.github.ben-manes.versions") version "0.33.0"
-    id("com.android.application") version "4.0.2" apply false
+    id("dependencies")
+    id("build-helper")
+    id(Plugins.Ids.versions) version Versions.versions
+    id(Plugins.Ids.androidApp) version Versions.agp apply false
     kotlin("android") version Versions.kotlin apply false
-    id("com.google.firebase.crashlytics") version "2.3.0" apply false
-    id("com.google.gms.google-services") version "4.3.4" apply false
-    id("androidx.navigation.safeargs.kotlin") version Versions.navigation apply false
-    id("dagger.hilt.android.plugin") version Versions.daggerHilt apply false
-}
-
-allprojects {
-    repositories {
-        mavenCentral()
-        google()
-        jcenter()
-        maven(url = "https://kotlin.bintray.com/kotlinx/")
-        maven(url = "https://dl.bintray.com/yshrsmz/twitter4kt/")
-//        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
-    }
+    id(Plugins.Ids.crashlytics) version Versions.crashlytics apply false
+    id(Plugins.Ids.googleservices) version Versions.googleservices apply false
+    id(Plugins.Ids.navSafeArgs) version Versions.navigation apply false
 }
 
 tasks.register("clean", Delete::class.java) {
@@ -27,6 +17,6 @@ tasks.register("clean", Delete::class.java) {
 }
 
 tasks.wrapper {
-    gradleVersion = "6.7-rc-4"
+    gradleVersion = Versions.gradle
     distributionType = Wrapper.DistributionType.ALL
 }

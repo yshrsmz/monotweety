@@ -4,7 +4,7 @@
 ////apply plugin: "com.getkeepsafe.dexcount"
 //apply plugin: "com.google.gms.google-services"
 //apply plugin: "com.google.firebase.crashlytics"
-import java.util.*
+import java.util.Properties
 
 plugins {
     id("com.android.application")
@@ -26,26 +26,7 @@ fun getSecretProperty(name: String): String {
     return properties.getProperty(name.toString())
 }
 
-fun splitAlternately(source: String): Array<String> {
-    var result1 = ""
-    var result2 = ""
-
-    var i = 0
-    val len = source.length
-    while (i < len) {
-        if (i % 2 == 0) {
-            // even
-            result1 += source[i]
-        } else {
-            result2 += source[i]
-        }
-        i++
-    }
-    return arrayOf(result1, result2)
-}
-
 android {
-    compileSdkVersion(Versions.compileSdk)
 
     signingConfigs {
         getByName("debug") {
@@ -61,21 +42,10 @@ android {
         }
     }
 
-    val twitterApiKeys = splitAlternately(getSecretProperty("twitter.api.key"))
-    val twitterApiSecrets = splitAlternately(getSecretProperty("twitter.api.secret"))
     defaultConfig {
         applicationId = "net.yslibrary.monotweety"
-        minSdkVersion(Versions.minSdk)
-        targetSdkVersion(Versions.targetSdk)
         versionCode = 58
         versionName = "1.9.0"
-
-        buildConfigField("String", "TWITTER_API_KEY_1", "\"${twitterApiKeys[0]}\"")
-        buildConfigField("String", "TWITTER_API_KEY_2", "\"${twitterApiKeys[1]}\"")
-        buildConfigField("String", "TWITTER_API_SECRET_1", "\"${twitterApiSecrets[0]}\"")
-        buildConfigField("String", "TWITTER_API_SECRET_2", "\"${twitterApiSecrets[1]}\"")
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -94,41 +64,9 @@ android {
         }
     }
 
-    buildFeatures {
-        viewBinding = true
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
     kotlinOptions {
         jvmTarget = "1.8"
         languageVersion = "1.4"
-    }
-
-    dexOptions {
-        jumboMode = true
-    }
-
-    lintOptions {
-        lintConfig = rootProject.file("gradle/lint.xml")
-        isAbortOnError = false
-        textReport = true
-        textOutput("stdout")
-//    xmlReport true
-    }
-
-    testOptions {
-        unitTests.isIncludeAndroidResources = true
-    }
-}
-
-kapt {
-    correctErrorTypes = true
-    useBuildCache = true
-    javacOptions {
-        option("-Adagger.fastInit=enabled")
     }
 }
 

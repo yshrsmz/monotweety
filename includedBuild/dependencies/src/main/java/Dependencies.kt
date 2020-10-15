@@ -3,9 +3,9 @@ object Versions {
     const val minSdk = 21
     const val targetSdk = 29
 
-    const val gradle = "6.7-rc-4"
+    const val gradle = "6.7"
 
-    const val agp = "4.0.2"
+    const val agp = "4.1.0"
     const val kotlin = "1.4.10"
     const val coroutines = "1.3.9"
     const val dokka = "0.10.1"
@@ -15,9 +15,9 @@ object Versions {
 
     const val androidXLifecycle = "2.3.0-beta01"
     const val androidXFragment = "1.3.0-beta01"
-    const val androidXDataStore = "1.0.0-alpha01"
+    const val androidXDataStore = "1.0.0-alpha02"
     const val androidXTest = "1.3.0"
-    const val navigation = "2.3.0"
+    const val navigation = "2.3.1"
     const val okhttp3 = "4.9.0"
     const val dagger = "2.29.1"
     const val daggerHilt = "2.29.1-alpha"
@@ -211,7 +211,7 @@ object Deps {
 
 
     // test
-    const val junit = "junit:junit:4.13"
+    const val junit = "junit:junit:4.13.1"
     const val robolectric = "org.robolectric:robolectric:4.4"
     const val mockk = "io.mockk:mockk:1.10.2"
     const val truth = "com.google.truth:truth:1.0.1"

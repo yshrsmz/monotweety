@@ -16,7 +16,7 @@ tasks.register("clean", Delete::class.java) {
     delete(rootProject.buildDir)
 }
 
-tasks.wrapper {
+tasks.getByName<Wrapper>("wrapper") {
     gradleVersion = Versions.gradle
     distributionType = Wrapper.DistributionType.ALL
 }

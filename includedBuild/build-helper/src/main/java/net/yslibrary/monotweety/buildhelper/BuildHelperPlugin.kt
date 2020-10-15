@@ -104,8 +104,9 @@ private fun Project.configureAndroidApp() {
             jumboMode = true
         }
 
+        @Suppress("UnstableApiUsage")
         compileOptions {
-            coreLibraryDesugaringEnabled = true
+            isCoreLibraryDesugaringEnabled = true
         }
 
         @Suppress("UnstableApiUsage")

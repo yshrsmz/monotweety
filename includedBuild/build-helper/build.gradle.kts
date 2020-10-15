@@ -17,7 +17,7 @@ dependencies {
     compileOnly(gradleApi())
     compileOnly(gradleKotlinDsl())
 
-//    implementation("net.yslibrary.monotweety.dependencies:dependencies:SNAPSHOT")
+    implementation("net.yslibrary.monotweety.dependencies:dependencies:SNAPSHOT")
 
     implementation(Plugins.kotlin)
     implementation(Plugins.android)
@@ -29,10 +29,6 @@ kotlin {
             kotlinOptions.jvmTarget = "1.8"
         }
     }
-
-    // TODO: recheck when Android Studio 4.1 is available
-    // Same as 'implementation("net.yslibrary.monotweety.dependencies:dependencies:SNAPSHOT")', but will make autocompletion work
-    sourceSets.getByName("main").kotlin.srcDir("../dependencies/src/main/java")
 }
 
 gradlePlugin {

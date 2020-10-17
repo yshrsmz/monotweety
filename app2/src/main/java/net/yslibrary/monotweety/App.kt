@@ -12,9 +12,29 @@ class App : Application() {
         )
     }
 
+    var userComponent: UserComponent? = null
+
+    override fun onCreate() {
+        super.onCreate()
+        AppInitializerProvider.get().init(this)
+    }
+
     companion object {
         fun get(context: Context): App = context.applicationContext as App
         fun appComponent(context: Context): AppComponent = get(context).appComponent
+        fun userComponent(context: Context): UserComponent {
+            val app = get(context)
+
+            return app.userComponent ?: kotlin.run {
+                val userComponent = app.appComponent.userComponent()
+                app.userComponent = userComponent
+                userComponent
+            }
+        }
+
+        fun clearUserComponent(context: Context) {
+            get(context).userComponent = null
+        }
     }
 }
 

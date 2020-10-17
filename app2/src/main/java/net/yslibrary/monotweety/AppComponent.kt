@@ -12,10 +12,13 @@ import javax.inject.Singleton
     modules = [
         AppModule::class,
         SingletonDataModule::class,
+        SingletonDataModule::class,
     ]
 )
 interface AppComponent {
     fun inject(app: App)
+
+    fun userComponent(): UserComponent
 
     @Component.Factory
     interface Factory {

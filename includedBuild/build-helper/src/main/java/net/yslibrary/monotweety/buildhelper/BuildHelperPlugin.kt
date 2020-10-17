@@ -9,6 +9,7 @@ import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginConvention
+import org.gradle.kotlin.dsl.findByType
 import org.gradle.kotlin.dsl.maven
 import org.gradle.kotlin.dsl.repositories
 import org.gradle.kotlin.dsl.withConvention
@@ -52,7 +53,7 @@ private fun Project.configureRepositories() {
 
 private fun Project.configureAndroidCommon() {
     val extension =
-        extensions.findByType(com.android.build.gradle.BaseExtension::class.java) ?: return
+        extensions.findByType(com.android.build.gradle.BaseExtension::class) ?: return
 
     extension.apply {
         compileSdkVersion(Versions.compileSdk)
@@ -86,7 +87,7 @@ private fun Project.configureAndroidCommon() {
 private fun Project.configureAndroidApp() {
     configureAndroidCommon()
     val extension =
-        extensions.findByType(BaseAppModuleExtension::class.java)
+        extensions.findByType(BaseAppModuleExtension::class)
             ?: return
 
     val secrets = loadSecrets()
@@ -124,7 +125,7 @@ private fun Project.configureAndroidLib() {
     configureAndroidCommon()
 
     val extension =
-        extensions.findByType(LibraryExtension::class.java) ?: return
+        extensions.findByType(LibraryExtension::class) ?: return
 
     extension.apply {
         defaultConfig {
@@ -159,7 +160,7 @@ private fun Project.configureKotlinJvm() {
 }
 
 private fun Project.configureKapt() {
-    val extension = extensions.findByType(KaptExtension::class.java) ?: return
+    val extension = extensions.findByType(KaptExtension::class) ?: return
     extension.apply {
         correctErrorTypes = true
         useBuildCache = true

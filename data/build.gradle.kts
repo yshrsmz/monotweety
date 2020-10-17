@@ -1,4 +1,3 @@
-import com.google.protobuf.gradle.builtins
 import com.google.protobuf.gradle.generateProtoTasks
 import com.google.protobuf.gradle.protobuf
 import com.google.protobuf.gradle.protoc
@@ -25,7 +24,7 @@ dependencies {
     api(Deps.Kotlin.datetime)
 
     api(Deps.Twitter4kt.core)
-    implementation(Deps.Twitter4kt.v1)
+    api(Deps.Twitter4kt.v1)
 
     implementation(Deps.Androidx.ktx)
     implementation(Deps.Androidx.appcompat)

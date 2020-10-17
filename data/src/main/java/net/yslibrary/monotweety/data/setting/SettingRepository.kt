@@ -19,8 +19,10 @@ interface SettingRepository {
     suspend fun updateNotificationEnabled(enabled: Boolean)
     suspend fun updateFooterEnabled(enabled: Boolean)
     suspend fun updateFooterText(text: String)
+    suspend fun updateFooter(enabled: Boolean, text: String)
     suspend fun updateTimelineAppEnabled(enabled: Boolean)
     suspend fun updateTimelineAppPackageName(packageName: String)
+    suspend fun updateTimelineApp(enabled: Boolean, packageName: String)
     suspend fun clear()
 }
 
@@ -63,6 +65,15 @@ internal class SettingRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun updateFooter(enabled: Boolean, text: String) {
+        dataStore.updateData { prefs ->
+            prefs.toBuilder()
+                .setFooterEnabled(enabled)
+                .setFooterText(text)
+                .build()
+        }
+    }
+
     override suspend fun updateTimelineAppEnabled(enabled: Boolean) {
         dataStore.updateData { prefs ->
             prefs.toBuilder()
@@ -74,6 +85,15 @@ internal class SettingRepositoryImpl @Inject constructor(
     override suspend fun updateTimelineAppPackageName(packageName: String) {
         dataStore.updateData { prefs ->
             prefs.toBuilder()
+                .setTimelineAppPackageName(packageName)
+                .build()
+        }
+    }
+
+    override suspend fun updateTimelineApp(enabled: Boolean, packageName: String) {
+        dataStore.updateData { prefs ->
+            prefs.toBuilder()
+                .setTimelineAppEnabled(enabled)
                 .setTimelineAppPackageName(packageName)
                 .build()
         }

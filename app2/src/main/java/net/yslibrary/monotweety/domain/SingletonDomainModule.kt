@@ -2,6 +2,8 @@ package net.yslibrary.monotweety.domain
 
 import dagger.Binds
 import dagger.Module
+import net.yslibrary.monotweety.domain.session.ObserveSession
+import net.yslibrary.monotweety.domain.session.ObserveSessionImpl
 import net.yslibrary.monotweety.domain.setting.ObserveSetting
 import net.yslibrary.monotweety.domain.setting.ObserveSettingImpl
 import net.yslibrary.monotweety.domain.setting.UpdateFooterSetting
@@ -24,4 +26,7 @@ internal interface SingletonDomainModule {
 
     @Binds
     fun bindUpdateNotificationEnabled(impl: UpdateNotificationEnabledImpl): UpdateNotificationEnabled
+
+    @Binds
+    fun bindObserveSession(impl: ObserveSessionImpl):ObserveSession
 }

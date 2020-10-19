@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_launcher"
+    app:startDestination="@id/splashFragment"
+    >
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="net.yslibrary.monotweety.ui.splash.SplashFragment"
+        android:label="SplashFragment"
+        >
+        <action
+            android:id="@+id/action_splashFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            />
+        <action
+            android:id="@+id/action_splashFragment_to_mainActivity"
+            app:destination="@id/mainActivity"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="net.yslibrary.monotweety.ui.login.LoginFragment"
+        android:label="LoginFragment"
+        >
+        <action
+            android:id="@+id/action_loginFragment_to_mainActivity"
+            app:destination="@id/mainActivity"
+            />
+    </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="net.yslibrary.monotweety.ui.main.MainActivity"
+        android:label="MainActivity"
+        />
+</navigation>

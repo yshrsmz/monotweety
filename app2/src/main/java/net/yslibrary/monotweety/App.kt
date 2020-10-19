@@ -5,14 +5,14 @@ import android.content.Context
 import com.codingfeline.twitter4kt.core.ConsumerKeys
 
 class App : Application() {
-    val appComponent: AppComponent by lazy {
+    private val appComponent: AppComponent by lazy {
         DaggerAppComponent.factory().create(
             context = this,
             consumerKeys = getTwitterConsumerKeys()
         )
     }
 
-    var userComponent: UserComponent? = null
+    private var userComponent: UserComponent? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -26,7 +26,7 @@ class App : Application() {
             val app = get(context)
 
             return app.userComponent ?: kotlin.run {
-                val userComponent = app.appComponent.userComponent()
+                val userComponent = app.appComponent.userComponent().build()
                 app.userComponent = userComponent
                 userComponent
             }

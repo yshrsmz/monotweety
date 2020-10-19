@@ -150,7 +150,10 @@ private fun Project.configureKotlinJvm() {
     tasks.withType<KotlinCompile>().all {
         sourceCompatibility = "1.8"
         targetCompatibility = "1.8"
-        kotlinOptions.jvmTarget = "1.8"
+        kotlinOptions {
+            jvmTarget = "1.8"
+            freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
+        }
     }
 
     project.withConvention(JavaPluginConvention::class) {

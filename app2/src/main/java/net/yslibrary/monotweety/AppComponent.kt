@@ -5,6 +5,9 @@ import com.codingfeline.twitter4kt.core.ConsumerKeys
 import dagger.BindsInstance
 import dagger.Component
 import net.yslibrary.monotweety.data.SingletonDataModule
+import net.yslibrary.monotweety.domain.SingletonDomainModule
+import net.yslibrary.monotweety.ui.launcher.LauncherActivityComponent
+import net.yslibrary.monotweety.ui.launcher.LauncherActivityComponentModule
 import javax.inject.Singleton
 
 @Singleton
@@ -12,18 +15,19 @@ import javax.inject.Singleton
     modules = [
         AppModule::class,
         SingletonDataModule::class,
-        SingletonDataModule::class,
-    ]
+        SingletonDomainModule::class,
+        UserComponentModule::class,
+        LauncherActivityComponentModule::class,
+    ],
 )
-interface AppComponent {
-    fun inject(app: App)
+interface AppComponent : UserComponent.Provider,
+    LauncherActivityComponent.ComponentProvider {
 
-    fun userComponent(): UserComponent
+    fun inject(app: App)
 
     @Component.Factory
     interface Factory {
         fun create(
-//            appModule: AppModule,
             @BindsInstance context: Context,
             @BindsInstance consumerKeys: ConsumerKeys,
         ): AppComponent

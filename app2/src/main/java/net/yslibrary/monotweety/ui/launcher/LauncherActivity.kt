@@ -6,17 +6,18 @@ import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.databinding.ActivityMainBinding
 import net.yslibrary.monotweety.ui.base.ViewBindingAppCompatActivity
+import net.yslibrary.monotweety.ui.di.HasComponent
 import javax.inject.Inject
 
 class LauncherActivity : ViewBindingAppCompatActivity<ActivityMainBinding>(
     R.layout.activity_launcher,
     ActivityMainBinding::bind
-) {
+), HasComponent<LauncherActivityComponent> {
 
     @Inject
     lateinit var analyrics: Analytics
 
-    private val component: LauncherActivityComponent by lazy {
+    override val component: LauncherActivityComponent by lazy {
         App.appComponent(this)
             .launcherActivityComponent()
             .build(this)

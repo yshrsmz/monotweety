@@ -24,7 +24,9 @@ interface Action
 interface State
 interface Effect
 
-interface GlobalAction : Action
+sealed class GlobalAction : Action {
+    object NoOp : GlobalAction()
+}
 
 abstract class Processor<ACTION : Action>(
     private val dispatchers: CoroutineDispatchers
@@ -58,6 +60,7 @@ abstract class MviViewModel<INTENT : Intent, ACTION : Action, STATE : State, EFF
 ) : ViewModel() {
 
     private val _states = MutableStateFlow(initialState)
+    val states: Flow<STATE> get() = _states
     val state: STATE get() = _states.value
 
     private val _effects = MutableSharedFlow<EFFECT>()
@@ -65,15 +68,28 @@ abstract class MviViewModel<INTENT : Intent, ACTION : Action, STATE : State, EFF
 
     private val _actions = Channel<Any>(Channel.BUFFERED)
 
+    protected fun sendEffect(effect: EFFECT) {
+        viewModelScope.launch {
+            _effects.emit(effect)
+        }
+    }
+
     fun dispatch(intent: INTENT) {
         val action = intentToAction(intent, state)
         processAction(action)
     }
 
-    private fun processAction(action: ACTION) {
+    private fun processAction(action: Action) {
         viewModelScope.launch {
             _actions.send(action)
-            processor.processAction(action)
+            @Suppress("UNCHECKED_CAST") val a = action as? ACTION
+            if (a != null) processor.processAction(action)
+        }
+    }
+
+    private fun reduceGlobal(previousState: STATE, action: GlobalAction): STATE {
+        return when (action) {
+            GlobalAction.NoOp -> previousState
         }
     }
 
@@ -82,14 +98,15 @@ abstract class MviViewModel<INTENT : Intent, ACTION : Action, STATE : State, EFF
             .scan(initialState) { previousState, action ->
                 @Suppress("MemberVisibilityCanBePrivate")
                 when (action) {
-                    is GlobalAction -> {
-                        // TODO: handle GlobalAction
-                        previousState
-                    }
+                    is GlobalAction -> reduceGlobal(previousState, action)
                     else -> {
                         @Suppress("UNCHECKED_CAST")
-                        (action as? ACTION)?.let { a -> reduce(previousState, a) }
-                            ?: run { previousState }
+                        val a = action as? ACTION
+                        if (a == null) {
+                            previousState
+                        } else {
+                            reduce(previousState, a)
+                        }
                     }
                 }
             }
@@ -98,7 +115,7 @@ abstract class MviViewModel<INTENT : Intent, ACTION : Action, STATE : State, EFF
             .launchIn(viewModelScope)
     }
 
-    protected abstract fun intentToAction(intent: INTENT, state: STATE): ACTION
+    protected abstract fun intentToAction(intent: INTENT, state: STATE): Action
 
     protected abstract fun reduce(previousState: STATE, newAction: ACTION): STATE
 

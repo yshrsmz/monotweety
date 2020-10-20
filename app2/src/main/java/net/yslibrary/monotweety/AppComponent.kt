@@ -6,8 +6,7 @@ import dagger.BindsInstance
 import dagger.Component
 import net.yslibrary.monotweety.data.SingletonDataModule
 import net.yslibrary.monotweety.domain.SingletonDomainModule
-import net.yslibrary.monotweety.ui.launcher.LauncherActivityComponent
-import net.yslibrary.monotweety.ui.launcher.LauncherActivityComponentModule
+import net.yslibrary.monotweety.ui.AppUiSubcomponentModule
 import javax.inject.Singleton
 
 @Singleton
@@ -17,11 +16,11 @@ import javax.inject.Singleton
         SingletonDataModule::class,
         SingletonDomainModule::class,
         UserComponentModule::class,
-        LauncherActivityComponentModule::class,
+        AppUiSubcomponentModule::class,
     ],
 )
 interface AppComponent : UserComponent.Provider,
-    LauncherActivityComponent.ComponentProvider {
+    AppUiSubcomponentModule.ComponentProviders {
 
     fun inject(app: App)
 

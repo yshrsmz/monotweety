@@ -6,13 +6,13 @@ import net.yslibrary.monotweety.data.session.SessionRepository
 import javax.inject.Inject
 
 interface ObserveSession {
-    suspend operator fun invoke():Flow<Session?>
+    operator fun invoke(): Flow<Session?>
 }
 
 internal class ObserveSessionImpl @Inject constructor(
     private val sessionRepository: SessionRepository
-): ObserveSession {
-    override suspend fun invoke(): Flow<Session?> {
+) : ObserveSession {
+    override fun invoke(): Flow<Session?> {
         return sessionRepository.sessionFlow
     }
 }

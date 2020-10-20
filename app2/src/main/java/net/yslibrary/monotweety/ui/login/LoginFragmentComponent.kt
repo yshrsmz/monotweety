@@ -1,17 +1,16 @@
-package net.yslibrary.monotweety.ui.splash
+package net.yslibrary.monotweety.ui.login
 
 import dagger.Subcomponent
 import net.yslibrary.monotweety.di.FragmentScope
 
-
 @FragmentScope
 @Subcomponent
-interface SplashFragmentComponent {
-    fun inject(fragment: SplashFragment)
+interface LoginFragmentComponent {
+    fun inject(fragment: LoginFragment)
 
     @Subcomponent.Factory
     interface Factory {
-        fun build(): SplashFragmentComponent
+        fun build(): LoginFragmentComponent
     }
 }
 

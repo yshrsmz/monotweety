@@ -5,33 +5,33 @@ import dagger.BindsInstance
 import dagger.Module
 import dagger.Subcomponent
 import net.yslibrary.monotweety.di.ActivityScope
+import net.yslibrary.monotweety.ui.login.LoginFragmentComponent
 import net.yslibrary.monotweety.ui.splash.SplashFragmentComponent
-import net.yslibrary.monotweety.ui.splash.SplashFragmentModule
 
 @ActivityScope
 @Subcomponent(
     modules = [
-        SplashFragmentModule::class
+        LauncherActivitySubcomponentModule::class
     ]
 )
-interface LauncherActivityComponent : SplashFragmentComponent.ComponentProvider {
+interface LauncherActivityComponent : LauncherActivitySubcomponentModule.ComponentProviders {
     fun inject(activity: LauncherActivity)
 
     @Subcomponent.Factory
     interface Factory {
         fun build(@BindsInstance activity: Activity): LauncherActivityComponent
     }
-
-    interface ComponentProvider {
-        fun launcherActivityComponent(): Factory
-    }
 }
 
 @Module(
     subcomponents = [
-        LauncherActivityComponent::class,
+        SplashFragmentComponent::class,
+        LoginFragmentComponent::class,
     ]
 )
-interface LauncherActivityComponentModule {
-
+interface LauncherActivitySubcomponentModule {
+    interface ComponentProviders {
+        fun loginFragmentComponent(): LoginFragmentComponent.Factory
+        fun splashFragmentComponent(): SplashFragmentComponent.Factory
+    }
 }

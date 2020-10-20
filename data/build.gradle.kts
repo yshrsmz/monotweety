@@ -29,7 +29,7 @@ dependencies {
     implementation(Deps.Androidx.ktx)
     implementation(Deps.Androidx.appcompat)
     api(Deps.Androidx.DataStore.core)
-    implementation(Deps.Protobuf.core)
+    api(Deps.Protobuf.core)
 
     implementation(Deps.Dagger.core)
     kapt(Deps.Dagger.compiler)

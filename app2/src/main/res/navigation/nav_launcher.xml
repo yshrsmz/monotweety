@@ -12,11 +12,11 @@
         android:label="SplashFragment"
         >
         <action
-            android:id="@+id/action_splashFragment_to_loginFragment"
+            android:id="@+id/toLogin"
             app:destination="@id/loginFragment"
             />
         <action
-            android:id="@+id/action_splashFragment_to_mainActivity"
+            android:id="@+id/toMain"
             app:destination="@id/mainActivity"
             />
     </fragment>
@@ -26,7 +26,7 @@
         android:label="LoginFragment"
         >
         <action
-            android:id="@+id/action_loginFragment_to_mainActivity"
+            android:id="@+id/toMain"
             app:destination="@id/mainActivity"
             />
     </fragment>

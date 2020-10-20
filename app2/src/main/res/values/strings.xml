@@ -1,1 +1,8 @@
-<resources></resources>
+<resources>
+    <string name="login_title">Login with Twitter</string>
+    <string name="login_description">Open browser to authorize Monotweety.\nYou will see a numerical PIN code after authorization. Copy and paste it to the input below.</string>
+
+    <string name="open_browser">Open Browser</string>
+    <string name="loginform_hint">Enter PIN code</string>
+    <string name="login_authorize">Authorize</string>
+</resources>

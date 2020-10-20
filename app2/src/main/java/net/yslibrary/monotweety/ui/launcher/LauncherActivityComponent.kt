@@ -6,6 +6,7 @@ import dagger.Module
 import dagger.Subcomponent
 import net.yslibrary.monotweety.di.ActivityScope
 import net.yslibrary.monotweety.ui.login.LoginFragmentComponent
+import net.yslibrary.monotweety.ui.loginform.LoginFormFragmentComponent
 import net.yslibrary.monotweety.ui.splash.SplashFragmentComponent
 
 @ActivityScope
@@ -21,6 +22,10 @@ interface LauncherActivityComponent : LauncherActivitySubcomponentModule.Compone
     interface Factory {
         fun build(@BindsInstance activity: Activity): LauncherActivityComponent
     }
+
+    interface ComponentProvider {
+        fun launcherActivityComponent(): Factory
+    }
 }
 
 @Module(
@@ -30,8 +35,7 @@ interface LauncherActivityComponent : LauncherActivitySubcomponentModule.Compone
     ]
 )
 interface LauncherActivitySubcomponentModule {
-    interface ComponentProviders {
-        fun loginFragmentComponent(): LoginFragmentComponent.Factory
-        fun splashFragmentComponent(): SplashFragmentComponent.Factory
-    }
+    interface ComponentProviders : SplashFragmentComponent.ComponentProvider,
+        LoginFragmentComponent.ComponentProvider,
+        LoginFormFragmentComponent.ComponentProvider
 }

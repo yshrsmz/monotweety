@@ -7,14 +7,16 @@ import net.yslibrary.monotweety.data.session.Session
 import net.yslibrary.monotweety.domain.session.ObserveSession
 import net.yslibrary.monotweety.ui.arch.Action
 import net.yslibrary.monotweety.ui.arch.Effect
+import net.yslibrary.monotweety.ui.arch.GlobalAction
 import net.yslibrary.monotweety.ui.arch.Intent
 import net.yslibrary.monotweety.ui.arch.MviViewModel
 import net.yslibrary.monotweety.ui.arch.Processor
 import net.yslibrary.monotweety.ui.arch.State
+import net.yslibrary.monotweety.ui.arch.ULIEState
 import javax.inject.Inject
 
 sealed class SplashIntent : Intent {
-    object InitialLoad : SplashIntent()
+    object Initialize : SplashIntent()
 }
 
 sealed class SplashAction : Action {
@@ -30,11 +32,13 @@ sealed class SplashEffect : Effect {
 }
 
 data class SplashState(
+    val state: ULIEState,
     val hasSession: Boolean,
 ) : State {
     companion object {
         fun initialState(): SplashState {
             return SplashState(
+                state = ULIEState.UNINITIALIZED,
                 hasSession = false
             )
         }
@@ -75,18 +79,29 @@ class SplashViewModel @Inject constructor(
 
     override fun intentToAction(intent: SplashIntent, state: SplashState): Action {
         return when (intent) {
-            SplashIntent.InitialLoad -> SplashAction.CheckSession
+            SplashIntent.Initialize -> {
+                if (state.state == ULIEState.UNINITIALIZED) {
+                    SplashAction.CheckSession
+                } else {
+                    GlobalAction.NoOp
+                }
+            }
         }
     }
 
     override fun reduce(previousState: SplashState, newAction: SplashAction): SplashState {
         return when (newAction) {
-            SplashAction.CheckSession -> previousState
+            SplashAction.CheckSession -> {
+                previousState.copy(state = ULIEState.LOADING)
+            }
             is SplashAction.SessionUpdated -> {
                 val hasSession = newAction.session != null
                 val effect = if (hasSession) SplashEffect.ToMain else SplashEffect.ToLogin
                 sendEffect(effect)
-                previousState.copy(hasSession = hasSession)
+                previousState.copy(
+                    state = ULIEState.IDLE,
+                    hasSession = hasSession
+                )
             }
         }
     }

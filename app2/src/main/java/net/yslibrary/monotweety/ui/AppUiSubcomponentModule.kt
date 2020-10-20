@@ -9,7 +9,6 @@ import net.yslibrary.monotweety.ui.launcher.LauncherActivityComponent
     ]
 )
 interface AppUiSubcomponentModule {
-    interface ComponentProviders {
-        fun launcherActivityComponent(): LauncherActivityComponent.Factory
+    interface ComponentProviders : LauncherActivityComponent.ComponentProvider {
     }
 }

@@ -95,7 +95,7 @@ dependencies {
     implementation(Deps.Androidx.Navigation.ui)
     implementation(Deps.Androidx.viewmodel)
 
-    implementation(Deps.material)
+    implementation("com.google.android.material:material:1.0.0")
 
     implementation(platform(Deps.Firebase.bom))
     implementation(Deps.Firebase.analytics)

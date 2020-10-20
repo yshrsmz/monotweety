@@ -13,5 +13,9 @@ interface SplashFragmentComponent {
     interface Factory {
         fun build(): SplashFragmentComponent
     }
+
+    interface ComponentProvider {
+        fun splashFragmentComponent(): SplashFragmentComponent.Factory
+    }
 }
 

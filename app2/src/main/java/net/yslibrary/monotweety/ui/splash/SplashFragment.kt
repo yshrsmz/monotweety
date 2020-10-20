@@ -46,7 +46,7 @@ class SplashFragment : ViewBindingFragment<FragmentSplashBinding>(
             bindEffects(owner)
             bindStates(owner)
         }
-        viewModel.dispatch(SplashIntent.InitialLoad)
+        viewModel.dispatch(SplashIntent.Initialize)
 
         analytics.viewEvent(Analytics.Screen.Splash, this::class)
     }

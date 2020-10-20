@@ -137,7 +137,7 @@ object Deps {
     }
 
     const val desugarJdk = "com.android.tools:desugar_jdk_libs:1.0.10"
-    const val material = "com.google.android.material:material:1.0.0"
+    const val material = "com.google.android.material:material:1.2.1"
 
     object Firebase {
         const val bom = "com.google.firebase:firebase-bom:25.12.0"

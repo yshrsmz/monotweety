@@ -26,10 +26,20 @@
         android:label="LoginFragment"
         >
         <action
-            android:id="@+id/toMain"
-            app:destination="@id/mainActivity"
+            android:id="@+id/toLoginForm"
+            app:destination="@id/loginFormFragment"
             />
     </fragment>
+    <dialog
+        android:id="@+id/loginFormFragment"
+        android:name="net.yslibrary.monotweety.ui.loginform.LoginFormFragment"
+        android:label="LoginFormFragment"
+        >
+        <action
+            android:id="@+id/action_loginFormFragment_to_mainActivity"
+            app:destination="@id/mainActivity"
+            />
+    </dialog>
     <activity
         android:id="@+id/mainActivity"
         android:name="net.yslibrary.monotweety.ui.main.MainActivity"

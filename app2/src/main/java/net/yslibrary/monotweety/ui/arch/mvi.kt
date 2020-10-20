@@ -24,6 +24,13 @@ interface Action
 interface State
 interface Effect
 
+sealed class ULIEState {
+    object UNINITIALIZED : ULIEState()
+    object LOADING : ULIEState()
+    object IDLE : ULIEState()
+    data class ERROR(val error: Throwable? = null) : ULIEState()
+}
+
 sealed class GlobalAction : Action {
     object NoOp : GlobalAction()
 }
@@ -96,7 +103,6 @@ abstract class MviViewModel<INTENT : Intent, ACTION : Action, STATE : State, EFF
     private fun initReducer(initialState: STATE) {
         _actions.consumeAsFlow()
             .scan(initialState) { previousState, action ->
-                @Suppress("MemberVisibilityCanBePrivate")
                 when (action) {
                     is GlobalAction -> reduceGlobal(previousState, action)
                     else -> {

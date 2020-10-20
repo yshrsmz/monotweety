@@ -12,5 +12,9 @@ interface LoginFragmentComponent {
     interface Factory {
         fun build(): LoginFragmentComponent
     }
+
+    interface ComponentProvider {
+        fun loginFragmentComponent(): Factory
+    }
 }
 

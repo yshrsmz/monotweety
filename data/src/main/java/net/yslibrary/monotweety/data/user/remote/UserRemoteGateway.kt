@@ -11,7 +11,7 @@ interface UserRemoteGateway {
 }
 
 internal class UserRemoteGatewayImpl @Inject constructor(
-    private val accountApi: AccountApi
+    private val accountApi: AccountApi,
 ) : UserRemoteGateway {
     override suspend fun verifyCredentials(): ApiResult<Account> {
         return accountApi.verifyCredentials(

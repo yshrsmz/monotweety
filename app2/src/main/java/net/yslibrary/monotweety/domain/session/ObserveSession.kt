@@ -10,7 +10,7 @@ interface ObserveSession {
 }
 
 internal class ObserveSessionImpl @Inject constructor(
-    private val sessionRepository: SessionRepository
+    private val sessionRepository: SessionRepository,
 ) : ObserveSession {
     override fun invoke(): Flow<Session?> {
         return sessionRepository.sessionFlow

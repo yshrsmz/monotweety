@@ -38,7 +38,7 @@ data class LoginState(
 }
 
 class LoginProcessor @Inject constructor(
-    dispatchers: CoroutineDispatchers
+    dispatchers: CoroutineDispatchers,
 ) : Processor<LoginAction>(dispatchers) {
     override fun processAction(action: LoginAction) {
 
@@ -46,7 +46,7 @@ class LoginProcessor @Inject constructor(
 }
 
 class LoginViewModel @Inject constructor(
-    dispatchers: CoroutineDispatchers
+    dispatchers: CoroutineDispatchers,
 ) : MviViewModel<LoginIntent, LoginAction, LoginState, LoginEffect>(
     initialState = LoginState.initialState(),
     dispatchers = dispatchers

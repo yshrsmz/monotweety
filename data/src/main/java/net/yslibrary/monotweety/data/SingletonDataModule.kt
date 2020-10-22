@@ -22,7 +22,7 @@ object SingletonDataModule {
     @Provides
     fun provideTwitter(
         consumerKeys: ConsumerKeys,
-        clock: Clock
+        clock: Clock,
     ): Twitter {
         return Twitter {
             this.consumerKeys = consumerKeys

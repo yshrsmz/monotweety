@@ -22,7 +22,7 @@ interface SessionRepository {
 
 @Singleton
 internal class SessionRepositoryImpl @Inject constructor(
-    private val dataStore: DataStore<SessionPreferences>
+    private val dataStore: DataStore<SessionPreferences>,
 ) : SessionRepository {
     override val sessionFlow: Flow<Session?> = dataStore.data
         .map { it.takeUnless { it.authToken.isEmpty() } }

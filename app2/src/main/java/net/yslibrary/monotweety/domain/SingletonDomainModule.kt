@@ -28,5 +28,5 @@ internal interface SingletonDomainModule {
     fun bindUpdateNotificationEnabled(impl: UpdateNotificationEnabledImpl): UpdateNotificationEnabled
 
     @Binds
-    fun bindObserveSession(impl: ObserveSessionImpl):ObserveSession
+    fun bindObserveSession(impl: ObserveSessionImpl): ObserveSession
 }

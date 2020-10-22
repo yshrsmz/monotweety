@@ -24,7 +24,7 @@ interface UserLocalGateway {
 
 @Singleton
 internal class UserLocalGatewayImpl @Inject constructor(
-    private val dataStore: DataStore<UserPreferences>
+    private val dataStore: DataStore<UserPreferences>,
 ) : UserLocalGateway {
     override val userFlow: Flow<User?> = dataStore.data
         .map { it.takeUnless { it.updatedAt == 0L } }

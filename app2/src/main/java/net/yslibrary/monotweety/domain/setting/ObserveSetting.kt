@@ -10,7 +10,7 @@ interface ObserveSetting {
 }
 
 internal class ObserveSettingImpl @Inject constructor(
-    private val settingRepository: SettingRepository
+    private val settingRepository: SettingRepository,
 ) : ObserveSetting {
     override fun invoke(): Flow<Setting> {
         return settingRepository.settingFlow

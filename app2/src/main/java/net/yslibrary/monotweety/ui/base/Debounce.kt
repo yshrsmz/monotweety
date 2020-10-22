@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 fun <T> debounce(
     delayMillis: Long = 800,
     scope: CoroutineScope,
-    action: (T) -> Unit
+    action: (T) -> Unit,
 ): (T) -> Unit {
     var debounceJob: Job? = null
     return { param: T ->

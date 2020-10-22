@@ -8,7 +8,7 @@ interface UpdateFooterSetting {
 }
 
 internal class UpdateFooterSettingImpl @Inject constructor(
-    private val settingRepository: SettingRepository
+    private val settingRepository: SettingRepository,
 ) : UpdateFooterSetting {
     override suspend fun invoke(enabled: Boolean, text: String) {
         settingRepository.updateFooter(enabled, text)

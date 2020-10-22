@@ -5,5 +5,5 @@ data class User(
     val name: String,
     val screenName: String,
     val profileImageUrl: String,
-    val updatedAt: Long
+    val updatedAt: Long,
 )

@@ -7,7 +7,7 @@ import androidx.viewbinding.ViewBinding
 
 open class ViewBindingFragment<T : ViewBinding>(
     @LayoutRes contentLayoutId: Int,
-    bind: (View) -> T
+    bind: (View) -> T,
 ) : Fragment(contentLayoutId) {
     protected val binding: T by viewBinding(bind)
 }

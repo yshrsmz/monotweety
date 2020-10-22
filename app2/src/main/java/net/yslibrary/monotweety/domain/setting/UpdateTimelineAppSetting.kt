@@ -8,7 +8,7 @@ interface UpdateTimelineAppSetting {
 }
 
 internal class UpdateTimelineAppSettingImpl @Inject constructor(
-    private val settingRepository: SettingRepository
+    private val settingRepository: SettingRepository,
 ) : UpdateTimelineAppSetting {
     override suspend fun invoke(enabled: Boolean, packageName: String) {
         settingRepository.updateTimelineApp(enabled, packageName)

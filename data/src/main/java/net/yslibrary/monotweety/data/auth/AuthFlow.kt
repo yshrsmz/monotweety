@@ -16,7 +16,7 @@ interface AuthFlow {
 
 internal class AuthFlowImpl @Inject constructor(
     private val oAuth1aFlow: OAuth1aFlow,
-    private val sessionRepository: SessionRepository
+    private val sessionRepository: SessionRepository,
 ) : AuthFlow {
 
     override suspend fun getRequestToken(): RequestToken {
@@ -25,7 +25,7 @@ internal class AuthFlowImpl @Inject constructor(
 
     override suspend fun getAccessToken(
         requestToken: RequestToken,
-        verifierCode: String
+        verifierCode: String,
     ): AccessToken {
         return oAuth1aFlow.fetchAccessToken(requestToken.token, verifierCode)
             .onSuccess { sessionRepository.update(Session(it.token, it.secret)) }

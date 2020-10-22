@@ -12,7 +12,7 @@ import javax.inject.Singleton
 internal class UserRepositoryImpl @Inject constructor(
     private val remoteGateway: UserRemoteGateway,
     private val localGateway: UserLocalGateway,
-    private val clock: Clock
+    private val clock: Clock,
 ) : UserRepository {
     override val userFlow: Flow<User?> = localGateway.userFlow
 

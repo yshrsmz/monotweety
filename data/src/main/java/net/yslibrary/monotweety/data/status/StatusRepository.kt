@@ -12,7 +12,7 @@ interface StatusRepository {
 
 @UserScope
 internal class StatusRepositoryImpl @Inject constructor(
-    private val statusesApi: StatusesApi
+    private val statusesApi: StatusesApi,
 ) : StatusRepository {
     override suspend fun update(status: String) {
         statusesApi.update(status).getOrThrow()

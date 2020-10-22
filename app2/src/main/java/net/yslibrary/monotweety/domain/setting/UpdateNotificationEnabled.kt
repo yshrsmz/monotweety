@@ -8,7 +8,7 @@ interface UpdateNotificationEnabled {
 }
 
 internal class UpdateNotificationEnabledImpl @Inject constructor(
-    private val settingRepository: SettingRepository
+    private val settingRepository: SettingRepository,
 ) : UpdateNotificationEnabled {
     override suspend fun invoke(enabled: Boolean) {
         settingRepository.updateNotificationEnabled(enabled)

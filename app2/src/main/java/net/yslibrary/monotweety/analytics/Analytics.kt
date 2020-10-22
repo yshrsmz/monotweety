@@ -6,7 +6,7 @@ import javax.inject.Inject
 import kotlin.reflect.KClass
 
 class Analytics @Inject constructor(
-    private val analytics: FirebaseAnalytics
+    private val analytics: FirebaseAnalytics,
 ) {
     fun viewEvent(screen: Screen, clazz: KClass<*>) {
         analytics.logEvent(

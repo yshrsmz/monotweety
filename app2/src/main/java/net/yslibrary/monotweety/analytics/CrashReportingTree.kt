@@ -14,7 +14,8 @@ class CrashReportingTree : Timber.Tree() {
         when (logLevel) {
             LogLevel.ERROR,
             LogLevel.WARN,
-            LogLevel.INFO -> {
+            LogLevel.INFO,
+            -> {
                 FirebaseCrashlytics.getInstance().log("${logLevel.name}/$tag: $message")
             }
             else -> Unit // no-op

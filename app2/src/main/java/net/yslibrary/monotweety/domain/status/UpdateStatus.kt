@@ -8,7 +8,7 @@ interface UpdateStatus {
 }
 
 internal class UpdateStatusImpl @Inject constructor(
-    private val statusRepository: StatusRepository
+    private val statusRepository: StatusRepository,
 ) : UpdateStatus {
     override suspend fun invoke(status: String) {
         statusRepository.update(status)

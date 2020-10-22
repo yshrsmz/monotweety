@@ -36,7 +36,7 @@ sealed class GlobalAction : Action {
 }
 
 abstract class Processor<ACTION : Action>(
-    private val dispatchers: CoroutineDispatchers
+    private val dispatchers: CoroutineDispatchers,
 ) : CoroutineScope {
     private val job = SupervisorJob()
 

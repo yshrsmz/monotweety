@@ -1,7 +1,19 @@
 package net.yslibrary.monotweety.ui.base
 
+import android.content.Context
+import android.net.Uri
+import android.webkit.URLUtil
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
+
+fun Context.navigateToBrowser(url: String) {
+    if (!url.isValidUrl()) return
+
+    CustomTabsIntent.Builder()
+        .build()
+        .launchUrl(this, Uri.parse(url))
+}
 
 /**
  * Check if the current destination can handle the provided [direction].
@@ -15,3 +27,5 @@ fun NavController.navigateSafe(direction: NavDirections) {
         navigate(direction)
     }
 }
+
+fun String.isValidUrl(): Boolean = URLUtil.isHttpUrl(this) || URLUtil.isHttpsUrl(this)

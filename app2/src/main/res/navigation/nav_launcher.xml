@@ -36,7 +36,7 @@
         android:label="LoginFormFragment"
         >
         <action
-            android:id="@+id/action_loginFormFragment_to_mainActivity"
+            android:id="@+id/toMain"
             app:destination="@id/mainActivity"
             />
     </dialog>

@@ -21,7 +21,7 @@ interface UserComponent {
     }
 
     interface Provider {
-        fun userComponent(): UserComponent.Factory
+        fun userComponent(): Factory
     }
 }
 

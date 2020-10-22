@@ -27,4 +27,9 @@ pluginManagement {
     }
 }
 
-include(":di-common", ":data", ":app", ":app2")
+include(
+    ":di-common",
+    ":data",
+    ":app",
+    ":app2"
+)

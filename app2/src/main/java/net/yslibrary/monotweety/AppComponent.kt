@@ -4,6 +4,7 @@ import android.content.Context
 import com.codingfeline.twitter4kt.core.ConsumerKeys
 import dagger.BindsInstance
 import dagger.Component
+import kotlinx.datetime.Clock
 import net.yslibrary.monotweety.data.SingletonDataModule
 import net.yslibrary.monotweety.domain.SingletonDomainModule
 import net.yslibrary.monotweety.ui.AppUiSubcomponentModule
@@ -29,6 +30,7 @@ interface AppComponent : UserComponent.Provider,
         fun create(
             @BindsInstance context: Context,
             @BindsInstance consumerKeys: ConsumerKeys,
+            @BindsInstance clock: Clock,
         ): AppComponent
     }
 }

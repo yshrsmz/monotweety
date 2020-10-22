@@ -81,6 +81,7 @@ dependencies {
     implementation(Deps.Kotlin.datetime)
 
     implementation(Deps.Androidx.appcompat)
+    implementation(Deps.Androidx.browser)
     implementation(Deps.Androidx.recyclerview)
     implementation(Deps.Androidx.constraintlayout)
     implementation(Deps.Androidx.multidex)
@@ -108,37 +109,14 @@ dependencies {
     implementation(Deps.Dagger.core)
     kapt(Deps.Dagger.compiler)
 
-    implementation(Deps.RxJava2.core)
-    implementation(Deps.RxJava2.android)
-    implementation(Deps.RxJava2.kotlin)
-
-    implementation("com.gojuno.koptional:koptional:1.7.0")
-    implementation("com.gojuno.koptional:koptional-rxjava2-extensions:1.7.0")
-
-    implementation(Deps.RxJava2.proguard)
-
-    implementation(Deps.RxBinding.core)
-    implementation(Deps.RxBinding.appcompat)
-    implementation(Deps.RxBinding.recyclerview)
-
-    implementation("com.jakewharton.rxrelay2:rxrelay:2.1.1")
-
-    implementation("com.f2prateek.rx.preferences2:rx-preferences:2.0.1")
-
-    implementation(Deps.adapterDelegates)
-
-    implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation(Deps.Glide.core)
     kapt(Deps.Glide.compiler)
 
     implementation(Deps.timber)
-    implementation(Deps.threetenabp)
 
     implementation(Deps.licenseAdapter)
 
-    implementation("com.github.gabrielemariotti.changeloglib:changelog:2.1.0")
-
-    implementation("me.drakeet.support:toastcompat:1.1.0")
+    implementation(Deps.progressButton)
 
     implementation(Deps.LeakCanary.plumber)
     debugImplementation(Deps.LeakCanary.core)

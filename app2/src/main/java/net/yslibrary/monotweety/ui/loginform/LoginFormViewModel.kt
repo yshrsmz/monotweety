@@ -20,7 +20,7 @@ sealed class LoginFormIntent : Intent {
     object Initialize : LoginFormIntent()
     object OpenBrowser : LoginFormIntent()
     data class PinCodeUpdated(val value: String) : LoginFormIntent()
-    data class Authorize(val pinCode: String) : LoginFormIntent()
+    object Authorize : LoginFormIntent()
 }
 
 sealed class LoginFormAction : Action {
@@ -77,9 +77,9 @@ sealed class LoginFormEffect : Effect {
 enum class LoginFlowState {
     Idle,
     LoadingRequestToken,
+    LoadRequestTokenError,
     WaitForPinCode,
     Authorizing,
-    LoadRequestTokenError,
     LoadAccessTokenError,
     Finished;
 
@@ -183,7 +183,7 @@ class LoginFormViewModel @Inject constructor(
             }
             is LoginFormIntent.Authorize -> {
                 if (state.pinCodeIsValid && state.loginFlowState == LoginFlowState.WaitForPinCode) {
-                    LoginFormAction.Authorize(state.requestToken!!, intent.pinCode)
+                    LoginFormAction.Authorize(state.requestToken!!, state.pinCode)
                 } else GlobalAction.NoOp
             }
             is LoginFormIntent.PinCodeUpdated -> LoginFormAction.PinCodeUpdated(intent.value)
@@ -236,6 +236,7 @@ class LoginFormViewModel @Inject constructor(
                 )
             }
             is LoginFormAction.AccessTokenLoaded -> {
+                sendEffect(LoginFormEffect.ToMain)
                 previousState.copy(
                     state = ULIEState.IDLE,
                     loginFlowState = LoginFlowState.Finished,

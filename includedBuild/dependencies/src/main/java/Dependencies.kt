@@ -91,7 +91,7 @@ object Deps {
         const val appcompat = "androidx.appcompat:appcompat:1.2.0"
         const val constraintlayout = "androidx.constraintlayout:constraintlayout:2.0.2"
         const val sqlite = "androidx.sqlite:sqlite:2.0.1"
-        const val browser = "androidx.browser:browser:1.3.0-alpha05"
+        const val browser = "androidx.browser:browser:1.3.0-alpha06"
         const val viewpager = "androidx.viewpager2:viewpager2:1.1.0-alpha01"
         const val recyclerview = "androidx.recyclerview:recyclerview:1.2.0-alpha06"
         const val swiperefreshlayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
@@ -209,6 +209,7 @@ object Deps {
 
     const val twitterText = "com.twitter.twittertext:twitter-text:3.1.0"
 
+    const val progressButton = "com.github.razir.progressbutton:progressbutton:2.1.0"
 
     // test
     const val junit = "junit:junit:4.13.1"

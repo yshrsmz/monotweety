@@ -3,12 +3,14 @@ package net.yslibrary.monotweety
 import android.app.Application
 import android.content.Context
 import com.codingfeline.twitter4kt.core.ConsumerKeys
+import kotlinx.datetime.Clock
 
 class App : Application() {
     private val appComponent: AppComponent by lazy {
         DaggerAppComponent.factory().create(
             context = this,
-            consumerKeys = getTwitterConsumerKeys()
+            consumerKeys = getTwitterConsumerKeys(),
+            clock = Clock.System
         )
     }
 

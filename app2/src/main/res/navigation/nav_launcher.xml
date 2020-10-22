@@ -14,7 +14,7 @@
         <action
             android:id="@+id/toLogin"
             app:destination="@id/loginFragment"
-            app:popUpTo="@+id/splashFragment"
+            app:popUpTo="@+id/nav_launcher"
             app:popUpToInclusive="true"
             />
         <action

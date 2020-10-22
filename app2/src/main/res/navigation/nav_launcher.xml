@@ -14,6 +14,8 @@
         <action
             android:id="@+id/toLogin"
             app:destination="@id/loginFragment"
+            app:popUpTo="@+id/splashFragment"
+            app:popUpToInclusive="true"
             />
         <action
             android:id="@+id/toMain"

@@ -8,13 +8,13 @@ import dagger.Provides
 import kotlinx.datetime.Clock
 import net.yslibrary.monotweety.data.auth.AuthDataModule
 import net.yslibrary.monotweety.data.session.SessionDataModule
-import net.yslibrary.monotweety.data.setting.SettingDataModule
+import net.yslibrary.monotweety.data.settings.SettingsDataModule
 
 @Module(
     includes = [
         AuthDataModule::class,
         SessionDataModule::class,
-        SettingDataModule::class,
+        SettingsDataModule::class,
     ]
 )
 object SingletonDataModule {

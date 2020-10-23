@@ -1,6 +1,6 @@
-package net.yslibrary.monotweety.data.setting
+package net.yslibrary.monotweety.data.settings
 
-data class Setting(
+data class Settings(
     val notificationEnabled: Boolean,
     val footerEnabled: Boolean,
     val footerText: String,

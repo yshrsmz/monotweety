@@ -1,4 +1,4 @@
-package net.yslibrary.monotweety.data.setting
+package net.yslibrary.monotweety.data.settings
 
 import android.content.Context
 import androidx.datastore.DataStore
@@ -9,14 +9,14 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-internal interface SettingDataModule {
+internal interface SettingsDataModule {
     @Binds
-    fun bindSettingRepository(impl: SettingRepositoryImpl): SettingRepository
+    fun bindSettingsRepository(impl: SettingRepositoryImpl): SettingRepository
 
     companion object {
         @Singleton
         @Provides
-        fun provideSettingDataStore(context: Context): DataStore<SettingPreferences> {
+        fun provideSettingsDataStore(context: Context): DataStore<SettingPreferences> {
             return context.createDataStore(
                 fileName = "setting_prefs.pb",
                 serializer = SettingPreferencesSerializer,

@@ -1,4 +1,4 @@
-package net.yslibrary.monotweety.data.setting
+package net.yslibrary.monotweety.data.settings
 
 import androidx.datastore.CorruptionException
 import androidx.datastore.DataStore
@@ -15,7 +15,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 interface SettingRepository {
-    val settingFlow: Flow<Setting>
+    val settingsFlow: Flow<Settings>
     suspend fun updateNotificationEnabled(enabled: Boolean)
     suspend fun updateFooterEnabled(enabled: Boolean)
     suspend fun updateFooterText(text: String)
@@ -30,7 +30,7 @@ interface SettingRepository {
 internal class SettingRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<SettingPreferences>,
 ) : SettingRepository {
-    override val settingFlow: Flow<Setting> = dataStore.data
+    override val settingsFlow: Flow<Settings> = dataStore.data
         .catch { e ->
             if (e is IOException) {
                 Timber.e(e, "Error reading SettingPreferences")
@@ -103,8 +103,8 @@ internal class SettingRepositoryImpl @Inject constructor(
         dataStore.updateData { SettingPreferences.getDefaultInstance() }
     }
 
-    private fun SettingPreferences.toEntity(): Setting {
-        return Setting(
+    private fun SettingPreferences.toEntity(): Settings {
+        return Settings(
             notificationEnabled = this.notificationEnabled,
             footerEnabled = this.footerEnabled,
             footerText = this.footerText,

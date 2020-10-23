@@ -1,6 +1,11 @@
 package net.yslibrary.monotweety.ui.settings
 
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import net.yslibrary.monotweety.base.CoroutineDispatchers
+import net.yslibrary.monotweety.data.settings.Settings
+import net.yslibrary.monotweety.domain.setting.ObserveSetting
 import net.yslibrary.monotweety.ui.arch.Action
 import net.yslibrary.monotweety.ui.arch.Effect
 import net.yslibrary.monotweety.ui.arch.Intent
@@ -11,29 +16,54 @@ import net.yslibrary.monotweety.ui.arch.ULIEState
 import javax.inject.Inject
 
 
-sealed class SettingsIntent : Intent
-sealed class SettingsAction : Action
+sealed class SettingsIntent : Intent {
+    object Initialize : SettingsIntent()
+}
+
+sealed class SettingsAction : Action {
+    object Initialize : SettingsAction()
+    data class SettingUpdated(val settings: Settings) : SettingsAction()
+}
+
 sealed class SettingsEffect : Effect
 
 data class SettingsState(
     val state: ULIEState,
+    val settings: Settings?,
 ) : State {
     companion object {
         fun initialState(): SettingsState {
             return SettingsState(
                 state = ULIEState.UNINITIALIZED,
+                settings = null,
             )
         }
     }
 }
 
 class SettingsProcessor @Inject constructor(
+    private val observeSetting: ObserveSetting,
     dispatchers: CoroutineDispatchers,
 ) : Processor<SettingsAction>(
     dispatchers = dispatchers
 ) {
     override fun processAction(action: SettingsAction) {
-        TODO("Not yet implemented")
+        when (action) {
+            SettingsAction.Initialize -> {
+                doObserveSetting()
+            }
+            is SettingsAction.SettingUpdated -> {
+                // no-op
+            }
+        }
+    }
+
+    private fun doObserveSetting() {
+        launch {
+            observeSetting()
+                .onEach { setting -> put(SettingsAction.SettingUpdated(setting)) }
+                .collect()
+        }
     }
 }
 
@@ -46,11 +76,20 @@ class SettingsViewModel @Inject constructor(
     dispatchers = dispatchers,
 ) {
     override fun intentToAction(intent: SettingsIntent, state: SettingsState): Action {
-        TODO("Not yet implemented")
+        return when (intent) {
+            SettingsIntent.Initialize -> SettingsAction.Initialize
+        }
     }
 
     override fun reduce(previousState: SettingsState, newAction: SettingsAction): SettingsState {
-        TODO("Not yet implemented")
+        return when (newAction) {
+            SettingsAction.Initialize -> {
+                previousState.copy(state = ULIEState.LOADING)
+            }
+            is SettingsAction.SettingUpdated -> {
+                previousState.copy(settings = newAction.settings)
+            }
+        }
     }
 
 }

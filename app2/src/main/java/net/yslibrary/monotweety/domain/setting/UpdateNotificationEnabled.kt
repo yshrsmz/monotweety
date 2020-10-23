@@ -1,6 +1,6 @@
 package net.yslibrary.monotweety.domain.setting
 
-import net.yslibrary.monotweety.data.setting.SettingRepository
+import net.yslibrary.monotweety.data.settings.SettingRepository
 import javax.inject.Inject
 
 interface UpdateNotificationEnabled {

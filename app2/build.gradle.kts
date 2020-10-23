@@ -118,6 +118,8 @@ dependencies {
 
     implementation(Deps.progressButton)
 
+    implementation(Deps.groupie)
+
     implementation(Deps.LeakCanary.plumber)
     debugImplementation(Deps.LeakCanary.core)
     implementation(Deps.LeakCanary.objectWatcher)

@@ -200,6 +200,7 @@ object Deps {
     }
 
     const val adapterDelegates = "com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.3.0"
+    const val groupie = "com.xwray:groupie:${Versions.groupie}"
 
     const val threetenabp = "com.jakewharton.threetenabp:threetenabp:1.2.4"
 

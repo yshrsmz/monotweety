@@ -31,7 +31,8 @@ import javax.inject.Inject
 class LoginFormFragment : BottomSheetDialogFragment(), HasComponent<LoginFormFragmentComponent> {
 
     override val component: LoginFormFragmentComponent by lazy {
-        requireActivity().getComponentProvider<LoginFormFragmentComponent.ComponentProvider>()
+        requireActivity()
+            .getComponentProvider<LoginFormFragmentComponent.ComponentProvider>()
             .loginFormFragmentComponent()
             .build()
     }
@@ -39,7 +40,7 @@ class LoginFormFragment : BottomSheetDialogFragment(), HasComponent<LoginFormFra
     @Inject
     lateinit var factory: ViewModelFactory<LoginFormViewModel>
 
-    val binding: FragmentLoginformBinding by viewBinding { FragmentLoginformBinding.bind(it) }
+    private val binding: FragmentLoginformBinding by viewBinding { FragmentLoginformBinding.bind(it) }
 
     private val viewModel: LoginFormViewModel by viewModels { factory }
 

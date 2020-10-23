@@ -5,4 +5,8 @@
     <string name="open_browser">Open Browser</string>
     <string name="loginform_hint">Enter PIN code</string>
     <string name="login_authorize">Authorize</string>
+
+    <string name="label_notification_state">Notification: %s</string>
+    <string name="label_on" translatable="false">ON</string>
+    <string name="label_off" translatable="false">OFF</string>
 </resources>

@@ -14,14 +14,14 @@ class LauncherActivity : ViewBindingAppCompatActivity<ActivityMainBinding>(
     ActivityMainBinding::bind
 ), HasComponent<LauncherActivityComponent> {
 
-    @Inject
-    lateinit var analyrics: Analytics
-
     override val component: LauncherActivityComponent by lazy {
         App.appComponent(this)
             .launcherActivityComponent()
             .build(this)
     }
+
+    @Inject
+    lateinit var analyrics: Analytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

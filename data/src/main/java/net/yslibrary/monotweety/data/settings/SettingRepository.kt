@@ -7,6 +7,7 @@ import com.google.protobuf.InvalidProtocolBufferException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import net.yslibrary.monotweety.data.setting.SettingsPreferences
 import timber.log.Timber
 import java.io.IOException
 import java.io.InputStream
@@ -28,13 +29,13 @@ interface SettingRepository {
 
 @Singleton
 internal class SettingRepositoryImpl @Inject constructor(
-    private val dataStore: DataStore<SettingPreferences>,
+    private val dataStore: DataStore<SettingsPreferences>,
 ) : SettingRepository {
     override val settingsFlow: Flow<Settings> = dataStore.data
         .catch { e ->
             if (e is IOException) {
                 Timber.e(e, "Error reading SettingPreferences")
-                emit(SettingPreferences.getDefaultInstance())
+                emit(SettingsPreferences.getDefaultInstance())
             } else {
                 throw e
             }
@@ -100,10 +101,10 @@ internal class SettingRepositoryImpl @Inject constructor(
     }
 
     override suspend fun clear() {
-        dataStore.updateData { SettingPreferences.getDefaultInstance() }
+        dataStore.updateData { SettingsPreferences.getDefaultInstance() }
     }
 
-    private fun SettingPreferences.toEntity(): Settings {
+    private fun SettingsPreferences.toEntity(): Settings {
         return Settings(
             notificationEnabled = this.notificationEnabled,
             footerEnabled = this.footerEnabled,
@@ -114,16 +115,16 @@ internal class SettingRepositoryImpl @Inject constructor(
     }
 }
 
-internal object SettingPreferencesSerializer : Serializer<SettingPreferences> {
-    override fun readFrom(input: InputStream): SettingPreferences {
+internal object SettingPreferencesSerializer : Serializer<SettingsPreferences> {
+    override fun readFrom(input: InputStream): SettingsPreferences {
         try {
-            return SettingPreferences.parseFrom(input)
+            return SettingsPreferences.parseFrom(input)
         } catch (exception: InvalidProtocolBufferException) {
             throw CorruptionException("Cannot read proto.", exception)
         }
     }
 
-    override fun writeTo(t: SettingPreferences, output: OutputStream) {
+    override fun writeTo(t: SettingsPreferences, output: OutputStream) {
         t.writeTo(output)
     }
 }

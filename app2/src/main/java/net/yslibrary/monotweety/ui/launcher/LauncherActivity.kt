@@ -25,7 +25,7 @@ class LauncherActivity : ViewBindingAppCompatActivity<ActivityMainBinding>(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setTheme(R.style.AppTheme)
         component.inject(this)
     }
 }

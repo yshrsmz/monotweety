@@ -7,4 +7,8 @@
         <item name="colorSecondary">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.Launcher" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+    </style>
+
 </resources>

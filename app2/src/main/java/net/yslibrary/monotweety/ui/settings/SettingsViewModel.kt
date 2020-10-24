@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import net.yslibrary.monotweety.base.CoroutineDispatchers
 import net.yslibrary.monotweety.data.settings.Settings
+import net.yslibrary.monotweety.data.user.User
 import net.yslibrary.monotweety.domain.setting.ObserveSetting
 import net.yslibrary.monotweety.ui.arch.Action
 import net.yslibrary.monotweety.ui.arch.Effect
@@ -30,12 +31,14 @@ sealed class SettingsEffect : Effect
 data class SettingsState(
     val state: ULIEState,
     val settings: Settings?,
+    val user: User?,
 ) : State {
     companion object {
         fun initialState(): SettingsState {
             return SettingsState(
                 state = ULIEState.UNINITIALIZED,
                 settings = null,
+                user = null,
             )
         }
     }

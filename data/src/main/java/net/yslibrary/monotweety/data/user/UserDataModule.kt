@@ -12,6 +12,8 @@ import dagger.Provides
 import net.yslibrary.monotweety.data.user.local.UserLocalGateway
 import net.yslibrary.monotweety.data.user.local.UserLocalGatewayImpl
 import net.yslibrary.monotweety.data.user.local.UserPreferencesSerializer
+import net.yslibrary.monotweety.data.user.remote.UserRemoteGateway
+import net.yslibrary.monotweety.data.user.remote.UserRemoteGatewayImpl
 import net.yslibrary.monotweety.di.UserScope
 
 @Module
@@ -19,6 +21,9 @@ internal interface UserDataModule {
 
     @Binds
     fun bindUserLocalGateway(impl: UserLocalGatewayImpl): UserLocalGateway
+
+    @Binds
+    fun bindUserRemoteGateway(impl: UserRemoteGatewayImpl): UserRemoteGateway
 
     @Binds
     fun bindUserRepository(impl: UserRepositoryImpl): UserRepository

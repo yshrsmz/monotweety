@@ -9,12 +9,12 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import net.yslibrary.monotweety.data.user.User
 import net.yslibrary.monotweety.data.user.UserPreferences
+import net.yslibrary.monotweety.di.UserScope
 import timber.log.Timber
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 import javax.inject.Inject
-import javax.inject.Singleton
 
 interface UserLocalGateway {
     val userFlow: Flow<User?>
@@ -22,7 +22,7 @@ interface UserLocalGateway {
     suspend fun delete()
 }
 
-@Singleton
+@UserScope
 internal class UserLocalGatewayImpl @Inject constructor(
     private val dataStore: DataStore<UserPreferences>,
 ) : UserLocalGateway {

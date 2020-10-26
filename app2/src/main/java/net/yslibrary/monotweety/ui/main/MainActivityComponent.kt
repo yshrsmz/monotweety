@@ -13,7 +13,7 @@ import net.yslibrary.monotweety.ui.settings.SettingsFragmentComponent
         MainActivitySubcomponentModule::class,
     ]
 )
-interface MainActivityComponent {
+interface MainActivityComponent : MainActivitySubcomponentModule.ComponentProviders {
     fun inject(activity: MainActivity)
 
     @Subcomponent.Factory

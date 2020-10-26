@@ -3,6 +3,7 @@ package net.yslibrary.monotweety
 import android.app.Application
 import android.content.Context
 import com.codingfeline.twitter4kt.core.ConsumerKeys
+import com.codingfeline.twitter4kt.core.model.oauth1a.AccessToken
 import kotlinx.datetime.Clock
 
 class App : Application() {
@@ -24,14 +25,18 @@ class App : Application() {
     companion object {
         fun get(context: Context): App = context.applicationContext as App
         fun appComponent(context: Context): AppComponent = get(context).appComponent
-        fun userComponent(context: Context): UserComponent {
+        fun getOrCreateUserComponent(context: Context, accessToken: AccessToken): UserComponent {
             val app = get(context)
-
             return app.userComponent ?: kotlin.run {
-                val userComponent = app.appComponent.userComponent().build()
+                val userComponent = app.appComponent.userComponent().build(accessToken)
                 app.userComponent = userComponent
                 userComponent
             }
+        }
+
+        fun userComponent(context: Context): UserComponent {
+            val app = get(context)
+            return requireNotNull(app.userComponent)
         }
 
         fun clearUserComponent(context: Context) {

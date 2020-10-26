@@ -26,7 +26,7 @@ object Versions {
     const val flowBinding = "0.12.0"
     const val rxBinding = "3.1.0"
     const val protobuf = "3.13.0"
-    const val twitter4kt = "0.1.4"
+    const val twitter4kt = "0.2.0"
     const val leakcanary = "2.5"
     const val hyperion = "0.9.29"
     const val robolectric = "4.4"
@@ -211,6 +211,8 @@ object Deps {
     const val twitterText = "com.twitter.twittertext:twitter-text:3.1.0"
 
     const val progressButton = "com.github.razir.progressbutton:progressbutton:2.1.0"
+
+    const val coil = "io.coil-kt:coil:1.0.0"
 
     // test
     const val junit = "junit:junit:4.13.1"

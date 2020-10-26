@@ -11,4 +11,31 @@
         <item name="android:windowBackground">@drawable/bg_splash</item>
     </style>
 
+    <style name="AppTheme.Settings" parent="AppTheme" />
+
+    <style name="AppTheme.Settings.ListItem" parent="AppTheme.Settings">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingStart">@dimen/space_16dp</item>
+        <item name="android:paddingEnd">@dimen/space_16dp</item>
+        <item name="background">?attr/selectableItemBackground</item>
+    </style>
+
+    <style name="AppTheme.Settings.ListItem.1Line" parent="AppTheme.Settings.ListItem">
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingTop">@dimen/space_12dp</item>
+        <item name="android:paddingBottom">@dimen/space_12dp</item>
+    </style>
+
+    <style name="AppTheme.Settings.ListItem.2Line" parent="AppTheme.Settings.ListItem">
+        <item name="android:minHeight">64dp</item>
+        <item name="android:paddingTop">@dimen/space_16dp</item>
+        <item name="android:paddingBottom">@dimen/space_16dp</item>
+    </style>
+
+    <style name="AppTheme.Settings.CircleAvatar" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
 </resources>

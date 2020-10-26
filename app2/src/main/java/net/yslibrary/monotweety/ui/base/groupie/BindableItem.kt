@@ -1,6 +1,7 @@
 package net.yslibrary.monotweety.ui.base.groupie
 
 import android.view.View
+import androidx.annotation.LayoutRes
 import androidx.viewbinding.ViewBinding
 import com.xwray.groupie.Item
 
@@ -17,8 +18,11 @@ import com.xwray.groupie.Item
  * @param binder
  */
 abstract class BindableItem<T : ViewBinding>(
+    @LayoutRes val layoutResId: Int,
     val binder: (view: View) -> T,
 ) : Item<GroupieViewHolder<T>>() {
+
+    final override fun getLayout(): Int = layoutResId
 
     final override fun createViewHolder(itemView: View): GroupieViewHolder<T> {
         val binding = binder(itemView)

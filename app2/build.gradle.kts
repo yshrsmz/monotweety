@@ -109,8 +109,7 @@ dependencies {
     implementation(Deps.Dagger.core)
     kapt(Deps.Dagger.compiler)
 
-    implementation(Deps.Glide.core)
-    kapt(Deps.Glide.compiler)
+    implementation(Deps.coil)
 
     implementation(Deps.timber)
 

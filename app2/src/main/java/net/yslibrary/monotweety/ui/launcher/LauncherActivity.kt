@@ -1,5 +1,7 @@
 package net.yslibrary.monotweety.ui.launcher
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import net.yslibrary.monotweety.App
 import net.yslibrary.monotweety.R
@@ -27,5 +29,11 @@ class LauncherActivity : ViewBindingAppCompatActivity<ActivityMainBinding>(
         super.onCreate(savedInstanceState)
         setTheme(R.style.AppTheme)
         component.inject(this)
+    }
+
+    companion object {
+        fun getIntent(context: Context): Intent {
+            return Intent(context.applicationContext, LauncherActivity::class.java)
+        }
     }
 }

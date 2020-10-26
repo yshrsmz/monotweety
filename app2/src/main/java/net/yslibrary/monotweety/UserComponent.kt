@@ -1,5 +1,7 @@
 package net.yslibrary.monotweety
 
+import com.codingfeline.twitter4kt.core.model.oauth1a.AccessToken
+import dagger.BindsInstance
 import dagger.Module
 import dagger.Subcomponent
 import net.yslibrary.monotweety.data.UserScopeDataModule
@@ -19,10 +21,10 @@ interface UserComponent : UserUiSubcomponentModule.ComponentProviders {
 
     @Subcomponent.Factory
     interface Factory {
-        fun build(): UserComponent
+        fun build(@BindsInstance accessToken: AccessToken): UserComponent
     }
 
-    interface Provider {
+    interface ComponentProvider {
         fun userComponent(): Factory
     }
 }

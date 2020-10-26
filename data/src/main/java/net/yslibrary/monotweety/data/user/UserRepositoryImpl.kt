@@ -5,10 +5,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Clock
 import net.yslibrary.monotweety.data.user.local.UserLocalGateway
 import net.yslibrary.monotweety.data.user.remote.UserRemoteGateway
+import net.yslibrary.monotweety.di.UserScope
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
+@UserScope
 internal class UserRepositoryImpl @Inject constructor(
     private val remoteGateway: UserRemoteGateway,
     private val localGateway: UserLocalGateway,

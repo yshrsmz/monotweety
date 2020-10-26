@@ -7,6 +7,7 @@ import dagger.Component
 import kotlinx.datetime.Clock
 import net.yslibrary.monotweety.data.SingletonDataModule
 import net.yslibrary.monotweety.domain.SingletonDomainModule
+import net.yslibrary.monotweety.domain.session.ObserveSession
 import net.yslibrary.monotweety.ui.AppUiSubcomponentModule
 import javax.inject.Singleton
 
@@ -20,8 +21,10 @@ import javax.inject.Singleton
         AppUiSubcomponentModule::class,
     ],
 )
-interface AppComponent : UserComponent.Provider,
+interface AppComponent : UserComponent.ComponentProvider,
     AppUiSubcomponentModule.ComponentProviders {
+
+    fun observeSession(): ObserveSession
 
     fun inject(app: App)
 

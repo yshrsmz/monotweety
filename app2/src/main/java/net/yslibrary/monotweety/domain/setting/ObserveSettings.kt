@@ -5,13 +5,13 @@ import net.yslibrary.monotweety.data.settings.SettingRepository
 import net.yslibrary.monotweety.data.settings.Settings
 import javax.inject.Inject
 
-interface ObserveSetting {
+interface ObserveSettings {
     operator fun invoke(): Flow<Settings>
 }
 
-internal class ObserveSettingImpl @Inject constructor(
+internal class ObserveSettingsImpl @Inject constructor(
     private val settingRepository: SettingRepository,
-) : ObserveSetting {
+) : ObserveSettings {
     override fun invoke(): Flow<Settings> {
         return settingRepository.settingsFlow
     }

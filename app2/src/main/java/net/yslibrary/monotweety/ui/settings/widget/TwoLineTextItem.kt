@@ -1,5 +1,6 @@
 package net.yslibrary.monotweety.ui.settings.widget
 
+import androidx.core.view.doOnAttach
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.databinding.Item2lineTextBinding
 import net.yslibrary.monotweety.ui.base.groupie.BindableItem
@@ -17,8 +18,20 @@ class TwoLineTextItem(
             title.text = item.title
             subtitle.text = item.subTitle
             root.isEnabled = item.enabled
-            root.setDebounceClickListener { onClick(item) }
+            root.doOnAttach {
+                it.setDebounceClickListener { onClick(item) }
+            }
         }
+    }
+
+    override fun hasSameContentAs(other: com.xwray.groupie.Item<*>): Boolean {
+        if (other !is TwoLineTextItem) return false
+        return other.item == item
+    }
+
+    override fun isSameAs(other: com.xwray.groupie.Item<*>): Boolean {
+        if (other !is TwoLineTextItem) return false
+        return other.item.title == item.title
     }
 
     data class Item(

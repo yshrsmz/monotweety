@@ -12,6 +12,7 @@ import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Section
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
+import net.yslibrary.monotweety.BuildConfig
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.databinding.FragmentSettingsBinding
 import net.yslibrary.monotweety.ui.base.ViewBindingFragment
@@ -21,6 +22,7 @@ import net.yslibrary.monotweety.ui.di.getComponentProvider
 import net.yslibrary.monotweety.ui.settings.widget.DividerItemDecoration
 import net.yslibrary.monotweety.ui.settings.widget.OneLineTextItem
 import net.yslibrary.monotweety.ui.settings.widget.SubHeaderItem
+import net.yslibrary.monotweety.ui.settings.widget.TwoLineTextItem
 import net.yslibrary.monotweety.ui.settings.widget.UserItem
 import timber.log.Timber
 import javax.inject.Inject
@@ -44,11 +46,88 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
 
     private val userSection by lazy { Section(SubHeaderItem(getString(R.string.account))) }
     private val settingsSection by lazy { Section(SubHeaderItem(getString(R.string.settings))) }
+    private val privacySection by lazy {
+        Section(SubHeaderItem(getString(R.string.privacy)))
+            .apply {
+                add(OneLineTextItem(
+                    item = OneLineTextItem.Item(
+                        title = getString(R.string.privacy_policy),
+                        enabled = true,
+                    ),
+                    onClick = {}
+                ))
+            }
+    }
+    private val othersSection by lazy {
+        Section(SubHeaderItem(getString(R.string.others)))
+            .apply {
+                addAll(listOf(
+                    TwoLineTextItem(
+                        item = TwoLineTextItem.Item(
+                            title = getString(R.string.version,
+                                BuildConfig.VERSION_NAME,
+                                BuildConfig.VERSION_CODE),
+                            subTitle = getString(R.string.version_description),
+                            enabled = true
+                        ),
+                        onClick = {}
+                    ),
+                    OneLineTextItem(
+                        item = OneLineTextItem.Item(
+                            title = getString(R.string.license),
+                            enabled = true
+                        ),
+                        onClick = {}
+                    )
+                ))
+            }
+    }
+    private val supportSection by lazy {
+        Section(SubHeaderItem(getString(R.string.support_developer)))
+            .apply {
+                addAll(listOf(
+                    TwoLineTextItem(
+                        item = TwoLineTextItem.Item(
+                            title = getString(R.string.follow_developer),
+                            subTitle = getString(R.string.follow_developer_description),
+                            enabled = true,
+                        ),
+                        onClick = {}
+                    ),
+                    TwoLineTextItem(
+                        item = TwoLineTextItem.Item(
+                            title = getString(R.string.share),
+                            subTitle = getString(R.string.share_description),
+                            enabled = true
+                        ),
+                        onClick = {}
+                    ),
+                    OneLineTextItem(
+                        item = OneLineTextItem.Item(
+                            title = getString(R.string.rate_on_store),
+                            enabled = true
+                        ),
+                        onClick = {}
+                    ),
+                    OneLineTextItem(
+                        item = OneLineTextItem.Item(
+                            title = getString(R.string.star_github),
+                            enabled = true
+                        ),
+                        onClick = {}
+                    ),
+                ))
+            }
+    }
+
     private val adapter by lazy {
         GroupAdapter<GroupieViewHolder>().apply {
             addAll(listOf(
                 userSection,
                 settingsSection,
+                privacySection,
+                othersSection,
+                supportSection,
             ))
         }
     }

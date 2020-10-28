@@ -5,9 +5,11 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
+import com.xwray.groupie.Section
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import net.yslibrary.monotweety.R
@@ -16,7 +18,11 @@ import net.yslibrary.monotweety.ui.base.ViewBindingFragment
 import net.yslibrary.monotweety.ui.di.HasComponent
 import net.yslibrary.monotweety.ui.di.ViewModelFactory
 import net.yslibrary.monotweety.ui.di.getComponentProvider
+import net.yslibrary.monotweety.ui.settings.widget.DividerItemDecoration
+import net.yslibrary.monotweety.ui.settings.widget.OneLineTextItem
+import net.yslibrary.monotweety.ui.settings.widget.SubHeaderItem
 import net.yslibrary.monotweety.ui.settings.widget.UserItem
+import timber.log.Timber
 import javax.inject.Inject
 
 class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
@@ -36,7 +42,16 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
 
     private val viewModel: SettingsViewModel by viewModels { factory }
 
-    private val adapter = GroupAdapter<GroupieViewHolder>()
+    private val userSection by lazy { Section(SubHeaderItem(getString(R.string.account))) }
+    private val settingsSection by lazy { Section(SubHeaderItem(getString(R.string.settings))) }
+    private val adapter by lazy {
+        GroupAdapter<GroupieViewHolder>().apply {
+            addAll(listOf(
+                userSection,
+                settingsSection,
+            ))
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,9 +66,18 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.list.layoutManager = LinearLayoutManager(requireContext())
-        binding.list.adapter = adapter
-        adapter.add(UserItem())
+
+        binding.notificationSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+            Timber.d("notificationSwitch: $isChecked")
+            viewModel.dispatch(SettingsIntent.NotificationStateUpdated(enabled = isChecked))
+        }
+
+        binding.list.let { list ->
+            (list.itemAnimator as? DefaultItemAnimator)?.supportsChangeAnimations = false
+            list.layoutManager = LinearLayoutManager(requireContext())
+            list.addItemDecoration(DividerItemDecoration(requireContext()))
+            list.adapter = adapter
+        }
     }
 
     private fun bindEffects(scope: LifecycleCoroutineScope) {
@@ -77,6 +101,18 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
     }
 
     private fun render(state: SettingsState) {
+        Timber.d("newState: $state")
+        userSection.update(listOf(UserItem(state.user)))
+        settingsSection.update(
+            listOf(
+                OneLineTextItem(OneLineTextItem.Item("title", enabled = true)) {}
+            ),
+        )
 
+        val notiEnabled = state.settings?.notificationEnabled == true
+        val notiStateResId = if (notiEnabled) R.string.label_on else R.string.label_off
+        binding.notificationSwitch.text =
+            getString(R.string.label_notification_state, getString(notiStateResId))
+        binding.notificationSwitch.isChecked = notiEnabled
     }
 }

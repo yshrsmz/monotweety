@@ -26,7 +26,7 @@ object Versions {
     const val flowBinding = "0.12.0"
     const val rxBinding = "3.1.0"
     const val protobuf = "3.13.0"
-    const val twitter4kt = "0.2.0"
+    const val twitter4kt = "0.2.1"
     const val leakcanary = "2.5"
     const val hyperion = "0.9.29"
     const val robolectric = "4.4"
@@ -85,6 +85,10 @@ object Deps {
         }
 
         const val datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.1.0"
+    }
+
+    object Ktor {
+        const val logging = "io.ktor:ktor-client-logging:1.4.1"
     }
 
     object Androidx {

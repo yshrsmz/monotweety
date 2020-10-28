@@ -25,6 +25,7 @@ dependencies {
 
     api(Deps.Twitter4kt.core)
     api(Deps.Twitter4kt.v1)
+    implementation(Deps.Ktor.logging)
 
     implementation(Deps.Androidx.ktx)
     implementation(Deps.Androidx.appcompat)

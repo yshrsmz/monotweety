@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingStart="@dimen/space_16dp"
     android:paddingTop="@dimen/space_12dp"
     android:paddingEnd="@dimen/space_16dp"
@@ -16,12 +16,13 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:adjustViewBounds="true"
+        android:padding="1dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearance="@style/AppTheme.Settings.CircleAvatar"
         app:srcCompat="@drawable/ic_app"
         app:strokeColor="?attr/colorPrimary"
-        app:strokeWidth="2dp"
+        app:strokeWidth="1dp"
         tools:srcCompat="@drawable/ic_app"
         />
 
@@ -29,10 +30,11 @@
         android:id="@+id/userName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/userImage"
+        app:layout_constraintStart_toEndOf="@+id/barrier2"
         app:layout_constraintTop_toTopOf="@+id/userImage"
         tools:text="せーい"
         />
@@ -41,10 +43,11 @@
         android:id="@+id/userScreenName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/userImage"
+        app:layout_constraintStart_toEndOf="@+id/barrier2"
         app:layout_constraintTop_toBottomOf="@+id/userName"
         tools:text="\@_yshrsmz"
         />
@@ -54,27 +57,43 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
+        app:barrierMargin="@dimen/space_16dp"
         app:constraint_referenced_ids="userImage,userName,userScreenName"
         />
 
     <Button
         android:id="@+id/logout"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/logout"
-        app:layout_constraintStart_toEndOf="@+id/userImage"
-        app:layout_constraintTop_toBottomOf="@+id/barrier"
+        android:layout_marginEnd="@dimen/space_4dp"
         android:backgroundTint="?attr/colorSecondary"
+        android:text="@string/logout"
+        app:layout_constraintEnd_toStartOf="@+id/openProfile"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@+id/barrier2"
+        app:layout_constraintTop_toBottomOf="@+id/barrier"
         />
 
     <Button
         android:id="@+id/openProfile"
-        android:layout_width="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_4dp"
         android:text="@string/open_profile"
-        app:layout_constraintTop_toBottomOf="@+id/barrier"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/logout"
+        app:layout_constraintTop_toBottomOf="@+id/barrier"
+        />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="right"
+        app:barrierMargin="@dimen/space_16dp"
+        app:constraint_referenced_ids="userImage"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

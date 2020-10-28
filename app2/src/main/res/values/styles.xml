@@ -33,6 +33,10 @@
         <item name="android:paddingBottom">@dimen/space_16dp</item>
     </style>
 
+    <style name="AppTheme.Settings.ListItem.SubHeader" parent="AppTheme.Settings.ListItem.1Line">
+        <item name="android:background">@null</item>
+    </style>
+
     <style name="AppTheme.Settings.CircleAvatar" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>

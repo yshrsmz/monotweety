@@ -1,6 +1,6 @@
 package net.yslibrary.monotweety.ui.settings
 
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
@@ -9,6 +9,7 @@ import net.yslibrary.monotweety.base.CoroutineDispatchers
 import net.yslibrary.monotweety.data.settings.Settings
 import net.yslibrary.monotweety.data.user.User
 import net.yslibrary.monotweety.domain.setting.ObserveSettings
+import net.yslibrary.monotweety.domain.setting.UpdateNotificationEnabled
 import net.yslibrary.monotweety.domain.user.FetchUser
 import net.yslibrary.monotweety.domain.user.ObserveUser
 import net.yslibrary.monotweety.ui.arch.Action
@@ -26,12 +27,14 @@ import kotlin.time.ExperimentalTime
 
 sealed class SettingsIntent : Intent {
     object Initialize : SettingsIntent()
+    data class NotificationStateUpdated(val enabled: Boolean) : SettingsIntent()
 }
 
 sealed class SettingsAction : Action {
     object Initialize : SettingsAction()
     data class SettingsUpdated(val settings: Settings) : SettingsAction()
     data class UserUpdated(val user: User) : SettingsAction()
+    data class NotificationStateUpdated(val enabled: Boolean) : SettingsAction()
 }
 
 sealed class SettingsEffect : Effect
@@ -56,6 +59,7 @@ class SettingsProcessor @Inject constructor(
     private val observeSettings: ObserveSettings,
     private val observeUser: ObserveUser,
     private val fetchUser: FetchUser,
+    private val updateNotificationEnabled: UpdateNotificationEnabled,
     private val clock: Clock,
     dispatchers: CoroutineDispatchers,
 ) : Processor<SettingsAction>(
@@ -67,32 +71,34 @@ class SettingsProcessor @Inject constructor(
                 doObserveSetting()
                 doObserveUser()
             }
-            is SettingsAction.SettingsUpdated -> {
+            is SettingsAction.NotificationStateUpdated -> {
+                launch { updateNotificationEnabled(action.enabled) }
+            }
+            is SettingsAction.UserUpdated,
+            is SettingsAction.SettingsUpdated,
+            -> {
                 // no-op
             }
         }
     }
 
     private fun doObserveSetting() {
-        launch {
-            observeSettings()
-                .onEach { setting -> put(SettingsAction.SettingsUpdated(setting)) }
-                .collect()
-        }
+        observeSettings()
+            .onEach { setting -> put(SettingsAction.SettingsUpdated(setting)) }
+            .launchIn(this)
+
     }
 
     private fun doObserveUser() {
-        launch {
-            observeUser()
-                .onEach { user ->
-                    if (user.isValid(clock)) {
-                        put(SettingsAction.UserUpdated(user))
-                    } else {
-                        fetchUser()
-                    }
+        observeUser()
+            .onEach { user ->
+                if (user.isValid(clock)) {
+                    put(SettingsAction.UserUpdated(user))
+                } else {
+                    fetchUser()
                 }
-                .collect()
-        }
+            }
+            .launchIn(this)
     }
 }
 
@@ -118,6 +124,8 @@ class SettingsViewModel @Inject constructor(
     override fun intentToAction(intent: SettingsIntent, state: SettingsState): Action {
         return when (intent) {
             SettingsIntent.Initialize -> SettingsAction.Initialize
+            is SettingsIntent.NotificationStateUpdated ->
+                SettingsAction.NotificationStateUpdated(intent.enabled)
         }
     }
 
@@ -130,8 +138,12 @@ class SettingsViewModel @Inject constructor(
                 previousState.copy(settings = newAction.settings)
             }
             is SettingsAction.UserUpdated -> {
-                previousState.copy(user = newAction.user)
+                previousState.copy(
+                    state = ULIEState.IDLE,
+                    user = newAction.user,
+                )
             }
+            is SettingsAction.NotificationStateUpdated -> previousState
         }
     }
 

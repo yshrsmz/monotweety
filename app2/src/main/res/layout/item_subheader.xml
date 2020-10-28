@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/AppTheme.Settings.ListItem.SubHeader"
+    >
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="SubHeader"
+        android:maxLines="1"
+        android:textAllCaps="true"
+        android:layout_gravity="center_vertical"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        />
+
+</FrameLayout>

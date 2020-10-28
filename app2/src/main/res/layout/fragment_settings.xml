@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     >
 
     <androidx.recyclerview.widget.RecyclerView
@@ -38,6 +39,11 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+            android:paddingStart="@dimen/space_16dp"
+            android:paddingEnd="@dimen/space_16dp"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:textColor="@android:color/white"
+            tools:text="Notification: ON"
             />
     </com.google.android.material.appbar.AppBarLayout>
 

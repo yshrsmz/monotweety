@@ -58,8 +58,8 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    override fun reduce(previousState: LoginState, newAction: LoginAction): LoginState {
-        return when (newAction) {
+    override fun reduce(previousState: LoginState, action: LoginAction): LoginState {
+        return when (action) {
             LoginAction.Initialize -> {
                 previousState.copy(state = ULIEState.IDLE)
             }

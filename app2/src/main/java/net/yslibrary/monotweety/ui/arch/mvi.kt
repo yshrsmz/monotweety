@@ -123,7 +123,7 @@ abstract class MviViewModel<INTENT : Intent, ACTION : Action, STATE : State, EFF
 
     protected abstract fun intentToAction(intent: INTENT, state: STATE): Action
 
-    protected abstract fun reduce(previousState: STATE, newAction: ACTION): STATE
+    protected abstract fun reduce(previousState: STATE, action: ACTION): STATE
 
     init {
         processor.setPostActionCallback(::processAction)

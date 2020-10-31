@@ -89,13 +89,13 @@ class SplashViewModel @Inject constructor(
         }
     }
 
-    override fun reduce(previousState: SplashState, newAction: SplashAction): SplashState {
-        return when (newAction) {
+    override fun reduce(previousState: SplashState, action: SplashAction): SplashState {
+        return when (action) {
             SplashAction.CheckSession -> {
                 previousState.copy(state = ULIEState.LOADING)
             }
             is SplashAction.SessionUpdated -> {
-                val hasSession = newAction.session != null
+                val hasSession = action.session != null
                 val effect = if (hasSession) SplashEffect.ToMain else SplashEffect.ToLogin
                 sendEffect(effect)
                 previousState.copy(

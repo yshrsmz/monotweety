@@ -190,8 +190,8 @@ class LoginFormViewModel @Inject constructor(
         }
     }
 
-    override fun reduce(previousState: LoginFormState, newAction: LoginFormAction): LoginFormState {
-        return when (newAction) {
+    override fun reduce(previousState: LoginFormState, action: LoginFormAction): LoginFormState {
+        return when (action) {
             LoginFormAction.Initialize -> {
                 previousState.copy(
                     state = ULIEState.IDLE,
@@ -209,23 +209,23 @@ class LoginFormViewModel @Inject constructor(
                 )
             }
             is LoginFormAction.RequestTokenLoaded -> {
-                sendEffect(LoginFormEffect.OpenBrowser(url = newAction.token.authorizationUrl()))
+                sendEffect(LoginFormEffect.OpenBrowser(url = action.token.authorizationUrl()))
                 previousState.copy(
                     state = ULIEState.IDLE,
                     loginFlowState = LoginFlowState.WaitForPinCode,
-                    requestToken = newAction.token,
+                    requestToken = action.token,
                 )
             }
             is LoginFormAction.RequestTokenError -> {
                 previousState.copy(
-                    state = ULIEState.ERROR(newAction.error),
+                    state = ULIEState.ERROR(action.error),
                     loginFlowState = LoginFlowState.LoadRequestTokenError
                 )
             }
             is LoginFormAction.PinCodeUpdated -> {
                 previousState.copy(
                     state = ULIEState.IDLE,
-                    pinCode = newAction.value
+                    pinCode = action.value
                 )
             }
             is LoginFormAction.Authorize -> {
@@ -240,12 +240,12 @@ class LoginFormViewModel @Inject constructor(
                 previousState.copy(
                     state = ULIEState.IDLE,
                     loginFlowState = LoginFlowState.Finished,
-                    accessToken = newAction.token,
+                    accessToken = action.token,
                 )
             }
             is LoginFormAction.AccessTokenError -> {
                 previousState.copy(
-                    state = ULIEState.ERROR(newAction.error),
+                    state = ULIEState.ERROR(action.error),
                     loginFlowState = LoginFlowState.LoadAccessTokenError
                 )
             }

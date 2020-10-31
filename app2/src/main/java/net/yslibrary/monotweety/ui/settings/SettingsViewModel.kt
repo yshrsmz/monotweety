@@ -129,18 +129,18 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    override fun reduce(previousState: SettingsState, newAction: SettingsAction): SettingsState {
-        return when (newAction) {
+    override fun reduce(previousState: SettingsState, action: SettingsAction): SettingsState {
+        return when (action) {
             SettingsAction.Initialize -> {
                 previousState.copy(state = ULIEState.LOADING)
             }
             is SettingsAction.SettingsUpdated -> {
-                previousState.copy(settings = newAction.settings)
+                previousState.copy(settings = action.settings)
             }
             is SettingsAction.UserUpdated -> {
                 previousState.copy(
                     state = ULIEState.IDLE,
-                    user = newAction.user,
+                    user = action.user,
                 )
             }
             is SettingsAction.NotificationStateUpdated -> previousState

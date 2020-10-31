@@ -5,15 +5,18 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import net.yslibrary.monotweety.Config
 import net.yslibrary.monotweety.base.CoroutineDispatchers
 import net.yslibrary.monotweety.data.settings.Settings
 import net.yslibrary.monotweety.data.user.User
+import net.yslibrary.monotweety.domain.session.Logout
 import net.yslibrary.monotweety.domain.setting.ObserveSettings
 import net.yslibrary.monotweety.domain.setting.UpdateNotificationEnabled
 import net.yslibrary.monotweety.domain.user.FetchUser
 import net.yslibrary.monotweety.domain.user.ObserveUser
 import net.yslibrary.monotweety.ui.arch.Action
 import net.yslibrary.monotweety.ui.arch.Effect
+import net.yslibrary.monotweety.ui.arch.GlobalAction
 import net.yslibrary.monotweety.ui.arch.Intent
 import net.yslibrary.monotweety.ui.arch.MviViewModel
 import net.yslibrary.monotweety.ui.arch.Processor
@@ -28,16 +31,40 @@ import kotlin.time.ExperimentalTime
 sealed class SettingsIntent : Intent {
     object Initialize : SettingsIntent()
     data class NotificationStateUpdated(val enabled: Boolean) : SettingsIntent()
+
+    object LogoutSelected : SettingsIntent()
+    object ProfileSelected : SettingsIntent()
+    object PrivacyPolicySelected : SettingsIntent()
+    object ChangelogSelected : SettingsIntent()
+    object LicenseSelected : SettingsIntent()
+    object FollowDeveloperSelected : SettingsIntent()
+    object ShareAppSelected : SettingsIntent()
+    object RateAppSelected : SettingsIntent()
+    object GitHubSelected : SettingsIntent()
 }
 
 sealed class SettingsAction : Action {
     object Initialize : SettingsAction()
+
     data class SettingsUpdated(val settings: Settings) : SettingsAction()
     data class UserUpdated(val user: User) : SettingsAction()
     data class NotificationStateUpdated(val enabled: Boolean) : SettingsAction()
+
+    object Logout : SettingsAction()
+    object LogoutCompleted : SettingsAction()
+    object ShareApp : SettingsAction()
+    object NavigateToChangelog : SettingsAction()
+    object NavigateToLicense : SettingsAction()
+    data class NavigateToExternalApp(val url: String) : SettingsAction()
 }
 
-sealed class SettingsEffect : Effect
+sealed class SettingsEffect : Effect {
+    object ToLicense : SettingsEffect()
+    object ToChangelog : SettingsEffect()
+    object ToSplash : SettingsEffect()
+    object ShareApp : SettingsEffect()
+    data class OpenBrowser(val url: String) : SettingsEffect()
+}
 
 data class SettingsState(
     val state: ULIEState,
@@ -59,6 +86,7 @@ class SettingsProcessor @Inject constructor(
     private val observeSettings: ObserveSettings,
     private val observeUser: ObserveUser,
     private val fetchUser: FetchUser,
+    private val logout: Logout,
     private val updateNotificationEnabled: UpdateNotificationEnabled,
     private val clock: Clock,
     dispatchers: CoroutineDispatchers,
@@ -74,8 +102,19 @@ class SettingsProcessor @Inject constructor(
             is SettingsAction.NotificationStateUpdated -> {
                 launch { updateNotificationEnabled(action.enabled) }
             }
+            SettingsAction.Logout -> {
+                launch {
+                    logout()
+                    put(SettingsAction.LogoutCompleted)
+                }
+            }
             is SettingsAction.UserUpdated,
             is SettingsAction.SettingsUpdated,
+            SettingsAction.ShareApp,
+            SettingsAction.NavigateToChangelog,
+            SettingsAction.NavigateToLicense,
+            is SettingsAction.NavigateToExternalApp,
+            SettingsAction.LogoutCompleted,
             -> {
                 // no-op
             }
@@ -114,6 +153,7 @@ private fun User?.isValid(clock: Clock): Boolean {
 }
 
 class SettingsViewModel @Inject constructor(
+    private val config: Config,
     processor: SettingsProcessor,
     dispatchers: CoroutineDispatchers,
 ) : MviViewModel<SettingsIntent, SettingsAction, SettingsState, SettingsEffect>(
@@ -126,6 +166,21 @@ class SettingsViewModel @Inject constructor(
             SettingsIntent.Initialize -> SettingsAction.Initialize
             is SettingsIntent.NotificationStateUpdated ->
                 SettingsAction.NotificationStateUpdated(intent.enabled)
+            SettingsIntent.PrivacyPolicySelected -> SettingsAction.NavigateToExternalApp(config.privacyPolicyUrl)
+            SettingsIntent.ChangelogSelected -> SettingsAction.NavigateToChangelog
+            SettingsIntent.LicenseSelected -> SettingsAction.NavigateToLicense
+            SettingsIntent.FollowDeveloperSelected -> SettingsAction.NavigateToExternalApp(config.twitterUrl)
+            SettingsIntent.ShareAppSelected -> SettingsAction.ShareApp
+            SettingsIntent.RateAppSelected -> SettingsAction.NavigateToExternalApp(config.googlePlayUrl)
+            SettingsIntent.GitHubSelected -> SettingsAction.NavigateToExternalApp(config.githubUrl)
+            SettingsIntent.LogoutSelected -> SettingsAction.Logout
+            SettingsIntent.ProfileSelected -> {
+                if (state.user == null) {
+                    GlobalAction.NoOp
+                } else {
+                    SettingsAction.NavigateToExternalApp("https://twitter.com/${state.user.screenName}")
+                }
+            }
         }
     }
 
@@ -144,6 +199,29 @@ class SettingsViewModel @Inject constructor(
                 )
             }
             is SettingsAction.NotificationStateUpdated -> previousState
+            is SettingsAction.NavigateToExternalApp -> {
+                sendEffect(SettingsEffect.OpenBrowser(action.url))
+                previousState
+            }
+            SettingsAction.NavigateToChangelog -> {
+                sendEffect(SettingsEffect.ToChangelog)
+                previousState
+            }
+            SettingsAction.NavigateToLicense -> {
+                sendEffect(SettingsEffect.ToLicense)
+                previousState
+            }
+            SettingsAction.ShareApp -> {
+                sendEffect(SettingsEffect.ShareApp)
+                previousState
+            }
+            SettingsAction.Logout -> {
+                previousState
+            }
+            SettingsAction.LogoutCompleted -> {
+                sendEffect(SettingsEffect.ToSplash)
+                previousState
+            }
         }
     }
 

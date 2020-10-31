@@ -16,6 +16,7 @@ import net.yslibrary.monotweety.BuildConfig
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.databinding.FragmentSettingsBinding
 import net.yslibrary.monotweety.ui.base.ViewBindingFragment
+import net.yslibrary.monotweety.ui.base.openExternalAppWithUrl
 import net.yslibrary.monotweety.ui.di.HasComponent
 import net.yslibrary.monotweety.ui.di.ViewModelFactory
 import net.yslibrary.monotweety.ui.di.getComponentProvider
@@ -54,7 +55,7 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
                         title = getString(R.string.privacy_policy),
                         enabled = true,
                     ),
-                    onClick = {}
+                    onClick = { viewModel.dispatch(SettingsIntent.PrivacyPolicySelected) }
                 ))
             }
     }
@@ -70,14 +71,14 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
                             subTitle = getString(R.string.version_description),
                             enabled = true
                         ),
-                        onClick = {}
+                        onClick = { viewModel.dispatch(SettingsIntent.ChangelogSelected) }
                     ),
                     OneLineTextItem(
                         item = OneLineTextItem.Item(
                             title = getString(R.string.license),
                             enabled = true
                         ),
-                        onClick = {}
+                        onClick = { viewModel.dispatch(SettingsIntent.LicenseSelected) }
                     )
                 ))
             }
@@ -92,7 +93,7 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
                             subTitle = getString(R.string.follow_developer_description),
                             enabled = true,
                         ),
-                        onClick = {}
+                        onClick = { viewModel.dispatch(SettingsIntent.FollowDeveloperSelected) }
                     ),
                     TwoLineTextItem(
                         item = TwoLineTextItem.Item(
@@ -100,21 +101,21 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
                             subTitle = getString(R.string.share_description),
                             enabled = true
                         ),
-                        onClick = {}
+                        onClick = { viewModel.dispatch(SettingsIntent.ShareAppSelected) }
                     ),
                     OneLineTextItem(
                         item = OneLineTextItem.Item(
                             title = getString(R.string.rate_on_store),
                             enabled = true
                         ),
-                        onClick = {}
+                        onClick = { viewModel.dispatch(SettingsIntent.RateAppSelected) }
                     ),
                     OneLineTextItem(
                         item = OneLineTextItem.Item(
                             title = getString(R.string.star_github),
                             enabled = true
                         ),
-                        onClick = {}
+                        onClick = { viewModel.dispatch(SettingsIntent.GitHubSelected) }
                     ),
                 ))
             }
@@ -176,12 +177,23 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
     }
 
     private fun handleEffect(effect: SettingsEffect) {
-
+        when (effect) {
+            SettingsEffect.ToLicense -> TODO()
+            SettingsEffect.ToChangelog -> TODO()
+            is SettingsEffect.OpenBrowser -> {
+                context?.openExternalAppWithUrl(effect.url)
+            }
+            SettingsEffect.ShareApp -> TODO()
+        }
     }
 
     private fun render(state: SettingsState) {
         Timber.d("newState: $state")
-        userSection.update(listOf(UserItem(state.user)))
+        userSection.update(listOf(UserItem(
+            user = state.user,
+            onLogoutClick = {},
+            onProfileClick = {},
+        )))
         settingsSection.update(
             listOf(
                 OneLineTextItem(OneLineTextItem.Item("title", enabled = true)) {}

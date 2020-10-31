@@ -16,7 +16,7 @@ import net.yslibrary.monotweety.base.inflate
 import timber.log.Timber
 
 class FooterEditorAdapterDelegate(
-    private val listener: Listener
+    private val listener: Listener,
 ) : AdapterDelegate<List<SettingAdapter.Item>>() {
 
     override fun isForViewType(items: List<SettingAdapter.Item>, position: Int): Boolean {
@@ -27,7 +27,7 @@ class FooterEditorAdapterDelegate(
         items: List<SettingAdapter.Item>,
         position: Int,
         holder: RecyclerView.ViewHolder,
-        payloads: MutableList<Any>
+        payloads: MutableList<Any>,
     ) {
         val item = items[position] as Item
 
@@ -67,12 +67,11 @@ class FooterEditorAdapterDelegate(
         AlertDialog.Builder(context)
             .setTitle(R.string.title_edit_footer)
             .setView(view)
-            .setPositiveButton(R.string.label_confirm,
-                { _, _ ->
-                    val enabled = enabledSwitch.isChecked
-                    val footerText = input.text.toString()
-                    listener.onFooterUpdated(enabled, footerText)
-                }).show()
+            .setPositiveButton(R.string.label_confirm) { _, _ ->
+                val enabled = enabledSwitch.isChecked
+                val footerText = input.text.toString()
+                listener.onFooterUpdated(enabled, footerText)
+            }.show()
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -93,7 +92,7 @@ class FooterEditorAdapterDelegate(
         val enabled: Boolean,
         val checked: Boolean,
         val footerText: String,
-        override val type: SettingAdapter.ViewType
+        override val type: SettingAdapter.ViewType,
     ) : SettingAdapter.Item
 
     interface Listener {

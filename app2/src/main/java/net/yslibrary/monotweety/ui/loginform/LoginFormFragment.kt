@@ -1,9 +1,7 @@
 package net.yslibrary.monotweety.ui.loginform
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleCoroutineScope
@@ -13,22 +11,24 @@ import com.github.razir.progressbutton.DrawableButton
 import com.github.razir.progressbutton.bindProgressButton
 import com.github.razir.progressbutton.hideProgress
 import com.github.razir.progressbutton.showProgress
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.databinding.FragmentLoginformBinding
+import net.yslibrary.monotweety.ui.base.ViewBindingBottomSheetDialogFragment
 import net.yslibrary.monotweety.ui.base.navigateSafe
 import net.yslibrary.monotweety.ui.base.navigateToBrowser
 import net.yslibrary.monotweety.ui.base.setDebounceClickListener
-import net.yslibrary.monotweety.ui.base.viewBinding
 import net.yslibrary.monotweety.ui.di.HasComponent
 import net.yslibrary.monotweety.ui.di.ViewModelFactory
 import net.yslibrary.monotweety.ui.di.getComponentProvider
 import timber.log.Timber
 import javax.inject.Inject
 
-class LoginFormFragment : BottomSheetDialogFragment(), HasComponent<LoginFormFragmentComponent> {
+class LoginFormFragment : ViewBindingBottomSheetDialogFragment<FragmentLoginformBinding>(
+    R.layout.fragment_loginform,
+    FragmentLoginformBinding::bind,
+), HasComponent<LoginFormFragmentComponent> {
 
     override val component: LoginFormFragmentComponent by lazy {
         requireActivity()
@@ -39,8 +39,6 @@ class LoginFormFragment : BottomSheetDialogFragment(), HasComponent<LoginFormFra
 
     @Inject
     lateinit var factory: ViewModelFactory<LoginFormViewModel>
-
-    private val binding: FragmentLoginformBinding by viewBinding { FragmentLoginformBinding.bind(it) }
 
     private val viewModel: LoginFormViewModel by viewModels { factory }
 
@@ -53,14 +51,6 @@ class LoginFormFragment : BottomSheetDialogFragment(), HasComponent<LoginFormFra
             bindStates(owner.lifecycleScope)
         }
         viewModel.dispatch(LoginFormIntent.Initialize)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.fragment_loginform, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

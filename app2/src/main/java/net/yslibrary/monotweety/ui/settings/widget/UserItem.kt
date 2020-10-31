@@ -1,14 +1,18 @@
 package net.yslibrary.monotweety.ui.settings.widget
 
+import androidx.core.view.doOnAttach
 import coil.load
 import com.xwray.groupie.Item
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.data.user.User
 import net.yslibrary.monotweety.databinding.ItemUserBinding
 import net.yslibrary.monotweety.ui.base.groupie.BindableItem
+import net.yslibrary.monotweety.ui.base.setDebounceClickListener
 
 class UserItem(
     val user: User?,
+    private val onLogoutClick: () -> Unit,
+    private val onProfileClick: () -> Unit,
 ) : BindableItem<ItemUserBinding>(
     R.layout.item_user,
     ItemUserBinding::bind
@@ -26,6 +30,16 @@ class UserItem(
             viewBinding.userName.text = user.name
             viewBinding.userScreenName.text =
                 context.getString(R.string.screen_name, user.screenName)
+        }
+        val userIsValid = user != null
+        viewBinding.logout.isEnabled = userIsValid
+        viewBinding.openProfile.isEnabled = userIsValid
+
+        viewBinding.logout.doOnAttach {
+            it.setDebounceClickListener { onLogoutClick() }
+        }
+        viewBinding.openProfile.doOnAttach {
+            it.setDebounceClickListener { onProfileClick() }
         }
     }
 

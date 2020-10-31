@@ -10,5 +10,15 @@
         android:id="@+id/settingsFragment"
         android:name="net.yslibrary.monotweety.ui.settings.SettingsFragment"
         android:label="SettingsFragment"
+        >
+        <action
+            android:id="@+id/toFooterEditor"
+            app:destination="@id/footerEditorDialogFragment"
+            />
+    </fragment>
+    <dialog
+        android:id="@+id/footerEditorDialogFragment"
+        android:name="net.yslibrary.monotweety.ui.footereditor.FooterEditorFragment"
+        android:label="FooterEditorDialogFragment"
         />
 </navigation>

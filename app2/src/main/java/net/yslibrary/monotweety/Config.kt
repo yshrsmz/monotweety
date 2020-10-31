@@ -5,7 +5,7 @@ data class Config(
     val googlePlayUrl: String,
     val githubUrl: String,
     val privacyPolicyUrl: String,
-    val statusMaxLength: Int = 280,
+    val statusMaxLength: Int,
 ) {
     companion object {
         fun init(): Config {
@@ -14,6 +14,7 @@ data class Config(
                 googlePlayUrl = "https://play.google.com/store/apps/details?id=net.yslibrary.monotweety",
                 githubUrl = "https://github.com/yshrsmz/monotweety",
                 privacyPolicyUrl = "https://www.yslibrary.net/products/monotweety/privacy-policy/",
+                statusMaxLength = 280,
             )
         }
     }

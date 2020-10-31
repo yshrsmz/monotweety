@@ -1,4 +1,7 @@
 <resources>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+
     <string name="login_title">Login with Twitter</string>
     <string name="login_description">Open browser to authorize Monotweety.\nYou will see a numerical PIN code after authorization. Copy and paste it to the input below.</string>
 
@@ -15,6 +18,12 @@
     <string name="open_profile">Open Profile</string>
     <string name="account">Account</string>
     <string name="settings">Settings</string>
+    <string name="footer">Footer</string>
+    <string name="footer_description_on">ON: %s</string>
+    <string name="footer_description_off">OFF</string>
+    <string name="edit_footer">Edit Footer</string>
+    <string name="enable_footer">Enable Footer</string>
+    <string name="footer_text">Footer text</string>
 
     <string name="privacy">Privacy</string>
     <string name="privacy_policy">Privacy Policy</string>

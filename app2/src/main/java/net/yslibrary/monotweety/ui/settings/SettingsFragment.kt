@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xwray.groupie.GroupAdapter
@@ -16,6 +17,7 @@ import net.yslibrary.monotweety.BuildConfig
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.databinding.FragmentSettingsBinding
 import net.yslibrary.monotweety.ui.base.ViewBindingFragment
+import net.yslibrary.monotweety.ui.base.navigateSafe
 import net.yslibrary.monotweety.ui.base.openExternalAppWithUrl
 import net.yslibrary.monotweety.ui.di.HasComponent
 import net.yslibrary.monotweety.ui.di.ViewModelFactory
@@ -184,6 +186,7 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
                 context?.openExternalAppWithUrl(effect.url)
             }
             SettingsEffect.ShareApp -> TODO()
+            SettingsEffect.ToSplash -> TODO()
         }
     }
 
@@ -196,6 +199,7 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
         )))
         settingsSection.update(
             listOf(
+                createFooterItem(state),
                 OneLineTextItem(OneLineTextItem.Item("title", enabled = true)) {}
             ),
         )
@@ -205,5 +209,23 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
         binding.notificationSwitch.text =
             getString(R.string.label_notification_state, getString(notiStateResId))
         binding.notificationSwitch.isChecked = notiEnabled
+    }
+
+    private fun createFooterItem(state: SettingsState): TwoLineTextItem {
+        val description = if (state.settings?.footerEnabled == true) {
+            getString(R.string.footer_description_on, state.settings.footerText)
+        } else {
+            getString(R.string.footer_description_off)
+        }
+        return TwoLineTextItem(
+            item = TwoLineTextItem.Item(
+                title = getString(R.string.footer),
+                subTitle = description,
+                enabled = state.settings != null,
+            ),
+            onClick = {
+                findNavController().navigateSafe(SettingsFragmentDirections.toFooterEditor())
+            }
+        )
     }
 }

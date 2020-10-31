@@ -2,6 +2,8 @@ package net.yslibrary.monotweety.domain
 
 import dagger.Binds
 import dagger.Module
+import net.yslibrary.monotweety.domain.session.Logout
+import net.yslibrary.monotweety.domain.session.LogoutImpl
 import net.yslibrary.monotweety.domain.status.UpdateStatus
 import net.yslibrary.monotweety.domain.status.UpdateStatusImpl
 import net.yslibrary.monotweety.domain.user.FetchUser
@@ -19,4 +21,7 @@ internal interface UserScopeDomainModule {
 
     @Binds
     fun bindObserveUser(impl: ObserveUserImpl): ObserveUser
+
+    @Binds
+    fun bindLogout(impl: LogoutImpl): Logout
 }

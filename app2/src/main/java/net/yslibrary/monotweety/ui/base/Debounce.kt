@@ -1,8 +1,6 @@
 package net.yslibrary.monotweety.ui.base
 
 import android.view.View
-import androidx.lifecycle.ViewTreeLifecycleOwner
-import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -28,10 +26,19 @@ fun <T> debounce(
     }
 }
 
-fun View.setDebounceClickListener(listener: (view: View) -> Unit) {
-    val scope = ViewTreeLifecycleOwner.get(this)!!.lifecycleScope
-    val clickWithDebounce: (view: View) -> Unit = debounce(scope = scope) {
-        listener(it)
-    }
-    setOnClickListener(clickWithDebounce)
+inline fun View.setDebounceClickListener(
+    timeoutMillis: Long = 800,
+    crossinline listener: (View) -> Unit,
+) {
+    setOnClickListener(object : View.OnClickListener {
+        private var throttling = false
+
+        override fun onClick(view: View) {
+            if (throttling) return
+
+            throttling = true
+            view.postDelayed({ throttling = false }, timeoutMillis)
+            listener(view)
+        }
+    })
 }

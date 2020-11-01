@@ -3,13 +3,13 @@ package net.yslibrary.monotweety.domain.setting
 import net.yslibrary.monotweety.data.settings.SettingRepository
 import javax.inject.Inject
 
-interface UpdateFooterSetting {
+interface UpdateFooterSettings {
     suspend operator fun invoke(enabled: Boolean, text: String)
 }
 
-internal class UpdateFooterSettingImpl @Inject constructor(
+internal class UpdateFooterSettingsImpl @Inject constructor(
     private val settingRepository: SettingRepository,
-) : UpdateFooterSetting {
+) : UpdateFooterSettings {
     override suspend fun invoke(enabled: Boolean, text: String) {
         settingRepository.updateFooter(enabled, text)
     }

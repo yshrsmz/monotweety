@@ -6,8 +6,8 @@ import net.yslibrary.monotweety.domain.session.ObserveSession
 import net.yslibrary.monotweety.domain.session.ObserveSessionImpl
 import net.yslibrary.monotweety.domain.setting.ObserveSettings
 import net.yslibrary.monotweety.domain.setting.ObserveSettingsImpl
-import net.yslibrary.monotweety.domain.setting.UpdateFooterSetting
-import net.yslibrary.monotweety.domain.setting.UpdateFooterSettingImpl
+import net.yslibrary.monotweety.domain.setting.UpdateFooterSettings
+import net.yslibrary.monotweety.domain.setting.UpdateFooterSettingsImpl
 import net.yslibrary.monotweety.domain.setting.UpdateNotificationEnabled
 import net.yslibrary.monotweety.domain.setting.UpdateNotificationEnabledImpl
 import net.yslibrary.monotweety.domain.setting.UpdateTimelineAppSetting
@@ -19,7 +19,7 @@ internal interface SingletonDomainModule {
     fun bindObserveSetting(impl: ObserveSettingsImpl): ObserveSettings
 
     @Binds
-    fun bindUpdateFooterSetting(impl: UpdateFooterSettingImpl): UpdateFooterSetting
+    fun bindUpdateFooterSettings(impl: UpdateFooterSettingsImpl): UpdateFooterSettings
 
     @Binds
     fun bindUpdateTimelineAppSetting(impl: UpdateTimelineAppSettingImpl): UpdateTimelineAppSetting

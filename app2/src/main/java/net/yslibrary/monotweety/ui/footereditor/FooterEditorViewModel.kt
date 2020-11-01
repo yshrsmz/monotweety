@@ -16,6 +16,9 @@ sealed class FooterEditorIntent : Intent {
 
     data class EnableStateUpdated(val enabled: Boolean) : FooterEditorIntent()
     data class FooterTextUpdated(val value: String) : FooterEditorIntent()
+
+    object SaveRequested : FooterEditorIntent()
+    object CancelRequested : FooterEditorIntent()
 }
 
 sealed class FooterEditorAction : Action {
@@ -24,6 +27,9 @@ sealed class FooterEditorAction : Action {
     data class SettingsUpdated(val settings: Settings?) : FooterEditorAction()
     data class EnableStateUpdated(val enabled: Boolean) : FooterEditorAction()
     data class FooterTextUpdated(val value: String) : FooterEditorAction()
+
+    object Save : FooterEditorAction()
+    object Close : FooterEditorAction()
 }
 
 sealed class FooterEditorEffect : Effect {
@@ -69,6 +75,8 @@ class FooterEditorViewModel @Inject constructor(
                 FooterEditorAction.EnableStateUpdated(intent.enabled)
             is FooterEditorIntent.FooterTextUpdated ->
                 FooterEditorAction.FooterTextUpdated(intent.value)
+            FooterEditorIntent.SaveRequested -> TODO()
+            FooterEditorIntent.CancelRequested -> TODO()
         }
     }
 

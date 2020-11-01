@@ -24,6 +24,7 @@
     <string name="edit_footer">Edit Footer</string>
     <string name="enable_footer">Enable Footer</string>
     <string name="footer_text">Footer text</string>
+    <string name="footer_error">You cannot use \'@\' in footer</string>
 
     <string name="privacy">Privacy</string>
     <string name="privacy_policy">Privacy Policy</string>

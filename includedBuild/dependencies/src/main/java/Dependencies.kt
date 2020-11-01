@@ -23,7 +23,7 @@ object Versions {
     const val daggerHilt = "2.29.1-alpha"
     const val glide = "4.11.0"
     const val groupie = "2.8.1"
-    const val flowBinding = "0.12.0"
+    const val flowBinding = "1.0.0-beta02"
     const val rxBinding = "3.1.0"
     const val protobuf = "3.13.0"
     const val twitter4kt = "0.2.1"
@@ -201,6 +201,13 @@ object Deps {
     object Twitter4kt {
         const val core = "com.codingfeline.twitter4kt:core-api:${Versions.twitter4kt}"
         const val v1 = "com.codingfeline.twitter4kt:v1-api:${Versions.twitter4kt}"
+    }
+
+    object FlowBinding {
+        const val platform =
+            "io.github.reactivecircus.flowbinding:flowbinding-android:${Versions.flowBinding}"
+        const val material =
+            "io.github.reactivecircus.flowbinding:flowbinding-material:${Versions.flowBinding}"
     }
 
     const val adapterDelegates = "com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.3.0"

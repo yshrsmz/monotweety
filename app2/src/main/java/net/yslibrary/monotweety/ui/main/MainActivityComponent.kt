@@ -5,6 +5,7 @@ import dagger.BindsInstance
 import dagger.Module
 import dagger.Subcomponent
 import net.yslibrary.monotweety.di.ActivityScope
+import net.yslibrary.monotweety.ui.footereditor.FooterEditorFragmentComponent
 import net.yslibrary.monotweety.ui.settings.SettingsFragmentComponent
 
 @ActivityScope
@@ -29,8 +30,10 @@ interface MainActivityComponent : MainActivitySubcomponentModule.ComponentProvid
 @Module(
     subcomponents = [
         SettingsFragmentComponent::class,
+        FooterEditorFragmentComponent::class,
     ]
 )
 interface MainActivitySubcomponentModule {
-    interface ComponentProviders : SettingsFragmentComponent.ComponentProvider
+    interface ComponentProviders : SettingsFragmentComponent.ComponentProvider,
+        FooterEditorFragmentComponent.ComponentProvider
 }

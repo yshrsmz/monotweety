@@ -22,7 +22,7 @@
         />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/enableFooter"
+        android:id="@+id/enableFooterSwitch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/enable_footer"
@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/edit_footer"
-        app:layout_constraintTop_toBottomOf="@+id/enableFooter"
+        app:layout_constraintTop_toBottomOf="@+id/enableFooterSwitch"
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -45,6 +45,7 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             android:maxLines="1"
+            android:nextFocusForward="@+id/save"
             />
     </com.google.android.material.textfield.TextInputLayout>
 

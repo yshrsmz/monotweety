@@ -1,6 +1,5 @@
 package net.yslibrary.monotweety.ui.settings.widget
 
-import androidx.core.view.doOnAttach
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.databinding.Item2lineTextBinding
 import net.yslibrary.monotweety.ui.base.groupie.BindableItem
@@ -18,9 +17,7 @@ class TwoLineTextItem(
             title.text = item.title
             subtitle.text = item.subTitle
             root.isEnabled = item.enabled
-            root.doOnAttach {
-                it.setDebounceClickListener { onClick(item) }
-            }
+            root.setDebounceClickListener { onClick(item) }
         }
     }
 

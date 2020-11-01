@@ -119,6 +119,9 @@ dependencies {
 
     implementation(Deps.groupie)
 
+    implementation(Deps.FlowBinding.platform)
+    implementation(Deps.FlowBinding.material)
+
     implementation(Deps.LeakCanary.plumber)
     debugImplementation(Deps.LeakCanary.core)
     implementation(Deps.LeakCanary.objectWatcher)

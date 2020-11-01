@@ -1,15 +1,9 @@
 package net.yslibrary.monotweety.ui.settings
 
-import dagger.Module
 import dagger.Subcomponent
-import net.yslibrary.monotweety.ui.footereditor.FooterEditorFragmentComponent
 
-@Subcomponent(
-    modules = [
-        SettingsFragmentSubcomponentModule::class,
-    ]
-)
-interface SettingsFragmentComponent : SettingsFragmentSubcomponentModule.ComponentProviders {
+@Subcomponent
+interface SettingsFragmentComponent {
     fun inject(fragment: SettingsFragment)
 
     @Subcomponent.Factory
@@ -22,11 +16,3 @@ interface SettingsFragmentComponent : SettingsFragmentSubcomponentModule.Compone
     }
 }
 
-@Module(
-    subcomponents = [
-        FooterEditorFragmentComponent::class,
-    ]
-)
-interface SettingsFragmentSubcomponentModule {
-    interface ComponentProviders : FooterEditorFragmentComponent.ComponentProvider
-}

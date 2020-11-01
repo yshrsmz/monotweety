@@ -151,6 +151,7 @@ private fun Project.configureKotlinJvm() {
         sourceCompatibility = "1.8"
         targetCompatibility = "1.8"
         kotlinOptions {
+            languageVersion = "1.4"
             jvmTarget = "1.8"
             freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
         }

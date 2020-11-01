@@ -4,18 +4,17 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.github.razir.progressbutton.DrawableButton
 import com.github.razir.progressbutton.bindProgressButton
 import com.github.razir.progressbutton.hideProgress
 import com.github.razir.progressbutton.showProgress
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onEach
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.databinding.FragmentLoginformBinding
 import net.yslibrary.monotweety.ui.base.ViewBindingBottomSheetDialogFragment
+import net.yslibrary.monotweety.ui.base.consumeEffects
+import net.yslibrary.monotweety.ui.base.consumeStates
 import net.yslibrary.monotweety.ui.base.navigateSafe
 import net.yslibrary.monotweety.ui.base.navigateToBrowser
 import net.yslibrary.monotweety.ui.base.setDebounceClickListener
@@ -47,8 +46,8 @@ class LoginFormFragment : ViewBindingBottomSheetDialogFragment<FragmentLoginform
         component.inject(this)
 
         viewLifecycleOwnerLiveData.observe(this) { owner ->
-            bindEffects(owner.lifecycleScope)
-            bindStates(owner.lifecycleScope)
+            viewModel.consumeEffects(owner.lifecycleScope, this::handleEffect)
+            viewModel.consumeStates(owner.lifecycleScope, this::render)
         }
         viewModel.dispatch(LoginFormIntent.Initialize)
     }
@@ -67,22 +66,6 @@ class LoginFormFragment : ViewBindingBottomSheetDialogFragment<FragmentLoginform
         binding.pinCode.editText?.addTextChangedListener { editable ->
             val text = editable?.toString() ?: ""
             viewModel.dispatch(LoginFormIntent.PinCodeUpdated(text))
-        }
-    }
-
-    private fun bindEffects(scope: LifecycleCoroutineScope) {
-        scope.launchWhenStarted {
-            viewModel.effects
-                .onEach { effect -> handleEffect(effect) }
-                .collect()
-        }
-    }
-
-    private fun bindStates(scope: LifecycleCoroutineScope) {
-        scope.launchWhenStarted {
-            viewModel.states
-                .onEach { state -> render(state) }
-                .collect()
         }
     }
 

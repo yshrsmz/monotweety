@@ -2,15 +2,14 @@ package net.yslibrary.monotweety.ui.splash
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onEach
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.databinding.FragmentSplashBinding
 import net.yslibrary.monotweety.ui.base.ViewBindingFragment
+import net.yslibrary.monotweety.ui.base.consumeEffects
+import net.yslibrary.monotweety.ui.base.consumeStates
 import net.yslibrary.monotweety.ui.base.navigateSafe
 import net.yslibrary.monotweety.ui.di.HasComponent
 import net.yslibrary.monotweety.ui.di.ViewModelFactory
@@ -43,28 +42,12 @@ class SplashFragment : ViewBindingFragment<FragmentSplashBinding>(
         component.inject(this)
 
         viewLifecycleOwnerLiveData.observe(this) { owner ->
-            bindEffects(owner)
-            bindStates(owner)
+            viewModel.consumeEffects(owner.lifecycleScope, this::handleEffect)
+            viewModel.consumeStates(owner.lifecycleScope, this::render)
         }
         viewModel.dispatch(SplashIntent.Initialize)
 
         analytics.viewEvent(Analytics.Screen.Splash, this::class)
-    }
-
-    private fun bindEffects(owner: LifecycleOwner) {
-        owner.lifecycleScope.launchWhenStarted {
-            viewModel.effects
-                .onEach { effect -> handleEffect(effect) }
-                .collect()
-        }
-    }
-
-    private fun bindStates(owner: LifecycleOwner) {
-        owner.lifecycleScope.launchWhenStarted {
-            viewModel.states
-                .onEach { state -> render(state) }
-                .collect()
-        }
     }
 
     private fun handleEffect(effect: SplashEffect) {

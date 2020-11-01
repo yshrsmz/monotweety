@@ -3,7 +3,6 @@ package net.yslibrary.monotweety.ui.settings
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -11,12 +10,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Section
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onEach
 import net.yslibrary.monotweety.BuildConfig
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.databinding.FragmentSettingsBinding
 import net.yslibrary.monotweety.ui.base.ViewBindingFragment
+import net.yslibrary.monotweety.ui.base.consumeEffects
+import net.yslibrary.monotweety.ui.base.consumeStates
 import net.yslibrary.monotweety.ui.base.navigateSafe
 import net.yslibrary.monotweety.ui.base.openExternalAppWithUrl
 import net.yslibrary.monotweety.ui.di.HasComponent
@@ -140,8 +139,8 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
         component.inject(this)
 
         viewLifecycleOwnerLiveData.observe(this) { owner ->
-            bindEffects(owner.lifecycleScope)
-            bindStates(owner.lifecycleScope)
+            viewModel.consumeEffects(owner.lifecycleScope, this::handleEffect)
+            viewModel.consumeStates(owner.lifecycleScope, this::render)
         }
         viewModel.dispatch(SettingsIntent.Initialize)
     }
@@ -159,22 +158,6 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
             list.layoutManager = LinearLayoutManager(requireContext())
             list.addItemDecoration(DividerItemDecoration(requireContext()))
             list.adapter = adapter
-        }
-    }
-
-    private fun bindEffects(scope: LifecycleCoroutineScope) {
-        scope.launchWhenStarted {
-            viewModel.effects
-                .onEach { effect -> handleEffect(effect) }
-                .collect()
-        }
-    }
-
-    private fun bindStates(scope: LifecycleCoroutineScope) {
-        scope.launchWhenStarted {
-            viewModel.states
-                .onEach { state -> render(state) }
-                .collect()
         }
     }
 

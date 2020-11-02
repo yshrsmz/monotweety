@@ -12,7 +12,7 @@ import javax.inject.Singleton
 @Module
 internal interface SettingsDataModule {
     @Binds
-    fun bindSettingsRepository(impl: SettingRepositoryImpl): SettingRepository
+    fun bindSettingsRepository(impl: SettingsRepositoryImpl): SettingsRepository
 
     companion object {
         @Singleton

@@ -1,6 +1,6 @@
 package net.yslibrary.monotweety.domain.setting
 
-import net.yslibrary.monotweety.data.settings.SettingRepository
+import net.yslibrary.monotweety.data.settings.SettingsRepository
 import javax.inject.Inject
 
 interface UpdateNotificationEnabled {
@@ -8,9 +8,9 @@ interface UpdateNotificationEnabled {
 }
 
 internal class UpdateNotificationEnabledImpl @Inject constructor(
-    private val settingRepository: SettingRepository,
+    private val settingsRepository: SettingsRepository,
 ) : UpdateNotificationEnabled {
     override suspend fun invoke(enabled: Boolean) {
-        settingRepository.updateNotificationEnabled(enabled)
+        settingsRepository.updateNotificationEnabled(enabled)
     }
 }

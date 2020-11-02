@@ -1,8 +1,8 @@
 package net.yslibrary.monotweety.domain.setting
 
 import kotlinx.coroutines.flow.Flow
-import net.yslibrary.monotweety.data.settings.SettingRepository
 import net.yslibrary.monotweety.data.settings.Settings
+import net.yslibrary.monotweety.data.settings.SettingsRepository
 import javax.inject.Inject
 
 interface ObserveSettings {
@@ -10,9 +10,9 @@ interface ObserveSettings {
 }
 
 internal class ObserveSettingsImpl @Inject constructor(
-    private val settingRepository: SettingRepository,
+    private val settingsRepository: SettingsRepository,
 ) : ObserveSettings {
     override fun invoke(): Flow<Settings> {
-        return settingRepository.settingsFlow
+        return settingsRepository.settingsFlow
     }
 }

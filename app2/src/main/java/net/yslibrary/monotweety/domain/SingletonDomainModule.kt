@@ -2,8 +2,12 @@ package net.yslibrary.monotweety.domain
 
 import dagger.Binds
 import dagger.Module
+import net.yslibrary.monotweety.domain.appinfo.GetInstalledTwitterApps
+import net.yslibrary.monotweety.domain.appinfo.GetInstalledTwitterAppsImpl
 import net.yslibrary.monotweety.domain.session.ObserveSession
 import net.yslibrary.monotweety.domain.session.ObserveSessionImpl
+import net.yslibrary.monotweety.domain.setting.GetTimelineTwitterApp
+import net.yslibrary.monotweety.domain.setting.GetTimelineTwitterAppImpl
 import net.yslibrary.monotweety.domain.setting.ObserveSettings
 import net.yslibrary.monotweety.domain.setting.ObserveSettingsImpl
 import net.yslibrary.monotweety.domain.setting.UpdateFooterSettings
@@ -29,4 +33,10 @@ internal interface SingletonDomainModule {
 
     @Binds
     fun bindObserveSession(impl: ObserveSessionImpl): ObserveSession
+
+    @Binds
+    fun bindGetInstalledTwitterApps(impl: GetInstalledTwitterAppsImpl): GetInstalledTwitterApps
+
+    @Binds
+    fun bindGetTimelineTwitterApp(impl: GetTimelineTwitterAppImpl): GetTimelineTwitterApp
 }

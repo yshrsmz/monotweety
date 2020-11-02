@@ -15,7 +15,7 @@ import java.io.OutputStream
 import javax.inject.Inject
 import javax.inject.Singleton
 
-interface SettingRepository {
+interface SettingsRepository {
     val settingsFlow: Flow<Settings>
     suspend fun updateNotificationEnabled(enabled: Boolean)
     suspend fun updateFooterEnabled(enabled: Boolean)
@@ -28,9 +28,9 @@ interface SettingRepository {
 }
 
 @Singleton
-internal class SettingRepositoryImpl @Inject constructor(
+internal class SettingsRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<SettingsPreferences>,
-) : SettingRepository {
+) : SettingsRepository {
     override val settingsFlow: Flow<Settings> = dataStore.data
         .catch { e ->
             if (e is IOException) {

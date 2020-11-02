@@ -1,6 +1,6 @@
 package net.yslibrary.monotweety.domain.setting
 
-import net.yslibrary.monotweety.data.settings.SettingRepository
+import net.yslibrary.monotweety.data.settings.SettingsRepository
 import javax.inject.Inject
 
 interface UpdateTimelineAppSetting {
@@ -8,9 +8,9 @@ interface UpdateTimelineAppSetting {
 }
 
 internal class UpdateTimelineAppSettingImpl @Inject constructor(
-    private val settingRepository: SettingRepository,
+    private val settingsRepository: SettingsRepository,
 ) : UpdateTimelineAppSetting {
     override suspend fun invoke(enabled: Boolean, packageName: String) {
-        settingRepository.updateTimelineApp(enabled, packageName)
+        settingsRepository.updateTimelineApp(enabled, packageName)
     }
 }

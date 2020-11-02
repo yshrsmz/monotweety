@@ -1,5 +1,8 @@
 package net.yslibrary.monotweety.data.appinfo
 
+/**
+ * Make sure to update `data/src/main/AndroidManifest.xml` as well
+ */
 enum class TwitterApp(val packageName: String) {
     BEETER("me.b0ne.android.apps.beeter"),
     BIYONTTER("jp.gifu.abs104a.twitterproject"),

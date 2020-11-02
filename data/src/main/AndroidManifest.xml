@@ -4,12 +4,53 @@
     >
 
     <queries>
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data
-                android:host="twitter.com"
-                android:scheme="https"
-                />
-        </intent>
+        <!--        <intent>-->
+        <!--            <action android:name="android.intent.action.VIEW" />-->
+        <!--            <data-->
+        <!--                android:host="twitter.com"-->
+        <!--                android:scheme="https"-->
+        <!--                />-->
+        <!--        </intent>-->
+
+        <!-- make sure to update `data/src/main/java/net/yslibrary/monotweety/data/appinfo/TwitterApp.kt` as well -->
+        <package android:name="me.b0ne.android.apps.beeter" />
+        <package android:name="jp.gifu.abs104a.twitterproject" />
+        <package android:name="com.echofon" />
+        <package android:name="com.jv.materialfalcon" />
+        <package android:name="com.covelline.feather" />
+        <package android:name="it.mvilla.android.fenix" />
+        <package android:name="it.mvilla.android.fenix2" />
+        <package android:name="com.samruston.twitter" />
+        <package android:name="com.hootsuite.droid.full" />
+        <package android:name="net.janesoft.janetter.android.free" />
+        <package android:name="net.janesoft.janetter.android.pro" />
+        <package android:name="jp.jig.jigtwi.android" />
+        <package android:name="info.justaway" />
+        <package android:name="net.wakamesoba98.matecha" />
+        <package android:name="com.levelup.touiteur" />
+        <package android:name="com.aaplab.robird" />
+        <package android:name="net.wakamesoba98.sobacha" />
+        <package android:name="com.suruyatu3" />
+        <package android:name="com.suruyatu3.pro" />
+        <package android:name="com.klinker.android.twitter_l" />
+        <package android:name="net.sinproject.android.tweecha" />
+        <package android:name="net.sinproject.android.tweecha.prime" />
+        <package android:name="com.handmark.tweetcaster" />
+        <package android:name="com.handmark.tweetcaster.premium" />
+        <package android:name="com.dwdesign.tweetings" />
+        <package android:name="jp.r246.twicca" />
+        <package android:name="org.mariotaku.twidere" />
+        <package android:name="jp.ne.biglobe.twipple" />
+        <package android:name="com.softama.twitama" />
+        <package android:name="com.softama.twitamaplus" />
+        <package android:name="jp.yoshika.twitcle.plus" />
+        <package android:name="com.twitpane" />
+        <package android:name="com.twitpane.premium" />
+        <package android:name="com.twitpane.classic" />
+        <package android:name="com.twitter.android" />
+        <package android:name="com.twitter.android.lite" />
+        <package android:name="de.vanita5.twittnuker" />
+        <package android:name="jp.takmurata.twitwick2" />
+        <package android:name="shibafu.yukari" />
     </queries>
 </manifest>

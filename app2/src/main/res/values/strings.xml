@@ -25,6 +25,9 @@
     <string name="enable_footer">Enable Footer</string>
     <string name="footer_text">Footer text</string>
     <string name="footer_error">You cannot use \'@\' in footer</string>
+    <string name="timelineapp">Select an app to view timeline</string>
+    <string name="timelineapp_description_on">ON: %s</string>
+    <string name="timelineapp_description_off">OFF</string>
 
     <string name="privacy">Privacy</string>
     <string name="privacy_policy">Privacy Policy</string>

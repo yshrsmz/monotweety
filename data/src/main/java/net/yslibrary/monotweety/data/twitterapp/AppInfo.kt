@@ -1,4 +1,4 @@
-package net.yslibrary.monotweety.data.appinfo
+package net.yslibrary.monotweety.data.twitterapp
 
 data class AppInfo(
     val name: String,

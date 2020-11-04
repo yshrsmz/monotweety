@@ -1,7 +1,7 @@
-package net.yslibrary.monotweety.domain.appinfo
+package net.yslibrary.monotweety.domain.twitterapp
 
-import net.yslibrary.monotweety.data.appinfo.AppInfo
-import net.yslibrary.monotweety.data.appinfo.TwitterAppRepository
+import net.yslibrary.monotweety.data.twitterapp.AppInfo
+import net.yslibrary.monotweety.data.twitterapp.TwitterAppRepository
 import javax.inject.Inject
 
 interface GetInstalledTwitterApps {

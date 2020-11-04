@@ -1,10 +1,10 @@
-package net.yslibrary.monotweety.data.appinfo
+package net.yslibrary.monotweety.data.twitterapp
 
 import dagger.Binds
 import dagger.Module
 
 @Module
-internal interface AppInfoDataModule {
+internal interface TwitterAppDataModule {
     @Binds
     fun bindTwitterAppRepository(impl: TwitterAppRepositoryImpl): TwitterAppRepository
 }

@@ -12,17 +12,17 @@ import io.ktor.client.features.logging.Logger
 import io.ktor.client.features.logging.Logging
 import io.ktor.client.features.logging.SIMPLE
 import kotlinx.datetime.Clock
-import net.yslibrary.monotweety.data.appinfo.AppInfoDataModule
 import net.yslibrary.monotweety.data.auth.AuthDataModule
 import net.yslibrary.monotweety.data.session.SessionDataModule
 import net.yslibrary.monotweety.data.settings.SettingsDataModule
+import net.yslibrary.monotweety.data.twitterapp.TwitterAppDataModule
 
 @Module(
     includes = [
         AuthDataModule::class,
         SessionDataModule::class,
         SettingsDataModule::class,
-        AppInfoDataModule::class,
+        TwitterAppDataModule::class,
     ]
 )
 object SingletonDataModule {

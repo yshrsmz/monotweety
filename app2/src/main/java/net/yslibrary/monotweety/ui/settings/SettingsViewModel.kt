@@ -8,8 +8,10 @@ import kotlinx.datetime.Instant
 import net.yslibrary.monotweety.Config
 import net.yslibrary.monotweety.base.CoroutineDispatchers
 import net.yslibrary.monotweety.data.settings.Settings
+import net.yslibrary.monotweety.data.twitterapp.AppInfo
 import net.yslibrary.monotweety.data.user.User
 import net.yslibrary.monotweety.domain.session.Logout
+import net.yslibrary.monotweety.domain.setting.GetTwitterAppByPackageName
 import net.yslibrary.monotweety.domain.setting.ObserveSettings
 import net.yslibrary.monotweety.domain.setting.UpdateNotificationEnabled
 import net.yslibrary.monotweety.domain.user.FetchUser
@@ -49,6 +51,7 @@ sealed class SettingsAction : Action {
     data class SettingsUpdated(val settings: Settings) : SettingsAction()
     data class UserUpdated(val user: User) : SettingsAction()
     data class NotificationStateUpdated(val enabled: Boolean) : SettingsAction()
+    data class TimelineAppInfoUpdated(val appInfo: AppInfo?) : SettingsAction()
 
     object Logout : SettingsAction()
     object LogoutCompleted : SettingsAction()
@@ -70,6 +73,7 @@ data class SettingsState(
     val state: ULIEState,
     val settings: Settings?,
     val user: User?,
+    val timelineAppInfo: AppInfo?,
 ) : State {
     companion object {
         fun initialState(): SettingsState {
@@ -77,6 +81,7 @@ data class SettingsState(
                 state = ULIEState.UNINITIALIZED,
                 settings = null,
                 user = null,
+                timelineAppInfo = null,
             )
         }
     }
@@ -85,6 +90,7 @@ data class SettingsState(
 class SettingsProcessor @Inject constructor(
     private val observeSettings: ObserveSettings,
     private val observeUser: ObserveUser,
+    private val getTwitterAppByPackageName: GetTwitterAppByPackageName,
     private val fetchUser: FetchUser,
     private val logout: Logout,
     private val updateNotificationEnabled: UpdateNotificationEnabled,
@@ -115,6 +121,7 @@ class SettingsProcessor @Inject constructor(
             SettingsAction.NavigateToLicense,
             is SettingsAction.NavigateToExternalApp,
             SettingsAction.LogoutCompleted,
+            is SettingsAction.TimelineAppInfoUpdated,
             -> {
                 // no-op
             }
@@ -124,6 +131,10 @@ class SettingsProcessor @Inject constructor(
     private fun doObserveSetting() {
         observeSettings()
             .onEach { setting -> put(SettingsAction.SettingsUpdated(setting)) }
+            .onEach {
+                val appInfo = getTwitterAppByPackageName(it.timelineAppPackageName)
+                put(SettingsAction.TimelineAppInfoUpdated(appInfo))
+            }
             .launchIn(this)
 
     }
@@ -221,6 +232,11 @@ class SettingsViewModel @Inject constructor(
             SettingsAction.LogoutCompleted -> {
                 sendEffect(SettingsEffect.ToSplash)
                 previousState
+            }
+            is SettingsAction.TimelineAppInfoUpdated -> {
+                previousState.copy(
+                    timelineAppInfo = action.appInfo
+                )
             }
         }
     }

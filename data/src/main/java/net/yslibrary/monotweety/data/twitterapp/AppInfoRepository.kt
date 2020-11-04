@@ -1,4 +1,4 @@
-package net.yslibrary.monotweety.data.appinfo
+package net.yslibrary.monotweety.data.twitterapp
 
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -13,7 +13,6 @@ interface TwitterAppRepository {
 internal class TwitterAppRepositoryImpl @Inject constructor(
     private val packageManager: PackageManager,
 ) : TwitterAppRepository {
-    private val twitterApps = TwitterApp.packages()
 
     override suspend fun getByPackageName(twitterApp: TwitterApp): AppInfo? {
         val intent = packageManager.getLaunchIntentForPackage(twitterApp.packageName) ?: return null
@@ -35,14 +34,18 @@ internal class TwitterAppRepositoryImpl @Inject constructor(
     }
 
     private fun ResolveInfo.toAppInfo(): AppInfo? {
-        val label = loadLabel(packageManager)
-        val packageName = twitterApps.firstOrNull { it == activityInfo.packageName } ?: return null
-        val twitterApp = TwitterApp.fromPackageName(packageName)
-            .takeUnless { it == TwitterApp.NONE } ?: return null
+        return packageManager.runCatching { getPackageInfo(activityInfo.packageName, 0) }
+            .map { it.applicationInfo }
+            .map { applicationInfo ->
+                val name = applicationInfo.loadLabel(packageManager).toString()
+                val twitterApp = TwitterApp.fromPackageName(applicationInfo.packageName)
+                    .takeUnless { it == TwitterApp.NONE } ?: return@map null
 
-        return AppInfo(
-            name = label.toString(),
-            packageName = twitterApp
-        )
+                AppInfo(
+                    name = name,
+                    packageName = twitterApp,
+                )
+            }
+            .getOrNull()
     }
 }

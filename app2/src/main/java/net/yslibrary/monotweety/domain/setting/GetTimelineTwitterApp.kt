@@ -1,10 +1,10 @@
 package net.yslibrary.monotweety.domain.setting
 
 import kotlinx.coroutines.flow.firstOrNull
-import net.yslibrary.monotweety.data.appinfo.AppInfo
-import net.yslibrary.monotweety.data.appinfo.TwitterApp
-import net.yslibrary.monotweety.data.appinfo.TwitterAppRepository
 import net.yslibrary.monotweety.data.settings.SettingsRepository
+import net.yslibrary.monotweety.data.twitterapp.AppInfo
+import net.yslibrary.monotweety.data.twitterapp.TwitterApp
+import net.yslibrary.monotweety.data.twitterapp.TwitterAppRepository
 import javax.inject.Inject
 
 interface GetTimelineTwitterApp {

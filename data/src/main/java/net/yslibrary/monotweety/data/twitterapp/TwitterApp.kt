@@ -1,4 +1,4 @@
-package net.yslibrary.monotweety.data.appinfo
+package net.yslibrary.monotweety.data.twitterapp
 
 /**
  * Make sure to update `data/src/main/AndroidManifest.xml` as well

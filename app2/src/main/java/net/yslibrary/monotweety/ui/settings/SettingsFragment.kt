@@ -1,5 +1,6 @@
 package net.yslibrary.monotweety.ui.settings
 
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -43,6 +44,9 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
 
     @Inject
     lateinit var factory: ViewModelFactory<SettingsViewModel>
+
+    @Inject
+    lateinit var packageManager: PackageManager
 
     private val viewModel: SettingsViewModel by viewModels { factory }
 
@@ -180,10 +184,11 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
             onLogoutClick = {},
             onProfileClick = {},
         )))
+
         settingsSection.update(
             listOf(
                 createFooterItem(state),
-                OneLineTextItem(OneLineTextItem.Item("title", enabled = true)) {}
+                createTimelineAppItem(state),
             ),
         )
 
@@ -209,6 +214,24 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
             onClick = {
                 findNavController().navigateSafe(SettingsFragmentDirections.toFooterEditor())
             }
+        )
+    }
+
+    private fun createTimelineAppItem(state: SettingsState): TwoLineTextItem {
+        val description =
+            if (state.settings?.timelineAppEnabled == true && state.timelineAppInfo != null) {
+                getString(R.string.timelineapp_description_on,
+                    state.timelineAppInfo.name)
+            } else {
+                getString(R.string.timelineapp_description_off)
+            }
+        return TwoLineTextItem(
+            item = TwoLineTextItem.Item(
+                title = getString(R.string.timelineapp),
+                subTitle = description,
+                enabled = true
+            ),
+            onClick = { /* TODO */ }
         )
     }
 }

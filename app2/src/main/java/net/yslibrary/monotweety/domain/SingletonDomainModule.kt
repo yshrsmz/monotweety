@@ -2,12 +2,12 @@ package net.yslibrary.monotweety.domain
 
 import dagger.Binds
 import dagger.Module
-import net.yslibrary.monotweety.domain.appinfo.GetInstalledTwitterApps
-import net.yslibrary.monotweety.domain.appinfo.GetInstalledTwitterAppsImpl
 import net.yslibrary.monotweety.domain.session.ObserveSession
 import net.yslibrary.monotweety.domain.session.ObserveSessionImpl
 import net.yslibrary.monotweety.domain.setting.GetTimelineTwitterApp
 import net.yslibrary.monotweety.domain.setting.GetTimelineTwitterAppImpl
+import net.yslibrary.monotweety.domain.setting.GetTwitterAppByPackageName
+import net.yslibrary.monotweety.domain.setting.GetTwitterAppByPackageNameImpl
 import net.yslibrary.monotweety.domain.setting.ObserveSettings
 import net.yslibrary.monotweety.domain.setting.ObserveSettingsImpl
 import net.yslibrary.monotweety.domain.setting.UpdateFooterSettings
@@ -16,6 +16,8 @@ import net.yslibrary.monotweety.domain.setting.UpdateNotificationEnabled
 import net.yslibrary.monotweety.domain.setting.UpdateNotificationEnabledImpl
 import net.yslibrary.monotweety.domain.setting.UpdateTimelineAppSetting
 import net.yslibrary.monotweety.domain.setting.UpdateTimelineAppSettingImpl
+import net.yslibrary.monotweety.domain.twitterapp.GetInstalledTwitterApps
+import net.yslibrary.monotweety.domain.twitterapp.GetInstalledTwitterAppsImpl
 
 @Module
 internal interface SingletonDomainModule {
@@ -39,4 +41,7 @@ internal interface SingletonDomainModule {
 
     @Binds
     fun bindGetTimelineTwitterApp(impl: GetTimelineTwitterAppImpl): GetTimelineTwitterApp
+
+    @Binds
+    fun bindGetTwitterAppByPackageName(impl: GetTwitterAppByPackageNameImpl): GetTwitterAppByPackageName
 }

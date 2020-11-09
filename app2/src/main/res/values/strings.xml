@@ -1,6 +1,7 @@
 <resources>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
+    <string name="confirm">Confirm</string>
 
     <string name="login_title">Login with Twitter</string>
     <string name="login_description">Open browser to authorize Monotweety.\nYou will see a numerical PIN code after authorization. Copy and paste it to the input below.</string>
@@ -28,6 +29,8 @@
     <string name="timelineapp">Select an app to view timeline</string>
     <string name="timelineapp_description_on">ON: %s</string>
     <string name="timelineapp_description_off">OFF</string>
+    <string name="timelineapp_dialog_title">Add shortcut to the notification</string>
+    <string name="timelineapp_dialog_disable_value">None(disable)</string>
 
     <string name="privacy">Privacy</string>
     <string name="privacy_policy">Privacy Policy</string>

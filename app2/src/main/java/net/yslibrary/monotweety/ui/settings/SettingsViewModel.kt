@@ -14,6 +14,8 @@ import net.yslibrary.monotweety.domain.session.Logout
 import net.yslibrary.monotweety.domain.setting.GetTwitterAppByPackageName
 import net.yslibrary.monotweety.domain.setting.ObserveSettings
 import net.yslibrary.monotweety.domain.setting.UpdateNotificationEnabled
+import net.yslibrary.monotweety.domain.setting.UpdateTimelineAppSetting
+import net.yslibrary.monotweety.domain.twitterapp.GetInstalledTwitterApps
 import net.yslibrary.monotweety.domain.user.FetchUser
 import net.yslibrary.monotweety.domain.user.ObserveUser
 import net.yslibrary.monotweety.ui.arch.Action
@@ -33,6 +35,7 @@ import kotlin.time.ExperimentalTime
 sealed class SettingsIntent : Intent {
     object Initialize : SettingsIntent()
     data class NotificationStateUpdated(val enabled: Boolean) : SettingsIntent()
+    data class TimelineAppSelected(val packageName: String) : SettingsIntent()
 
     object LogoutSelected : SettingsIntent()
     object ProfileSelected : SettingsIntent()
@@ -50,8 +53,10 @@ sealed class SettingsAction : Action {
 
     data class SettingsUpdated(val settings: Settings) : SettingsAction()
     data class UserUpdated(val user: User) : SettingsAction()
-    data class NotificationStateUpdated(val enabled: Boolean) : SettingsAction()
-    data class TimelineAppInfoUpdated(val appInfo: AppInfo?) : SettingsAction()
+    data class UpdateNotification(val enabled: Boolean) : SettingsAction()
+    data class UpdateSelectedTimelineApp(val packageName: String) : SettingsAction()
+    data class SelectedTimelineAppUpdated(val appInfo: AppInfo?) : SettingsAction()
+    data class TimelineAppsUpdated(val apps: List<AppInfo>) : SettingsAction()
 
     object Logout : SettingsAction()
     object LogoutCompleted : SettingsAction()
@@ -67,13 +72,15 @@ sealed class SettingsEffect : Effect {
     object ToSplash : SettingsEffect()
     object ShareApp : SettingsEffect()
     data class OpenBrowser(val url: String) : SettingsEffect()
+    data class UpdateNotification(val enabled: Boolean) : SettingsEffect()
 }
 
 data class SettingsState(
     val state: ULIEState,
     val settings: Settings?,
     val user: User?,
-    val timelineAppInfo: AppInfo?,
+    val selectedTimelineApp: AppInfo?,
+    val timelineApps: List<AppInfo>,
 ) : State {
     companion object {
         fun initialState(): SettingsState {
@@ -81,7 +88,8 @@ data class SettingsState(
                 state = ULIEState.UNINITIALIZED,
                 settings = null,
                 user = null,
-                timelineAppInfo = null,
+                selectedTimelineApp = null,
+                timelineApps = emptyList(),
             )
         }
     }
@@ -90,10 +98,12 @@ data class SettingsState(
 class SettingsProcessor @Inject constructor(
     private val observeSettings: ObserveSettings,
     private val observeUser: ObserveUser,
+    private val getInstalledTwitterApps: GetInstalledTwitterApps,
     private val getTwitterAppByPackageName: GetTwitterAppByPackageName,
     private val fetchUser: FetchUser,
     private val logout: Logout,
     private val updateNotificationEnabled: UpdateNotificationEnabled,
+    private val updateTimelineAppSetting: UpdateTimelineAppSetting,
     private val clock: Clock,
     dispatchers: CoroutineDispatchers,
 ) : Processor<SettingsAction>(
@@ -104,14 +114,22 @@ class SettingsProcessor @Inject constructor(
             SettingsAction.Initialize -> {
                 doObserveSetting()
                 doObserveUser()
+                doGetInstalledTwitterApps()
             }
-            is SettingsAction.NotificationStateUpdated -> {
+            is SettingsAction.UpdateNotification -> {
                 launch { updateNotificationEnabled(action.enabled) }
             }
             SettingsAction.Logout -> {
                 launch {
                     logout()
                     put(SettingsAction.LogoutCompleted)
+                }
+            }
+            is SettingsAction.UpdateSelectedTimelineApp -> {
+                launch {
+                    updateTimelineAppSetting(
+                        enabled = action.packageName.isNotEmpty(),
+                        packageName = action.packageName)
                 }
             }
             is SettingsAction.UserUpdated,
@@ -121,7 +139,8 @@ class SettingsProcessor @Inject constructor(
             SettingsAction.NavigateToLicense,
             is SettingsAction.NavigateToExternalApp,
             SettingsAction.LogoutCompleted,
-            is SettingsAction.TimelineAppInfoUpdated,
+            is SettingsAction.SelectedTimelineAppUpdated,
+            is SettingsAction.TimelineAppsUpdated,
             -> {
                 // no-op
             }
@@ -133,10 +152,9 @@ class SettingsProcessor @Inject constructor(
             .onEach { setting -> put(SettingsAction.SettingsUpdated(setting)) }
             .onEach {
                 val appInfo = getTwitterAppByPackageName(it.timelineAppPackageName)
-                put(SettingsAction.TimelineAppInfoUpdated(appInfo))
+                put(SettingsAction.SelectedTimelineAppUpdated(appInfo))
             }
             .launchIn(this)
-
     }
 
     private fun doObserveUser() {
@@ -149,6 +167,13 @@ class SettingsProcessor @Inject constructor(
                 }
             }
             .launchIn(this)
+    }
+
+    private fun doGetInstalledTwitterApps() {
+        launch {
+            val apps = getInstalledTwitterApps()
+            put(SettingsAction.TimelineAppsUpdated(apps))
+        }
     }
 }
 
@@ -176,7 +201,7 @@ class SettingsViewModel @Inject constructor(
         return when (intent) {
             SettingsIntent.Initialize -> SettingsAction.Initialize
             is SettingsIntent.NotificationStateUpdated ->
-                SettingsAction.NotificationStateUpdated(intent.enabled)
+                SettingsAction.UpdateNotification(intent.enabled)
             SettingsIntent.PrivacyPolicySelected -> SettingsAction.NavigateToExternalApp(config.privacyPolicyUrl)
             SettingsIntent.ChangelogSelected -> SettingsAction.NavigateToChangelog
             SettingsIntent.LicenseSelected -> SettingsAction.NavigateToLicense
@@ -192,6 +217,7 @@ class SettingsViewModel @Inject constructor(
                     SettingsAction.NavigateToExternalApp("https://twitter.com/${state.user.screenName}")
                 }
             }
+            is SettingsIntent.TimelineAppSelected -> SettingsAction.UpdateSelectedTimelineApp(intent.packageName)
         }
     }
 
@@ -201,6 +227,9 @@ class SettingsViewModel @Inject constructor(
                 previousState.copy(state = ULIEState.LOADING)
             }
             is SettingsAction.SettingsUpdated -> {
+                if (previousState.settings?.notificationEnabled != action.settings.notificationEnabled) {
+                    sendEffect(SettingsEffect.UpdateNotification(action.settings.notificationEnabled))
+                }
                 previousState.copy(settings = action.settings)
             }
             is SettingsAction.UserUpdated -> {
@@ -209,7 +238,7 @@ class SettingsViewModel @Inject constructor(
                     user = action.user,
                 )
             }
-            is SettingsAction.NotificationStateUpdated -> previousState
+            is SettingsAction.UpdateNotification -> previousState
             is SettingsAction.NavigateToExternalApp -> {
                 sendEffect(SettingsEffect.OpenBrowser(action.url))
                 previousState
@@ -233,10 +262,16 @@ class SettingsViewModel @Inject constructor(
                 sendEffect(SettingsEffect.ToSplash)
                 previousState
             }
-            is SettingsAction.TimelineAppInfoUpdated -> {
+            is SettingsAction.SelectedTimelineAppUpdated -> {
                 previousState.copy(
-                    timelineAppInfo = action.appInfo
+                    selectedTimelineApp = action.appInfo
                 )
+            }
+            is SettingsAction.TimelineAppsUpdated -> {
+                previousState.copy(timelineApps = action.apps)
+            }
+            is SettingsAction.UpdateSelectedTimelineApp -> {
+                previousState
             }
         }
     }

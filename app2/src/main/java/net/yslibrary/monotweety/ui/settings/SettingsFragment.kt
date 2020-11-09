@@ -1,13 +1,15 @@
 package net.yslibrary.monotweety.ui.settings
 
-import android.content.pm.PackageManager
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Section
@@ -44,9 +46,6 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
 
     @Inject
     lateinit var factory: ViewModelFactory<SettingsViewModel>
-
-    @Inject
-    lateinit var packageManager: PackageManager
 
     private val viewModel: SettingsViewModel by viewModels { factory }
 
@@ -174,6 +173,9 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
             }
             SettingsEffect.ShareApp -> TODO()
             SettingsEffect.ToSplash -> TODO()
+            is SettingsEffect.UpdateNotification -> {
+                /* TODO */
+            }
         }
     }
 
@@ -219,19 +221,40 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
 
     private fun createTimelineAppItem(state: SettingsState): TwoLineTextItem {
         val description =
-            if (state.settings?.timelineAppEnabled == true && state.timelineAppInfo != null) {
+            if (state.settings?.timelineAppEnabled == true && state.selectedTimelineApp != null) {
                 getString(R.string.timelineapp_description_on,
-                    state.timelineAppInfo.name)
+                    state.selectedTimelineApp.name)
             } else {
                 getString(R.string.timelineapp_description_off)
             }
+
         return TwoLineTextItem(
             item = TwoLineTextItem.Item(
                 title = getString(R.string.timelineapp),
                 subTitle = description,
                 enabled = true
             ),
-            onClick = { /* TODO */ }
+            onClick = {
+                val s = viewModel.state
+                val timelineApps = viewModel.state.timelineApps
+                val selectedIndex = timelineApps.indexOf(s.selectedTimelineApp)
+
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(R.string.timelineapp_dialog_title)
+                    .setSingleChoiceItems(
+                        (listOf(getString(R.string.timelineapp_dialog_disable_value)) + timelineApps.map { it.name })
+                            .toTypedArray(),
+                        if (selectedIndex < 0) 0 else selectedIndex + 1,
+                        null
+                    )
+                    .setPositiveButton(R.string.confirm) { dialog, _ ->
+                        val selected = (dialog as AlertDialog).listView.checkedItemPosition
+                        val app = timelineApps.getOrNull(selected - 1)
+                        viewModel.dispatch(SettingsIntent.TimelineAppSelected(app?.packageName?.packageName
+                            ?: ""))
+                    }
+                    .show()
+            }
         )
     }
 }

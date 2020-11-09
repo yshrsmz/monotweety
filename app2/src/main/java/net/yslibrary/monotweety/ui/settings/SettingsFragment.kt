@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -166,7 +167,9 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
 
     private fun handleEffect(effect: SettingsEffect) {
         when (effect) {
-            SettingsEffect.ToLicense -> TODO()
+            SettingsEffect.ToLicense -> {
+                startActivity(Intent(context, OssLicensesMenuActivity::class.java))
+            }
             SettingsEffect.ToChangelog -> TODO()
             is SettingsEffect.OpenBrowser -> {
                 context?.openExternalAppWithUrl(effect.url)

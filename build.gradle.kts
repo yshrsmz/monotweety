@@ -10,6 +10,7 @@ plugins {
     id(Plugins.Ids.crashlytics) version Versions.crashlytics apply false
     id(Plugins.Ids.googleservices) version Versions.googleservices apply false
     id(Plugins.Ids.navSafeArgs) version Versions.navigation apply false
+    id(Plugins.Ids.licenses) version "0.10.2" apply false
 }
 
 tasks.register("clean", Delete::class.java) {

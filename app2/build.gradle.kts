@@ -14,6 +14,7 @@ plugins {
     id(Plugins.Ids.crashlytics)
     id(Plugins.Ids.googleservices)
     id(Plugins.Ids.navSafeArgs)
+    id(Plugins.Ids.licenses)
     id("scabbard.gradle") version "0.4.0"
 }
 
@@ -96,6 +97,8 @@ dependencies {
     implementation(Deps.Androidx.Navigation.ui)
 
     implementation(Deps.material)
+
+    implementation(Deps.licenses)
 
     implementation(platform(Deps.Firebase.bom))
     implementation(Deps.Firebase.analytics)

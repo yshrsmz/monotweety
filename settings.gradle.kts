@@ -15,6 +15,8 @@ pluginManagement {
                     useModule("androidx.navigation:navigation-safe-args-gradle-plugin:${requested.version}")
                 "dagger.hilt.android.plugin" ->
                     useModule("com.google.dagger:hilt-android-gradle-plugin:${requested.version}")
+                "com.google.android.gms.oss-licenses-plugin" ->
+                    useModule("com.google.android.gms:oss-licenses-plugin:${requested.version}")
             }
         }
     }

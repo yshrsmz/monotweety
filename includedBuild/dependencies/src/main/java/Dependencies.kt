@@ -7,9 +7,9 @@ object Versions {
 
     const val agp = "4.1.0"
     const val kotlin = "1.4.10"
-    const val coroutines = "1.4.0-M1"
+    const val coroutines = "1.4.1"
     const val dokka = "0.10.1"
-    const val versions = "0.33.0"
+    const val versions = "0.34.0"
     const val crashlytics = "2.3.0"
     const val googleservices = "4.3.4"
 
@@ -42,6 +42,7 @@ object Plugins {
         const val googleservices = "com.google.gms.google-services"
         const val navSafeArgs = "androidx.navigation.safeargs.kotlin"
         const val daggerHilt = "dagger.hilt.android.plugin"
+        const val licenses = "com.google.android.gms.oss-licenses-plugin"
     }
 
     const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
@@ -54,7 +55,7 @@ object Deps {
         const val android = "com.android.tools.build:gradle:4.0.2"
         const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
         const val dokka = "org.jetbrains.dokka:dokka-gradle-plugin:${Versions.dokka}"
-        const val versions = "com.github.ben-manes:gradle-versions-plugin:"
+        const val versions = "com.github.ben-manes:gradle-versions-plugin:0.34.0"
         const val kotlinxcodesync = "co.touchlab:kotlinxcodesync:0.2"
         const val googleservices = "com.google.gms:google-services:4.3.4"
         const val navSafeArgs =
@@ -93,7 +94,7 @@ object Deps {
 
     object Androidx {
         const val appcompat = "androidx.appcompat:appcompat:1.2.0"
-        const val constraintlayout = "androidx.constraintlayout:constraintlayout:2.0.2"
+        const val constraintlayout = "androidx.constraintlayout:constraintlayout:2.0.4"
         const val sqlite = "androidx.sqlite:sqlite:2.0.1"
         const val browser = "androidx.browser:browser:1.3.0-alpha06"
         const val viewpager = "androidx.viewpager2:viewpager2:1.1.0-alpha01"
@@ -142,9 +143,10 @@ object Deps {
 
     const val desugarJdk = "com.android.tools:desugar_jdk_libs:1.0.10"
     const val material = "com.google.android.material:material:1.2.1"
+    const val licenses = "com.google.android.gms:play-services-oss-licenses:17.0.0"
 
     object Firebase {
-        const val bom = "com.google.firebase:firebase-bom:25.12.0"
+        const val bom = "com.google.firebase:firebase-bom:26.0.0"
         const val messaging = "com.google.firebase:firebase-messaging"
         const val crashlytics = "com.google.firebase:firebase-crashlytics"
         const val analytics = "com.google.firebase:firebase-analytics"
@@ -213,7 +215,7 @@ object Deps {
     const val adapterDelegates = "com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.3.0"
     const val groupie = "com.xwray:groupie:${Versions.groupie}"
 
-    const val threetenabp = "com.jakewharton.threetenabp:threetenabp:1.2.4"
+    const val threetenabp = "com.jakewharton.threetenabp:threetenabp:1.3.0"
 
     const val timber = "com.jakewharton.timber:timber:4.7.1"
 
@@ -229,5 +231,5 @@ object Deps {
     const val junit = "junit:junit:4.13.1"
     const val robolectric = "org.robolectric:robolectric:4.4"
     const val mockk = "io.mockk:mockk:1.10.2"
-    const val truth = "com.google.truth:truth:1.0.1"
+    const val truth = "com.google.truth:truth:1.1"
 }

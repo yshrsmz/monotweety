@@ -5,7 +5,7 @@ object Versions {
 
     const val gradle = "6.7"
 
-    const val agp = "4.1.0"
+    const val agp = "4.1.1"
     const val kotlin = "1.4.10"
     const val coroutines = "1.4.1"
     const val dokka = "0.10.1"
@@ -15,7 +15,7 @@ object Versions {
 
     const val androidXLifecycle = "2.3.0-beta01"
     const val androidXFragment = "1.3.0-beta01"
-    const val androidXDataStore = "1.0.0-alpha02"
+    const val androidXDataStore = "1.0.0-alpha03"
     const val androidXTest = "1.3.0"
     const val navigation = "2.3.1"
     const val okhttp3 = "4.9.0"
@@ -52,7 +52,7 @@ object Plugins {
 object Deps {
 
     object Plugins {
-        const val android = "com.android.tools.build:gradle:4.0.2"
+        const val android = "com.android.tools.build:gradle:${Versions.agp}"
         const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
         const val dokka = "org.jetbrains.dokka:dokka-gradle-plugin:${Versions.dokka}"
         const val versions = "com.github.ben-manes:gradle-versions-plugin:0.34.0"
@@ -120,7 +120,7 @@ object Deps {
         }
 
         object DataStore {
-            const val core = "androidx.datastore:datastore-core:${Versions.androidXDataStore}"
+            const val core = "androidx.datastore:datastore:${Versions.androidXDataStore}"
         }
 
         const val viewmodel =
@@ -146,7 +146,7 @@ object Deps {
     const val licenses = "com.google.android.gms:play-services-oss-licenses:17.0.0"
 
     object Firebase {
-        const val bom = "com.google.firebase:firebase-bom:26.0.0"
+        const val bom = "com.google.firebase:firebase-bom:26.1.0"
         const val messaging = "com.google.firebase:firebase-messaging"
         const val crashlytics = "com.google.firebase:firebase-crashlytics"
         const val analytics = "com.google.firebase:firebase-analytics"

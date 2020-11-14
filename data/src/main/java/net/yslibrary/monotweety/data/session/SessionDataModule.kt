@@ -1,7 +1,7 @@
 package net.yslibrary.monotweety.data.session
 
 import android.content.Context
-import androidx.datastore.DataStore
+import androidx.datastore.core.DataStore
 import androidx.datastore.createDataStore
 import dagger.Binds
 import dagger.Module

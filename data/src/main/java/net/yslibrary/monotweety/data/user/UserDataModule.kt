@@ -1,7 +1,7 @@
 package net.yslibrary.monotweety.data.user
 
 import android.content.Context
-import androidx.datastore.DataStore
+import androidx.datastore.core.DataStore
 import androidx.datastore.createDataStore
 import com.codingfeline.twitter4kt.core.session.ApiClient
 import com.codingfeline.twitter4kt.v1.api.account.AccountApi

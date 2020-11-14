@@ -1,8 +1,8 @@
 package net.yslibrary.monotweety.data.settings
 
-import androidx.datastore.CorruptionException
-import androidx.datastore.DataStore
-import androidx.datastore.Serializer
+import androidx.datastore.core.CorruptionException
+import androidx.datastore.core.DataStore
+import androidx.datastore.core.Serializer
 import com.google.protobuf.InvalidProtocolBufferException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -127,4 +127,7 @@ internal object SettingPreferencesSerializer : Serializer<SettingsPreferences> {
     override fun writeTo(t: SettingsPreferences, output: OutputStream) {
         t.writeTo(output)
     }
+
+    override val defaultValue: SettingsPreferences
+        get() = SettingsPreferences.getDefaultInstance()
 }

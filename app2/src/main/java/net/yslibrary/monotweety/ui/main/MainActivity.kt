@@ -1,5 +1,7 @@
 package net.yslibrary.monotweety.ui.main
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import kotlinx.coroutines.flow.first
@@ -39,5 +41,13 @@ class MainActivity : ViewBindingAppCompatActivity<ActivityMainBinding>(
         }
 
         component.inject(this)
+    }
+
+    companion object {
+        fun callingIntent(context: Context): Intent {
+            return Intent(context, MainActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+        }
     }
 }

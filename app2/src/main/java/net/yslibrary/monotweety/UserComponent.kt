@@ -7,6 +7,7 @@ import dagger.Subcomponent
 import net.yslibrary.monotweety.data.UserScopeDataModule
 import net.yslibrary.monotweety.di.UserScope
 import net.yslibrary.monotweety.domain.UserScopeDomainModule
+import net.yslibrary.monotweety.notification.NotificationServiceComponent
 import net.yslibrary.monotweety.ui.UserUiSubcomponentModule
 
 @UserScope
@@ -14,10 +15,10 @@ import net.yslibrary.monotweety.ui.UserUiSubcomponentModule
     modules = [
         UserScopeDataModule::class,
         UserScopeDomainModule::class,
-        UserUiSubcomponentModule::class,
+        UserSubcomponentModule::class,
     ]
 )
-interface UserComponent : UserUiSubcomponentModule.ComponentProviders {
+interface UserComponent : UserSubcomponentModule.ComponentProviders {
 
     @Subcomponent.Factory
     interface Factory {
@@ -27,6 +28,20 @@ interface UserComponent : UserUiSubcomponentModule.ComponentProviders {
     interface ComponentProvider {
         fun userComponent(): Factory
     }
+}
+
+@Module(
+    includes = [
+        UserUiSubcomponentModule::class,
+    ],
+    subcomponents = [
+        NotificationServiceComponent::class,
+    ]
+)
+interface UserSubcomponentModule {
+    interface ComponentProviders : UserUiSubcomponentModule.ComponentProviders,
+        NotificationServiceComponent.ComponentProvider
+
 }
 
 @Module(

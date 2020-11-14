@@ -49,4 +49,15 @@
     <string name="star_github">Star on GitHub</string>
 
     <string name="loading">Loading…</string>
+    <string name="whats_happening">What\'s happening?</string>
+    <string name="tweet">tweet</string>
+    <string name="close">close</string>
+    <string name="notification_footer_on"><b>Footer</b> - ON: %s</string>
+    <string name="notification_footer_off"><b>Footer</b> - OFF</string>
+    <string name="notification_content">Tap to open tweet dialog:)</string>
+    <string name="timeline">timeline</string>
+
+    <!-- Notification -->
+    <string name="notification_channel_editor_name">Editor</string>
+    <string name="notification_channel_editor_description">Notification to create new tweet</string>
 </resources>

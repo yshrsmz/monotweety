@@ -1,6 +1,6 @@
 object Versions {
     const val compileSdk = 29
-    const val minSdk = 21
+    const val minSdk = 24
     const val targetSdk = 30
 
     const val gradle = "6.7"
@@ -89,7 +89,7 @@ object Deps {
     }
 
     object Ktor {
-        const val logging = "io.ktor:ktor-client-logging:1.4.1"
+        const val logging = "io.ktor:ktor-client-logging:1.4.2"
     }
 
     object Androidx {
@@ -109,6 +109,7 @@ object Deps {
         object Lifecycle {
             const val runtime = "androidx.lifecycle:lifecycle-runtime:${Versions.androidXLifecycle}"
             const val process = "androidx.lifecycle:lifecycle-process:${Versions.androidXLifecycle}"
+            const val service = "androidx.lifecycle:lifecycle-service:${Versions.androidXLifecycle}"
             const val commonJava8 =
                 "androidx.lifecycle:lifecycle-common-java8:${Versions.androidXLifecycle}"
         }

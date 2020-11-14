@@ -5,7 +5,7 @@ import net.yslibrary.monotweety.ui.main.MainActivityComponent
 
 @Module(
     subcomponents = [
-        MainActivityComponent::class
+        MainActivityComponent::class,
     ]
 )
 interface UserUiSubcomponentModule {

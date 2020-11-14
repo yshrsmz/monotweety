@@ -89,6 +89,7 @@ dependencies {
     implementation(Deps.Androidx.ktx)
     implementation(Deps.Androidx.fragmentKtx)
     implementation(Deps.Androidx.Lifecycle.runtime)
+    implementation(Deps.Androidx.Lifecycle.service)
     implementation(Deps.Androidx.Lifecycle.commonJava8)
     implementation(Deps.Androidx.Navigation.fragment)
     implementation(Deps.Androidx.Navigation.ui)

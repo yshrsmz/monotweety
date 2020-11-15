@@ -9,21 +9,27 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Binder
 import android.os.IBinder
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.RemoteInput
 import androidx.core.app.TaskStackBuilder
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import net.yslibrary.monotweety.App
 import net.yslibrary.monotweety.R
+import net.yslibrary.monotweety.base.CoroutineDispatchers
 import net.yslibrary.monotweety.domain.session.ObserveSession
 import net.yslibrary.monotweety.ui.arch.ULIEState
 import net.yslibrary.monotweety.ui.base.consumeEffects
 import net.yslibrary.monotweety.ui.base.consumeStates
+import net.yslibrary.monotweety.ui.compose.ComposeActivity
 import net.yslibrary.monotweety.ui.di.HasComponent
 import net.yslibrary.monotweety.ui.main.MainActivity
 import javax.inject.Inject
@@ -42,7 +48,13 @@ class NotificationService : LifecycleService(), HasComponent<NotificationService
     @Inject
     lateinit var viewModel: NotificationViewModel
 
-    lateinit var notificationManager by lazy { NotificationManagerCompat.from(applicationContext) }
+    @Inject
+    lateinit var dispatchers: CoroutineDispatchers
+
+    private val job = SupervisorJob()
+    private val coroutineScope by lazy { CoroutineScope(dispatchers.background + job) }
+
+    private val notificationManager by lazy { NotificationManagerCompat.from(applicationContext) }
 
     private val binder: ServiceBinder by lazy { ServiceBinder() }
     private val commandReceiver: CommandReceiver by lazy { CommandReceiver() }
@@ -94,10 +106,23 @@ class NotificationService : LifecycleService(), HasComponent<NotificationService
 
     private fun handleEffect(effect: NotificationEffect) {
         when (effect) {
-            NotificationEffect.UpdateCompleted -> TODO()
-            is NotificationEffect.Error -> TODO()
-            is NotificationEffect.StatusTooLong -> TODO()
-            NotificationEffect.StopNotification -> TODO()
+            NotificationEffect.UpdateCompleted -> {
+                closeNotificationDrawer()
+                showToast(getString(R.string.tweet_succeeded))
+                updateNotification(viewModel.state)
+            }
+            is NotificationEffect.Error -> {
+                closeNotificationDrawer()
+                showToast(effect.message, Duration.LONG)
+                updateNotification(viewModel.state)
+            }
+            is NotificationEffect.StatusTooLong -> {
+                closeNotificationDrawer()
+                showToast(getString(R.string.status_too_long))
+                updateNotification(viewModel.state)
+                startActivity(ComposeActivity.callingIntent(applicationContext, effect.status))
+            }
+            NotificationEffect.StopNotification -> stopSelf()
         }
     }
 
@@ -126,18 +151,17 @@ class NotificationService : LifecycleService(), HasComponent<NotificationService
             commandIntent(Command.DIRECT_TWEET),
             PendingIntent.FLAG_UPDATE_CURRENT)
 
-//        val openDialogIntent = PendingIntent.getActivity(
-//            applicationContext,
-//            1,
-//
-//        )
+        val openDialogIntent = PendingIntent.getActivity(
+            applicationContext,
+            1,
+            ComposeActivity.callingIntent(applicationContext),
+            PendingIntent.FLAG_CANCEL_CURRENT)
 
         val closeIntent = PendingIntent.getBroadcast(
             applicationContext,
             2,
             commandIntent(Command.CLOSE_NOTIFICATION),
-            PendingIntent.FLAG_CANCEL_CURRENT
-        )
+            PendingIntent.FLAG_CANCEL_CURRENT)
 
         val openSettingsIntent = TaskStackBuilder.create(applicationContext)
             .addParentStack(MainActivity::class.java)
@@ -181,7 +205,7 @@ class NotificationService : LifecycleService(), HasComponent<NotificationService
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(getString(R.string.app_name))
             .setContentText(getString(R.string.notification_content))
-//            .setContentIntent()
+            .setContentIntent(openDialogIntent)
             .setStyle(inboxStyle)
             .setShowWhen(false)
             .setPriority(NotificationCompat.PRIORITY_MAX)
@@ -206,6 +230,16 @@ class NotificationService : LifecycleService(), HasComponent<NotificationService
         builder.addAction(closeAction)
 
         return builder.build()
+    }
+
+    private fun showToast(message: String, duration: Duration = Duration.SHORT) {
+        coroutineScope.launch(dispatchers.main) {
+            Toast.makeText(applicationContext, message, duration.length).show()
+        }
+    }
+
+    enum class Duration(val length: Int) {
+        SHORT(Toast.LENGTH_SHORT), LONG(Toast.LENGTH_LONG)
     }
 
     inner class ServiceBinder : Binder() {

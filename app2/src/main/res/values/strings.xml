@@ -57,6 +57,9 @@
     <string name="notification_content">Tap to open tweet dialog:)</string>
     <string name="timeline">timeline</string>
 
+    <string name="tweet_succeeded">Status successfully updated!</string>
+    <string name="status_too_long">Content is too long. \nPlease edit on the following dialog</string>
+
     <!-- Notification -->
     <string name="notification_channel_editor_name">Editor</string>
     <string name="notification_channel_editor_description">Notification to create new tweet</string>

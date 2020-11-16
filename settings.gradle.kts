@@ -32,6 +32,6 @@ pluginManagement {
 include(
     ":di-common",
     ":data",
-    ":app",
+//    ":app",
     ":app2"
 )

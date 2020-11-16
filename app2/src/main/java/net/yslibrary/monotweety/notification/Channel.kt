@@ -3,9 +3,9 @@ package net.yslibrary.monotweety.notification
 import android.annotation.TargetApi
 import android.app.Notification
 import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
+import androidx.core.app.NotificationManagerCompat
 import net.yslibrary.monotweety.R
 
 @TargetApi(Build.VERSION_CODES.O)
@@ -21,13 +21,13 @@ enum class Channel(
         id = "editor",
         nameResId = R.string.notification_channel_editor_name,
         descriptionResId = R.string.notification_channel_editor_description,
-        importance = NotificationManager.IMPORTANCE_LOW,
+        importance = NotificationManagerCompat.IMPORTANCE_LOW,
         lockScreenVisibility = Notification.VISIBILITY_PUBLIC,
         showBadge = false
     )
 }
 
-fun createNotificationChannel(context: Context, notificationManager: NotificationManager) {
+fun createNotificationChannel(context: Context, notificationManager: NotificationManagerCompat) {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
         return
     }

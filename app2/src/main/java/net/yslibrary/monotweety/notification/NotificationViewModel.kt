@@ -18,10 +18,17 @@ import javax.inject.Inject
 sealed class NotificationIntent : Intent {
     object Initialize : NotificationIntent()
 
+    object OpenTweetDialog : NotificationIntent()
+    data class Tweet(val status: String) : NotificationIntent()
 }
 
 sealed class NotificationAction : Action {
     object Initialize : NotificationAction()
+
+    data class Tweet(val status: String) : NotificationAction()
+    object TweetCompleted : NotificationAction()
+
+    object OpenTweetDialog : NotificationAction()
 
     data class FooterSettingsUpdated(
         val enabled: Boolean,
@@ -40,6 +47,8 @@ sealed class NotificationEffect : Effect {
     data class StatusTooLong(val status: String) : NotificationEffect()
 
     object StopNotification : NotificationEffect()
+
+    object OpenTweetDialog : NotificationEffect()
 }
 
 data class NotificationState(
@@ -74,6 +83,9 @@ class NotificationProcessor @Inject constructor(
             NotificationAction.Initialize -> {
                 doObserveSettings()
             }
+            is NotificationAction.Tweet -> {
+                
+            }
         }
     }
 
@@ -105,6 +117,8 @@ class NotificationViewModel @Inject constructor(
     override fun intentToAction(intent: NotificationIntent, state: NotificationState): Action {
         return when (intent) {
             NotificationIntent.Initialize -> NotificationAction.Initialize
+            NotificationIntent.OpenTweetDialog -> NotificationAction.OpenTweetDialog
+            is NotificationIntent.Tweet -> NotificationAction.Tweet(intent.status)
         }
     }
 
@@ -129,6 +143,15 @@ class NotificationViewModel @Inject constructor(
                     timelineAppEnabled = action.enabled,
                     timelineApp = action.appInfo,
                 )
+            }
+            is NotificationAction.Tweet -> previousState
+            NotificationAction.TweetCompleted -> {
+                sendEffect(NotificationEffect.UpdateCompleted)
+                previousState
+            }
+            NotificationAction.OpenTweetDialog -> {
+                sendEffect(NotificationEffect.OpenTweetDialog)
+                previousState
             }
         }
     }

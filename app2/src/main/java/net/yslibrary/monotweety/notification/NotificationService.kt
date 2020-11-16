@@ -18,13 +18,13 @@ import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import net.yslibrary.monotweety.App
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.CoroutineDispatchers
+import net.yslibrary.monotweety.data.session.toAccessToken
 import net.yslibrary.monotweety.domain.session.ObserveSession
 import net.yslibrary.monotweety.ui.arch.ULIEState
 import net.yslibrary.monotweety.ui.base.consumeEffects
@@ -123,6 +123,7 @@ class NotificationService : LifecycleService(), HasComponent<NotificationService
                 startActivity(ComposeActivity.callingIntent(applicationContext, effect.status))
             }
             NotificationEffect.StopNotification -> stopSelf()
+            NotificationEffect.OpenTweetDialog -> TODO()
         }
     }
 
@@ -133,8 +134,7 @@ class NotificationService : LifecycleService(), HasComponent<NotificationService
     }
 
     private fun showNotification(): Notification {
-        val state = runBlocking { viewModel.states.filter { it.state == ULIEState.IDLE }.first() }
-        return updateNotification(state)
+        return updateNotification(viewModel.state)
     }
 
     private fun updateNotification(state: NotificationState): Notification {
@@ -250,10 +250,17 @@ class NotificationService : LifecycleService(), HasComponent<NotificationService
     inner class CommandReceiver : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             when (Command.from(intent?.getStringExtra(KEY_COMMAND) ?: "")) {
-                Command.SHOW_NOTIFICATION -> TODO()
                 Command.CLOSE_NOTIFICATION -> TODO()
-                Command.DIRECT_TWEET -> TODO()
-                Command.SHOW_TWEET_DIALOG -> TODO()
+                Command.DIRECT_TWEET -> {
+                    val bundle = RemoteInput.getResultsFromIntent(intent) ?: return
+                    val status = bundle.getString(KEY_NOTIFICATION_TWEET_TEXT)
+                        .takeUnless { it.isNullOrBlank() } ?: return
+
+                    viewModel.dispatch(NotificationIntent.Tweet(status))
+                }
+                Command.SHOW_TWEET_DIALOG -> {
+                    viewModel.dispatch(NotificationIntent.OpenTweetDialog)
+                }
             }
         }
     }
@@ -277,7 +284,6 @@ class NotificationService : LifecycleService(), HasComponent<NotificationService
     }
 
     enum class Command(val value: String) {
-        SHOW_NOTIFICATION("net.yslibrary.monotweety.notification.NotificationService.ShowNotification"),
         CLOSE_NOTIFICATION("net.yslibrary.monotweety.notification.NotificationService.CloseNotification"),
         DIRECT_TWEET("net.yslibrary.monotweety.notification.NotificationService.DirectTweet"),
         SHOW_TWEET_DIALOG("net.yslibrary.monotweety.notification.NotificationService.ShowTweetDialog");

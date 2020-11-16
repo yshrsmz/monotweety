@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -17,6 +18,7 @@ import com.xwray.groupie.Section
 import net.yslibrary.monotweety.BuildConfig
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.databinding.FragmentSettingsBinding
+import net.yslibrary.monotweety.notification.NotificationService
 import net.yslibrary.monotweety.ui.base.ViewBindingFragment
 import net.yslibrary.monotweety.ui.base.consumeEffects
 import net.yslibrary.monotweety.ui.base.consumeStates
@@ -177,7 +179,13 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
             SettingsEffect.ShareApp -> TODO()
             SettingsEffect.ToSplash -> TODO()
             is SettingsEffect.UpdateNotification -> {
-                /* TODO */
+                val context = requireContext()
+                val intent = NotificationService.callingIntent(context)
+                if (effect.enabled) {
+                    ContextCompat.startForegroundService(context, intent)
+                } else {
+                    context.stopService(intent)
+                }
             }
         }
     }
@@ -201,7 +209,10 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
         val notiStateResId = if (notiEnabled) R.string.label_on else R.string.label_off
         binding.notificationSwitch.text =
             getString(R.string.label_notification_state, getString(notiStateResId))
-        binding.notificationSwitch.isChecked = notiEnabled
+        val notificationStateChanged = binding.notificationSwitch.isChecked != notiEnabled
+        if (notificationStateChanged) {
+            binding.notificationSwitch.isChecked = notiEnabled
+        }
     }
 
     private fun createFooterItem(state: SettingsState): TwoLineTextItem {

@@ -24,7 +24,6 @@ import kotlinx.coroutines.runBlocking
 import net.yslibrary.monotweety.App
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.CoroutineDispatchers
-import net.yslibrary.monotweety.data.session.toAccessToken
 import net.yslibrary.monotweety.domain.session.ObserveSession
 import net.yslibrary.monotweety.ui.arch.ULIEState
 import net.yslibrary.monotweety.ui.base.consumeEffects
@@ -32,6 +31,7 @@ import net.yslibrary.monotweety.ui.base.consumeStates
 import net.yslibrary.monotweety.ui.compose.ComposeActivity
 import net.yslibrary.monotweety.ui.di.HasComponent
 import net.yslibrary.monotweety.ui.main.MainActivity
+import java.util.Locale
 import javax.inject.Inject
 
 class NotificationService : LifecycleService(), HasComponent<NotificationServiceComponent> {
@@ -174,20 +174,20 @@ class NotificationService : LifecycleService(), HasComponent<NotificationService
 
         val directTweetAction = NotificationCompat.Action.Builder(
             R.drawable.ic_send_black_24dp,
-            getString(R.string.tweet),
+            getString(R.string.tweet).toUpperCase(Locale.ENGLISH),
             directTweetIntent)
             .addRemoteInput(remoteInput)
             .build()
 
         val closeAction = NotificationCompat.Action.Builder(
             R.drawable.ic_close_black_24dp,
-            getString(R.string.close),
+            getString(R.string.close).toUpperCase(Locale.ENGLISH),
             closeIntent)
             .build()
 
         val settingAction = NotificationCompat.Action.Builder(
             R.drawable.ic_settings_black_24dp,
-            getString(R.string.settings),
+            getString(R.string.settings).toUpperCase(Locale.ENGLISH),
             openSettingsIntent)
             .build()
 
@@ -221,7 +221,7 @@ class NotificationService : LifecycleService(), HasComponent<NotificationService
             )
             val appAction = NotificationCompat.Action.Builder(
                 R.drawable.ic_view_headline_black_24dp,
-                getString(R.string.timeline),
+                getString(R.string.timeline).toUpperCase(Locale.ENGLISH),
                 appIntent)
                 .build()
             builder.addAction(appAction)
@@ -250,7 +250,7 @@ class NotificationService : LifecycleService(), HasComponent<NotificationService
     inner class CommandReceiver : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             when (Command.from(intent?.getStringExtra(KEY_COMMAND) ?: "")) {
-                Command.CLOSE_NOTIFICATION -> TODO()
+                Command.CLOSE_NOTIFICATION -> closeNotificationDrawer()
                 Command.DIRECT_TWEET -> {
                     val bundle = RemoteInput.getResultsFromIntent(intent) ?: return
                     val status = bundle.getString(KEY_NOTIFICATION_TWEET_TEXT)

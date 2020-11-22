@@ -16,6 +16,7 @@ import androidx.core.app.RemoteInput
 import androidx.core.app.TaskStackBuilder
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
+import com.codingfeline.twitter4kt.core.model.oauth1a.AccessToken
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.first
@@ -24,6 +25,7 @@ import kotlinx.coroutines.runBlocking
 import net.yslibrary.monotweety.App
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.base.CoroutineDispatchers
+import net.yslibrary.monotweety.data.session.toAccessToken
 import net.yslibrary.monotweety.domain.session.ObserveSession
 import net.yslibrary.monotweety.ui.arch.ULIEState
 import net.yslibrary.monotweety.ui.base.consumeEffects
@@ -40,8 +42,11 @@ class NotificationService : LifecycleService(), HasComponent<NotificationService
         App.appComponent(this).observeSession()
     }
 
-    override val component: NotificationServiceComponent by lazy {
-        App.userComponent(applicationContext).notificationServiceComponent()
+    override val component by lazy {
+        val token =
+            requireNotNull(accessToken) { "AccessToken is required to create a UserComponent" }
+        App.getOrCreateUserComponent(applicationContext, token)
+            .notificationServiceComponent()
             .build()
     }
 
@@ -59,6 +64,8 @@ class NotificationService : LifecycleService(), HasComponent<NotificationService
     private val binder: ServiceBinder by lazy { ServiceBinder() }
     private val commandReceiver: CommandReceiver by lazy { CommandReceiver() }
 
+    private var accessToken: AccessToken? = null
+
     override fun onCreate() {
         super.onCreate()
 
@@ -67,7 +74,7 @@ class NotificationService : LifecycleService(), HasComponent<NotificationService
             stopSelf()
             return
         }
-
+        accessToken = session.toAccessToken()
         component.inject(this)
 
         viewModel.consumeEffects(lifecycleScope, this::handleEffect)
@@ -123,7 +130,8 @@ class NotificationService : LifecycleService(), HasComponent<NotificationService
                 startActivity(ComposeActivity.callingIntent(applicationContext, effect.status))
             }
             NotificationEffect.StopNotification -> stopSelf()
-            NotificationEffect.OpenTweetDialog -> TODO()
+            NotificationEffect.OpenTweetDialog ->
+                startActivity(ComposeActivity.callingIntent(applicationContext))
         }
     }
 

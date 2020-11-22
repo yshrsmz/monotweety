@@ -21,6 +21,7 @@ internal class BuildAndValidateStatusStringImpl @Inject constructor(
 ) : BuildAndValidateStatusString {
     override suspend fun invoke(status: String): BuildAndValidateStatusString.Result {
         val settings = settingsRepository.settingsFlow.first()
+
         val finalStatus = when {
             settings.footerEnabled -> "$status ${settings.footerText}"
             else -> status

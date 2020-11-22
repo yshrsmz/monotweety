@@ -9,5 +9,7 @@
     <color name="lightGray">#F5F5F5</color>
     <color name="orange">#FF9800</color>
 
+    <color name="transparentGray">#1e000000</color>
+    <color name="overlayGray">#88000000</color>
 
 </resources>

@@ -28,6 +28,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.main.MainActivity" />
+        <activity
+            android:name=".ui.compose.ComposeActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:launchMode="singleInstance"
+            />
 
         <service
             android:name=".notification.NotificationService"

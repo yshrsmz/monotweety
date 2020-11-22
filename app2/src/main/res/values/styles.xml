@@ -11,6 +11,12 @@
         <item name="android:windowBackground">@drawable/bg_splash</item>
     </style>
 
+    <style name="AppTheme.Transparent" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/transparentGray</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
     <style name="AppTheme.Settings" parent="AppTheme" />
 
     <style name="AppTheme.Settings.ListItem" parent="AppTheme.Settings">

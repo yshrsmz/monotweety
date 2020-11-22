@@ -113,6 +113,7 @@ private fun Project.configureAndroidApp() {
         @Suppress("UnstableApiUsage")
         buildFeatures {
             viewBinding = true
+            buildConfig = true
         }
     }
 

@@ -3,23 +3,23 @@ object Versions {
     const val minSdk = 24
     const val targetSdk = 30
 
-    const val gradle = "6.7"
+    const val gradle = "6.7.1"
 
     const val agp = "4.1.1"
     const val kotlin = "1.4.10"
     const val coroutines = "1.4.1"
     const val dokka = "0.10.1"
-    const val versions = "0.34.0"
+    const val versions = "0.36.0"
     const val crashlytics = "2.3.0"
     const val googleservices = "4.3.4"
 
     const val androidXLifecycle = "2.3.0-beta01"
     const val androidXFragment = "1.3.0-beta01"
-    const val androidXDataStore = "1.0.0-alpha03"
+    const val androidXDataStore = "1.0.0-alpha04"
     const val androidXTest = "1.3.0"
     const val navigation = "2.3.1"
     const val okhttp3 = "4.9.0"
-    const val dagger = "2.29.1"
+    const val dagger = "2.30"
     const val daggerHilt = "2.29.1-alpha"
     const val glide = "4.11.0"
     const val groupie = "2.8.1"
@@ -55,12 +55,12 @@ object Deps {
         const val android = "com.android.tools.build:gradle:${Versions.agp}"
         const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
         const val dokka = "org.jetbrains.dokka:dokka-gradle-plugin:${Versions.dokka}"
-        const val versions = "com.github.ben-manes:gradle-versions-plugin:0.34.0"
+        const val versions = "com.github.ben-manes:gradle-versions-plugin:${Versions.versions}"
         const val kotlinxcodesync = "co.touchlab:kotlinxcodesync:0.2"
         const val googleservices = "com.google.gms:google-services:4.3.4"
         const val navSafeArgs =
             "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
-        const val crashlytics = "com.google.firebase:firebase-crashlytics-gradle:2.3.0"
+        const val crashlytics = "com.google.firebase:firebase-crashlytics-gradle:2.4.1"
         const val dexcount = "com.getkeepsafe.dexcount:dexcount-gradle-plugin:2.0.0-RC1"
         const val jacoco = "org.jacoco:org.jacoco.core:0.8.6"
     }
@@ -96,7 +96,7 @@ object Deps {
         const val appcompat = "androidx.appcompat:appcompat:1.2.0"
         const val constraintlayout = "androidx.constraintlayout:constraintlayout:2.0.4"
         const val sqlite = "androidx.sqlite:sqlite:2.0.1"
-        const val browser = "androidx.browser:browser:1.3.0-alpha06"
+        const val browser = "androidx.browser:browser:1.3.0-rc01"
         const val viewpager = "androidx.viewpager2:viewpager2:1.1.0-alpha01"
         const val recyclerview = "androidx.recyclerview:recyclerview:1.2.0-alpha06"
         const val swiperefreshlayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"

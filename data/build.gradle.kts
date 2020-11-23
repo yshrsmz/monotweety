@@ -6,7 +6,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("kapt")
-    id("com.google.protobuf") version "0.8.13"
+    id("com.google.protobuf") version "0.8.14"
 }
 
 android {

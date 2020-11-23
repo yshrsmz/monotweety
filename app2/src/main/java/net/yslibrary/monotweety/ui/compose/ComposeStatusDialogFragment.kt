@@ -1,18 +1,31 @@
 package net.yslibrary.monotweety.ui.compose
 
 import android.app.Dialog
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import net.yslibrary.monotweety.R
 import net.yslibrary.monotweety.databinding.FragmentComposeStatusBinding
+import net.yslibrary.monotweety.ui.arch.ULIEState
+import net.yslibrary.monotweety.ui.base.consumeEffects
+import net.yslibrary.monotweety.ui.base.consumeStates
 import net.yslibrary.monotweety.ui.di.HasComponent
 import net.yslibrary.monotweety.ui.di.ViewModelFactory
 import net.yslibrary.monotweety.ui.di.getComponentProvider
+import reactivecircus.flowbinding.android.widget.afterTextChanges
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -41,15 +54,18 @@ class ComposeStatusDialogFragment : DialogFragment(),
         }
     }
 
+    private var counterOriginalColor: Int = Color.GRAY
+
+    private val alertDialog: AlertDialog
+        get() = dialog as AlertDialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         isCancelable = false
 
         component.inject(this)
 
-        viewLifecycleOwnerLiveData.observe(this) { owner ->
-
-        }
+        viewModel.dispatch(ComposeStatusIntent.Initialize(arguments?.getString(KEY_STATUS) ?: ""))
 
         requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
     }
@@ -67,16 +83,60 @@ class ComposeStatusDialogFragment : DialogFragment(),
 
     private fun setupDialog(dialog: AlertDialog) {
         dialog.setOnShowListener {
-            val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-            val negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+            counterOriginalColor = binding.counter.currentTextColor
+            setupEvents(dialog)
+            viewModel.consumeEffects(lifecycleScope, this::handleEffect)
+            viewModel.consumeStates(lifecycleScope, this::render)
+        }
+    }
 
-            positiveButton.setOnClickListener {
+    @OptIn(FlowPreview::class)
+    private fun setupEvents(dialog: AlertDialog) {
+        val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+        val negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
 
-            }
-            negativeButton.setOnClickListener {
+        positiveButton.setOnClickListener {
+            viewModel.dispatch(ComposeStatusIntent.Tweet)
+        }
+        negativeButton.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
 
+        binding.status.afterTextChanges()
+            .skipInitialValue()
+            .debounce(200)
+            .map { it.editable?.toString() ?: "" }
+            .distinctUntilChanged()
+            .map { ComposeStatusIntent.StatusUpdated(it) }
+            .onEach { viewModel.dispatch(it) }
+            .launchIn(lifecycleScope)
+    }
+
+    private fun handleEffect(effect: ComposeStatusEffect) {
+        when (effect) {
+            is ComposeStatusEffect.UpdateStatus -> {
+                binding.status.setText(effect.status)
             }
         }
+    }
+
+    private fun render(state: ComposeStatusState) {
+        if (state.state == ULIEState.UNINITIALIZED || state.state == ULIEState.LOADING) return
+        val context = alertDialog.context
+        val counterColor = if (state.isStatusValid) {
+            counterOriginalColor
+        } else {
+            ContextCompat.getColor(context, R.color.red)
+        }
+        binding.counter.setTextColor(counterColor)
+        binding.counter.text =
+            getString(R.string.status_counter, state.statusLength, state.statusMaxLength)
+
+        binding.statusContainer.error = if (!state.isStatusValid && state.statusLength > 0) {
+            getString(R.string.status_too_long_error)
+        } else null
+
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = state.isStatusValid
     }
 
     companion object {

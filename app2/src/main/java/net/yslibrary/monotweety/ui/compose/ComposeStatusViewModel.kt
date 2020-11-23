@@ -5,6 +5,7 @@ import net.yslibrary.monotweety.base.CoroutineDispatchers
 import net.yslibrary.monotweety.domain.status.BuildAndValidateStatusString
 import net.yslibrary.monotweety.ui.arch.Action
 import net.yslibrary.monotweety.ui.arch.Effect
+import net.yslibrary.monotweety.ui.arch.GlobalAction
 import net.yslibrary.monotweety.ui.arch.Intent
 import net.yslibrary.monotweety.ui.arch.MviViewModel
 import net.yslibrary.monotweety.ui.arch.Processor
@@ -15,6 +16,8 @@ import javax.inject.Inject
 sealed class ComposeStatusIntent : Intent {
     data class Initialize(val status: String) : ComposeStatusIntent()
     data class StatusUpdated(val status: String) : ComposeStatusIntent()
+
+    object Tweet : ComposeStatusIntent()
 }
 
 sealed class ComposeStatusAction : Action {
@@ -28,13 +31,18 @@ sealed class ComposeStatusAction : Action {
         val length: Int,
         val maxLength: Int,
     ) : ComposeStatusAction()
+
+    data class Tweet(val status: String) : ComposeStatusAction()
 }
 
-sealed class ComposeStatusEffect : Effect {}
+sealed class ComposeStatusEffect : Effect {
+    // notify view to update text input
+    data class UpdateStatus(val status: String) : ComposeStatusEffect()
+}
 
 data class ComposeStatusState(
     val state: ULIEState,
-    val status: String,
+    val status: String?,
     val isStatusValid: Boolean,
     val statusLength: Int,
     val statusMaxLength: Int,
@@ -44,7 +52,7 @@ data class ComposeStatusState(
         fun initialState(): ComposeStatusState {
             return ComposeStatusState(
                 state = ULIEState.UNINITIALIZED,
-                status = "",
+                status = null,
                 isStatusValid = false,
                 statusLength = 0,
                 statusMaxLength = 0
@@ -95,6 +103,9 @@ class ComposeStatusViewModel @Inject constructor(
         return when (intent) {
             is ComposeStatusIntent.Initialize -> ComposeStatusAction.Initialize(intent.status)
             is ComposeStatusIntent.StatusUpdated -> ComposeStatusAction.ValidateStatus(intent.status)
+            ComposeStatusIntent.Tweet -> {
+                if (state.status != null) ComposeStatusAction.Tweet(state.status) else GlobalAction.NoOp
+            }
         }
     }
 
@@ -108,6 +119,9 @@ class ComposeStatusViewModel @Inject constructor(
             }
             is ComposeStatusAction.ValidateStatus -> previousState
             is ComposeStatusAction.StatusValidated -> {
+                if (previousState.status == null) {
+                    sendEffect(ComposeStatusEffect.UpdateStatus(action.status))
+                }
                 previousState.copy(
                     state = ULIEState.IDLE,
                     status = action.status,
@@ -116,6 +130,7 @@ class ComposeStatusViewModel @Inject constructor(
                     statusMaxLength = action.maxLength
                 )
             }
+            is ComposeStatusAction.Tweet -> TODO()
         }
     }
 }

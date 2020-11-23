@@ -14,6 +14,8 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:boxStrokeErrorColor="@color/red"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -23,6 +25,7 @@
             android:id="@+id/status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLines="3"
             android:hint="@string/whats_happening"
             />
     </com.google.android.material.textfield.TextInputLayout>
@@ -35,7 +38,7 @@
         android:maxLines="1"
         android:paddingHorizontal="@dimen/space_4dp"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-        app:layout_constraintTop_toBottomOf="@+id/statusContainer"
+        app:layout_constraintBottom_toBottomOf="@+id/statusContainer"
         android:text="0/280"
         tools:text="0/280"
         />

@@ -63,4 +63,7 @@
     <!-- Notification -->
     <string name="notification_channel_editor_name">Editor</string>
     <string name="notification_channel_editor_description">Notification to create new tweet</string>
+
+    <string name="status_counter" translatable="false">%1$d/%2$d</string>
+    <string name="status_too_long_error">Content is too long</string>
 </resources>

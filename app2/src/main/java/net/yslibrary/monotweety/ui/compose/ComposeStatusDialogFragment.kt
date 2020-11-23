@@ -3,7 +3,7 @@ package net.yslibrary.monotweety.ui.compose
 import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
-import androidx.activity.OnBackPressedCallback
+import android.view.KeyEvent
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -48,12 +48,6 @@ class ComposeStatusDialogFragment : DialogFragment(),
             requireDialog().findViewById(R.id.composeStatusContainer))
     }
 
-    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
-        override fun handleOnBackPressed() {
-
-        }
-    }
-
     private var counterOriginalColor: Int = Color.GRAY
 
     private val alertDialog: AlertDialog
@@ -66,8 +60,6 @@ class ComposeStatusDialogFragment : DialogFragment(),
         component.inject(this)
 
         viewModel.dispatch(ComposeStatusIntent.Initialize(arguments?.getString(KEY_STATUS) ?: ""))
-
-        requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -82,11 +74,23 @@ class ComposeStatusDialogFragment : DialogFragment(),
     }
 
     private fun setupDialog(dialog: AlertDialog) {
+        dialog.setCanceledOnTouchOutside(false)
         dialog.setOnShowListener {
             counterOriginalColor = binding.counter.currentTextColor
             setupEvents(dialog)
             viewModel.consumeEffects(lifecycleScope, this::handleEffect)
             viewModel.consumeStates(lifecycleScope, this::render)
+        }
+        dialog.setOnKeyListener { d, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                if (viewModel.state.statusLength > 0) {
+                    // has something in editor
+                    showDismissConfirmDialog()
+                } else {
+                    d.dismiss()
+                }
+                true
+            } else false
         }
     }
 
@@ -122,6 +126,7 @@ class ComposeStatusDialogFragment : DialogFragment(),
 
     private fun render(state: ComposeStatusState) {
         if (state.state == ULIEState.UNINITIALIZED || state.state == ULIEState.LOADING) return
+
         val context = alertDialog.context
         val counterColor = if (state.isStatusValid) {
             counterOriginalColor
@@ -137,6 +142,18 @@ class ComposeStatusDialogFragment : DialogFragment(),
         } else null
 
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = state.isStatusValid
+    }
+
+    private fun showDismissConfirmDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.confirm)
+            .setMessage(R.string.quit_without_tweeting)
+            .setPositiveButton(R.string.quit) { dialog, which ->
+                alertDialog.dismiss()
+                activity?.finish()
+            }
+            .setNegativeButton(R.string.no, null)
+            .show()
     }
 
     companion object {

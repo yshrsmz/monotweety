@@ -120,6 +120,7 @@ class ComposeStatusViewModel @Inject constructor(
             is ComposeStatusAction.ValidateStatus -> previousState
             is ComposeStatusAction.StatusValidated -> {
                 if (previousState.status == null) {
+                    // should update EditText once
                     sendEffect(ComposeStatusEffect.UpdateStatus(action.status))
                 }
                 previousState.copy(

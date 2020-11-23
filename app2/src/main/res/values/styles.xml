@@ -17,6 +17,19 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
+    <style name="AppTheme.ComposeDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.AppTheme.PositiveButton</item>
+        <!--        <item name="buttonBarNegativeButtonStyle"></item>-->
+    </style>
+
+    <style name="Widget" />
+
+    <style name="Widget.AppTheme" />
+
+    <style name="Widget.AppTheme.PositiveButton" parent="@style/Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/text_color_accent_selector</item>
+    </style>
+
     <style name="AppTheme.Settings" parent="AppTheme" />
 
     <style name="AppTheme.Settings.ListItem" parent="AppTheme.Settings">

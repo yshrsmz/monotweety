@@ -4,21 +4,45 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.codingfeline.twitter4kt.core.model.oauth1a.AccessToken
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
+import net.yslibrary.monotweety.App
 import net.yslibrary.monotweety.R
+import net.yslibrary.monotweety.data.session.toAccessToken
+import net.yslibrary.monotweety.ui.di.HasComponent
 
-class ComposeActivity : AppCompatActivity(R.layout.activity_compose) {
+class ComposeActivity : AppCompatActivity(R.layout.activity_compose),
+    HasComponent<ComposeActivityComponent> {
+
+    private var accessToken: AccessToken? = null
+
+    override val component by lazy {
+        val token =
+            requireNotNull(accessToken) { "AccessToken is required to create a UserComponent" }
+        App.getOrCreateUserComponent(applicationContext, token)
+            .composeActivityComponent()
+            .build(this)
+    }
+
+    private val observeSession by lazy {
+        App.appComponent(this).observeSession()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        MaterialAlertDialogBuilder(this)
-            .setTitle("Title")
-            .setMessage("Message")
-            .setOnDismissListener { finish() }
-            .setNegativeButton(R.string.cancel) { dialog, which -> /* no-op */ }
-            .setPositiveButton(R.string.tweet) { dialog, which -> /* no-op */ }
-            .show()
+        val session = runBlocking { observeSession().first() }
+        if (session == null) {
+            finish()
+            return
+        }
+        accessToken = session.toAccessToken()
+
+        component.inject(this)
+
+        ComposeStatusDialogFragment.newInstance()
+            .show(supportFragmentManager, ComposeStatusDialogFragment.TAG)
     }
 
     companion object {

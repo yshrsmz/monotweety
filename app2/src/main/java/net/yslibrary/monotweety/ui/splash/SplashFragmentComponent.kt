@@ -15,7 +15,7 @@ interface SplashFragmentComponent {
     }
 
     interface ComponentProvider {
-        fun splashFragmentComponent(): SplashFragmentComponent.Factory
+        fun splashFragmentComponent(): Factory
     }
 }
 

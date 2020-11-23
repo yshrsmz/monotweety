@@ -9,6 +9,7 @@ import net.yslibrary.monotweety.di.UserScope
 import net.yslibrary.monotweety.domain.UserScopeDomainModule
 import net.yslibrary.monotweety.notification.NotificationServiceComponent
 import net.yslibrary.monotweety.ui.UserUiSubcomponentModule
+import net.yslibrary.monotweety.ui.compose.ComposeActivityComponent
 
 @UserScope
 @Subcomponent(
@@ -36,11 +37,13 @@ interface UserComponent : UserSubcomponentModule.ComponentProviders {
     ],
     subcomponents = [
         NotificationServiceComponent::class,
+        ComposeActivityComponent::class,
     ]
 )
 interface UserSubcomponentModule {
     interface ComponentProviders : UserUiSubcomponentModule.ComponentProviders,
-        NotificationServiceComponent.ComponentProvider
+        NotificationServiceComponent.ComponentProvider,
+        ComposeActivityComponent.ComponentProvider
 
 }
 

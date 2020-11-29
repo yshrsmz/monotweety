@@ -1,5 +1,6 @@
 package net.yslibrary.monotweety.ui.compose
 
+import com.codingfeline.twitter4kt.core.isSuccess
 import kotlinx.coroutines.launch
 import net.yslibrary.monotweety.base.CoroutineDispatchers
 import net.yslibrary.monotweety.domain.status.BuildAndValidateStatusString
@@ -33,21 +34,23 @@ sealed class ComposeTweetAction : Action {
         val maxLength: Int,
     ) : ComposeTweetAction()
 
-    data class Tweet(val status: String) : ComposeTweetAction()
+    data class Tweet(val tweet: String) : ComposeTweetAction()
     object Tweeting : ComposeTweetAction()
     object Tweeted : ComposeTweetAction()
-    data class TweetFailed(val error: Exception) : ComposeTweetAction()
+    data class TweetFailed(val error: Throwable) : ComposeTweetAction()
 }
 
 sealed class ComposeTweetEffect : Effect {
     // notify view to update text input
     data class UpdateTweetString(val tweet: String) : ComposeTweetEffect()
+
+    object Dismiss : ComposeTweetEffect()
 }
 
 data class ComposeTweetState(
     val state: ULIEState,
     val tweet: String?,
-    val isTweetValid: Boolean,
+    val tweetStatus: TweetStatus,
     val tweetLength: Int,
     val tweetMaxLength: Int,
 ) : State {
@@ -57,7 +60,7 @@ data class ComposeTweetState(
             return ComposeTweetState(
                 state = ULIEState.UNINITIALIZED,
                 tweet = null,
-                isTweetValid = false,
+                tweetStatus = TweetStatus.INVALID,
                 tweetLength = 0,
                 tweetMaxLength = 0
             )
@@ -71,7 +74,11 @@ data class ComposeTweetState(
      *    +---------+--------+
      */
     enum class TweetStatus {
-        INVALID, VALID, TWEETING, TWEETED
+        INVALID, VALID, TWEETING, TWEETED;
+
+        val isValid: Boolean get() = this == VALID
+
+        val isTweeting: Boolean get() = this === TWEETING
     }
 }
 
@@ -90,6 +97,9 @@ class ComposeTweetProcessor @Inject constructor(
             is ComposeTweetAction.ValidateTweet -> {
                 buildAndValidateStatus(action.tweet)
             }
+            is ComposeTweetAction.Tweet -> {
+                tweet(action.tweet)
+            }
         }
     }
 
@@ -102,6 +112,17 @@ class ComposeTweetProcessor @Inject constructor(
                 length = result.length,
                 maxLength = result.maxLength,
             ))
+        }
+    }
+
+    private fun tweet(tweet: String) {
+        launch {
+            val result = updateStatus(tweet)
+            if (result.isSuccess()) {
+                put(ComposeTweetAction.Tweeted)
+            } else {
+                put(ComposeTweetAction.TweetFailed(result.error))
+            }
         }
     }
 }
@@ -138,18 +159,31 @@ class ComposeTweetViewModel @Inject constructor(
                     // should update EditText once
                     sendEffect(ComposeTweetEffect.UpdateTweetString(action.tweet))
                 }
+                val tweetStatus = if (action.isValid) {
+                    ComposeTweetState.TweetStatus.VALID
+                } else {
+                    ComposeTweetState.TweetStatus.INVALID
+                }
+
                 previousState.copy(
                     state = ULIEState.IDLE,
                     tweet = action.tweet,
-                    isTweetValid = action.isValid,
+                    tweetStatus = tweetStatus,
                     tweetLength = action.length,
                     tweetMaxLength = action.maxLength
                 )
             }
-            is ComposeTweetAction.Tweet -> TODO()
-            ComposeTweetAction.Tweeting -> TODO()
-            ComposeTweetAction.Tweeted -> TODO()
-            is ComposeTweetAction.TweetFailed -> TODO()
+            is ComposeTweetAction.Tweet -> previousState
+            ComposeTweetAction.Tweeting -> {
+                previousState.copy(tweetStatus = ComposeTweetState.TweetStatus.TWEETING)
+            }
+            ComposeTweetAction.Tweeted -> {
+                sendEffect(ComposeTweetEffect.Dismiss)
+                previousState.copy(tweetStatus = ComposeTweetState.TweetStatus.TWEETED)
+            }
+            is ComposeTweetAction.TweetFailed -> {
+                previousState.copy(tweetStatus = ComposeTweetState.TweetStatus.INVALID)
+            }
         }
     }
 }

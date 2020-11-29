@@ -87,7 +87,7 @@ class ComposeTweetDialogFragment : DialogFragment(),
                     // has something in editor
                     showDismissConfirmDialog()
                 } else {
-                    d.dismiss()
+                    requireActivity().finish()
                 }
                 true
             } else false
@@ -103,7 +103,7 @@ class ComposeTweetDialogFragment : DialogFragment(),
             viewModel.dispatch(ComposeTweetIntent.Tweet)
         }
         negativeButton.setOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
+            showDismissConfirmDialog()
         }
 
         binding.tweet.afterTextChanges()
@@ -121,6 +121,9 @@ class ComposeTweetDialogFragment : DialogFragment(),
             is ComposeTweetEffect.UpdateTweetString -> {
                 binding.tweet.setText(effect.tweet)
             }
+            ComposeTweetEffect.Dismiss -> {
+                activity?.finish()
+            }
         }
     }
 
@@ -128,7 +131,7 @@ class ComposeTweetDialogFragment : DialogFragment(),
         if (state.state == ULIEState.UNINITIALIZED || state.state == ULIEState.LOADING) return
 
         val context = alertDialog.context
-        val counterColor = if (state.isTweetValid) {
+        val counterColor = if (state.tweetStatus.isValid) {
             counterOriginalColor
         } else {
             ContextCompat.getColor(context, R.color.red)
@@ -137,11 +140,11 @@ class ComposeTweetDialogFragment : DialogFragment(),
         binding.counter.text =
             getString(R.string.status_counter, state.tweetLength, state.tweetMaxLength)
 
-        binding.tweetContainer.error = if (!state.isTweetValid && state.tweetLength > 0) {
+        binding.tweetContainer.error = if (!state.tweetStatus.isValid && state.tweetLength > 0) {
             getString(R.string.status_too_long_error)
         } else null
 
-        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = state.isTweetValid
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = state.tweetStatus.isValid
     }
 
     private fun showDismissConfirmDialog() {

@@ -5,15 +5,15 @@ import net.yslibrary.monotweety.di.FragmentScope
 
 @FragmentScope
 @Subcomponent
-interface ComposeStatusDialogFragmentComponent {
-    fun inject(fragment: ComposeStatusDialogFragment)
+interface ComposeTweetDialogFragmentComponent {
+    fun inject(fragment: ComposeTweetDialogFragment)
 
     @Subcomponent.Factory
     interface Factory {
-        fun build(): ComposeStatusDialogFragmentComponent
+        fun build(): ComposeTweetDialogFragmentComponent
     }
 
     interface ComponentProvider {
-        fun composeStatusDialogFragmentComponent(): Factory
+        fun composeTweetDialogFragmentComponent(): Factory
     }
 }

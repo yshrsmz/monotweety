@@ -27,9 +27,9 @@ interface ComposeActivityComponent : ComposeActivitySubcomponentModule.Component
 
 @Module(
     subcomponents = [
-        ComposeStatusDialogFragmentComponent::class,
+        ComposeTweetDialogFragmentComponent::class,
     ]
 )
 interface ComposeActivitySubcomponentModule {
-    interface ComponentProviders : ComposeStatusDialogFragmentComponent.ComponentProvider
+    interface ComponentProviders : ComposeTweetDialogFragmentComponent.ComponentProvider
 }

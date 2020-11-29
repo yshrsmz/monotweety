@@ -41,8 +41,8 @@ class ComposeActivity : AppCompatActivity(R.layout.activity_compose),
 
         component.inject(this)
 
-        ComposeStatusDialogFragment.newInstance()
-            .show(supportFragmentManager, ComposeStatusDialogFragment.TAG)
+        ComposeTweetDialogFragment.newInstance()
+            .show(supportFragmentManager, ComposeTweetDialogFragment.TAG)
     }
 
     companion object {

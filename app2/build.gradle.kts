@@ -45,8 +45,8 @@ android {
 
     defaultConfig {
         applicationId = "net.yslibrary.monotweety"
-        versionCode = 59
-        versionName = "2.0.0-beta01"
+        versionCode = 60
+        versionName = "2.0.0-beta02"
     }
 
     buildTypes {

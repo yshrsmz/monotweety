@@ -211,7 +211,7 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
                     .setMessage(R.string.logout_confirmation)
                     .setCancelable(true)
                     .setPositiveButton(R.string.logout) { _, _ -> viewModel.dispatch(SettingsIntent.LogoutSelected) }
-                    .setNegativeButton(R.string.no, null)
+                    .setNegativeButton(R.string.cancel, null)
                     .show()
             },
             onProfileClick = { viewModel.dispatch(SettingsIntent.ProfileSelected) },

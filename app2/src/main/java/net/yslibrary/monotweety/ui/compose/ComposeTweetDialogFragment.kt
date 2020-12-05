@@ -184,8 +184,8 @@ class ComposeTweetDialogFragment : DialogFragment(),
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.confirm)
             .setMessage(R.string.quit_without_tweeting)
-            .setPositiveButton(R.string.quit) { dialog, which -> dismissDialog() }
-            .setNegativeButton(R.string.no, null)
+            .setPositiveButton(R.string.quit) { _, _ -> dismissDialog() }
+            .setNegativeButton(R.string.cancel, null)
             .show()
     }
 

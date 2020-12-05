@@ -44,13 +44,14 @@ sealed class ComposeTweetEffect : Effect {
     // notify view to update text input
     data class UpdateTweetString(val tweet: String) : ComposeTweetEffect()
 
+    object Tweeted : ComposeTweetEffect()
     object Dismiss : ComposeTweetEffect()
 }
 
 data class ComposeTweetState(
     val state: ULIEState,
     val tweet: String?,
-    val tweetStatus: TweetStatus,
+    val tweetState: TweetState,
     val tweetLength: Int,
     val tweetMaxLength: Int,
 ) : State {
@@ -60,7 +61,7 @@ data class ComposeTweetState(
             return ComposeTweetState(
                 state = ULIEState.UNINITIALIZED,
                 tweet = null,
-                tweetStatus = TweetStatus.INVALID,
+                tweetState = TweetState.INVALID,
                 tweetLength = 0,
                 tweetMaxLength = 0
             )
@@ -73,12 +74,15 @@ data class ComposeTweetState(
      *    |         |        |
      *    +---------+--------+
      */
-    enum class TweetStatus {
+    enum class TweetState {
         INVALID, VALID, TWEETING, TWEETED;
 
+        val isInvalid: Boolean get() = this == INVALID
         val isValid: Boolean get() = this == VALID
-
         val isTweeting: Boolean get() = this === TWEETING
+
+        fun isAtLeast(state: TweetState): Boolean = compareTo(state) >= 0
+        fun isAtMost(state: TweetState): Boolean = compareTo(state) <= 0
     }
 }
 
@@ -160,29 +164,29 @@ class ComposeTweetViewModel @Inject constructor(
                     sendEffect(ComposeTweetEffect.UpdateTweetString(action.tweet))
                 }
                 val tweetStatus = if (action.isValid) {
-                    ComposeTweetState.TweetStatus.VALID
+                    ComposeTweetState.TweetState.VALID
                 } else {
-                    ComposeTweetState.TweetStatus.INVALID
+                    ComposeTweetState.TweetState.INVALID
                 }
 
                 previousState.copy(
                     state = ULIEState.IDLE,
                     tweet = action.tweet,
-                    tweetStatus = tweetStatus,
+                    tweetState = tweetStatus,
                     tweetLength = action.length,
                     tweetMaxLength = action.maxLength
                 )
             }
             is ComposeTweetAction.Tweet -> previousState
             ComposeTweetAction.Tweeting -> {
-                previousState.copy(tweetStatus = ComposeTweetState.TweetStatus.TWEETING)
+                previousState.copy(tweetState = ComposeTweetState.TweetState.TWEETING)
             }
             ComposeTweetAction.Tweeted -> {
-                sendEffect(ComposeTweetEffect.Dismiss)
-                previousState.copy(tweetStatus = ComposeTweetState.TweetStatus.TWEETED)
+                sendEffect(ComposeTweetEffect.Tweeted)
+                previousState.copy(tweetState = ComposeTweetState.TweetState.TWEETED)
             }
             is ComposeTweetAction.TweetFailed -> {
-                previousState.copy(tweetStatus = ComposeTweetState.TweetStatus.INVALID)
+                previousState.copy(tweetState = ComposeTweetState.TweetState.INVALID)
             }
         }
     }

@@ -72,4 +72,8 @@
     <string name="quit_without_tweeting">Quit without tweeting?</string>
 
     <string name="share_message">Check out #Monotweety! %s #Android</string>
+
+    <string name="logout_confirmation">Do you want to logout?</string>
+
+    <string name="compose_tweet">Compose Tweet</string>
 </resources>

@@ -4,12 +4,16 @@ import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
 import android.view.KeyEvent
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.github.razir.progressbutton.DrawableButton
+import com.github.razir.progressbutton.hideProgress
+import com.github.razir.progressbutton.showProgress
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce
@@ -22,6 +26,8 @@ import net.yslibrary.monotweety.databinding.FragmentComposeTweetBinding
 import net.yslibrary.monotweety.ui.arch.ULIEState
 import net.yslibrary.monotweety.ui.base.consumeEffects
 import net.yslibrary.monotweety.ui.base.consumeStates
+import net.yslibrary.monotweety.ui.base.hideKeyboard
+import net.yslibrary.monotweety.ui.base.showKeyboard
 import net.yslibrary.monotweety.ui.di.HasComponent
 import net.yslibrary.monotweety.ui.di.ViewModelFactory
 import net.yslibrary.monotweety.ui.di.getComponentProvider
@@ -65,7 +71,7 @@ class ComposeTweetDialogFragment : DialogFragment(),
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         Timber.d("onCreateDialog")
         return MaterialAlertDialogBuilder(requireContext(), R.style.AppTheme_ComposeDialog)
-            .setTitle("Title")
+            .setTitle(R.string.compose_tweet)
             .setView(R.layout.fragment_compose_tweet)
             .setNegativeButton(R.string.cancel, null)
             .setPositiveButton(R.string.tweet, null)
@@ -87,7 +93,7 @@ class ComposeTweetDialogFragment : DialogFragment(),
                     // has something in editor
                     showDismissConfirmDialog()
                 } else {
-                    requireActivity().finish()
+                    dismissDialog()
                 }
                 true
             } else false
@@ -103,7 +109,12 @@ class ComposeTweetDialogFragment : DialogFragment(),
             viewModel.dispatch(ComposeTweetIntent.Tweet)
         }
         negativeButton.setOnClickListener {
-            showDismissConfirmDialog()
+            if (viewModel.state.tweetLength > 0) {
+                // has something in editor
+                showDismissConfirmDialog()
+            } else {
+                dismissDialog()
+            }
         }
 
         binding.tweet.afterTextChanges()
@@ -114,6 +125,10 @@ class ComposeTweetDialogFragment : DialogFragment(),
             .map { ComposeTweetIntent.TweetUpdated(it) }
             .onEach { viewModel.dispatch(it) }
             .launchIn(lifecycleScope)
+
+        binding.tweet.post {
+            binding.tweet.showKeyboard()
+        }
     }
 
     private fun handleEffect(effect: ComposeTweetEffect) {
@@ -122,7 +137,12 @@ class ComposeTweetDialogFragment : DialogFragment(),
                 binding.tweet.setText(effect.tweet)
             }
             ComposeTweetEffect.Dismiss -> {
-                activity?.finish()
+                dismissDialog()
+            }
+            ComposeTweetEffect.Tweeted -> {
+                Toast.makeText(requireContext(), R.string.tweet_succeeded, Toast.LENGTH_SHORT)
+                    .show()
+                dismissDialog()
             }
         }
     }
@@ -131,7 +151,7 @@ class ComposeTweetDialogFragment : DialogFragment(),
         if (state.state == ULIEState.UNINITIALIZED || state.state == ULIEState.LOADING) return
 
         val context = alertDialog.context
-        val counterColor = if (state.tweetStatus.isValid) {
+        val counterColor = if (state.tweetState.isValid) {
             counterOriginalColor
         } else {
             ContextCompat.getColor(context, R.color.red)
@@ -140,23 +160,45 @@ class ComposeTweetDialogFragment : DialogFragment(),
         binding.counter.text =
             getString(R.string.status_counter, state.tweetLength, state.tweetMaxLength)
 
-        binding.tweetContainer.error = if (!state.tweetStatus.isValid && state.tweetLength > 0) {
+        binding.tweetContainer.error = if (state.tweetState.isInvalid && state.tweetLength > 0) {
             getString(R.string.status_too_long_error)
         } else null
 
-        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = state.tweetStatus.isValid
+        val positive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+        val negative = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+
+        positive.isEnabled = state.tweetState.isValid
+        negative.isEnabled = state.tweetState.isAtMost(ComposeTweetState.TweetState.VALID)
+        binding.tweetContainer.isEnabled =
+            state.tweetState.isAtMost(ComposeTweetState.TweetState.VALID)
+        if (state.tweetState.isAtLeast(ComposeTweetState.TweetState.TWEETING)) {
+            positive.showProgress {
+                gravity = DrawableButton.GRAVITY_CENTER
+            }
+        } else {
+            positive.hideProgress(R.string.tweet)
+        }
     }
 
     private fun showDismissConfirmDialog() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.confirm)
             .setMessage(R.string.quit_without_tweeting)
-            .setPositiveButton(R.string.quit) { dialog, which ->
-                alertDialog.dismiss()
-                activity?.finish()
-            }
+            .setPositiveButton(R.string.quit) { dialog, which -> dismissDialog() }
             .setNegativeButton(R.string.no, null)
             .show()
+    }
+
+    private fun cleanupProgress() {
+        val positive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+        positive.hideProgress(R.string.tweet)
+    }
+
+    private fun dismissDialog() {
+        binding.tweet.hideKeyboard()
+        cleanupProgress()
+        alertDialog.dismiss()
+        activity?.finish()
     }
 
     companion object {

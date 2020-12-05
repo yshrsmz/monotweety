@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
     <release
+        date="Dec XXth, 2020"
+        versionName="2.0.0"
+        >
+        <info>Complete overhaul. You need to sign in again</info>
+        <new>Drop support for Android 5 and 6</new>
+        <new>Android 11 support</new>
+    </release>
+    <release
         date="Sep 17th, 2019"
         versionName="1.9.0"
         >

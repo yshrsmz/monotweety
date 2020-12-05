@@ -81,6 +81,7 @@ dependencies {
     implementation(Deps.Kotlin.Coroutines.rx2)
     implementation(Deps.Kotlin.datetime)
 
+    implementation(Deps.Androidx.activity)
     implementation(Deps.Androidx.appcompat)
     implementation(Deps.Androidx.browser)
     implementation(Deps.Androidx.recyclerview)

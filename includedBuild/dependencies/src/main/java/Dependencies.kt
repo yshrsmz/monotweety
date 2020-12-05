@@ -17,7 +17,9 @@ object Versions {
     const val androidXFragment = "1.3.0-beta02"
     const val androidXDataStore = "1.0.0-alpha05"
     const val androidXTest = "1.3.0"
-    const val navigation = "2.3.2"
+
+    // https://issuetracker.google.com/issues/174832563
+    const val navigation = "2.3.1"
     const val okhttp3 = "4.9.0"
     const val dagger = "2.30.1"
     const val daggerHilt = "2.29.1-alpha"
@@ -93,6 +95,7 @@ object Deps {
     }
 
     object Androidx {
+        const val activity = "androidx.activity:activity:1.2.0-beta02"
         const val appcompat = "androidx.appcompat:appcompat:1.2.0"
         const val constraintlayout = "androidx.constraintlayout:constraintlayout:2.0.4"
         const val sqlite = "androidx.sqlite:sqlite:2.0.1"

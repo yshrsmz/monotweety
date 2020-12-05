@@ -70,7 +70,7 @@ sealed class SettingsEffect : Effect {
     object ToLicense : SettingsEffect()
     object ToChangelog : SettingsEffect()
     object ToSplash : SettingsEffect()
-    object ShareApp : SettingsEffect()
+    data class ShareApp(val url: String) : SettingsEffect()
     data class OpenBrowser(val url: String) : SettingsEffect()
     data class UpdateNotification(val enabled: Boolean) : SettingsEffect()
 }
@@ -252,7 +252,7 @@ class SettingsViewModel @Inject constructor(
                 previousState
             }
             SettingsAction.ShareApp -> {
-                sendEffect(SettingsEffect.ShareApp)
+                sendEffect(SettingsEffect.ShareApp(config.googlePlayUrl))
                 previousState
             }
             SettingsAction.Logout -> {

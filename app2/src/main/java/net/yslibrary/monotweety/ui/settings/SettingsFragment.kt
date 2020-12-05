@@ -24,11 +24,13 @@ import net.yslibrary.monotweety.ui.base.ViewBindingFragment
 import net.yslibrary.monotweety.ui.base.consumeEffects
 import net.yslibrary.monotweety.ui.base.consumeStates
 import net.yslibrary.monotweety.ui.base.navigateSafe
+import net.yslibrary.monotweety.ui.base.openExternalAppWithShareIntent
 import net.yslibrary.monotweety.ui.base.openExternalAppWithUrl
 import net.yslibrary.monotweety.ui.base.requireAppCompatActivity
 import net.yslibrary.monotweety.ui.di.HasComponent
 import net.yslibrary.monotweety.ui.di.ViewModelFactory
 import net.yslibrary.monotweety.ui.di.getComponentProvider
+import net.yslibrary.monotweety.ui.launcher.LauncherActivity
 import net.yslibrary.monotweety.ui.settings.widget.DividerItemDecoration
 import net.yslibrary.monotweety.ui.settings.widget.OneLineTextItem
 import net.yslibrary.monotweety.ui.settings.widget.SubHeaderItem
@@ -178,8 +180,15 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
             is SettingsEffect.OpenBrowser -> {
                 context?.openExternalAppWithUrl(effect.url)
             }
-            SettingsEffect.ShareApp -> TODO()
-            SettingsEffect.ToSplash -> TODO()
+            is SettingsEffect.ShareApp -> {
+                requireContext().openExternalAppWithShareIntent(
+                    getString(R.string.share_message, effect.url)
+                )
+            }
+            SettingsEffect.ToSplash -> {
+                startActivity(LauncherActivity.getIntent(requireContext()))
+                requireActivity().finish()
+            }
             is SettingsEffect.UpdateNotification -> {
                 val context = requireContext()
                 val intent = NotificationService.callingIntent(context)
@@ -196,8 +205,16 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
         Timber.d("newState: $state")
         userSection.update(listOf(UserItem(
             user = state.user,
-            onLogoutClick = {},
-            onProfileClick = {},
+            onLogoutClick = {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(R.string.confirm)
+                    .setMessage(R.string.logout_confirmation)
+                    .setCancelable(true)
+                    .setPositiveButton(R.string.logout) { _, _ -> viewModel.dispatch(SettingsIntent.LogoutSelected) }
+                    .setNegativeButton(R.string.no, null)
+                    .show()
+            },
+            onProfileClick = { viewModel.dispatch(SettingsIntent.ProfileSelected) },
         )))
 
         settingsSection.update(

@@ -70,4 +70,6 @@
     <string name="status_counter" translatable="false">%1$d/%2$d</string>
     <string name="status_too_long_error">Content is too long</string>
     <string name="quit_without_tweeting">Quit without tweeting?</string>
+
+    <string name="share_message">Check out #Monotweety! %s #Android</string>
 </resources>

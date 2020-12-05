@@ -3,30 +3,30 @@ object Versions {
     const val minSdk = 24
     const val targetSdk = 30
 
-    const val gradle = "6.7.1"
+    const val gradle = "6.8-rc-1"
 
     const val agp = "4.1.1"
-    const val kotlin = "1.4.10"
-    const val coroutines = "1.4.1"
+    const val kotlin = "1.4.20"
+    const val coroutines = "1.4.2"
     const val dokka = "0.10.1"
     const val versions = "0.36.0"
     const val crashlytics = "2.3.0"
     const val googleservices = "4.3.4"
 
     const val androidXLifecycle = "2.3.0-beta01"
-    const val androidXFragment = "1.3.0-beta01"
-    const val androidXDataStore = "1.0.0-alpha04"
+    const val androidXFragment = "1.3.0-beta02"
+    const val androidXDataStore = "1.0.0-alpha05"
     const val androidXTest = "1.3.0"
-    const val navigation = "2.3.1"
+    const val navigation = "2.3.2"
     const val okhttp3 = "4.9.0"
-    const val dagger = "2.30"
+    const val dagger = "2.30.1"
     const val daggerHilt = "2.29.1-alpha"
     const val glide = "4.11.0"
     const val groupie = "2.8.1"
     const val flowBinding = "1.0.0-beta02"
     const val rxBinding = "3.1.0"
     const val protobuf = "3.13.0"
-    const val twitter4kt = "0.2.1"
+    const val twitter4kt = "0.2.2"
     const val leakcanary = "2.5"
     const val hyperion = "0.9.29"
     const val robolectric = "4.4"
@@ -89,14 +89,14 @@ object Deps {
     }
 
     object Ktor {
-        const val logging = "io.ktor:ktor-client-logging:1.4.2"
+        const val logging = "io.ktor:ktor-client-logging:1.4.3"
     }
 
     object Androidx {
         const val appcompat = "androidx.appcompat:appcompat:1.2.0"
         const val constraintlayout = "androidx.constraintlayout:constraintlayout:2.0.4"
         const val sqlite = "androidx.sqlite:sqlite:2.0.1"
-        const val browser = "androidx.browser:browser:1.3.0-rc01"
+        const val browser = "androidx.browser:browser:1.3.0"
         const val viewpager = "androidx.viewpager2:viewpager2:1.1.0-alpha01"
         const val recyclerview = "androidx.recyclerview:recyclerview:1.2.0-alpha06"
         const val swiperefreshlayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
@@ -147,7 +147,7 @@ object Deps {
     const val licenses = "com.google.android.gms:play-services-oss-licenses:17.0.0"
 
     object Firebase {
-        const val bom = "com.google.firebase:firebase-bom:26.1.0"
+        const val bom = "com.google.firebase:firebase-bom:26.1.1"
         const val messaging = "com.google.firebase:firebase-messaging"
         const val crashlytics = "com.google.firebase:firebase-crashlytics"
         const val analytics = "com.google.firebase:firebase-analytics"
@@ -226,13 +226,13 @@ object Deps {
 
     const val progressButton = "com.github.razir.progressbutton:progressbutton:2.1.0"
 
-    const val coil = "io.coil-kt:coil:1.0.0"
+    const val coil = "io.coil-kt:coil:1.1.0"
 
     const val changelog = "com.github.MFlisar:changelog:1.1.7"
 
     // test
     const val junit = "junit:junit:4.13.1"
     const val robolectric = "org.robolectric:robolectric:4.4"
-    const val mockk = "io.mockk:mockk:1.10.2"
+    const val mockk = "io.mockk:mockk:1.10.3"
     const val truth = "com.google.truth:truth:1.1"
 }

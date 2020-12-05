@@ -32,7 +32,7 @@ class BuildHelperPlugin : Plugin<Project> {
                 configureKapt()
             }
             pluginManager.withPlugin("java-library") {
-                println("jvm: ${path}")
+                println("jvm: $path")
             }
             pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
                 println("kotlin-jvm: $path")

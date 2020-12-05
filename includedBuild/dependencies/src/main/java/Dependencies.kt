@@ -228,6 +228,8 @@ object Deps {
 
     const val coil = "io.coil-kt:coil:1.0.0"
 
+    const val changelog = "com.github.MFlisar:changelog:1.1.7"
+
     // test
     const val junit = "junit:junit:4.13.1"
     const val robolectric = "org.robolectric:robolectric:4.4"

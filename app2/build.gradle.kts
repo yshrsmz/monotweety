@@ -126,6 +126,8 @@ dependencies {
     implementation(Deps.FlowBinding.platform)
     implementation(Deps.FlowBinding.material)
 
+    implementation(Deps.changelog)
+
     implementation(Deps.LeakCanary.plumber)
     debugImplementation(Deps.LeakCanary.core)
     implementation(Deps.LeakCanary.objectWatcher)

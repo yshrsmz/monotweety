@@ -48,6 +48,7 @@ private fun Project.configureRepositories() {
         jcenter()
         maven(url = "https://kotlin.bintray.com/kotlinx/")
         maven(url = "https://dl.bintray.com/yshrsmz/twitter4kt/")
+        maven(url = "https://jitpack.io")
     }
 }
 

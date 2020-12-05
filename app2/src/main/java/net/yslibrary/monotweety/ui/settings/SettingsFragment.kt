@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.michaelflisar.changelog.ChangelogBuilder
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Section
@@ -24,6 +25,7 @@ import net.yslibrary.monotweety.ui.base.consumeEffects
 import net.yslibrary.monotweety.ui.base.consumeStates
 import net.yslibrary.monotweety.ui.base.navigateSafe
 import net.yslibrary.monotweety.ui.base.openExternalAppWithUrl
+import net.yslibrary.monotweety.ui.base.requireAppCompatActivity
 import net.yslibrary.monotweety.ui.di.HasComponent
 import net.yslibrary.monotweety.ui.di.ViewModelFactory
 import net.yslibrary.monotweety.ui.di.getComponentProvider
@@ -172,7 +174,7 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
             SettingsEffect.ToLicense -> {
                 startActivity(Intent(context, OssLicensesMenuActivity::class.java))
             }
-            SettingsEffect.ToChangelog -> TODO()
+            SettingsEffect.ToChangelog -> showChangelog()
             is SettingsEffect.OpenBrowser -> {
                 context?.openExternalAppWithUrl(effect.url)
             }
@@ -270,5 +272,11 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
                     .show()
             }
         )
+    }
+
+    private fun showChangelog() {
+        ChangelogBuilder()
+            .withUseBulletList(true)
+            .buildAndShowDialog(requireAppCompatActivity(), false)
     }
 }

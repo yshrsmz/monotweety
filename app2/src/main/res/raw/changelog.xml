@@ -5,6 +5,9 @@
         versionName="2.0.0"
         >
         <info>Complete overhaul. You need to sign in again</info>
+        <info>To ensure the quality, I removed some features from initial v2 release. If you want
+            these features back, please let me know.
+        </info>
         <new>Drop support for Android 5 and 6</new>
         <new>Android 11 support</new>
     </release>

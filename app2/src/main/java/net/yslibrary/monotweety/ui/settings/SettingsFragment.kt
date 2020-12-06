@@ -18,6 +18,7 @@ import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Section
 import net.yslibrary.monotweety.BuildConfig
 import net.yslibrary.monotweety.R
+import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.databinding.FragmentSettingsBinding
 import net.yslibrary.monotweety.notification.NotificationService
 import net.yslibrary.monotweety.ui.base.ViewBindingFragment
@@ -53,6 +54,9 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
 
     @Inject
     lateinit var factory: ViewModelFactory<SettingsViewModel>
+
+    @Inject
+    lateinit var analytics: Analytics
 
     private val viewModel: SettingsViewModel by viewModels { factory }
 
@@ -153,6 +157,8 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
             viewModel.consumeStates(owner.lifecycleScope, this::render)
         }
         viewModel.dispatch(SettingsIntent.Initialize)
+
+        analytics.screenView(Analytics.Screen.Settings, this::class)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -174,6 +180,7 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
     private fun handleEffect(effect: SettingsEffect) {
         when (effect) {
             SettingsEffect.ToLicense -> {
+                analytics.screenView(Analytics.Screen.License)
                 startActivity(Intent(context, OssLicensesMenuActivity::class.java))
             }
             SettingsEffect.ToChangelog -> showChangelog()
@@ -292,6 +299,7 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
     }
 
     private fun showChangelog() {
+        analytics.screenView(Analytics.Screen.Changelog)
         ChangelogBuilder()
             .withUseBulletList(true)
             .buildAndShowDialog(requireAppCompatActivity(), false)

@@ -47,7 +47,7 @@ class SplashFragment : ViewBindingFragment<FragmentSplashBinding>(
         }
         viewModel.dispatch(SplashIntent.Initialize)
 
-        analytics.viewEvent(Analytics.Screen.Splash, this::class)
+        analytics.screenView(Analytics.Screen.Splash, this::class)
     }
 
     private fun handleEffect(effect: SplashEffect) {

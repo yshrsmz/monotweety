@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import net.yslibrary.monotweety.R
+import net.yslibrary.monotweety.analytics.Analytics
 import net.yslibrary.monotweety.databinding.FragmentComposeTweetBinding
 import net.yslibrary.monotweety.ui.arch.ULIEState
 import net.yslibrary.monotweety.ui.base.consumeEffects
@@ -47,6 +48,9 @@ class ComposeTweetDialogFragment : DialogFragment(),
     @Inject
     lateinit var factory: ViewModelFactory<ComposeTweetViewModel>
 
+    @Inject
+    lateinit var analytics: Analytics
+
     private val viewModel: ComposeTweetViewModel by viewModels { factory }
 
     private val binding by lazy {
@@ -65,6 +69,7 @@ class ComposeTweetDialogFragment : DialogFragment(),
 
         component.inject(this)
 
+        analytics.screenView(Analytics.Screen.Compose)
         viewModel.dispatch(ComposeTweetIntent.Initialize(arguments?.getString(KEY_STATUS) ?: ""))
     }
 

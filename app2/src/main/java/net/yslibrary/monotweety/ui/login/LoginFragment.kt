@@ -47,6 +47,8 @@ class LoginFragment : ViewBindingFragment<FragmentLoginBinding>(
         }
 
         viewModel.dispatch(LoginIntent.Initialize)
+
+        analytics.screenView(Analytics.Screen.Login, this::class)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

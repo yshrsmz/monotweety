@@ -79,6 +79,7 @@ class NotificationService : LifecycleService(), HasComponent<NotificationService
 
         viewModel.consumeEffects(lifecycleScope, this::handleEffect)
         viewModel.consumeStates(lifecycleScope, this::render)
+        viewModel.dispatch(NotificationIntent.Initialize)
 
         registerReceiver(commandReceiver, IntentFilter(ACTION))
     }

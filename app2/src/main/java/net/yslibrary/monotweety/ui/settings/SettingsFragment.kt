@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.michaelflisar.changelog.ChangelogBuilder
+import com.michaelflisar.changelog.internal.ChangelogDialogFragment
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Section
@@ -180,7 +181,7 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
     private fun handleEffect(effect: SettingsEffect) {
         when (effect) {
             SettingsEffect.ToLicense -> {
-                analytics.screenView(Analytics.Screen.License)
+                analytics.screenView(Analytics.Screen.License, OssLicensesMenuActivity::class)
                 startActivity(Intent(context, OssLicensesMenuActivity::class.java))
             }
             SettingsEffect.ToChangelog -> showChangelog()
@@ -299,7 +300,7 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
     }
 
     private fun showChangelog() {
-        analytics.screenView(Analytics.Screen.Changelog)
+        analytics.screenView(Analytics.Screen.Changelog, ChangelogDialogFragment::class)
         ChangelogBuilder()
             .withUseBulletList(true)
             .buildAndShowDialog(requireAppCompatActivity(), false)

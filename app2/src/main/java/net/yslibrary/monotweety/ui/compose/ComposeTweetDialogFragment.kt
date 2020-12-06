@@ -69,7 +69,7 @@ class ComposeTweetDialogFragment : DialogFragment(),
 
         component.inject(this)
 
-        analytics.screenView(Analytics.Screen.Compose)
+        analytics.screenView(Analytics.Screen.Compose, this::class)
         viewModel.dispatch(ComposeTweetIntent.Initialize(arguments?.getString(KEY_STATUS) ?: ""))
     }
 

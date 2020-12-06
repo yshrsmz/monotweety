@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
     <release
-        date="Dec XXth, 2020"
+        date="Dec 7th, 2020"
         versionName="2.0.0"
         >
         <info>Complete overhaul. You need to sign in again</info>
         <info>To ensure the quality, I removed some features from initial v2 release. If you want
             these features back, please let me know.
         </info>
+        <new>To avoid spamming, you can't include '@' character in the footer text. This is needed
+            to comply with Twitter's guideline. Thanks for your understanding.
+        </new>
         <new>Drop support for Android 5 and 6</new>
         <new>Android 11 support</new>
     </release>

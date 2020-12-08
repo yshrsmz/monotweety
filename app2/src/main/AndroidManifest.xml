@@ -18,6 +18,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         >
+
+        <meta-data
+            android:name="google_analytics_automatic_screen_reporting_enabled"
+            android:value="false"
+            />
+
         <activity
             android:name=".ui.launcher.LauncherActivity"
             android:label="@string/app_name"

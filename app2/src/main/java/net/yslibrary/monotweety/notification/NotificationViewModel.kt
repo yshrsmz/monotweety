@@ -2,6 +2,7 @@ package net.yslibrary.monotweety.notification
 
 import com.codingfeline.twitter4kt.core.isSuccess
 import com.codingfeline.twitter4kt.v1.model.error.TwitterApiException
+import com.codingfeline.twitter4kt.v1.model.error.TwitterError
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -137,8 +138,7 @@ class NotificationProcessor @Inject constructor(
 
     private suspend fun logoutIfNeeded(error: Throwable) {
         if (error is TwitterApiException) {
-            val unauthenticated = error.errors.any { it.code == 32 }
-            if (unauthenticated) {
+            if (error.contains(TwitterError.Code.CouldNotAuthenticate)) {
                 logout()
                 put(NotificationAction.LoggedOut)
             }

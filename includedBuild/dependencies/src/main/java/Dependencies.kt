@@ -18,7 +18,6 @@ object Versions {
     const val androidXDataStore = "1.0.0-alpha05"
     const val androidXTest = "1.3.0"
 
-    // https://issuetracker.google.com/issues/174832563
     const val navigation = "2.3.2"
     const val okhttp3 = "4.9.0"
     const val dagger = "2.30.1"
@@ -28,7 +27,7 @@ object Versions {
     const val flowBinding = "1.0.0-beta02"
     const val rxBinding = "3.1.0"
     const val protobuf = "3.13.0"
-    const val twitter4kt = "0.2.2"
+    const val twitter4kt = "0.2.3"
     const val leakcanary = "2.5"
     const val hyperion = "0.9.29"
     const val robolectric = "4.4"

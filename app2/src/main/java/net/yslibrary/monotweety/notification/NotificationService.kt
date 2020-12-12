@@ -32,6 +32,7 @@ import net.yslibrary.monotweety.ui.base.consumeEffects
 import net.yslibrary.monotweety.ui.base.consumeStates
 import net.yslibrary.monotweety.ui.compose.ComposeActivity
 import net.yslibrary.monotweety.ui.di.HasComponent
+import net.yslibrary.monotweety.ui.launcher.LauncherActivity
 import net.yslibrary.monotweety.ui.main.MainActivity
 import java.util.Locale
 import javax.inject.Inject
@@ -121,7 +122,7 @@ class NotificationService : LifecycleService(), HasComponent<NotificationService
             }
             is NotificationEffect.Error -> {
                 closeNotificationDrawer()
-                showToast(effect.message, Duration.LONG)
+                showToast(effect.message ?: getString(R.string.generic_error), Duration.LONG)
                 updateNotification(viewModel.state)
             }
             is NotificationEffect.StatusTooLong -> {
@@ -133,6 +134,10 @@ class NotificationService : LifecycleService(), HasComponent<NotificationService
             NotificationEffect.StopNotification -> stopSelf()
             NotificationEffect.OpenTweetDialog ->
                 startActivity(ComposeActivity.callingIntent(applicationContext))
+            NotificationEffect.LoggedOut -> {
+                startActivity(LauncherActivity.callingIntent(applicationContext))
+                stopSelf()
+            }
         }
     }
 

@@ -1,5 +1,6 @@
 package net.yslibrary.monotweety.ui.settings
 
+import com.codingfeline.twitter4kt.v1.model.error.TwitterApiException
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -26,6 +27,7 @@ import net.yslibrary.monotweety.ui.arch.MviViewModel
 import net.yslibrary.monotweety.ui.arch.Processor
 import net.yslibrary.monotweety.ui.arch.State
 import net.yslibrary.monotweety.ui.arch.ULIEState
+import timber.log.Timber
 import javax.inject.Inject
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
@@ -64,6 +66,8 @@ sealed class SettingsAction : Action {
     object NavigateToChangelog : SettingsAction()
     object NavigateToLicense : SettingsAction()
     data class NavigateToExternalApp(val url: String) : SettingsAction()
+
+    data class UserFetchFailed(val error: Throwable) : SettingsAction()
 }
 
 sealed class SettingsEffect : Effect {
@@ -73,6 +77,8 @@ sealed class SettingsEffect : Effect {
     data class ShareApp(val url: String) : SettingsEffect()
     data class OpenBrowser(val url: String) : SettingsEffect()
     data class UpdateNotification(val enabled: Boolean) : SettingsEffect()
+
+    data class ShowError(val message: String?) : SettingsEffect()
 }
 
 data class SettingsState(
@@ -163,7 +169,13 @@ class SettingsProcessor @Inject constructor(
                 if (user.isValid(clock)) {
                     put(SettingsAction.UserUpdated(user))
                 } else {
-                    fetchUser()
+                    try {
+                        fetchUser()
+                    } catch (e: Throwable) {
+                        Timber.e(e, "failed to fetch user: ${e.message}")
+                        put((SettingsAction.UserFetchFailed(e)))
+                        logoutIfNeeded(e)
+                    }
                 }
             }
             .launchIn(this)
@@ -173,6 +185,16 @@ class SettingsProcessor @Inject constructor(
         launch {
             val apps = getInstalledTwitterApps()
             put(SettingsAction.TimelineAppsUpdated(apps))
+        }
+    }
+
+    private suspend fun logoutIfNeeded(error: Throwable) {
+        if (error is TwitterApiException) {
+            val unauthenticated = error.errors.any { it.code == 32 }
+            if (unauthenticated) {
+                logout()
+                put(SettingsAction.LogoutCompleted)
+            }
         }
     }
 }
@@ -271,6 +293,15 @@ class SettingsViewModel @Inject constructor(
                 previousState.copy(timelineApps = action.apps)
             }
             is SettingsAction.UpdateSelectedTimelineApp -> {
+                previousState
+            }
+            is SettingsAction.UserFetchFailed -> {
+                val message = if (action.error is TwitterApiException) {
+                    action.error.errors.firstOrNull()?.message
+                } else {
+                    action.error.message
+                }
+                sendEffect(SettingsEffect.ShowError(message))
                 previousState
             }
         }

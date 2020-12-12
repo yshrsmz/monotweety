@@ -32,7 +32,7 @@ class MainActivity : ViewBindingAppCompatActivity<ActivityMainBinding>(
         val session = runBlocking { observeSession().first() }
         if (session == null) {
             Toast.makeText(this, "You need to login first", Toast.LENGTH_LONG).show()
-            startActivity(LauncherActivity.getIntent(this))
+            startActivity(LauncherActivity.callingIntent(this))
             finish()
         } else {
             component = App.getOrCreateUserComponent(this, session.toAccessToken())

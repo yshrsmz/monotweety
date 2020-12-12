@@ -76,4 +76,6 @@
     <string name="logout_confirmation">Do you want to logout?</string>
 
     <string name="compose_tweet">Compose Tweet</string>
+
+    <string name="generic_error">Something went wrong. Please try again later</string>
 </resources>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
     <release
-        date="Dec 7th, 2020"
-        versionName="2.0.0"
+        date="Dec 13th, 2020"
+        versionName="2.0.1"
         >
         <info>Complete overhaul. You need to sign in again</info>
         <info>To ensure the quality, I removed some features from initial v2 release. If you want

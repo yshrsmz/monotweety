@@ -194,7 +194,7 @@ class SettingsFragment : ViewBindingFragment<FragmentSettingsBinding>(
                 )
             }
             SettingsEffect.ToSplash -> {
-                startActivity(LauncherActivity.getIntent(requireContext()))
+                startActivity(LauncherActivity.callingIntent(requireContext()))
                 requireActivity().finish()
             }
             is SettingsEffect.UpdateNotification -> {

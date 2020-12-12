@@ -32,8 +32,9 @@ class LauncherActivity : ViewBindingAppCompatActivity<ActivityMainBinding>(
     }
 
     companion object {
-        fun getIntent(context: Context): Intent {
+        fun callingIntent(context: Context): Intent {
             return Intent(context.applicationContext, LauncherActivity::class.java)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
     }
 }

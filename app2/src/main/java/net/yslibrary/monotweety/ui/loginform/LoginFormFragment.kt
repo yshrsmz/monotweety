@@ -2,6 +2,7 @@ package net.yslibrary.monotweety.ui.loginform
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -78,6 +79,12 @@ class LoginFormFragment : ViewBindingBottomSheetDialogFragment<FragmentLoginform
             LoginFormEffect.ToMain -> {
                 findNavController().navigateSafe(LoginFormFragmentDirections.toMain())
                 activity?.finish()
+            }
+            is LoginFormEffect.ShowError -> {
+                Toast.makeText(requireContext(),
+                    effect.message ?: getString(R.string.generic_error),
+                    Toast.LENGTH_LONG)
+                    .show()
             }
         }
     }

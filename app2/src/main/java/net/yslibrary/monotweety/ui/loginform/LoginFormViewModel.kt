@@ -14,6 +14,7 @@ import net.yslibrary.monotweety.ui.arch.MviViewModel
 import net.yslibrary.monotweety.ui.arch.Processor
 import net.yslibrary.monotweety.ui.arch.State
 import net.yslibrary.monotweety.ui.arch.ULIEState
+import timber.log.Timber
 import javax.inject.Inject
 
 sealed class LoginFormIntent : Intent {
@@ -43,6 +44,8 @@ sealed class LoginFormAction : Action {
 sealed class LoginFormEffect : Effect {
     data class OpenBrowser(val url: String) : LoginFormEffect()
     object ToMain : LoginFormEffect()
+
+    data class ShowError(val message: String?) : LoginFormEffect()
 }
 
 /**
@@ -142,6 +145,7 @@ class LoginFormProcessor @Inject constructor(
                 val token = authFlow.getRequestToken()
                 put(LoginFormAction.RequestTokenLoaded(token))
             } catch (e: Throwable) {
+                Timber.e(e, "load request token error: $e.")
                 put(LoginFormAction.RequestTokenError(e))
             }
         }
@@ -153,6 +157,7 @@ class LoginFormProcessor @Inject constructor(
                 val token = authFlow.getAccessToken(requestToken, pinCode)
                 put(LoginFormAction.AccessTokenLoaded(token))
             } catch (e: Throwable) {
+                Timber.e(e, "load access token error: $e.")
                 put(LoginFormAction.AccessTokenError(e))
             }
         }
@@ -217,6 +222,7 @@ class LoginFormViewModel @Inject constructor(
                 )
             }
             is LoginFormAction.RequestTokenError -> {
+                sendEffect(LoginFormEffect.ShowError(action.error.message))
                 previousState.copy(
                     state = ULIEState.ERROR(action.error),
                     loginFlowState = LoginFlowState.LoadRequestTokenError
@@ -244,6 +250,7 @@ class LoginFormViewModel @Inject constructor(
                 )
             }
             is LoginFormAction.AccessTokenError -> {
+                sendEffect(LoginFormEffect.ShowError(action.error.message))
                 previousState.copy(
                     state = ULIEState.ERROR(action.error),
                     loginFlowState = LoginFlowState.LoadAccessTokenError

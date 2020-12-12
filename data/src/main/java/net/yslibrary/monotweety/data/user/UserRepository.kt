@@ -1,6 +1,6 @@
 package net.yslibrary.monotweety.data.user
 
-import com.codingfeline.twitter4kt.core.ApiResult
+import com.codingfeline.twitter4kt.core.getOrThrow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Clock
 import net.yslibrary.monotweety.data.user.local.UserLocalGateway
@@ -28,17 +28,16 @@ internal class UserRepositoryImpl @Inject constructor(
 
     override suspend fun fetch() {
         val result = remoteGateway.verifyCredentials()
-        if (result is ApiResult.Success) {
-            val account = result.value
-            localGateway.update(
-                User(
-                    id = account.idStr,
-                    name = account.name,
-                    screenName = account.screenName,
-                    profileImageUrl = account.profileImageUrlHttps,
-                    updatedAt = clock.now().epochSeconds
-                )
+        val account = result.getOrThrow()
+        localGateway.update(
+            User(
+                id = account.idStr,
+                name = account.name,
+                screenName = account.screenName,
+                profileImageUrl = account.profileImageUrlHttps,
+                updatedAt = clock.now().epochSeconds
             )
-        }
+        )
+
     }
 }

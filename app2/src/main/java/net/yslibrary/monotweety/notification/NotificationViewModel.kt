@@ -1,11 +1,13 @@
 package net.yslibrary.monotweety.notification
 
 import com.codingfeline.twitter4kt.core.isSuccess
+import com.codingfeline.twitter4kt.v1.model.error.TwitterApiException
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import net.yslibrary.monotweety.base.CoroutineDispatchers
 import net.yslibrary.monotweety.data.twitterapp.AppInfo
+import net.yslibrary.monotweety.domain.session.Logout
 import net.yslibrary.monotweety.domain.setting.GetTwitterAppByPackageName
 import net.yslibrary.monotweety.domain.setting.ObserveSettings
 import net.yslibrary.monotweety.domain.status.BuildAndValidateStatusString
@@ -17,6 +19,7 @@ import net.yslibrary.monotweety.ui.arch.MviViewModel
 import net.yslibrary.monotweety.ui.arch.Processor
 import net.yslibrary.monotweety.ui.arch.State
 import net.yslibrary.monotweety.ui.arch.ULIEState
+import timber.log.Timber
 import javax.inject.Inject
 
 sealed class NotificationIntent : Intent {
@@ -34,6 +37,8 @@ sealed class NotificationAction : Action {
     data class StatusTooLong(val status: String) : NotificationAction()
     data class TweetFailed(val error: Throwable) : NotificationAction()
 
+    object LoggedOut : NotificationAction()
+
     object OpenTweetDialog : NotificationAction()
 
     data class FooterSettingsUpdated(
@@ -49,12 +54,14 @@ sealed class NotificationAction : Action {
 
 sealed class NotificationEffect : Effect {
     object UpdateCompleted : NotificationEffect()
-    data class Error(val message: String) : NotificationEffect()
+    data class Error(val message: String?) : NotificationEffect()
     data class StatusTooLong(val status: String) : NotificationEffect()
 
     object StopNotification : NotificationEffect()
 
     object OpenTweetDialog : NotificationEffect()
+
+    object LoggedOut : NotificationEffect()
 }
 
 data class NotificationState(
@@ -81,6 +88,7 @@ class NotificationProcessor @Inject constructor(
     private val observeSettings: ObserveSettings,
     private val getTwitterAppByPackageName: GetTwitterAppByPackageName,
     private val buildAndValidateStatusString: BuildAndValidateStatusString,
+    private val logout: Logout,
     private val updateStatus: UpdateStatus,
     dispatchers: CoroutineDispatchers,
 ) : Processor<NotificationAction>(
@@ -100,6 +108,7 @@ class NotificationProcessor @Inject constructor(
                             put(NotificationAction.TweetCompleted)
                         } else {
                             put(NotificationAction.TweetFailed(apiResult.error))
+                            logoutIfNeeded(apiResult.error)
                         }
                     } else {
                         // should pass a status string without footer(footer should be added in Editor dialog)
@@ -124,6 +133,16 @@ class NotificationProcessor @Inject constructor(
                     appInfo = appInfo))
             }
             .launchIn(this)
+    }
+
+    private suspend fun logoutIfNeeded(error: Throwable) {
+        if (error is TwitterApiException) {
+            val unauthenticated = error.errors.any { it.code == 32 }
+            if (unauthenticated) {
+                logout()
+                put(NotificationAction.LoggedOut)
+            }
+        }
     }
 }
 
@@ -179,7 +198,17 @@ class NotificationViewModel @Inject constructor(
                 previousState
             }
             is NotificationAction.TweetFailed -> {
-                sendEffect(NotificationEffect.Error(action.error.message ?: ""))
+                Timber.w(action.error, "tweet failed: ${action.error.message}")
+                val message = if (action.error is TwitterApiException) {
+                    action.error.errors.firstOrNull()?.message
+                } else {
+                    action.error.message
+                }
+                sendEffect(NotificationEffect.Error(message))
+                previousState
+            }
+            NotificationAction.LoggedOut -> {
+                sendEffect(NotificationEffect.LoggedOut)
                 previousState
             }
         }

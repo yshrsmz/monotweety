@@ -30,8 +30,6 @@ class ComposeActivity : AppCompatActivity(R.layout.activity_compose),
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
         val session = runBlocking { observeSession().first() }
         if (session == null) {
             finish()
@@ -40,6 +38,8 @@ class ComposeActivity : AppCompatActivity(R.layout.activity_compose),
         accessToken = session.toAccessToken()
 
         component.inject(this)
+
+        super.onCreate(savedInstanceState)
 
         ComposeTweetDialogFragment.newInstance()
             .show(supportFragmentManager, ComposeTweetDialogFragment.TAG)

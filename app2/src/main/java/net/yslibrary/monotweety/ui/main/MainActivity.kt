@@ -27,8 +27,6 @@ class MainActivity : ViewBindingAppCompatActivity<ActivityMainBinding>(
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
         val session = runBlocking { observeSession().first() }
         if (session == null) {
             Toast.makeText(this, "You need to login first", Toast.LENGTH_LONG).show()
@@ -41,6 +39,8 @@ class MainActivity : ViewBindingAppCompatActivity<ActivityMainBinding>(
         }
 
         component.inject(this)
+
+        super.onCreate(savedInstanceState)
     }
 
     companion object {

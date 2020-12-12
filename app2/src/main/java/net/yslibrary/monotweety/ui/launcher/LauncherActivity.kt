@@ -26,9 +26,9 @@ class LauncherActivity : ViewBindingAppCompatActivity<ActivityMainBinding>(
     lateinit var analyrics: Analytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        component.inject(this)
         super.onCreate(savedInstanceState)
         setTheme(R.style.AppTheme)
-        component.inject(this)
     }
 
     companion object {

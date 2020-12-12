@@ -6,11 +6,11 @@ object Versions {
     const val gradle = "6.8-rc-1"
 
     const val agp = "4.1.1"
-    const val kotlin = "1.4.20"
+    const val kotlin = "1.4.21"
     const val coroutines = "1.4.2"
     const val dokka = "0.10.1"
     const val versions = "0.36.0"
-    const val crashlytics = "2.3.0"
+    const val crashlytics = "2.4.1"
     const val googleservices = "4.3.4"
 
     const val androidXLifecycle = "2.3.0-beta01"
@@ -19,7 +19,7 @@ object Versions {
     const val androidXTest = "1.3.0"
 
     // https://issuetracker.google.com/issues/174832563
-    const val navigation = "2.3.1"
+    const val navigation = "2.3.2"
     const val okhttp3 = "4.9.0"
     const val dagger = "2.30.1"
     const val daggerHilt = "2.29.1-alpha"
@@ -87,7 +87,7 @@ object Deps {
             const val rx2 = "org.jetbrains.kotlinx:kotlinx-coroutines-rx2:${Versions.coroutines}"
         }
 
-        const val datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.1.0"
+        const val datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.1.1"
     }
 
     object Ktor {
@@ -101,7 +101,7 @@ object Deps {
         const val sqlite = "androidx.sqlite:sqlite:2.0.1"
         const val browser = "androidx.browser:browser:1.3.0"
         const val viewpager = "androidx.viewpager2:viewpager2:1.1.0-alpha01"
-        const val recyclerview = "androidx.recyclerview:recyclerview:1.2.0-alpha06"
+        const val recyclerview = "androidx.recyclerview:recyclerview:1.2.0-beta01"
         const val swiperefreshlayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
         const val preference = "androidx.preference:preference:1.1.1"
 
